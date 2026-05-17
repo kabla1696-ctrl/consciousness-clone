@@ -132,7 +132,7 @@ export default function PublicProfile() {
         </div>
       </header>
 
-      <div className="relative z-10 pt-6 px-4 max-w-2xl mx-auto pb-24">
+      <div className="relative z-10 pt-6 px-4 max-w-2xl mx-auto pb-24 md:pb-8">
         {/* Profile Preview Card */}
         <div className="relative rounded-2xl border border-white/[0.08] p-6 mb-6 backdrop-blur-2xl bg-white/[0.02] overflow-hidden">
           {/* Top glow line */}

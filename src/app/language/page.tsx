@@ -49,7 +49,7 @@ export default function LanguagePage() {
         </div>
       </header>
 
-      <div className="px-4 py-6 pb-24 relative z-10">
+      <div className="px-4 py-6 pb-24 md:pb-8 relative z-10">
         {/* Current Language */}
         <div className="rounded-xl border border-blue-500/20 p-5 mb-6 backdrop-blur-xl" style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.05), rgba(99,102,241,0.03))' }}>
           <div className="flex items-center gap-3">

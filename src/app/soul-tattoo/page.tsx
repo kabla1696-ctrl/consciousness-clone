@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 const ALL_TRAITS = [
   { name: 'Loyal', symbol: '🛡️', meaning: 'Unwavering devotion to those you hold dear', color: '#3b82f6' },
@@ -26,6 +27,7 @@ interface Tattoo {
 }
 
 export default function SoulTattooPage() {
+  const t = useT();
   const [tattoos, setTattoos] = useState<Tattoo[]>([]);
   const [selecting, setSelecting] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
@@ -90,8 +92,8 @@ export default function SoulTattooPage() {
       <header style={{ position: 'sticky', top: 0, zIndex: 40, backdropFilter: 'blur(20px)', background: 'rgba(5,5,16,.8)', borderBottom: '1px solid rgba(255,255,255,.06)', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 14 }}>
         <Link href="/dashboard" style={{ color: '#a78bfa', fontSize: 22, textDecoration: 'none' }}>←</Link>
         <div>
-          <h1 style={{ fontSize: 20, fontWeight: 700, margin: 0, background: 'linear-gradient(135deg,#c084fc,#818cf8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Soul Tattoo</h1>
-          <p style={{ fontSize: 12, color: '#888', margin: 0 }}>Permanent traits etched into your essence</p>
+          <h1 style={{ fontSize: 20, fontWeight: 700, margin: 0, background: 'linear-gradient(135deg,#c084fc,#818cf8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{t('soul tattoo')}</h1>
+          <p style={{ fontSize: 12, color: '#888', margin: 0 }}>{t('permanent traits')}</p>
         </div>
       </header>
 
@@ -99,16 +101,16 @@ export default function SoulTattooPage() {
         {/* Existing Tattoos */}
         {tattoos.length > 0 && (
           <section style={{ marginBottom: 28 }}>
-            <h2 style={{ fontSize: 15, fontWeight: 600, color: '#a78bfa', marginBottom: 14 }}>✦ Your Soul Tattoos</h2>
+            <h2 style={{ fontSize: 15, fontWeight: 600, color: '#a78bfa', marginBottom: 14 }}>✦ {t('your soul tattoos')}</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 14 }}>
-              {tattoos.map(t => (
-                <div key={t.name} className="tattoo-card" onClick={() => setRevealed(revealed === t.name ? null : t.name)} style={{ animation: 'fadeIn .5s ease-out, glow 3s ease-in-out infinite', cursor: 'pointer' }}>
-                  <div style={{ fontSize: 42, marginBottom: 8, filter: `drop-shadow(0 0 12px ${t.color}50)` }}>{t.symbol}</div>
-                  <div style={{ fontSize: 16, fontWeight: 700, color: t.color }}>{t.name}</div>
-                  {revealed === t.name && (
+              {tattoos.map(tattoo => (
+                <div key={tattoo.name} className="tattoo-card" onClick={() => setRevealed(revealed === tattoo.name ? null : tattoo.name)} style={{ animation: 'fadeIn .5s ease-out, glow 3s ease-in-out infinite', cursor: 'pointer' }}>
+                  <div style={{ fontSize: 42, marginBottom: 8, filter: `drop-shadow(0 0 12px ${tattoo.color}50)` }}>{tattoo.symbol}</div>
+                  <div style={{ fontSize: 16, fontWeight: 700, color: tattoo.color }}>{tattoo.name}</div>
+                  {revealed === tattoo.name && (
                     <div style={{ marginTop: 8, animation: 'fadeIn .3s ease-out' }}>
-                      <p style={{ fontSize: 12, color: '#aaa', margin: 0, lineHeight: 1.5, fontStyle: 'italic' }}>&ldquo;{t.meaning}&rdquo;</p>
-                      <p style={{ fontSize: 10, color: '#555', margin: '8px 0 0' }}>🔒 Locked {t.lockedDate}</p>
+                      <p style={{ fontSize: 12, color: '#aaa', margin: 0, lineHeight: 1.5, fontStyle: 'italic' }}>&ldquo;{tattoo.meaning}&rdquo;</p>
+                      <p style={{ fontSize: 10, color: '#555', margin: '8px 0 0' }}>🔒 {t('locked')} {tattoo.lockedDate}</p>
                     </div>
                   )}
                 </div>
@@ -121,25 +123,25 @@ export default function SoulTattooPage() {
         {selecting ? (
           <section style={{ animation: 'fadeIn .3s ease-out' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
-              <h2 style={{ fontSize: 15, fontWeight: 600, color: '#a78bfa', margin: 0 }}>Choose 3–5 Core Traits</h2>
+              <h2 style={{ fontSize: 15, fontWeight: 600, color: '#a78bfa', margin: 0 }}>{t('choose core traits')}</h2>
               <span style={{ fontSize: 13, color: selected.length >= 3 ? '#34d399' : '#888' }}>{selected.length}/5</span>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 10, marginBottom: 20 }}>
-              {ALL_TRAITS.map(t => {
-                const locked = isTraitLocked(t.name);
-                const sel = selected.includes(t.name);
+              {ALL_TRAITS.map(tr => {
+                const locked = isTraitLocked(tr.name);
+                const sel = selected.includes(tr.name);
                 return (
-                  <div key={t.name} className={`trait-option${sel ? ' selected' : ''}${locked ? ' locked' : ''}`} onClick={() => toggleSelect(t.name)}>
-                    <div style={{ fontSize: 28, marginBottom: 4 }}>{t.symbol}</div>
-                    <div style={{ fontSize: 13, fontWeight: 600, color: sel ? t.color : '#ccc' }}>{t.name}</div>
-                    {locked && <div style={{ fontSize: 10, color: '#555', marginTop: 2 }}>🔒 Locked</div>}
+                  <div key={tr.name} className={`trait-option${sel ? ' selected' : ''}${locked ? ' locked' : ''}`} onClick={() => toggleSelect(tr.name)}>
+                    <div style={{ fontSize: 28, marginBottom: 4 }}>{tr.symbol}</div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: sel ? tr.color : '#ccc' }}>{tr.name}</div>
+                    {locked && <div style={{ fontSize: 10, color: '#555', marginTop: 2 }}>🔒 {t('locked')}</div>}
                   </div>
                 );
               })}
             </div>
             <div style={{ display: 'flex', gap: 10 }}>
-              <button onClick={() => { setSelecting(false); setSelected([]); }} style={{ flex: 1, padding: 14, borderRadius: 14, border: '1px solid rgba(255,255,255,.1)', background: 'transparent', color: '#999', cursor: 'pointer', fontSize: 14 }}>Cancel</button>
-              <button className="confirm-btn" disabled={selected.length < 3} onClick={lockTattoos} style={{ flex: 1 }}>🔒 Lock Forever</button>
+              <button onClick={() => { setSelecting(false); setSelected([]); }} style={{ flex: 1, padding: 14, borderRadius: 14, border: '1px solid rgba(255,255,255,.1)', background: 'transparent', color: '#999', cursor: 'pointer', fontSize: 14 }}>{t('cancel')}</button>
+              <button className="confirm-btn" disabled={selected.length < 3} onClick={lockTattoos} style={{ flex: 1 }}>🔒 {t('lock forever')}</button>
             </div>
           </section>
         ) : (
@@ -147,12 +149,12 @@ export default function SoulTattooPage() {
             {tattoos.length === 0 && (
               <div style={{ marginBottom: 24 }}>
                 <div style={{ fontSize: 56, marginBottom: 12, animation: 'float 4s ease-in-out infinite' }}>✦</div>
-                <h2 style={{ fontSize: 22, fontWeight: 700, margin: '0 0 8px', background: 'linear-gradient(135deg,#c084fc,#818cf8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>No Tattoos Yet</h2>
-                <p style={{ fontSize: 14, color: '#888', maxWidth: 300, margin: '0 auto 24px', lineHeight: 1.6 }}>Choose 3–5 core personality traits that define who you are. Once locked, they can never be changed.</p>
+                <h2 style={{ fontSize: 22, fontWeight: 700, margin: '0 0 8px', background: 'linear-gradient(135deg,#c084fc,#818cf8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{t('no tattoos yet')}</h2>
+                <p style={{ fontSize: 14, color: '#888', maxWidth: 300, margin: '0 auto 24px', lineHeight: 1.6 }}>{t('choose traits description')}</p>
               </div>
             )}
             <button className="confirm-btn" onClick={() => setSelecting(true)} style={{ background: tattoos.length > 0 ? 'rgba(139,92,246,.15)' : undefined, border: tattoos.length > 0 ? '1px solid rgba(139,92,246,.3)' : 'none', color: tattoos.length > 0 ? '#c084fc' : '#fff' }}>
-              {tattoos.length > 0 ? '+ Add More Tattoos' : '✦ Begin Tattoo Ritual'}
+              {tattoos.length > 0 ? '+ ' + t('add more tattoos') : '✦ ' + t('begin tattoo ritual')}
             </button>
           </div>
         )}

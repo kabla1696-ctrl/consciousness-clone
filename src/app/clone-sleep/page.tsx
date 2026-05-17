@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Dream {
   id: string;
@@ -26,6 +27,7 @@ const dreamThemes = [
 ];
 
 export default function CloneSleepPage() {
+  const t = useT();
   const [isSleeping, setIsSleeping] = useState(false);
   const [sleepTime, setSleepTime] = useState(0);
   const [targetMinutes, setTargetMinutes] = useState(8 * 60);
@@ -135,7 +137,7 @@ export default function CloneSleepPage() {
         padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12,
       }}>
         <Link href="/dashboard" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: 20 }}>←</Link>
-        <h1 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>🌙 Clone Sleep</h1>
+        <h1 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>🌙 {t('clone sleep')}</h1>
       </header>
 
       <main style={{ position: 'relative', zIndex: 1, maxWidth: 480, margin: '0 auto', padding: '24px 16px' }}>
@@ -159,7 +161,7 @@ export default function CloneSleepPage() {
             {formatTime(sleepTime)}
           </div>
           <p style={{ fontSize: 14, color: '#64748b', margin: 0 }}>
-            {isSleeping ? 'Clone is dreaming...' : 'Ready to sleep'}
+            {isSleeping ? `${t('sleeping')}...` : 'Ready to sleep'}
           </p>
           {currentDream && (
             <div style={{
@@ -204,7 +206,7 @@ export default function CloneSleepPage() {
           fontSize: 16, fontWeight: 700, marginBottom: 24,
           boxShadow: isSleeping ? '0 0 30px rgba(251,191,36,0.25)' : '0 0 30px rgba(99,102,241,0.25)',
         }}>
-          {isSleeping ? '☀️ Wake Up' : '🌙 Go to Sleep'}
+          {isSleeping ? `☀️ ${t('wake up')}` : '🌙 Go to Sleep'}
         </button>
 
         {/* Sleep Quality (shown after waking) */}
@@ -241,7 +243,7 @@ export default function CloneSleepPage() {
 
         {/* Dream Journal */}
         <h3 style={{ fontSize: 13, color: '#64748b', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>
-          💭 Dream Journal
+          💭 {t('dreams')}
         </h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {dreams.map(d => (

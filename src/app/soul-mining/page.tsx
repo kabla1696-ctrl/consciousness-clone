@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Transaction {
   id: string;
@@ -42,6 +43,7 @@ const memoryPrompts = [
 ];
 
 export default function SoulMining() {
+  const t = useT();
   const [coins, setCoins] = useState(0);
   const [pickaxeLevel, setPickaxeLevel] = useState(1);
   const [minedToday, setMinedToday] = useState(0);
@@ -143,7 +145,7 @@ export default function SoulMining() {
         <div style={{ display:'flex',alignItems:'center',gap:12,maxWidth:800,margin:'0 auto' }}>
           <Link href="/dashboard" style={{ color:'#888',textDecoration:'none',fontSize:20 }}>←</Link>
           <h1 style={{ fontSize:20,fontWeight:700,background:'linear-gradient(135deg,#FBBF24,#F59E0B)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent' }}>
-            ⛏️ Soul Mining
+            ⛏️ {t('soul mining')}
           </h1>
           <div style={{ marginLeft:'auto',display:'flex',alignItems:'center',gap:8,padding:'6px 14px',borderRadius:20,background:'rgba(251,191,36,0.1)',border:'1px solid rgba(251,191,36,0.2)' }}>
             <span style={{ fontSize:18 }}>🪙</span>
@@ -165,7 +167,7 @@ export default function SoulMining() {
             {currentPickaxe.emoji}
           </div>
           <h2 style={{ fontSize:22,fontWeight:700,color:'#FBBF24',marginTop:12 }}>{currentPickaxe.name}</h2>
-          <p style={{ color:'#888',fontSize:13 }}>Mining Power: {miningRate}x • Daily: {minedToday}/{DAILY_LIMIT} coins</p>
+          <p style={{ color:'#888',fontSize:13 }}>{t('mining power')}: {miningRate}x • {t('daily')}: {minedToday}/{DAILY_LIMIT} {t('coins')}</p>
           <div style={{ marginTop:8,height:6,background:'rgba(255,255,255,0.06)',borderRadius:3 }}>
             <div style={{ height:'100%',width:`${(minedToday/DAILY_LIMIT)*100}%`,background:'linear-gradient(90deg,#FBBF24,#F59E0B)',borderRadius:3,transition:'width 0.5s' }} />
           </div>
@@ -174,22 +176,22 @@ export default function SoulMining() {
         {/* Mining Input */}
         <div className="glass" style={{ padding:20,marginBottom:24 }}>
           <div style={{ display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12 }}>
-            <h3 style={{ fontSize:15,fontWeight:600,color:'#aaa' }}>Add a Memory to Mine</h3>
+            <h3 style={{ fontSize:15,fontWeight:600,color:'#aaa' }}>{t('add a memory to mine')}</h3>
             <button onClick={randomPrompt} style={{ padding:'4px 10px',borderRadius:8,border:'1px solid rgba(255,255,255,0.1)',background:'transparent',color:'#888',cursor:'pointer',fontSize:12 }}>
-              💡 Random
+              💡 {t('random')}
             </button>
           </div>
           <textarea value={memoryText} onChange={e => setMemoryText(e.target.value)} placeholder="Share a deep memory to mine soul coins..."
             rows={3} style={{ width:'100%',padding:12,borderRadius:10,border:'1px solid rgba(255,255,255,0.1)',background:'rgba(0,0,0,0.3)',color:'#E0E0E0',fontSize:14,resize:'none',boxSizing:'border-box',marginBottom:12 }} />
           <button onClick={mineMemory} disabled={mining || !memoryText.trim() || minedToday >= DAILY_LIMIT}
             style={{ width:'100%',padding:14,borderRadius:12,border:'none',background:mining?'#F59E0B':'linear-gradient(135deg,#FBBF24,#F59E0B)',color:'#050510',fontWeight:700,cursor:mining?'wait':'pointer',fontSize:16,opacity:!memoryText.trim()||minedToday>=DAILY_LIMIT?0.5:1 }}>
-            {mining ? '⛏️ Mining...' : minedToday >= DAILY_LIMIT ? 'Daily Limit Reached' : '⛏️ Mine Soul Coins'}
+            {mining ? '⛏️ ' + t('mining') : minedToday >= DAILY_LIMIT ? t('daily limit reached') : '⛏️ ' + t('mine soul coins')}
           </button>
         </div>
 
         {/* Pickaxe Upgrades */}
         <div className="glass" style={{ padding:20,marginBottom:24 }}>
-          <h3 style={{ fontSize:15,fontWeight:600,color:'#aaa',marginBottom:16 }}>Pickaxe Upgrades</h3>
+          <h3 style={{ fontSize:15,fontWeight:600,color:'#aaa',marginBottom:16 }}>{t('pickaxe upgrades')}</h3>
           <div style={{ display:'flex',flexDirection:'column',gap:10 }}>
             {pickaxes.map((p, i) => {
               const active = pickaxeLevel === p.level;
@@ -220,9 +222,9 @@ export default function SoulMining() {
 
         {/* Transaction History */}
         <div className="glass" style={{ padding:20 }}>
-          <h3 style={{ fontSize:15,fontWeight:600,color:'#aaa',marginBottom:16 }}>Transaction History</h3>
+          <h3 style={{ fontSize:15,fontWeight:600,color:'#aaa',marginBottom:16 }}>{t('transaction history')}</h3>
           {transactions.length === 0 ? (
-            <p style={{ color:'#555',textAlign:'center',padding:20 }}>No transactions yet. Start mining!</p>
+            <p style={{ color:'#555',textAlign:'center',padding:20 }}>{t('no transactions yet')}</p>
           ) : (
             <div style={{ display:'flex',flexDirection:'column',gap:8 }}>
               {transactions.slice(0, 20).map(tx => (

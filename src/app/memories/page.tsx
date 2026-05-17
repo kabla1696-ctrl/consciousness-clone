@@ -187,7 +187,7 @@ export default function MemoriesPage() {
         </div>
       </header>
 
-      <div className="relative z-10 px-4 max-w-6xl mx-auto pb-28 pt-6">
+      <div className="relative z-10 px-4 max-w-6xl mx-auto pb-28 md:pb-8 pt-6">
         {/* Search + Add */}
         <div className="flex gap-3 mb-6">
           <div className="relative flex-1">

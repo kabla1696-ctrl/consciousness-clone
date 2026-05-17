@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
+import { useT } from '../../lib/language-context'
 
 interface CloneProfile {
   id: string
@@ -146,11 +147,11 @@ export default function CloneConnect() {
   const chatMessages = messages.filter(m => (m.from === 'me' && m.to === selectedChat) || (m.from === selectedChat && m.to === 'me'))
 
   const TABS = [
-    { id: 'discover', icon: '🌍', label: 'Discover' },
-    { id: 'friends', icon: '👥', label: 'Friends' },
-    { id: 'messages', icon: '💬', label: 'Messages' },
-    { id: 'calls', icon: '📞', label: 'Calls' },
-    { id: 'requests', icon: '💌', label: 'Requests' },
+    { id: 'discover', icon: '🌍', label: t('Discover') },
+    { id: 'friends', icon: '👥', label: t('Friends') },
+    { id: 'messages', icon: '💬', label: t('Messages') },
+    { id: 'calls', icon: '📞', label: t('Calls') },
+    { id: 'requests', icon: '💌', label: t('Requests') },
   ]
 
   return (
@@ -179,13 +180,13 @@ export default function CloneConnect() {
         ))}
       </div>
 
-      <div className="px-4 py-4 pb-24 relative z-10">
+      <div className="px-4 py-4 pb-24 md:pb-8 relative z-10">
 
         {/* DISCOVER TAB */}
         {tab === 'discover' && (
           <>
             <div className="relative mb-4">
-              <input value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder="Search clones by name or personality..." className="w-full p-3 pl-10 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm focus:outline-none focus:border-violet-500/40" />
+              <input value={searchQuery} onChange={e => setSearchQuery(e.target.value)} placeholder={t("Search clones by name or personality...")} className="w-full p-3 pl-10 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm focus:outline-none focus:border-violet-500/40" />
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20">🔍</span>
             </div>
             <div className="space-y-3">
@@ -215,14 +216,14 @@ export default function CloneConnect() {
                     </div>
                   </div>
                   <div className="flex gap-2 mt-3">
-                    <button onClick={() => setShowSoul(clone)} className="flex-1 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white/60 text-xs tap-feedback">👁️ Soul Profile</button>
+                    <button onClick={() => setShowSoul(clone)} className="flex-1 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white/60 text-xs tap-feedback">👁️ {t('Soul Profile')}</button>
                     {friends.includes(clone.id) ? (
                       <>
-                        <button onClick={() => { setSelectedChat(clone.id); setTab('messages') }} className="flex-1 py-2 rounded-xl bg-violet-500/20 border border-violet-500/30 text-violet-400 text-xs tap-feedback">💬 Message</button>
+                        <button onClick={() => { setSelectedChat(clone.id); setTab('messages') }} className="flex-1 py-2 rounded-xl bg-violet-500/20 border border-violet-500/30 text-violet-400 text-xs tap-feedback">💬 {t('Message')}</button>
                         <button onClick={() => startCall(clone)} className="py-2 px-3 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs tap-feedback">📞</button>
                       </>
                     ) : (
-                      <button onClick={() => sendRequest(clone)} className="flex-1 py-2 rounded-xl bg-gradient-to-r from-violet-500 to-pink-500 text-white text-xs font-medium tap-feedback">➕ Add Friend</button>
+                      <button onClick={() => sendRequest(clone)} className="flex-1 py-2 rounded-xl bg-gradient-to-r from-violet-500 to-pink-500 text-white text-xs font-medium tap-feedback">➕ {t('Add Friend')}</button>
                     )}
                   </div>
                 </div>
@@ -237,8 +238,8 @@ export default function CloneConnect() {
             {friendClones.length === 0 ? (
               <div className="text-center py-16">
                 <div className="text-5xl mb-3">👥</div>
-                <p className="text-white/30 text-sm">No friends yet</p>
-                <p className="text-white/15 text-xs">Discover clones and send friend requests!</p>
+                <p className="text-white/30 text-sm">{t('No friends yet')}</p>
+                <p className="text-white/15 text-xs">{t('Discover clones and send friend requests!')}</p>
               </div>
             ) : (
               <div className="space-y-3">
@@ -250,7 +251,7 @@ export default function CloneConnect() {
                     </div>
                     <div className="flex-1">
                       <span className="text-sm font-medium">{clone.name}</span>
-                      <p className="text-white/20 text-[10px]">{clone.online ? '🟢 Online' : `Last seen ${clone.lastSeen}`}</p>
+                      <p className="text-white/20 text-[10px]">{clone.online ? '🟢 ' + t('Online') : t('Last seen') + ' ' + clone.lastSeen}</p>
                     </div>
                     <div className="flex gap-2">
                       <button onClick={() => { setSelectedChat(clone.id); setTab('messages') }} className="w-9 h-9 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center text-sm tap-feedback">💬</button>
@@ -270,7 +271,7 @@ export default function CloneConnect() {
             {friendClones.length === 0 ? (
               <div className="text-center py-16">
                 <div className="text-5xl mb-3">💬</div>
-                <p className="text-white/30 text-sm">No conversations yet</p>
+                <p className="text-white/30 text-sm">{t('No conversations yet')}</p>
               </div>
             ) : (
               <div className="space-y-2">
@@ -284,7 +285,7 @@ export default function CloneConnect() {
                           <span className="text-sm font-medium">{clone.name}</span>
                           <span className="text-white/10 text-[10px]">{lastMsg?.time || ''}</span>
                         </div>
-                        <p className="text-white/30 text-xs truncate">{lastMsg?.text || 'Start a conversation...'}</p>
+                        <p className="text-white/30 text-xs truncate">{lastMsg?.text || t('Start a conversation...')}</p>
                       </div>
                     </button>
                   )
@@ -304,14 +305,14 @@ export default function CloneConnect() {
               </div>
               <div>
                 <span className="text-sm font-medium">{clones.find(c => c.id === selectedChat)?.name}</span>
-                <p className="text-emerald-400 text-[10px]">🟢 Online</p>
+                <p className="text-emerald-400 text-[10px]">🟢 {t('Online')}</p>
               </div>
               <button onClick={() => startCall(clones.find(c => c.id === selectedChat)!)} className="ml-auto w-9 h-9 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-sm tap-feedback">📞</button>
             </div>
             <div ref={chatRef} className="flex-1 overflow-y-auto space-y-3 mb-4 pr-1">
               {chatMessages.length === 0 && (
                 <div className="text-center py-8">
-                  <p className="text-white/20 text-xs">Say hello to {clones.find(c => c.id === selectedChat)?.name}! 👋</p>
+                  <p className="text-white/20 text-xs">{t('Say hello to')} {clones.find(c => c.id === selectedChat)?.name}! 👋</p>
                 </div>
               )}
               {chatMessages.map(msg => (
@@ -324,7 +325,7 @@ export default function CloneConnect() {
               ))}
             </div>
             <div className="flex gap-2">
-              <input value={chatInput} onChange={e => setChatInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && sendMessage()} placeholder="Type a message..." className="flex-1 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm focus:outline-none focus:border-violet-500/40" />
+              <input value={chatInput} onChange={e => setChatInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && sendMessage()} placeholder={t('Type a message...')} className="flex-1 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm focus:outline-none focus:border-violet-500/40" />
               <button onClick={sendMessage} className="w-12 h-12 rounded-xl bg-gradient-to-r from-violet-500 to-purple-500 flex items-center justify-center text-white tap-feedback">➤</button>
             </div>
           </div>
@@ -336,7 +337,7 @@ export default function CloneConnect() {
             {calls.length === 0 ? (
               <div className="text-center py-16">
                 <div className="text-5xl mb-3">📞</div>
-                <p className="text-white/30 text-sm">No call history</p>
+                <p className="text-white/30 text-sm">{t('No call history')}</p>
               </div>
             ) : (
               <div className="space-y-2">
@@ -361,7 +362,7 @@ export default function CloneConnect() {
             {requests.filter(r => r.status === 'pending').length === 0 ? (
               <div className="text-center py-16">
                 <div className="text-5xl mb-3">💌</div>
-                <p className="text-white/30 text-sm">No pending requests</p>
+                <p className="text-white/30 text-sm">{t('No pending requests')}</p>
               </div>
             ) : (
               <div className="space-y-3">
@@ -375,8 +376,8 @@ export default function CloneConnect() {
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <button onClick={() => acceptRequest(req.id)} className="flex-1 py-2 rounded-xl bg-gradient-to-r from-violet-500 to-pink-500 text-white text-xs font-medium tap-feedback">Accept</button>
-                      <button className="flex-1 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white/40 text-xs tap-feedback">Decline</button>
+                      <button onClick={() => acceptRequest(req.id)} className="flex-1 py-2 rounded-xl bg-gradient-to-r from-violet-500 to-pink-500 text-white text-xs font-medium tap-feedback">{t('Accept')}</button>
+                      <button className="flex-1 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white/40 text-xs tap-feedback">{t('Decline')}</button>
                     </div>
                   </div>
                 ))}
@@ -443,7 +444,7 @@ export default function CloneConnect() {
           {showCall.active ? (
             <>
               <p className="text-emerald-400 text-lg font-mono mb-1">{Math.floor(showCall.duration / 60).toString().padStart(2, '0')}:{(showCall.duration % 60).toString().padStart(2, '0')}</p>
-              <p className="text-white/20 text-xs mb-8">🟢 Connected</p>
+              <p className="text-white/20 text-xs mb-8">🟢 {t('Connected')}</p>
               <div className="flex gap-6">
                 <button className="w-14 h-14 rounded-2xl bg-white/[0.05] border border-white/[0.06] flex items-center justify-center text-xl tap-feedback">🎤</button>
                 <button className="w-14 h-14 rounded-2xl bg-white/[0.05] border border-white/[0.06] flex items-center justify-center text-xl tap-feedback">🔊</button>
@@ -457,7 +458,7 @@ export default function CloneConnect() {
                   <div key={i} className="w-2 h-2 rounded-full bg-violet-400" style={{ animation: `pulse-ring 1.5s ease-in-out ${i * 0.3}s infinite` }} />
                 ))}
               </div>
-              <p className="text-white/30 text-sm">Calling...</p>
+              <p className="text-white/30 text-sm">{t('Calling...')}</p>
             </>
           )}
           {!showCall.active && (

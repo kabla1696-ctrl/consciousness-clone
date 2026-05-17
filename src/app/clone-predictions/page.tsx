@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Prediction {
   id: string;
@@ -70,6 +71,7 @@ const predictionTemplates: Record<string, string[]> = {
 };
 
 export default function ClonePredictions() {
+  const t = useT();
   const [predictions, setPredictions] = useState<Prediction[]>([]);
   const [selectedType, setSelectedType] = useState<string>('All');
   const [generating, setGenerating] = useState(false);
@@ -140,7 +142,7 @@ export default function ClonePredictions() {
 
       <header style={{ position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'blur(20px)', background: 'rgba(5,5,16,0.8)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 16 }}>
         <Link href="/dashboard" style={{ color: '#a78bfa', textDecoration: 'none', fontSize: 20 }}>←</Link>
-        <h1 style={{ fontSize: 20, fontWeight: 700, background: 'linear-gradient(135deg,#a78bfa,#6366f1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', margin: 0 }}>🔮 Clone Predictions</h1>
+        <h1 style={{ fontSize: 20, fontWeight: 700, background: 'linear-gradient(135deg,#a78bfa,#6366f1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', margin: 0 }}>🔮 {t('predictions')}</h1>
       </header>
 
       <main style={{ maxWidth: 900, margin: '0 auto', padding: 20 }}>
@@ -151,7 +153,7 @@ export default function ClonePredictions() {
             <span style={{ fontSize: 64, zIndex: 1, filter: generating ? 'brightness(1.5)' : 'none' }}>🔮</span>
           </div>
           <button onClick={generatePrediction} disabled={generating} style={{ padding: '12px 32px', borderRadius: 24, border: '1px solid #a78bfa', background: generating ? 'rgba(167,139,250,0.1)' : 'linear-gradient(135deg,rgba(167,139,250,0.2),rgba(99,102,241,0.2))', color: '#a78bfa', cursor: generating ? 'wait' : 'pointer', fontSize: 15, fontWeight: 600, transition: 'all .3s' }}>
-            {generating ? '✨ Channeling the future...' : '✨ Generate Prediction'}
+            {generating ? `✨ ${t('your future')}...` : `✨ ${t('ai predicts')}`}
           </button>
         </div>
 
@@ -191,7 +193,7 @@ export default function ClonePredictions() {
               <p style={{ margin: '0 0 12px', fontSize: 15, lineHeight: 1.6, color: '#e2e8f0' }}>{pred.text}</p>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <span style={{ fontSize: 11, color: '#64748b' }}>Confidence</span>
+                  <span style={{ fontSize: 11, color: '#64748b' }}>{t('probability')}</span>
                   <div style={{ width: 80, height: 6, background: 'rgba(255,255,255,0.06)', borderRadius: 3, overflow: 'hidden' }}>
                     <div style={{ width: `${pred.confidence}%`, height: '100%', background: `linear-gradient(90deg,${TYPE_COLORS[pred.type]},${TYPE_COLORS[pred.type]}88)`, borderRadius: 3 }} />
                   </div>

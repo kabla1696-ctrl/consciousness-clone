@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Song {
   name: string
@@ -35,6 +36,7 @@ const ALBUM_COLORS = [
 ]
 
 export default function SoulPlaylist() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [selectedMood, setSelectedMood] = useState('motivated')
   const [generating, setGenerating] = useState(false)
@@ -180,10 +182,10 @@ Choose 5 real, well-known songs. Pick songs that feel personal and meaningful.`,
           </Link>
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-sm shadow-lg shadow-emerald-500/25">🎵</div>
           <div className="flex-1">
-            <h1 className="text-sm font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Soul Playlist</h1>
+            <h1 className="text-sm font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">{t('soul playlist')}</h1>
             <p className="text-[10px] text-emerald-400 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
-              Music for your soul
+              {t('your music')}
             </p>
           </div>
           <button
@@ -202,12 +204,12 @@ Choose 5 real, well-known songs. Pick songs that feel personal and meaningful.`,
         {showHistory && (
           <div className="mb-6 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl overflow-hidden shadow-2xl shadow-emerald-500/[0.03]">
             <div className="px-4 py-3 border-b border-white/[0.06] flex items-center justify-between bg-gradient-to-r from-emerald-500/[0.06] to-transparent">
-              <h3 className="text-sm font-semibold text-white/90">Playlist History</h3>
+              <h3 className="text-sm font-semibold text-white/90">{t('playlist history')}</h3>
               <span className="text-xs text-emerald-400/70 bg-emerald-500/10 px-2 py-0.5 rounded-full">{history.length} playlists</span>
             </div>
             <div className="max-h-64 overflow-y-auto">
               {history.length === 0 ? (
-                <p className="text-white/30 text-sm p-6 text-center">No playlists yet</p>
+                <p className="text-white/30 text-sm p-6 text-center">{t('no playlists yet')}</p>
               ) : (
                 history.map(p => (
                   <button
@@ -229,7 +231,7 @@ Choose 5 real, well-known songs. Pick songs that feel personal and meaningful.`,
 
         {/* Mood Selector */}
         <div className="mb-6">
-          <label className="text-xs text-white/40 mb-2 block uppercase tracking-wider font-medium">How are you feeling?</label>
+          <label className="text-xs text-white/40 mb-2 block uppercase tracking-wider font-medium">{t('how are you feeling')}</label>
           <div className="grid grid-cols-3 gap-2">
             {MOODS.map(mood => (
               <button
@@ -261,11 +263,11 @@ Choose 5 real, well-known songs. Pick songs that feel personal and meaningful.`,
           {generating ? (
             <>
               <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin relative z-10" />
-              <span className="relative z-10">Curating Playlist...</span>
+              <span className="relative z-10">{t('curating playlist')}</span>
             </>
           ) : (
             <>
-              <span className="relative z-10">🎵</span> <span className="relative z-10">Generate Playlist</span>
+              <span className="relative z-10">🎵</span> <span className="relative z-10">{t('generate playlist')}</span>
             </>
           )}
         </button>
@@ -320,7 +322,7 @@ Choose 5 real, well-known songs. Pick songs that feel personal and meaningful.`,
         {favorites.length > 0 && (
           <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl overflow-hidden shadow-2xl shadow-rose-500/[0.03]">
             <div className="px-4 py-3 border-b border-white/[0.06] bg-gradient-to-r from-rose-500/[0.06] to-transparent">
-              <h3 className="text-sm font-semibold text-white/90">❤️ Favorites ({favorites.length})</h3>
+              <h3 className="text-sm font-semibold text-white/90">❤️ {t('favorites')} ({favorites.length})</h3>
             </div>
             <div className="max-h-48 overflow-y-auto">
               {favorites.map((song, i) => (
@@ -344,8 +346,8 @@ Choose 5 real, well-known songs. Pick songs that feel personal and meaningful.`,
         {songs.length === 0 && !generating && (
           <div className="text-center py-16">
             <div className="text-5xl mb-4 animate-bounce">🎶</div>
-            <p className="text-white/40 text-sm font-medium">Select your mood and generate a playlist</p>
-            <p className="text-white/20 text-xs mt-1.5">AI-curated songs based on your personality</p>
+            <p className="text-white/40 text-sm font-medium">{t('select your mood')}</p>
+            <p className="text-white/20 text-xs mt-1.5">{t('ai curated songs')}</p>
           </div>
         )}
       </div>

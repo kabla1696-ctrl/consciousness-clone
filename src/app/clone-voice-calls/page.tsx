@@ -1,15 +1,16 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface CallLog { id: string; type: string; cloneName: string; duration: number; timestamp: string; message: string; }
 
-const CALL_TYPES = [
-  { id: 'checkin', name: 'Check-in', icon: '💬', color: '#4FC3F7', desc: 'Quick wellness check' },
-  { id: 'morning', name: 'Good Morning', icon: '🌅', color: '#FFD54F', desc: 'Start your day right' },
-  { id: 'motivation', name: 'Motivation', icon: '🔥', color: '#FF7043', desc: 'Power boost call' },
-  { id: 'emergency', name: 'Emergency', icon: '🚨', color: '#EF5350', desc: 'Urgent alert' },
-];
+  const CALL_TYPES = [
+    { id: 'checkin', name: t('Check-in'), icon: '💬', color: '#4FC3F7', desc: t('Quick wellness check') },
+    { id: 'morning', name: t('Good Morning'), icon: '🌅', color: '#FFD54F', desc: t('Start your day right') },
+    { id: 'motivation', name: t('Motivation'), icon: '🔥', color: '#FF7043', desc: t('Power boost call') },
+    { id: 'emergency', name: t('Emergency'), icon: '🚨', color: '#EF5350', desc: t('Urgent alert') },
+  ];
 
 const DEFAULT_CALLS: CallLog[] = [
   { id: '1', type: 'morning', cloneName: 'Aria', duration: 45, timestamp: '2026-05-17T07:30:00', message: 'Good morning! Today is going to be amazing. You have 3 meetings but I believe in you!' },
@@ -19,6 +20,7 @@ const DEFAULT_CALLS: CallLog[] = [
 ];
 
 export default function CloneVoiceCallsPage() {
+  const t = useT();
   const [callLogs, setCallLogs] = useState<CallLog[]>([]);
   const [activeCall, setActiveCall] = useState<{ type: string; cloneName: string } | null>(null);
   const [callTimer, setCallTimer] = useState(0);
@@ -118,15 +120,15 @@ export default function CloneVoiceCallsPage() {
       <div style={{ position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'blur(20px)', background: 'rgba(5,5,16,0.8)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <Link href="/dashboard" style={{ color: '#888', fontSize: 22, textDecoration: 'none' }}>←</Link>
         <div>
-          <h1 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>📞 Clone Voice Calls</h1>
-          <p style={{ margin: 0, fontSize: 12, color: '#666' }}>Your clone calls you</p>
+          <h1 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>📞 {t('Clone Voice Calls')}</h1>
+          <p style={{ margin: 0, fontSize: 12, color: '#666' }}>{t('Your clone calls you')}</p>
         </div>
       </div>
 
       <div style={{ padding: 20, maxWidth: 500, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         {/* Call Types */}
         <div style={{ marginBottom: 28 }}>
-          <div style={{ fontSize: 13, color: '#888', marginBottom: 12, fontWeight: 600 }}>Start a Call</div>
+          <div style={{ fontSize: 13, color: '#888', marginBottom: 12, fontWeight: 600 }}>{t('Start a Call')}</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }}>
             {CALL_TYPES.map((ct, i) => (
               <button key={ct.id} onClick={() => startCall(ct.id)} className="call-type-btn"
@@ -144,7 +146,7 @@ export default function CloneVoiceCallsPage() {
 
         {/* Call History */}
         <div>
-          <div style={{ fontSize: 13, color: '#888', marginBottom: 12, fontWeight: 600 }}>Call History</div>
+          <div style={{ fontSize: 13, color: '#888', marginBottom: 12, fontWeight: 600 }}>{t('Call History')}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {callLogs.map((call, i) => {
               const ct = getTypeInfo(call.type);
@@ -171,9 +173,9 @@ export default function CloneVoiceCallsPage() {
 
         {/* Stats */}
         <div style={{ marginTop: 24, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: 16, backdropFilter: 'blur(20px)', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, textAlign: 'center' }}>
-          <div><div style={{ fontSize: 22, fontWeight: 700, color: '#4FC3F7' }}>{callLogs.length}</div><div style={{ fontSize: 10, color: '#666' }}>Total Calls</div></div>
-          <div><div style={{ fontSize: 22, fontWeight: 700, color: '#FFD54F' }}>{formatTime(callLogs.reduce((s, c) => s + c.duration, 0))}</div><div style={{ fontSize: 10, color: '#666' }}>Total Time</div></div>
-          <div><div style={{ fontSize: 22, fontWeight: 700, color: '#FF7043' }}>{callLogs.filter(c => c.type === 'motivation').length}</div><div style={{ fontSize: 10, color: '#666' }}>Motivations</div></div>
+          <div><div style={{ fontSize: 22, fontWeight: 700, color: '#4FC3F7' }}>{callLogs.length}</div><div style={{ fontSize: 10, color: '#666' }}>{t('Total Calls')}</div></div>
+          <div><div style={{ fontSize: 22, fontWeight: 700, color: '#FFD54F' }}>{formatTime(callLogs.reduce((s, c) => s + c.duration, 0))}</div><div style={{ fontSize: 10, color: '#666' }}>{t('Total Time')}</div></div>
+          <div><div style={{ fontSize: 22, fontWeight: 700, color: '#FF7043' }}>{callLogs.filter(c => c.type === 'motivation').length}</div><div style={{ fontSize: 10, color: '#666' }}>{t('Motivations')}</div></div>
         </div>
       </div>
     </div>

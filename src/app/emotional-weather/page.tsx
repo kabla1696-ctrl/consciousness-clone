@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { useT } from '../../lib/language-context'
 
 type Mood = 'sunny' | 'rainy' | 'stormy' | 'cloudy' | 'rainbow'
 
@@ -64,6 +65,7 @@ function LightningFlash({ show }: { show: boolean }) {
 }
 
 export default function EmotionalWeatherPage() {
+  const t = useT()
   const [forecast, setForecast] = useState<WeatherDay[]>([])
   const [todayMood, setTodayMood] = useState<Mood>('sunny')
   const [todayIntensity, setTodayIntensity] = useState(70)
@@ -141,8 +143,8 @@ export default function EmotionalWeatherPage() {
             <svg className="w-5 h-5 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </Link>
           <div>
-            <h1 className="text-lg font-bold gradient-text">Emotional Weather</h1>
-            <p className="text-[11px] text-white/30">Your clone&apos;s mood forecast</p>
+            <h1 className="text-lg font-bold gradient-text">{t('emotional weather')}</h1>
+            <p className="text-[11px] text-white/30">{t('forecast')}</p>
           </div>
         </div>
       </header>

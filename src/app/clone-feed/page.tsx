@@ -141,7 +141,7 @@ export default function CloneFeed() {
         ))}
       </div>
 
-      <div className="px-4 py-4 pb-24 relative z-10">
+      <div className="px-4 py-4 pb-24 md:pb-8 relative z-10">
 
         {/* ===== FEED TAB ===== */}
         {tab === 'feed' && (
@@ -151,7 +151,7 @@ export default function CloneFeed() {
               {/* Your Story */}
               <button onClick={() => setTab('story')} className="flex flex-col items-center gap-1 min-w-[60px]">
                 <div className="w-14 h-14 rounded-2xl border-2 border-dashed border-violet-500/40 flex items-center justify-center text-xl bg-white/[0.03]">+</div>
-                <span className="text-[10px] text-white/40">Your Story</span>
+                <span className="text-[10px] text-white/40">{t('Your Story')}</span>
               </button>
               {stories.map((s, i) => (
                 <button key={s.id} onClick={() => { setCurrentStoryIdx(i); setShowStoryViewer(true) }} className="flex flex-col items-center gap-1 min-w-[60px]">
@@ -206,10 +206,10 @@ export default function CloneFeed() {
                   {/* Action Buttons */}
                   <div className="px-4 py-2 flex items-center gap-1 border-t border-white/[0.04]">
                     <button onClick={() => toggleLike(post.id)} className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs tap-feedback transition-all ${post.liked ? 'text-pink-400' : 'text-white/40'}`}>
-                      {post.liked ? '❤️' : '🤍'} {post.liked ? 'Liked' : 'Like'}
+                      {post.liked ? '❤️' : '🤍'} {post.liked ? t('Liked') : t('Like')}}
                     </button>
-                    <button onClick={() => setCommentPost(commentPost === post.id ? null : post.id)} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs text-white/40 tap-feedback">💬 Comment</button>
-                    <button onClick={() => sharePost(post.id)} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs text-white/40 tap-feedback">↗️ Share</button>
+                    <button onClick={() => setCommentPost(commentPost === post.id ? null : post.id)} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs text-white/40 tap-feedback">💬 {t('Comment')}</button>
+                    <button onClick={() => sharePost(post.id)} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs text-white/40 tap-feedback">↗️ {t('Share')}</button>
                   </div>
 
                   {/* Comments */}
@@ -230,7 +230,7 @@ export default function CloneFeed() {
                   {/* Comment Input */}
                   {commentPost === post.id && (
                     <div className="px-4 py-2 flex gap-2 border-t border-white/[0.04]">
-                      <input value={commentText} onChange={e => setCommentText(e.target.value)} onKeyDown={e => e.key === 'Enter' && addComment(post.id)} placeholder="Write a comment..." className="flex-1 p-2 rounded-lg bg-white/[0.03] border border-white/[0.06] text-white text-xs focus:outline-none focus:border-violet-500/40" />
+                      <input value={commentText} onChange={e => setCommentText(e.target.value)} onKeyDown={e => e.key === 'Enter' && addComment(post.id)} placeholder={t('Write a comment...')} className="flex-1 p-2 rounded-lg bg-white/[0.03] border border-white/[0.06] text-white text-xs focus:outline-none focus:border-violet-500/40" />
                       <button onClick={() => addComment(post.id)} className="px-3 py-2 rounded-lg bg-violet-500/20 text-violet-400 text-xs tap-feedback">➤</button>
                     </div>
                   )}
@@ -263,20 +263,20 @@ export default function CloneFeed() {
               <h2 className="text-xl font-bold">{profile.name}</h2>
               <p className="text-white/40 text-sm">{profile.bio}</p>
               <div className="flex items-center justify-center gap-2 mt-2">
-                <span className="text-xs px-2 py-0.5 rounded-full bg-violet-500/10 text-violet-400">Soul Score: {profile.soulScore}</span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-violet-500/10 text-violet-400">{t('Soul Score')}: {profile.soulScore}</span>
                 <span className="text-xs text-white/30">{profile.mood}</span>
               </div>
             </div>
 
             <div className="grid grid-cols-3 gap-3 mb-6">
               {[
-                { label: 'Posts', value: profile.posts, color: 'text-violet-400' },
-                { label: 'Followers', value: profile.followers.toLocaleString(), color: 'text-pink-400' },
-                { label: 'Following', value: profile.following, color: 'text-blue-400' },
+                { label: t('Posts'), value: profile.posts, color: 'text-violet-400' },
+                { label: t('Followers'), value: profile.followers.toLocaleString(), color: 'text-pink-400' },
+                { label: t('Following'), value: profile.following, color: 'text-blue-400' },
               ].map(s => (
                 <div key={s.label} className="rounded-xl border border-white/[0.06] p-3 text-center backdrop-blur-xl" style={{ background: 'rgba(255,255,255,0.02)' }}>
                   <div className={`text-lg font-bold ${s.color}`}>{s.value}</div>
-                  <div className="text-white/30 text-[10px]">{s.label}</div>
+                  <div className="text-white/30 text-[10px]">{t(s.label)}</div>
                 </div>
               ))}
             </div>
@@ -309,11 +309,11 @@ export default function CloneFeed() {
             <div className="grid grid-cols-2 gap-3 mb-4">
               <div className="rounded-xl border border-white/[0.06] p-3 text-center" style={{ background: 'rgba(255,255,255,0.02)' }}>
                 <div className="text-lg font-bold text-pink-400">{followers.filter(f => f.following).length}</div>
-                <div className="text-white/30 text-[10px]">Following</div>
+                <div className="text-white/30 text-[10px]">{t('Following')}</div>
               </div>
               <div className="rounded-xl border border-white/[0.06] p-3 text-center" style={{ background: 'rgba(255,255,255,0.02)' }}>
                 <div className="text-lg font-bold text-violet-400">{followers.length}</div>
-                <div className="text-white/30 text-[10px]">Followers</div>
+                <div className="text-white/30 text-[10px]">{t('Followers')}</div>
               </div>
             </div>
 
@@ -323,7 +323,7 @@ export default function CloneFeed() {
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg" style={{ background: 'rgba(139,92,246,0.1)' }}>{f.avatar}</div>
                   <span className="flex-1 text-sm font-medium">{f.name}</span>
                   <button onClick={() => toggleFollow(f.name)} className={`px-3 py-1.5 rounded-lg text-xs font-medium tap-feedback ${f.following ? 'bg-violet-500/20 border border-violet-500/30 text-violet-400' : 'bg-white/[0.03] border border-white/[0.06] text-white/40'}`}>
-                    {f.following ? 'Following' : 'Follow'}
+                    {f.following ? t('Following') : t('Follow')}
                   </button>
                 </div>
               ))}
@@ -336,7 +336,7 @@ export default function CloneFeed() {
           <>
             <div className="flex items-center gap-3 mb-4">
               <button onClick={() => setTab('feed')} className="text-white/40 tap-feedback">←</button>
-              <h2 className="font-semibold text-sm">Create Post</h2>
+              <h2 className="font-semibold text-sm">{t('Create Post')}</h2>
             </div>
 
             <div className="flex items-center gap-3 mb-4">
@@ -347,7 +347,7 @@ export default function CloneFeed() {
               </div>
             </div>
 
-            <textarea value={newPost} onChange={e => setNewPost(e.target.value)} placeholder="What's on your mind?" className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm resize-none h-32 focus:outline-none focus:border-violet-500/40 mb-4" />
+            <textarea value={newPost} onChange={e => setNewPost(e.target.value)} placeholder={t("What's on your mind?")} className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm resize-none h-32 focus:outline-none focus:border-violet-500/40 mb-4" />
 
             <div className="flex gap-2 mb-4">
               {[
@@ -369,7 +369,7 @@ export default function CloneFeed() {
             <div className="flex items-center gap-3 mb-4 p-3 rounded-xl bg-amber-500/5 border border-amber-500/10">
               <span className="text-sm">🕊️</span>
               <div className="flex-1">
-                <span className="text-xs font-medium text-amber-400">Memorial Post</span>
+                <span className="text-xs font-medium text-amber-400">{t('Memorial Post')}</span>
                 <p className="text-white/20 text-[10px]">Post as your clone (will continue after you)</p>
               </div>
               <button onClick={() => setIsMemorial(!isMemorial)} className={`w-12 h-6 rounded-full transition-all tap-feedback ${isMemorial ? 'bg-amber-500' : 'bg-white/[0.1]'}`}>
@@ -378,7 +378,7 @@ export default function CloneFeed() {
             </div>
 
             <button onClick={createPost} className="w-full py-3 rounded-xl bg-gradient-to-r from-violet-500 to-pink-500 text-white font-semibold text-sm tap-feedback" style={{ boxShadow: '0 0 20px rgba(139,92,246,0.3)' }}>
-              {isMemorial ? '🕊️ Post as Memorial' : '📤 Post'}
+              {isMemorial ? '🕊️ ' + t('Post as Memorial') : '📤 ' + t('Post')}
             </button>
           </>
         )}
@@ -388,12 +388,12 @@ export default function CloneFeed() {
           <>
             <div className="flex items-center gap-3 mb-4">
               <button onClick={() => setTab('feed')} className="text-white/40 tap-feedback">←</button>
-              <h2 className="font-semibold text-sm">Create Story</h2>
+              <h2 className="font-semibold text-sm">{t('Create Story')}</h2>
             </div>
 
             <div className="rounded-2xl border border-white/[0.06] p-6 text-center mb-4" style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.05), rgba(236,72,153,0.05))' }}>
               <div className="w-20 h-20 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-4" style={{ background: 'rgba(139,92,246,0.1)' }}>{profile.avatar}</div>
-              <textarea value={newStory} onChange={e => setNewStory(e.target.value)} placeholder="Share a moment..." className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm resize-none h-20 focus:outline-none focus:border-violet-500/40 text-center mb-4" />
+              <textarea value={newStory} onChange={e => setNewStory(e.target.value)} placeholder={t('Share a moment...')} className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm resize-none h-20 focus:outline-none focus:border-violet-500/40 text-center mb-4" />
               <div className="flex gap-2 justify-center mb-4">
                 {['📸 Photo', '🎥 Video', '🎨 Draw'].map(a => (
                   <button key={a} className="px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.06] text-white/40 text-xs tap-feedback">{a}</button>
@@ -402,7 +402,7 @@ export default function CloneFeed() {
             </div>
 
             <button onClick={createStory} className="w-full py-3 rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold text-sm tap-feedback" style={{ boxShadow: '0 0 20px rgba(236,72,153,0.3)' }}>
-              📸 Share Story
+              📸 {t('Share Story')}
             </button>
           </>
         )}

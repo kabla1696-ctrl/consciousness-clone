@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useRef, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Message {
   id: string
@@ -18,6 +19,7 @@ const TIME_OPTIONS = [
 ]
 
 export default function FutureSelf() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
@@ -64,7 +66,9 @@ ${t('predictions')}`,
       setMessages([{
         id: 'welcome',
         role: 'future',
-        content: `Hey there, past me. 👋\n\nI'm you, ${yearsAhead} years from now. I've lived through everything you're going through — the uncertainty, the dreams, the late nights wondering if it'll all work out.\n\nSpoiler: it does. But the path isn't what you'd expect.\n\nAsk me anything. About career, relationships, health, regrets, wins — I've been through it all. I'll give you the honest truth, the way only you can.`,
+        content: `Hey there, past me. 👋\n\nI'm you, ${yearsAhead} years from now. I've lived through everything you're going through — the uncertainty, the dreams, the late nights wondering if it'll all work out.\n\nSpoiler: it does. But the path isn't what you'd expect.\n\nAsk me anything. About career, relationships, health, regrets, wins — I've been through it all. I'll give you the honest truth, the way only you can.
+
+${t('predictions')}`,
         created_at: new Date().toISOString(),
       }])
     }
@@ -184,7 +188,7 @@ You're not an AI assistant. You're THEM, looking back with love and wisdom.`
           </Link>
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-sm shadow-lg shadow-violet-500/20">🔮</div>
           <div className="flex-1">
-            <h1 className="text-sm font-bold">Future You</h1>
+            <h1 className="text-sm font-bold">{t('future self')}</h1>
             <p className="text-[10px] text-violet-400 flex items-center gap-1">
               <span className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-pulse" />
               {yearsAhead} years ahead
@@ -246,7 +250,7 @@ You're not an AI assistant. You're THEM, looking back with love and wisdom.`
               <div className="flex justify-start animate-[fadeInUp_0.3s_ease-out]">
                 <div className="flex items-center gap-2 mb-2">
                   <div className="w-8 h-8 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-full flex items-center justify-center text-sm shadow-lg shadow-violet-500/20">🔮</div>
-                  <span className="text-white/30 text-sm">Future You is reminiscing...</span>
+                  <span className="text-white/30 text-sm">{t('talk to future you')}...</span>
                 </div>
               </div>
               <div className="flex justify-start">
@@ -299,7 +303,7 @@ You're not an AI assistant. You're THEM, looking back with love and wisdom.`
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
             className="flex-1 px-5 py-3.5 bg-white/[0.03] border border-white/[0.06] rounded-full focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.1)] transition-all duration-300 text-white placeholder:text-white/20"
-            placeholder="Ask your future self..."
+            placeholder="{t('talk to future you')}"
           />
           <button
             onClick={sendMessage}

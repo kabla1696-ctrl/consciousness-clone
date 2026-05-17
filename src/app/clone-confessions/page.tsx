@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { useT } from '../../lib/language-context'
 
 interface Confession { id: string; text: string; category: string; reactions: Record<string, number>; aiResponse: string; createdAt: string }
 
@@ -22,6 +23,7 @@ const SAMPLE_CONFESSIONS: Confession[] = [
 ]
 
 export default function CloneConfessions() {
+  const t = useT();
   const [confessions, setConfessions] = useState<Confession[]>(SAMPLE_CONFESSIONS)
   const [showWrite, setShowWrite] = useState(false)
   const [newText, setNewText] = useState('')
@@ -81,7 +83,7 @@ export default function CloneConfessions() {
         <div className="px-4 py-3 flex items-center gap-3">
           <Link href="/dashboard" className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/[0.05] border border-white/[0.06] tap-feedback">←</Link>
           <span className="text-xl">🤫</span>
-          <span className="font-bold text-base bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400">Confessions</span>
+          <span className="font-bold text-base bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400">{t('confessions')}</span>
         </div>
       </header>
 
@@ -127,7 +129,7 @@ export default function CloneConfessions() {
 
         {/* Write Button */}
         <button onClick={() => setShowWrite(!showWrite)} className="w-full py-3 rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-semibold text-sm tap-feedback" style={{ boxShadow: '0 0 20px rgba(139,92,246,0.3)' }}>
-          🤫 Confess Anonymously
+          🤫 {t('anonymous')}
         </button>
 
         {/* Write Form */}
@@ -135,7 +137,7 @@ export default function CloneConfessions() {
           <div className="fixed inset-0 z-50 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.7)' }}>
             <div className="w-full max-w-lg rounded-t-2xl border-t border-white/[0.06] p-4" style={{ background: 'linear-gradient(135deg, #0a0a1e, #050510)' }}>
               <div className="flex justify-between items-center mb-4">
-                <h3 className="font-semibold text-sm">Anonymous Confession</h3>
+                <h3 className="font-semibold text-sm">{t('post confession')}</h3>
                 <button onClick={() => setShowWrite(false)} className="text-white/40 tap-feedback">✕</button>
               </div>
               <textarea value={newText} onChange={e => setNewText(e.target.value)} placeholder="What's on your mind? No one will know it's you..." className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm resize-none h-28 focus:outline-none focus:border-violet-500/40 mb-3" />
@@ -145,7 +147,7 @@ export default function CloneConfessions() {
                 ))}
               </div>
               <button onClick={submitConfession} disabled={generating || !newText.trim()} className="w-full py-3 rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-semibold text-sm tap-feedback disabled:opacity-30" style={{ boxShadow: '0 0 20px rgba(139,92,246,0.3)' }}>
-                {generating ? '✨ Writing...' : '🤫 Submit'}
+                {generating ? '✨ Writing...' : `🤫 ${t('post confession')}`}
               </button>
             </div>
           </div>

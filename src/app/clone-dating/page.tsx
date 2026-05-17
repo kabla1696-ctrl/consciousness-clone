@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 const PERSONALITY_TYPES = [
   { type: 'The Dreamer', emoji: '🌙', traits: ['Imaginative', 'Sensitive', 'Romantic'], color: '#8b5cf6' },
@@ -47,6 +48,7 @@ const getShared = (a: string, b: string): string[] => {
 };
 
 export default function CloneDatingPage() {
+  const t = useT();
   const [myClone, setMyClone] = useState<string | null>(null);
   const [partner, setPartner] = useState<string | null>(null);
   const [phase, setPhase] = useState<'pick-mine' | 'pick-partner' | 'matching' | 'date'>('pick-mine');
@@ -130,7 +132,7 @@ export default function CloneDatingPage() {
       <header style={{ position: 'sticky', top: 0, zIndex: 40, backdropFilter: 'blur(20px)', background: 'rgba(5,5,16,.8)', borderBottom: '1px solid rgba(255,255,255,.06)', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 14 }}>
         <Link href="/dashboard" style={{ color: '#a78bfa', fontSize: 22, textDecoration: 'none' }}>←</Link>
         <div>
-          <h1 style={{ fontSize: 20, fontWeight: 700, margin: 0, background: 'linear-gradient(135deg,#ec4899,#f43f5e)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Clone Dating</h1>
+          <h1 style={{ fontSize: 20, fontWeight: 700, margin: 0, background: 'linear-gradient(135deg,#ec4899,#f43f5e)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{t('clone dating')}</h1>
           <p style={{ fontSize: 12, color: '#888', margin: 0 }}>Where digital souls find connection</p>
         </div>
         <div style={{ marginLeft: 'auto', fontSize: 13, color: '#ec4899' }}>💕 {matches} matches</div>
@@ -151,14 +153,14 @@ export default function CloneDatingPage() {
                 </div>
               ))}
             </div>
-            <button className="action-btn" disabled={!myClone} onClick={() => setPhase('pick-partner')} style={{ width: '100%' }}>Find My Match →</button>
+            <button className="action-btn" disabled={!myClone} onClick={() => setPhase('pick-partner')} style={{ width: '100%' }}>{t('find match')} →</button>
           </section>
         )}
 
         {/* Pick Partner */}
         {phase === 'pick-partner' && partnerData && (
           <section style={{ animation: 'fadeIn .4s ease-out' }}>
-            <h2 style={{ fontSize: 16, fontWeight: 600, color: '#ec4899', marginBottom: 4 }}>Swipe to Find a Date</h2>
+            <h2 style={{ fontSize: 16, fontWeight: 600, color: '#ec4899', marginBottom: 4 }}>{t('swipe')}</h2>
             <p style={{ fontSize: 13, color: '#888', marginBottom: 20 }}>Your clone: {myData?.emoji} {myData?.type}</p>
 
             <div className="swipe-card" style={{ transform: `translateX(${swipeX}px)`, opacity: Math.abs(swipeX) > 300 ? 0 : 1 }}>
@@ -178,8 +180,8 @@ export default function CloneDatingPage() {
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'center', gap: 20, marginTop: 20, marginBottom: 20 }}>
-              <button onClick={() => handleSwipe('left')} style={{ width: 56, height: 56, borderRadius: '50%', border: '2px solid rgba(239,68,68,.3)', background: 'rgba(239,68,68,.08)', fontSize: 24, cursor: 'pointer', color: '#ef4444', transition: 'all .2s' }}>✕</button>
-              <button onClick={startMatch} style={{ width: 56, height: 56, borderRadius: '50%', border: '2px solid rgba(34,197,94,.3)', background: 'rgba(34,197,94,.08)', fontSize: 24, cursor: 'pointer', color: '#22c55e', transition: 'all .2s' }}>♥</button>
+              <button onClick={() => handleSwipe('left')} style={{ width: 56, height: 56, borderRadius: '50%', border: '2px solid rgba(239,68,68,.3)', background: 'rgba(239,68,68,.08)', fontSize: 24, cursor: 'pointer', color: '#ef4444', transition: 'all .2s' }}>{t('pass')}</button>
+              <button onClick={startMatch} style={{ width: 56, height: 56, borderRadius: '50%', border: '2px solid rgba(34,197,94,.3)', background: 'rgba(34,197,94,.08)', fontSize: 24, cursor: 'pointer', color: '#22c55e', transition: 'all .2s' }}>{t('like')}</button>
             </div>
 
             <button onClick={reset} style={{ width: '100%', padding: 12, borderRadius: 12, border: '1px solid rgba(255,255,255,.08)', background: 'transparent', color: '#888', cursor: 'pointer', fontSize: 13 }}>Start Over</button>
@@ -215,12 +217,12 @@ export default function CloneDatingPage() {
               <h3 style={{ fontSize: 18, fontWeight: 700, margin: '0 0 4px' }}>
                 <span style={{ color: myData.color }}>{myData.type}</span> <span style={{ color: '#666' }}>×</span> <span style={{ color: partnerData.color }}>{partnerData.type}</span>
               </h3>
-              <div style={{ fontSize: 32, fontWeight: 800, background: 'linear-gradient(135deg,#ec4899,#f43f5e)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', marginTop: 4 }}>{compat}% Match</div>
+              <div style={{ fontSize: 32, fontWeight: 800, background: 'linear-gradient(135deg,#ec4899,#f43f5e)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', marginTop: 4 }}>{compat}% {t('match')}</div>
             </div>
 
             {/* Shared Interests */}
             <div style={{ marginBottom: 20 }}>
-              <h4 style={{ fontSize: 13, fontWeight: 600, color: '#ec4899', marginBottom: 8 }}>Shared Interests</h4>
+              <h4 style={{ fontSize: 13, fontWeight: 600, color: '#ec4899', marginBottom: 8 }}>{t('interests')}</h4>
               <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                 {shared.map(s => (
                   <span key={s} style={{ padding: '6px 14px', borderRadius: 12, background: 'rgba(236,72,153,.1)', border: '1px solid rgba(236,72,153,.15)', fontSize: 12, color: '#f0abfc' }}>{s}</span>

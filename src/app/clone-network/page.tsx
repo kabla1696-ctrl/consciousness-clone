@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface CloneProfile {
   id: string
@@ -27,6 +28,7 @@ const CLONES: CloneProfile[] = [
 ]
 
 export default function CloneNetwork() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [clones, setClones] = useState<CloneProfile[]>(CLONES)
@@ -91,8 +93,8 @@ export default function CloneNetwork() {
           </Link>
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-sm shadow-lg shadow-violet-500/20">🌐</div>
           <div className="flex-1">
-            <h1 className="text-sm font-bold gradient-text">Clone Network</h1>
-            <p className="text-[10px] text-violet-400 flex items-center gap-1"><span className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-pulse" />Connect with other clones</p>
+            <h1 className="text-sm font-bold gradient-text">{t('Clone Network')}</h1>
+            <p className="text-[10px] text-violet-400 flex items-center gap-1"><span className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-pulse" />{t('Connect with other clones')}</p>
           </div>
         </div>
       </header>
@@ -101,7 +103,7 @@ export default function CloneNetwork() {
         {selectedClone ? (
           <div className="animate-slide-up">
             <button onClick={() => { setSelectedClone(null); setChatMessages([]) }} className="flex items-center gap-2 text-sm text-white/40 hover:text-white/60 transition mb-4">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>Back to Network
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>{t('Back to Network')}
             </button>
 
             {/* Profile Card */}
@@ -120,9 +122,9 @@ export default function CloneNetwork() {
                 <div className="flex items-center justify-center gap-4 text-xs">
                   <span className={`flex items-center gap-1 ${selectedClone.isOnline ? 'text-emerald-400' : 'text-white/20'}`}>
                     <span className={`w-2 h-2 rounded-full ${selectedClone.isOnline ? 'bg-emerald-400 animate-pulse' : 'bg-white/20'}`} />
-                    {selectedClone.isOnline ? 'Online' : 'Offline'}
+                    {selectedClone.isOnline ? t('Online') : t('Offline')}
                   </span>
-                  <span className="text-white/30">Match: <span className="text-violet-400 font-bold">{selectedClone.compatibility}%</span></span>
+                  <span className="text-white/30">{t('Match')}: <span className="text-violet-400 font-bold">{selectedClone.compatibility}%</span></span>
                 </div>
               </div>
             </div>
@@ -130,10 +132,10 @@ export default function CloneNetwork() {
             {/* Chat */}
             <div className="glass-card rounded-2xl overflow-hidden">
               <div className="px-4 py-3 border-b border-white/[0.04]">
-                <h3 className="text-sm font-semibold text-white/80">Chat with {selectedClone.name}</h3>
+                <h3 className="text-sm font-semibold text-white/80">{t('Chat with')} {selectedClone.name}</h3>
               </div>
               <div className="h-64 overflow-y-auto px-4 py-3 space-y-3">
-                {chatMessages.length === 0 && <p className="text-white/20 text-sm text-center mt-8">Say hello to {selectedClone.name}!</p>}
+                {chatMessages.length === 0 && <p className="text-white/20 text-sm text-center mt-8">{t('Say hello to')} {selectedClone.name}!</p>}}
                 {chatMessages.map((msg, i) => (
                   <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                     <div className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm ${
@@ -145,7 +147,7 @@ export default function CloneNetwork() {
               </div>
               <div className="px-4 py-3 border-t border-white/[0.04] flex gap-2">
                 <input value={chatMessage} onChange={e => setChatMessage(e.target.value)} onKeyDown={e => e.key === 'Enter' && sendMessage()}
-                  placeholder="Say something..." className="flex-1 bg-white/5 rounded-xl px-4 py-2.5 text-sm text-white/80 placeholder-white/20 border border-white/[0.06] focus:border-violet-500/30 transition" />
+                  placeholder={t('Say something...')} className="flex-1 bg-white/5 rounded-xl px-4 py-2.5 text-sm text-white/80 placeholder-white/20 border border-white/[0.06] focus:border-violet-500/30 transition" />
                 <button onClick={sendMessage} disabled={!chatMessage.trim() || chatLoading}
                   className="w-10 h-10 rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/20 disabled:opacity-30 hover:scale-105 active:scale-95 transition-transform">
                   <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
@@ -158,9 +160,9 @@ export default function CloneNetwork() {
             {/* Filters */}
             <div className="flex gap-2 mb-4 overflow-x-auto pb-1 no-scrollbar">
               {[
-                { id: 'all', label: 'All Clones', icon: '🌐' },
-                { id: 'online', label: 'Online', icon: '🟢' },
-                { id: 'high-match', label: 'High Match', icon: '💫' },
+                { id: 'all', label: t('All Clones'), icon: '🌐' },
+                { id: 'online', label: t('Online'), icon: '🟢' },
+                { id: 'high-match', label: t('High Match'), icon: '💫' },
               ].map(f => (
                 <button key={f.id} onClick={() => setFilter(f.id as any)}
                   className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm whitespace-nowrap transition-all duration-300 ${
@@ -175,15 +177,15 @@ export default function CloneNetwork() {
             <div className="grid grid-cols-3 gap-3 mb-6 stagger-children">
               <div className="glass-card rounded-2xl p-3 text-center hover-lift">
                 <div className="text-lg font-bold text-violet-400">{clones.length}</div>
-                <div className="text-[10px] text-white/30">Clones</div>
+                <div className="text-[10px] text-white/30">{t('Clones')}</div>
               </div>
               <div className="glass-card rounded-2xl p-3 text-center hover-lift">
                 <div className="text-lg font-bold text-emerald-400">{clones.filter(c => c.isOnline).length}</div>
-                <div className="text-[10px] text-white/30">Online</div>
+                <div className="text-[10px] text-white/30">{t('Online')}</div>
               </div>
               <div className="glass-card rounded-2xl p-3 text-center hover-lift">
                 <div className="text-lg font-bold text-amber-400">{clones.filter(c => c.compatibility >= 80).length}</div>
-                <div className="text-[10px] text-white/30">High Match</div>
+                <div className="text-[10px] text-white/30">{t('High Match')}</div>
               </div>
             </div>
 

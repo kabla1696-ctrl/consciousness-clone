@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Memory {
   id: string;
@@ -35,6 +36,7 @@ const DEFAULT_MEMORIES: Memory[] = [
 ];
 
 export default function MemoryReelsPage() {
+  const t = useT();
   const [memories, setMemories] = useState<Memory[]>(DEFAULT_MEMORIES);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
@@ -89,8 +91,8 @@ export default function MemoryReelsPage() {
       <header style={{ position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(20px)', background: 'rgba(5,5,16,0.8)', borderBottom: '1px solid rgba(139,92,246,0.2)', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: '16px' }}>
         <Link href="/dashboard" style={{ color: '#a78bfa', fontSize: '24px', textDecoration: 'none' }}>←</Link>
         <div>
-          <h1 style={{ fontSize: '20px', fontWeight: 700, margin: 0, background: 'linear-gradient(135deg, #4facfe, #00f2fe)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Memory Reels</h1>
-          <p style={{ fontSize: '12px', color: '#6b7280', margin: 0 }}>Swipe through your memories</p>
+          <h1 style={{ fontSize: '20px', fontWeight: 700, margin: 0, background: 'linear-gradient(135deg, #4facfe, #00f2fe)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{t('memory reels')}</h1>
+          <p style={{ fontSize: '12px', color: '#6b7280', margin: 0 }}>{t('watch')}</p>
         </div>
       </header>
 

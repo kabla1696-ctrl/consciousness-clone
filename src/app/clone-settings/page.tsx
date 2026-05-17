@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface CloneSettings {
   humor: number
@@ -21,27 +22,10 @@ const DEFAULT_SETTINGS: CloneSettings = {
 }
 
 const AVATARS = ['🧠', '🤖', '👾', '🎭', '🔮', '✨', '🌀', '💡', '🦊', '🐉', '👻', '🦄']
-const LANGUAGES = [
-  { value: 'banglish', label: 'Banglish', desc: 'Bangla + English mix' },
-  { value: 'english', label: 'English', desc: 'Pure English' },
-  { value: 'mixed', label: 'Mixed', desc: 'Natural blend' },
-]
-const STYLES = [
-  { value: 'short', label: 'Short', desc: 'Concise replies', icon: '⚡' },
-  { value: 'medium', label: 'Medium', desc: 'Balanced', icon: '💬' },
-  { value: 'long', label: 'Long', desc: 'Detailed', icon: '📝' },
-]
-const SLIDERS = [
-  { key: 'humor' as const, label: 'Humor', icon: '😂', low: 'Serious', high: 'Funny' },
-  { key: 'empathy' as const, label: 'Empathy', icon: '❤️', low: 'Logical', high: 'Caring' },
-  { key: 'formality' as const, label: 'Formality', icon: '👔', low: 'Casual', high: 'Formal' },
-  { key: 'creativity' as const, label: 'Creativity', icon: '🎨', low: 'Practical', high: 'Creative' },
-  { key: 'directness' as const, label: 'Directness', icon: '🎯', low: 'Diplomatic', high: 'Direct' },
-]
-
 interface ChatMessage { role: 'user' | 'clone'; content: string }
 
 export default function CloneSettings() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [settings, setSettings] = useState<CloneSettings>(DEFAULT_SETTINGS)
   const [saved, setSaved] = useState(false)
@@ -49,6 +33,24 @@ export default function CloneSettings() {
   const [chatInput, setChatInput] = useState('')
   const [chatLoading, setChatLoading] = useState(false)
   const chatEndRef = useRef<HTMLDivElement>(null)
+
+  const LANGUAGES = [
+    { value: 'banglish', label: t('Banglish'), desc: t('Bangla + English mix') },
+    { value: 'english', label: t('English'), desc: t('Pure English') },
+    { value: 'mixed', label: t('Mixed'), desc: t('Natural blend') },
+  ]
+  const STYLES = [
+    { value: 'short', label: t('Short'), desc: t('Concise replies'), icon: '⚡' },
+    { value: 'medium', label: t('Medium'), desc: t('Balanced'), icon: '💬' },
+    { value: 'long', label: t('Long'), desc: t('Detailed'), icon: '📝' },
+  ]
+  const SLIDERS = [
+    { key: 'humor' as const, label: t('Humor'), icon: '😂', low: t('Serious'), high: t('Funny') },
+    { key: 'empathy' as const, label: t('Empathy'), icon: '❤️', low: t('Logical'), high: t('Caring') },
+    { key: 'formality' as const, label: t('Formality'), icon: '👔', low: t('Casual'), high: t('Formal') },
+    { key: 'creativity' as const, label: t('Creativity'), icon: '🎨', low: t('Practical'), high: t('Creative') },
+    { key: 'directness' as const, label: t('Directness'), icon: '🎯', low: t('Diplomatic'), high: t('Direct') },
+  ]
 
   useEffect(() => {
     const init = async () => {
@@ -121,8 +123,8 @@ export default function CloneSettings() {
           </Link>
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-base shadow-lg shadow-violet-500/20">⚙️</div>
           <div className="flex-1">
-            <h1 className="text-sm font-bold bg-gradient-to-r from-violet-300 to-fuchsia-300 bg-clip-text text-transparent">Clone Settings</h1>
-            <p className="text-[10px] text-white/30">Customize your clone&apos;s personality</p>
+            <h1 className="text-sm font-bold bg-gradient-to-r from-violet-300 to-fuchsia-300 bg-clip-text text-transparent">{t('Clone Settings')}</h1>
+            <p className="text-[10px] text-white/30">{t('Customize your clone\'s personality')}</p>
           </div>
         </div>
       </header>
@@ -130,7 +132,7 @@ export default function CloneSettings() {
       <div className="px-4 py-6 pb-24 max-w-lg mx-auto relative z-10">
         {/* Avatar Selection */}
         <div className="rounded-2xl bg-white/[0.02] backdrop-blur-xl border border-white/[0.06] p-5 mb-6 shadow-xl shadow-black/10 hover:border-violet-500/15 transition-all duration-500">
-          <h3 className="text-sm font-bold mb-4 tracking-wide">🎭 Clone Avatar</h3>
+          <h3 className="text-sm font-bold mb-4 tracking-wide">🎭 {t('Clone Avatar')}</h3>
           <div className="grid grid-cols-6 gap-2.5">
             {AVATARS.map(avatar => (
               <button key={avatar} onClick={() => updateSetting('avatar', avatar)}
@@ -147,7 +149,7 @@ export default function CloneSettings() {
 
         {/* Personality Sliders */}
         <div className="rounded-2xl bg-white/[0.02] backdrop-blur-xl border border-white/[0.06] p-5 mb-6 shadow-xl shadow-black/10">
-          <h3 className="text-sm font-bold mb-5 tracking-wide">🧬 Personality Traits</h3>
+          <h3 className="text-sm font-bold mb-5 tracking-wide">🧬 {t('Personality Traits')}</h3>
           <div className="space-y-6">
             {SLIDERS.map(slider => (
               <div key={slider.key}>
@@ -180,7 +182,7 @@ export default function CloneSettings() {
 
         {/* Language Preference */}
         <div className="rounded-2xl bg-white/[0.02] backdrop-blur-xl border border-white/[0.06] p-5 mb-6 shadow-xl shadow-black/10">
-          <h3 className="text-sm font-bold mb-4 tracking-wide">🌐 Language Preference</h3>
+          <h3 className="text-sm font-bold mb-4 tracking-wide">🌐 {t('Language Preference')}</h3>
           <div className="space-y-2.5">
             {LANGUAGES.map(lang => (
               <button key={lang.value} onClick={() => updateSetting('language', lang.value)}
@@ -205,7 +207,7 @@ export default function CloneSettings() {
 
         {/* Response Style */}
         <div className="rounded-2xl bg-white/[0.02] backdrop-blur-xl border border-white/[0.06] p-5 mb-6 shadow-xl shadow-black/10">
-          <h3 className="text-sm font-bold mb-4 tracking-wide">💬 Response Style</h3>
+          <h3 className="text-sm font-bold mb-4 tracking-wide">💬 {t('Response Style')}</h3>
           <div className="grid grid-cols-3 gap-2.5">
             {STYLES.map(style => (
               <button key={style.value} onClick={() => updateSetting('responseStyle', style.value)}
@@ -229,7 +231,7 @@ export default function CloneSettings() {
               ? 'bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 shadow-lg shadow-emerald-500/10'
               : 'bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 shadow-xl shadow-violet-500/20 hover:shadow-2xl hover:shadow-violet-500/30 hover:scale-[1.01] active:scale-[0.99]'
           }`}>
-          {saved ? '✓ Settings Saved!' : '💾 Save Settings'}
+          {saved ? '✓ ' + t('Settings Saved!') : '💾 ' + t('Save Settings')}
         </button>
 
         {/* Preview Chat */}
@@ -239,8 +241,8 @@ export default function CloneSettings() {
               {settings.avatar}
             </div>
             <div>
-              <h3 className="text-sm font-bold">Talk to Your Clone</h3>
-              <p className="text-[10px] text-white/25">Preview your customized clone</p>
+              <h3 className="text-sm font-bold">{t('Talk to Your Clone')}</h3>
+              <p className="text-[10px] text-white/25">{t('Preview your customized clone')}</p>
             </div>
           </div>
 
@@ -248,7 +250,7 @@ export default function CloneSettings() {
             {chatMessages.length === 0 && (
               <div className="text-center py-8">
                 <div className="text-4xl mb-3 animate-bounce">{settings.avatar}</div>
-                <p className="text-white/25 text-sm">Say hello to your clone!</p>
+                <p className="text-white/25 text-sm">{t('Say hello to your clone!')}</p>
               </div>
             )}
             {chatMessages.map((msg, i) => (
@@ -278,11 +280,11 @@ export default function CloneSettings() {
 
           <div className="p-3 border-t border-white/[0.04] flex gap-2">
             <input type="text" value={chatInput} onChange={e => setChatInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && sendChatMessage()}
-              placeholder="Talk to your clone..."
+              placeholder={t('Talk to your clone...')}
               className="flex-1 px-4 py-2.5 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/40 transition-all text-white placeholder:text-white/15 text-sm" />
             <button onClick={sendChatMessage} disabled={chatLoading || !chatInput.trim()}
               className="px-5 py-2.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl text-sm font-semibold tap-feedback disabled:opacity-30 hover:shadow-lg hover:shadow-violet-500/20 transition-all">
-              Send
+              {t('Send')}
             </button>
           </div>
         </div>

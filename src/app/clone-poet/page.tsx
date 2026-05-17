@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Poem {
   id: string;
@@ -48,6 +49,7 @@ const poemTemplates: Record<string, string[]> = {
 };
 
 export default function ClonePoet() {
+  const t = useT();
   const [poems, setPoems] = useState<Poem[]>([]);
   const [selectedStyle, setSelectedStyle] = useState<string>('Haiku');
   const [generating, setGenerating] = useState(false);
@@ -121,17 +123,17 @@ export default function ClonePoet() {
 
       <header style={{ position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'blur(20px)', background: 'rgba(5,5,16,0.8)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 16 }}>
         <Link href="/dashboard" style={{ color: '#f472b6', textDecoration: 'none', fontSize: 20 }}>←</Link>
-        <h1 style={{ fontSize: 20, fontWeight: 700, background: 'linear-gradient(135deg,#f472b6,#a78bfa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', margin: 0 }}>✍️ Clone Poet</h1>
+        <h1 style={{ fontSize: 20, fontWeight: 700, background: 'linear-gradient(135deg,#f472b6,#a78bfa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', margin: 0 }}>✍️ {t('clone poet')}</h1>
       </header>
 
       <main style={{ maxWidth: 800, margin: '0 auto', padding: 20 }}>
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <div style={{ fontSize: 48, marginBottom: 8 }}>🪶</div>
-          <p style={{ color: '#94a3b8', fontSize: 15, fontStyle: 'italic', margin: 0 }}>Let your clone weave words from the threads of memory</p>
+          <p style={{ color: '#94a3b8', fontSize: 15, fontStyle: 'italic', margin: 0 }}>{t('poetry')}</p>
         </div>
 
         <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 20, padding: 24, border: '1px solid rgba(255,255,255,0.06)', marginBottom: 32 }}>
-          <div style={{ fontSize: 13, color: '#94a3b8', marginBottom: 12 }}>Poem Style</div>
+          <div style={{ fontSize: 13, color: '#94a3b8', marginBottom: 12 }}>{t('style')}</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 10, marginBottom: 20 }}>
             {POEM_STYLES.map(style => (
               <button key={style} onClick={() => setSelectedStyle(style)} style={{ padding: '14px 16px', borderRadius: 14, border: selectedStyle === style ? `2px solid ${STYLE_INFO[style].color}` : '1px solid rgba(255,255,255,0.08)', background: selectedStyle === style ? `${STYLE_INFO[style].color}15` : 'rgba(255,255,255,0.03)', color: selectedStyle === style ? STYLE_INFO[style].color : '#94a3b8', cursor: 'pointer', textAlign: 'left', transition: 'all .2s' }}>
@@ -143,7 +145,7 @@ export default function ClonePoet() {
           </div>
 
           <button onClick={generatePoem} disabled={generating} style={{ width: '100%', padding: '14px 0', borderRadius: 14, border: 'none', background: generating ? 'rgba(244,114,182,0.15)' : 'linear-gradient(135deg,#f472b6,#a78bfa)', color: '#fff', cursor: generating ? 'wait' : 'pointer', fontSize: 15, fontWeight: 600, fontFamily: 'system-ui, sans-serif' }}>
-            {generating ? '🪶 Ink is flowing...' : '✨ Generate Poem'}
+            {generating ? '🪶 Ink is flowing...' : `✨ ${t('generate poem')}`}
           </button>
         </div>
 

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 const CLONE_POOL = [
   { id: 1, name: 'Luna', personality: 'Dreamy Poet', color: '#a78bfa', emoji: '🌙', specialty: 'Verse & Lyrics' },
@@ -30,6 +31,7 @@ type Contribution = {
 };
 
 export default function CloneOrchestraPage() {
+  const t = useT();
   const [selected, setSelected] = useState<number[]>([]);
   const [composing, setComposing] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -155,9 +157,9 @@ export default function CloneOrchestraPage() {
         }}>←</Link>
         <div>
           <h1 style={{ fontSize: 16, fontWeight: 700, margin: 0, background: 'linear-gradient(135deg, #f97316, #ec4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            Clone Orchestra
+            {t('clone orchestra')}
           </h1>
-          <p style={{ fontSize: 11, color: '#64748b', margin: 0 }}>Compose with your consciousness</p>
+          <p style={{ fontSize: 11, color: '#64748b', margin: 0 }}>{t('compose')}</p>
         </div>
       </header>
 
@@ -166,7 +168,7 @@ export default function CloneOrchestraPage() {
         <div style={{ marginBottom: 20 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
             <h3 style={{ fontSize: 13, fontWeight: 600, color: '#94a3b8', margin: 0, textTransform: 'uppercase', letterSpacing: 1 }}>
-              Select Clones (3-5)
+              {t('instruments')}
             </h3>
             <span style={{ fontSize: 12, color: selected.length >= 3 ? '#22c55e' : '#f97316' }}>{selected.length}/5</span>
           </div>
@@ -324,7 +326,7 @@ export default function CloneOrchestraPage() {
               color: selected.length >= 3 ? '#fff' : '#475569', fontSize: 15, fontWeight: 700,
               cursor: selected.length >= 3 ? 'pointer' : 'default',
             }}>
-              🎵 {contributions.length > 0 ? 'Compose Again' : 'Start Composing'}
+              🎵 {t('compose')}
             </button>
           ) : (
             <div style={{ fontSize: 13, color: '#a78bfa', animation: 'pulse 1.5s ease-in-out infinite' }}>

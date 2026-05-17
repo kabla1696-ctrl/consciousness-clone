@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Episode {
   id: string
@@ -12,6 +13,7 @@ interface Episode {
 }
 
 export default function ClonePodcast() {
+  const t = useT();
   const [user, setUser] = useState<any>(null)
   const [generating, setGenerating] = useState(false)
   const [currentScript, setCurrentScript] = useState('')
@@ -131,10 +133,10 @@ export default function ClonePodcast() {
           </Link>
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-sm shadow-lg shadow-violet-500/25">🎙️</div>
           <div className="flex-1">
-            <h1 className="text-sm font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Clone Podcast</h1>
+            <h1 className="text-sm font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">{t('clone podcast')}</h1>
             <p className="text-[10px] text-violet-400 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-pulse" />
-              AI-generated episodes
+              {t('episodes')}
             </p>
           </div>
           <button
@@ -153,7 +155,7 @@ export default function ClonePodcast() {
         {showEpisodes && (
           <div className="mb-6 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl overflow-hidden shadow-2xl shadow-violet-500/[0.03] animate-in slide-in-from-top-2 duration-300">
             <div className="px-4 py-3 border-b border-white/[0.06] flex items-center justify-between bg-gradient-to-r from-violet-500/[0.06] to-transparent">
-              <h3 className="text-sm font-semibold text-white/90">Past Episodes</h3>
+              <h3 className="text-sm font-semibold text-white/90">{t('episodes')}</h3>
               <span className="text-xs text-violet-400/70 bg-violet-500/10 px-2 py-0.5 rounded-full">{episodes.length} episodes</span>
             </div>
             <div className="max-h-64 overflow-y-auto">
@@ -220,7 +222,7 @@ export default function ClonePodcast() {
           {/* Player Controls */}
           <div className="px-6 py-4">
             <h3 className="text-white/90 font-semibold text-center mb-3 text-sm">
-              {currentTitle || 'Generate Your First Episode'}
+              {currentTitle || t('generate')}
             </h3>
             <div className="flex items-center gap-4 justify-center mb-3">
               <button className="text-white/30 hover:text-white/60 transition-all duration-200 hover:scale-110">
@@ -261,11 +263,11 @@ export default function ClonePodcast() {
           {generating ? (
             <>
               <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin relative z-10" />
-              <span className="relative z-10">Generating Episode...</span>
+              <span className="relative z-10">{t('generate')}...</span>
             </>
           ) : (
             <>
-              <span className="relative z-10">🎙️</span> <span className="relative z-10">Generate Episode</span>
+              <span className="relative z-10">🎙️</span> <span className="relative z-10">{t('generate')}</span>
             </>
           )}
         </button>

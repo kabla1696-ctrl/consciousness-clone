@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Exhibit {
   id: string;
@@ -72,6 +73,7 @@ const rarityColors: Record<string, string> = { common: '#94a3b8', rare: '#60a5fa
 const rarityBg: Record<string, string> = { common: 'rgba(148,163,184,0.1)', rare: 'rgba(96,165,250,0.1)', legendary: 'rgba(251,191,36,0.15)' };
 
 export default function MemoryMuseum() {
+  const t = useT();
   const [activeRoom, setActiveRoom] = useState<string | null>(null);
   const [visitorCount, setVisitorCount] = useState(0);
   const [tourStep, setTourStep] = useState(0);
@@ -140,7 +142,7 @@ export default function MemoryMuseum() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <Link href="/dashboard" style={{ color: '#fbbf24', textDecoration: 'none', fontSize: 20 }}>←</Link>
           <h1 style={{ fontSize: 18, fontWeight: 700, background: 'linear-gradient(135deg, #fbbf24, #a78bfa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            🏛️ Memory Museum
+            🏛️ {t('memory museum')}
           </h1>
         </div>
         <div style={{ fontSize: 12, color: '#64748b' }}>👥 {visitorCount.toLocaleString()} visitors</div>
@@ -215,7 +217,7 @@ export default function MemoryMuseum() {
         {/* Room Gallery */}
         {!activeRoom ? (
           <div>
-            <h2 style={{ fontSize: 15, fontWeight: 600, marginBottom: 16, color: '#fbbf24' }}>🖼️ Gallery Rooms</h2>
+            <h2 style={{ fontSize: 15, fontWeight: 600, marginBottom: 16, color: '#fbbf24' }}>🖼️ {t('gallery')}</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }}>
               {rooms.map((room) => (
                 <button key={room.id} onClick={() => setActiveRoom(room.id)} style={{
@@ -225,7 +227,7 @@ export default function MemoryMuseum() {
                 }}>
                   <div style={{ fontSize: 36, marginBottom: 8 }}>{room.icon}</div>
                   <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 4, color: '#e2e8f0' }}>{room.name}</div>
-                  <div style={{ fontSize: 11, color: '#64748b' }}>{room.exhibits.length} exhibits</div>
+                  <div style={{ fontSize: 11, color: '#64748b' }}>{room.exhibits.length} {t('exhibits')}</div>
                   <div style={{
                     height: 3, borderRadius: 2, marginTop: 10, background: 'rgba(255,255,255,0.08)',
                   }}>
@@ -255,7 +257,7 @@ export default function MemoryMuseum() {
             }}>
               <div style={{ fontSize: 40, marginBottom: 8 }}>{selectedRoom!.icon}</div>
               <h2 style={{ fontSize: 18, fontWeight: 700, color: selectedRoom!.color }}>{selectedRoom!.name} Room</h2>
-              <p style={{ fontSize: 12, color: '#64748b', marginTop: 4 }}>{selectedRoom!.exhibits.length} exhibits on display</p>
+              <p style={{ fontSize: 12, color: '#64748b', marginTop: 4 }}>{selectedRoom!.exhibits.length} {t('exhibits')}</p>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {selectedRoom!.exhibits.map((exhibit) => (

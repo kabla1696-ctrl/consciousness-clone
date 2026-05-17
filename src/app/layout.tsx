@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import CapacitorInit from '../components/CapacitorInit'
 import Providers from '../components/Providers'
+import AppShell from '../components/AppShell'
 
 export const metadata: Metadata = {
   title: 'Consciousness Clone',
@@ -42,7 +43,9 @@ export default function RootLayout({
       <body className="bg-[#050510] text-white antialiased overscroll-none">
         <Providers>
           <CapacitorInit />
-          {children}
+          <AppShell>
+            {children}
+          </AppShell>
         </Providers>
       </body>
     </html>

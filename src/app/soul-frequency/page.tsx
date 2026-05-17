@@ -223,25 +223,25 @@ export default function SoulFrequencyPage() {
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
             <h3 style={{ fontSize: 13, fontWeight: 600, color: '#94a3b8', margin: 0, textTransform: 'uppercase', letterSpacing: 1 }}>
-              Waveform
+              {t('waveform')}
             </h3>
             <button onClick={() => setActiveTrait(activeTrait === null ? 0 : null)} style={{
               fontSize: 10, background: 'rgba(255,255,255,0.06)', border: 'none', borderRadius: 6,
               padding: '4px 10px', color: '#94a3b8', cursor: 'pointer',
-            }}>{activeTrait === null ? 'Isolate' : 'Show All'}</button>
+            }}>{activeTrait === null ? t('isolate') : t('show all')}</button>
           </div>
           <canvas ref={canvasRef} width={560} height={180} style={{ width: '100%', height: 180, borderRadius: 10 }} />
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 10, justifyContent: 'center' }}>
-            {TRAITS.map((t, i) => (
+            {TRAITS.map((tr, i) => (
               <button key={i} onClick={() => setActiveTrait(activeTrait === i ? null : i)} style={{
                 display: 'flex', alignItems: 'center', gap: 4, fontSize: 10,
-                background: activeTrait === i ? `${t.color}20` : 'rgba(255,255,255,0.03)',
-                border: `1px solid ${activeTrait === i ? t.color + '55' : 'rgba(255,255,255,0.06)'}`,
-                borderRadius: 6, padding: '3px 8px', color: activeTrait === i ? t.color : '#64748b',
+                background: activeTrait === i ? `${tr.color}20` : 'rgba(255,255,255,0.03)',
+                border: `1px solid ${activeTrait === i ? tr.color + '55' : 'rgba(255,255,255,0.06)'}`,
+                borderRadius: 6, padding: '3px 8px', color: activeTrait === i ? tr.color : '#64748b',
                 cursor: 'pointer', transition: 'all 0.3s',
               }}>
-                <span style={{ width: 6, height: 6, borderRadius: '50%', background: t.color }} />
-                {t.name}
+                <span style={{ width: 6, height: 6, borderRadius: '50%', background: tr.color }} />
+                {tr.name}
               </button>
             ))}
           </div>
@@ -253,7 +253,7 @@ export default function SoulFrequencyPage() {
           border: '1px solid rgba(255,255,255,0.06)', marginBottom: 20,
         }}>
           <h3 style={{ fontSize: 13, fontWeight: 600, color: '#94a3b8', margin: '0 0 12px', textTransform: 'uppercase', letterSpacing: 1 }}>
-            Frequency Spectrum
+            {t('frequency spectrum')}
           </h3>
           <canvas ref={spectrumRef} width={560} height={120} style={{ width: '100%', height: 120, borderRadius: 10 }} />
         </div>
@@ -264,7 +264,7 @@ export default function SoulFrequencyPage() {
           border: '1px solid rgba(255,255,255,0.06)', marginBottom: 20,
         }}>
           <h3 style={{ fontSize: 13, fontWeight: 600, color: '#94a3b8', margin: '0 0 16px', textTransform: 'uppercase', letterSpacing: 1 }}>
-            Personality → Sound Mapping
+            {t('personality sound mapping')}
           </h3>
           {TRAITS.map((trait, i) => (
             <div key={i} style={{ marginBottom: 16 }}>
@@ -299,7 +299,7 @@ export default function SoulFrequencyPage() {
           background: 'rgba(255,255,255,0.03)', borderRadius: 16, padding: 20,
           border: '1px solid rgba(255,255,255,0.06)', textAlign: 'center', marginBottom: 40,
         }}>
-            {t('your unique soul signature')}
+        <div style={{ fontSize: 11, color: '#64748b', marginBottom: 8 }}>{t('your unique soul signature')}</div>
           <div style={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap' }}>
             {values.map((v, i) => (
               <div key={i} style={{

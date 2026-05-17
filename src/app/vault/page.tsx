@@ -431,7 +431,7 @@ export default function VaultPage() {
 
   // UNLOCKED PHASE
   return (
-    <main className="page-transition min-h-screen pb-24 relative overflow-hidden">
+    <main className="page-transition min-h-screen pb-24 md:pb-8 relative overflow-hidden">
       {/* Matrix rain background (subtle) */}
       <div className="fixed inset-0 pointer-events-none z-0">
         {matrixChars.slice(0, 15).map(m => (

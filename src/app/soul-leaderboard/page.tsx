@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface LeaderboardEntry {
   rank: number;
@@ -30,6 +31,7 @@ const defaultLeaderboard: LeaderboardEntry[] = [
 const categories = ['All', 'Explorer', 'Sage', 'Creator', 'Warrior', 'Healer'];
 
 export default function SoulLeaderboard() {
+  const t = useT();
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [filter, setFilter] = useState('All');
   const [userRank] = useState({ rank: 42, name: 'You', soulScore: 1250, memories: 45, level: 18, avatar: '👤' });
@@ -75,7 +77,7 @@ export default function SoulLeaderboard() {
         <div style={{ display:'flex',alignItems:'center',gap:12,maxWidth:800,margin:'0 auto' }}>
           <Link href="/dashboard" style={{ color:'#888',textDecoration:'none',fontSize:20 }}>←</Link>
           <h1 style={{ fontSize:20,fontWeight:700,background:'linear-gradient(135deg,#FFD700,#FF6B9D)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent' }}>
-            🏆 Soul Leaderboard
+            🏆 {t('soul leaderboard')}
           </h1>
         </div>
       </header>
@@ -144,7 +146,7 @@ export default function SoulLeaderboard() {
             </div>
             <div style={{ textAlign:'right' }}>
               <div style={{ fontWeight:700,color:'#FFD700',fontSize:16 }}>{userRank.soulScore.toLocaleString()}</div>
-              <div style={{ fontSize:11,color:'#666' }}>Soul Score</div>
+              <div style={{ fontSize:11,color:'#666' }}>{t('soul score')}</div>
             </div>
           </div>
         </div>
@@ -152,7 +154,7 @@ export default function SoulLeaderboard() {
         {/* Leaderboard Table */}
         <div className="glass" style={{ overflow:'hidden' }}>
           <div style={{ display:'grid',gridTemplateColumns:'50px 1fr 80px 70px 60px',gap:0,padding:'12px 16px',fontSize:12,color:'#666',fontWeight:600,borderBottom:'1px solid rgba(255,255,255,0.06)' }}>
-            <span>Rank</span><span>Clone</span><span style={{textAlign:'right'}}>Score</span><span style={{textAlign:'right'}}>Mem</span><span style={{textAlign:'right'}}>Lv</span>
+            <span>{t('rank')}</span><span>{t('clone')}</span><span style={{textAlign:'right'}}>{t('score')}</span><span style={{textAlign:'right'}}>Mem</span><span style={{textAlign:'right'}}>Lv</span>
           </div>
           {filtered.map((entry, i) => (
             <div key={entry.rank} className="rank-row"
@@ -185,9 +187,9 @@ export default function SoulLeaderboard() {
         {/* Stats Footer */}
         <div style={{ display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:12,marginTop:20 }}>
           {[
-            { label: 'Total Clones', value: '1,247', emoji: '👥' },
-            { label: 'Avg Soul Score', value: '3,450', emoji: '📊' },
-            { label: 'Active Today', value: '89', emoji: '🟢' },
+            { label: t('total clones'), value: '1,247', emoji: '👥' },
+            { label: t('avg soul score'), value: '3,450', emoji: '📊' },
+            { label: t('active today'), value: '89', emoji: '🟢' },
           ].map(stat => (
             <div key={stat.label} className="glass" style={{ padding:16,textAlign:'center' }}>
               <div style={{ fontSize:24 }}>{stat.emoji}</div>

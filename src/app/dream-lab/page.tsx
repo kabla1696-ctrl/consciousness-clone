@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Dream {
   id: string
@@ -69,6 +70,7 @@ function Particles() {
 }
 
 export default function DreamLab() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [dreams, setDreams] = useState<Dream[]>([])
   const [showAdd, setShowAdd] = useState(false)
@@ -185,7 +187,7 @@ export default function DreamLab() {
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500/30 to-purple-600/20 flex items-center justify-center backdrop-blur-sm border border-violet-500/20">
               <span className="text-base">🌙</span>
             </div>
-            <h1 className="text-base font-bold bg-gradient-to-r from-violet-300 to-fuchsia-300 bg-clip-text text-transparent">Dream Lab</h1>
+            <h1 className="text-base font-bold bg-gradient-to-r from-violet-300 to-fuchsia-300 bg-clip-text text-transparent">{t('dream lab')}</h1>
           </div>
         </div>
       </header>
@@ -193,7 +195,7 @@ export default function DreamLab() {
       <div className="px-4 py-4 pb-24 relative z-10">
         {/* Intro */}
         <div className="mb-6 animate-[fadeSlideUp_0.5s_ease-out]">
-          <h2 className="text-2xl font-bold mb-1 bg-gradient-to-r from-white via-violet-200 to-fuchsia-200 bg-clip-text text-transparent">Dream Lab 🌙</h2>
+          <h2 className="text-2xl font-bold mb-1 bg-gradient-to-r from-white via-violet-200 to-fuchsia-200 bg-clip-text text-transparent">{t('dream lab')} 🌙</h2>
           <p className="text-white/30 text-sm">Record, analyze, and understand your dreams</p>
         </div>
 
@@ -246,7 +248,7 @@ export default function DreamLab() {
           onClick={() => setShowAdd(!showAdd)}
           className="w-full mb-6 px-4 py-3.5 bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 rounded-2xl font-semibold text-sm text-white shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 hover:scale-[1.01] active:scale-[0.99] transition-all duration-300 animate-[fadeSlideUp_0.5s_ease-out_0.25s_both]"
         >
-          {showAdd ? '✕ Cancel' : '✨ Record New Dream'}
+          {showAdd ? '✕ Cancel' : `✨ ${t('record dreams')}`}
         </button>
 
         {/* Add Dream Form */}
@@ -365,7 +367,7 @@ export default function DreamLab() {
                     disabled={analyzing === dream.id}
                     className="px-4 py-2 rounded-xl bg-violet-500/10 border border-violet-500/20 text-violet-400 text-xs font-medium hover:bg-violet-500/20 hover:shadow-[0_0_15px_rgba(139,92,246,0.1)] transition-all duration-300 disabled:opacity-50"
                   >
-                    {analyzing === dream.id ? '🔄 Analyzing...' : '🧠 Analyze Dream'}
+                    {analyzing === dream.id ? '🔄 Analyzing...' : `🧠 ${t('analyze')}`}
                   </button>
                 )}
               </div>

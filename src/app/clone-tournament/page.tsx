@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Clone {
   id: string;
@@ -42,9 +43,9 @@ const QUESTIONS = [
   { q: 'How many neurons in the human brain?', options: ['1 billion', '86 billion', '100 billion', '500 billion'], correct: 1 },
 ];
 
-const ROUND_NAMES = ['Quarter Finals', 'Semi Finals', 'Grand Final'];
-
 export default function CloneTournamentPage() {
+  const t = useT()
+  const ROUND_NAMES = [t('Quarter Finals'), t('Semi Finals'), t('Grand Final')];
   const [clones, setClones] = useState<Clone[]>(DEFAULT_CLONES);
   const [battles, setBattles] = useState<Battle[]>([]);
   const [currentBattleIdx, setCurrentBattleIdx] = useState(0);
@@ -188,8 +189,8 @@ export default function CloneTournamentPage() {
       <header style={{ position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(20px)', background: 'rgba(5,5,16,0.85)', borderBottom: '1px solid rgba(236,72,153,0.2)', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: '16px' }}>
         <Link href="/dashboard" style={{ color: '#a78bfa', fontSize: '24px', textDecoration: 'none' }}>←</Link>
         <div>
-          <h1 style={{ fontSize: '20px', fontWeight: 700, margin: 0, background: 'linear-gradient(135deg, #f59e0b, #ec4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Clone Tournament</h1>
-          <p style={{ fontSize: '12px', color: '#6b7280', margin: 0 }}>Knowledge battles between clones</p>
+          <h1 style={{ fontSize: '20px', fontWeight: 700, margin: 0, background: 'linear-gradient(135deg, #f59e0b, #ec4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{t('Clone Tournament')}</h1>
+          <p style={{ fontSize: '12px', color: '#6b7280', margin: 0 }}>{t('Knowledge battles between clones')}</p>
         </div>
       </header>
 
@@ -199,8 +200,8 @@ export default function CloneTournamentPage() {
           <div>
             <div style={{ textAlign: 'center', marginBottom: '32px' }}>
               <div style={{ fontSize: '64px', marginBottom: '12px' }}>🏆</div>
-              <h2 style={{ fontSize: '28px', fontWeight: 800, margin: '0 0 8px', background: 'linear-gradient(135deg, #fbbf24, #f59e0b)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Tournament Complete!</h2>
-              <p style={{ color: '#6b7280', margin: 0 }}>{sortedClones[0].name} wins the championship!</p>
+              <h2 style={{ fontSize: '28px', fontWeight: 800, margin: '0 0 8px', background: 'linear-gradient(135deg, #fbbf24, #f59e0b)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{t('Tournament Complete!')}</h2>
+              <p style={{ color: '#6b7280', margin: 0 }}>{sortedClones[0].name} {t('wins the championship!')}</p>
             </div>
 
             {sortedClones.map((clone, i) => (
@@ -209,14 +210,14 @@ export default function CloneTournamentPage() {
                 <span style={{ fontSize: '32px' }}>{clone.avatar}</span>
                 <div style={{ flex: 1 }}>
                   <p style={{ fontWeight: 700, margin: '0 0 4px', fontSize: '16px' }}>{clone.name}</p>
-                  <p style={{ color: '#6b7280', fontSize: '13px', margin: 0 }}>{clone.wins} wins · {clone.score} pts</p>
+                  <p style={{ color: '#6b7280', fontSize: '13px', margin: 0 }}>{clone.wins} {t('wins')} · {clone.score} {t('pts')}</p>
                 </div>
                 {i === 0 && <span style={{ fontSize: '24px' }}>👑</span>}
               </div>
             ))}
 
             <button onClick={resetTournament} style={{ width: '100%', marginTop: '24px', padding: '16px', borderRadius: '14px', background: 'linear-gradient(135deg, #a78bfa, #ec4899)', border: 'none', color: '#fff', fontSize: '16px', fontWeight: 700, cursor: 'pointer' }}>
-              New Tournament
+              {t('New Tournament')}
             </button>
           </div>
         ) : (
@@ -227,7 +228,7 @@ export default function CloneTournamentPage() {
               <span style={{ background: 'linear-gradient(135deg, rgba(167,139,250,0.2), rgba(236,72,153,0.2))', border: '1px solid rgba(167,139,250,0.3)', padding: '6px 20px', borderRadius: '20px', fontSize: '13px', fontWeight: 600, color: '#a78bfa' }}>
                 ⚔️ {roundName}
               </span>
-              <p style={{ color: '#4b5563', fontSize: '12px', margin: '8px 0 0' }}>Battle {currentBattleIdx + 1} of {battles.length}</p>
+              <p style={{ color: '#4b5563', fontSize: '12px', margin: '8px 0 0' }}>{t('Battle')} {currentBattleIdx + 1} {t('of')} {battles.length}</p>
             </div>
 
             {/* VS Header */}
@@ -247,7 +248,7 @@ export default function CloneTournamentPage() {
 
             {/* Question Card */}
             <div style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(20px)', border: '1px solid rgba(139,92,246,0.15)', borderRadius: '20px', padding: '24px', marginBottom: '20px' }}>
-              <p style={{ color: '#6b7280', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '2px', margin: '0 0 12px' }}>Challenge Question</p>
+              <p style={{ color: '#6b7280', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '2px', margin: '0 0 12px' }}>{t('Challenge Question')}</p>
               <p style={{ fontSize: '18px', fontWeight: 700, lineHeight: 1.4, margin: 0 }}>{battle.question}</p>
             </div>
 
@@ -295,7 +296,7 @@ export default function CloneTournamentPage() {
             {/* Vote Buttons */}
             {showResult && (
               <div>
-                <p style={{ textAlign: 'center', color: '#6b7280', fontSize: '13px', margin: '0 0 12px' }}>Vote for your favorite clone</p>
+                <p style={{ textAlign: 'center', color: '#6b7280', fontSize: '13px', margin: '0 0 12px' }}>{t('Vote for your favorite clone')}</p>
                 <div style={{ display: 'flex', gap: '12px', marginBottom: '20px' }}>
                   <button
                     onClick={() => handleVote(battle.clone1.id)}
@@ -316,7 +317,7 @@ export default function CloneTournamentPage() {
                 {/* Winner announcement */}
                 {battle.winnerId && (
                   <div style={{ textAlign: 'center', padding: '20px', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.3)', borderRadius: '16px', marginBottom: '16px' }}>
-                    <p style={{ fontSize: '14px', color: '#fbbf24', margin: '0 0 8px', textTransform: 'uppercase', letterSpacing: '2px' }}>Winner</p>
+                    <p style={{ fontSize: '14px', color: '#fbbf24', margin: '0 0 8px', textTransform: 'uppercase', letterSpacing: '2px' }}>{t('Winner')}</p>
                     <p style={{ fontSize: '24px', fontWeight: 800, margin: 0 }}>
                       {battle.winnerId === battle.clone1.id ? `${battle.clone1.avatar} ${battle.clone1.name}` : `${battle.clone2.avatar} ${battle.clone2.name}`}
                     </p>
@@ -324,7 +325,7 @@ export default function CloneTournamentPage() {
                 )}
 
                 <button onClick={nextBattle} style={{ width: '100%', padding: '16px', borderRadius: '14px', background: 'linear-gradient(135deg, #a78bfa, #ec4899)', border: 'none', color: '#fff', fontSize: '16px', fontWeight: 700, cursor: 'pointer' }}>
-                  {currentBattleIdx + 1 >= battles.length ? 'View Leaderboard' : 'Next Battle →'}
+                  {currentBattleIdx + 1 >= battles.length ? t('View Leaderboard') : t('Next Battle') + ' →'}
                 </button>
               </div>
             )}

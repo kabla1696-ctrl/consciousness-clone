@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Listing {
   id: string;
@@ -49,6 +50,7 @@ const listings: Listing[] = [
 ];
 
 export default function SoulMarket() {
+  const t = useT();
   const [activeCategory, setActiveCategory] = useState('All');
   const [balance, setBalance] = useState(5000);
   const [purchases, setPurchases] = useState<Purchase[]>([]);
@@ -119,7 +121,7 @@ export default function SoulMarket() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <Link href="/dashboard" style={{ color: '#fbbf24', textDecoration: 'none', fontSize: 20 }}>←</Link>
           <h1 style={{ fontSize: 18, fontWeight: 700, background: 'linear-gradient(135deg, #fbbf24, #f472b6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            🪙 Soul Market
+            🪙 {t('soul market')}
           </h1>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -146,9 +148,9 @@ export default function SoulMarket() {
             background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(251,191,36,0.2)',
             borderRadius: 16, padding: 20, marginBottom: 24, backdropFilter: 'blur(12px)',
           }}>
-            <h2 style={{ fontSize: 15, fontWeight: 600, marginBottom: 12, color: '#fbbf24' }}>Purchase History</h2>
+            <h2 style={{ fontSize: 15, fontWeight: 600, marginBottom: 12, color: '#fbbf24' }}>{t('purchase history')}</h2>
             {purchases.length === 0 ? (
-              <p style={{ color: '#64748b', fontSize: 13 }}>No purchases yet. Start collecting experiences!</p>
+              <p style={{ color: '#64748b', fontSize: 13 }}>{t('no purchases yet')}</p>
             ) : purchases.map((p) => (
               <div key={p.id} style={{
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center',
@@ -166,7 +168,7 @@ export default function SoulMarket() {
 
         {/* Featured */}
         <div style={{ marginBottom: 24 }}>
-          <h2 style={{ fontSize: 15, fontWeight: 600, marginBottom: 12, color: '#fbbf24' }}>⭐ Featured Experiences</h2>
+          <h2 style={{ fontSize: 15, fontWeight: 600, marginBottom: 12, color: '#fbbf24' }}>⭐ {t('featured experiences')}</h2>
           <div style={{ display: 'flex', gap: 12, overflowX: 'auto', paddingBottom: 8 }}>
             {featured.map((item) => (
               <div key={item.id} style={{
@@ -243,7 +245,7 @@ export default function SoulMarket() {
                           border: 'none', color: '#fff', cursor: purchasingId === item.id ? 'wait' : 'pointer',
                         }}
                       >
-                        {purchasingId === item.id ? '⏳' : 'Buy'}
+                        {purchasingId === item.id ? '⏳' : t('buy')}
                       </button>
                     </div>
                   </div>

@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { useT } from '../../lib/language-context'
 
 interface Milestone { id: string; icon: string; title: string; desc: string; target: number; current: number; xp: number; unlocked: boolean; category: string }
 
@@ -28,6 +29,7 @@ const ALL_MILESTONES: Omit<Milestone, 'current' | 'unlocked'>[] = [
 ]
 
 export default function MemoryMilestones() {
+  const t = useT();
   const [milestones, setMilestones] = useState<Milestone[]>([])
   const [totalXP, setTotalXP] = useState(0)
   const [filter, setFilter] = useState('all')
@@ -82,7 +84,7 @@ export default function MemoryMilestones() {
         <div className="px-4 py-3 flex items-center gap-3">
           <Link href="/dashboard" className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/[0.05] border border-white/[0.06] tap-feedback">←</Link>
           <span className="text-xl">🏆</span>
-          <span className="font-bold text-base bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-yellow-400">Milestones</span>
+          <span className="font-bold text-base bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-yellow-400">{t('milestones')}</span>
         </div>
       </header>
 
@@ -90,13 +92,13 @@ export default function MemoryMilestones() {
         {/* Stats */}
         <div className="grid grid-cols-3 gap-3 mb-6">
           {[
-            { label: 'Total XP', value: totalXP.toLocaleString(), color: 'text-amber-400' },
-            { label: 'Unlocked', value: `${milestones.filter(m => m.unlocked).length}/${milestones.length}`, color: 'text-emerald-400' },
-            { label: 'Progress', value: `${unlockPct}%`, color: 'text-violet-400' },
+            { label: 'xp', value: totalXP.toLocaleString(), color: 'text-amber-400' },
+            { label: 'unlocked', value: `${milestones.filter(m => m.unlocked).length}/${milestones.length}`, color: 'text-emerald-400' },
+            { label: 'level', value: `${unlockPct}%`, color: 'text-violet-400' },
           ].map(s => (
             <div key={s.label} className="rounded-xl border border-white/[0.06] p-3 text-center backdrop-blur-xl" style={{ background: 'rgba(255,255,255,0.02)' }}>
               <div className={`text-xl font-bold ${s.color}`}>{s.value}</div>
-              <div className="text-white/30 text-[10px]">{s.label}</div>
+              <div className="text-white/30 text-[10px]">{t(s.label)}</div>
             </div>
           ))}
         </div>
@@ -104,7 +106,7 @@ export default function MemoryMilestones() {
         {/* Progress Bar */}
         <div className="rounded-xl border border-white/[0.06] p-4 mb-4 backdrop-blur-xl" style={{ background: 'rgba(255,255,255,0.02)' }}>
           <div className="flex items-center justify-between mb-2">
-            <span className="text-white/40 text-xs">Overall Progress</span>
+            <span className="text-white/40 text-xs">{t('level')}</span>
             <span className="text-amber-400 text-xs font-medium">{unlockPct}%</span>
           </div>
           <div className="h-2 rounded-full bg-white/[0.05] overflow-hidden">
@@ -152,7 +154,7 @@ export default function MemoryMilestones() {
         <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ background: 'rgba(0,0,0,0.8)' }} onClick={() => setShowCelebration(null)}>
           <div className="text-center" style={{ animation: 'float-subtle 2s ease-in-out' }}>
             <div className="text-8xl mb-4">🎉</div>
-            <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-yellow-400 mb-2">Milestone Unlocked!</h2>
+            <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-yellow-400 mb-2">{t('milestones')} {t('unlocked')}!</h2>
             <p className="text-white/60 text-lg">{milestones.find(m => m.id === showCelebration)?.title}</p>
             <p className="text-amber-400 text-sm mt-1">+{milestones.find(m => m.id === showCelebration)?.xp} XP</p>
           </div>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 const TRAITS = [
   { name: 'Empathy', icon: '💗' },
@@ -24,6 +25,7 @@ TRAITS.forEach((t) => {
 });
 
 export default function SoulMirrorPage() {
+  const t = useT();
   const [traits, setTraits] = useState<TraitState>(defaultTraits);
   const [personA, setPersonA] = useState('You');
   const [personB, setPersonB] = useState('Your Clone');
@@ -184,7 +186,7 @@ export default function SoulMirrorPage() {
           onClick={resetAll}
           style={{ width: '100%', marginTop: '24px', padding: '14px', borderRadius: '14px', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#ef4444', fontSize: '15px', fontWeight: 600, cursor: 'pointer' }}
         >
-          Reset All Traits
+          {t('reset all traits')}
         </button>
       </main>
 

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Achievement {
   id: string;
@@ -86,6 +87,7 @@ const allAchievements: Achievement[] = [
 ];
 
 export default function CloneAchievements() {
+  const t = useT();
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [unlockingId, setUnlockingId] = useState<string | null>(null);
@@ -132,13 +134,13 @@ export default function CloneAchievements() {
 
       <header style={{ position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'blur(20px)', background: 'rgba(5,5,16,0.8)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 16 }}>
         <Link href="/dashboard" style={{ color: '#a78bfa', textDecoration: 'none', fontSize: 20 }}>←</Link>
-        <h1 style={{ fontSize: 20, fontWeight: 700, background: 'linear-gradient(135deg,#a78bfa,#6366f1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', margin: 0 }}>🏆 Clone Achievements</h1>
+        <h1 style={{ fontSize: 20, fontWeight: 700, background: 'linear-gradient(135deg,#a78bfa,#6366f1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', margin: 0 }}>🏆 {t('achievements')}</h1>
       </header>
 
       <main style={{ maxWidth: 900, margin: '0 auto', padding: 20 }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 12, marginBottom: 24 }}>
           {[
-            { label: 'Unlocked', value: `${unlockedCount}/${achievements.length}`, color: '#a78bfa' },
+            { label: t('unlocked'), value: `${unlockedCount}/${achievements.length}`, color: '#a78bfa' },
             { label: 'Points', value: totalPoints, color: '#f59e0b' },
             { label: 'Legendary', value: achievements.filter(a=>a.rarity==='legendary'&&a.unlocked).length, color: '#f59e0b' },
           ].map((s, i) => (

@@ -2,10 +2,12 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Message { id: string; role: 'user' | 'clone'; text: string; timestamp: number }
 
 export default function CloneVoiceCallPage() {
+  const t = useT()
   const [callState, setCallState] = useState<'idle' | 'ringing' | 'connected' | 'ended'>('idle')
   const [messages, setMessages] = useState<Message[]>([])
   const [isListening, setIsListening] = useState(false)
@@ -346,17 +348,17 @@ export default function CloneVoiceCallPage() {
           <div className="px-4 py-3 flex items-center gap-3">
             <Link href="/dashboard" className="text-white/40 hover:text-white/60 transition-colors">←</Link>
             <div>
-              <h1 className="text-base font-bold text-white">📞 Voice Call</h1>
-              <p className="text-white/30 text-xs">Talk to your consciousness clone</p>
+              <h1 className="text-base font-bold text-white">📞 {t('Voice Call')}</h1>
+              <p className="text-white/30 text-xs">{t('Talk to your clone LIVE')}</p>
             </div>
           </div>
         </header>
 
-        <div className="relative z-10 px-4 py-8">
+        <div className="relative z-10 px-4 py-8 pb-24 md:pb-8">
           {/* Ended banner */}
           {callState === 'ended' && (
             <div className="mb-6 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center" style={{ animation: 'fadeSlideUp 0.4s ease' }}>
-              <p className="text-emerald-400 text-sm font-medium">Call ended</p>
+              <p className="text-emerald-400 text-sm">{t('Call ended')}</p>
               <p className="text-white/30 text-xs">{formatTime(callTimer)} · {messagesRef.current.length} messages</p>
             </div>
           )}
@@ -374,17 +376,17 @@ export default function CloneVoiceCallPage() {
               </button>
             </div>
             <h2 className="text-xl font-bold text-white mb-1">{cloneName}</h2>
-            <p className="text-emerald-400 text-sm">Tap to start voice call</p>
-            <p className="text-white/20 text-xs mt-2">Your clone speaks and listens in real-time</p>
+            <p className="text-emerald-400 text-sm">{t('Tap to start voice call')}</p>
+            <p className="text-white/20 text-xs mt-2">{t('Your clone speaks and listens in real-time')}</p>
           </div>
 
           {/* Feature cards */}
           <div className="grid grid-cols-2 gap-3 mb-8">
             {[
-              { icon: '🗣️', title: 'Natural Voice', desc: 'Your clone speaks naturally' },
-              { icon: '🧠', title: 'Memory Aware', desc: 'References your memories' },
-              { icon: '⚡', title: 'Real-time', desc: 'Instant responses' },
-              { icon: '🔒', title: 'Private', desc: 'Calls stay between you' },
+              { icon: '🗣️', title: t('Natural Voice'), desc: t('Your clone speaks naturally') },
+              { icon: '🧠', title: t('Memory Aware'), desc: t('References your memories') },
+              { icon: '⚡', title: t('Real-time'), desc: t('Instant responses') },
+              { icon: '🔒', title: t('Private'), desc: t('Calls stay between you') },
             ].map((f, i) => (
               <div
                 key={f.title}
@@ -401,7 +403,7 @@ export default function CloneVoiceCallPage() {
           {/* Recent call logs */}
           {logs.length > 0 && (
             <div>
-              <h3 className="text-sm font-semibold text-white/50 mb-3">Recent Calls</h3>
+              <h3 className="text-sm font-semibold text-white/50 mb-3">{t('Recent Calls')}</h3>
               <div className="space-y-2">
                 {logs.slice(0, 5).map((log: any) => (
                   <div
@@ -411,7 +413,7 @@ export default function CloneVoiceCallPage() {
                   >
                     <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center text-sm">📞</div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs text-white/60 truncate">{log.preview?.slice(0, 2).join(' → ') || 'Voice call'}</p>
+                      <p className="text-xs text-white/60 truncate">{log.preview?.slice(0, 2).join(' → ') || t('Voice call')}</p>
                       <p className="text-white/20 text-[10px]">{new Date(log.timestamp).toLocaleDateString()} · {formatTime(log.duration)}</p>
                     </div>
                     <span className="text-emerald-400 text-[10px] shrink-0">{log.messageCount} msgs</span>
@@ -442,8 +444,8 @@ export default function CloneVoiceCallPage() {
           >
             📞
           </div>
-          <h2 className="text-2xl font-bold text-white mb-2">Calling {cloneName}...</h2>
-          <p className="text-emerald-400 text-sm animate-pulse">Ringing</p>
+          <h2 className="text-2xl font-bold text-white mb-2">{t('Calling')} {cloneName}...</h2>
+          <p className="text-emerald-400 text-sm animate-pulse">{t('Ringing')}</p>
           <div className="flex gap-1.5 justify-center mt-4">
             {[0, 0.2, 0.4].map((d, i) => (
               <div
@@ -478,7 +480,7 @@ export default function CloneVoiceCallPage() {
           <div>
             <h2 className="text-sm font-bold text-white">{cloneName}</h2>
             <p className="text-emerald-400 text-[10px]">
-              {isListening ? '🎙️ Listening...' : isSpeaking ? '🗣️ Speaking...' : '💬 Connected'}
+              {isListening ? '🎙️ ' + t('Listening') + '...' : isSpeaking ? '🗣️ ' + t('Speaking') + '...' : '💬 ' + t('Connected')}
             </p>
           </div>
         </div>
