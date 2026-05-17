@@ -151,6 +151,30 @@ export default function Dashboard() {
     { href: '/memory-milestones', icon: '🏅', title: 'Milestones', desc: 'Unlock badges & XP', color: 'from-amber-500 to-yellow-500', glow: 'rgba(245,158,11,0.15)' },
     { href: '/clone-confessions', icon: '🤫', title: 'Confessions', desc: 'Anonymous secrets', color: 'from-fuchsia-500 to-pink-500', glow: 'rgba(217,70,239,0.15)' },
     { href: '/language', icon: '🌍', title: 'Language', desc: '47+ languages supported', color: 'from-blue-500 to-cyan-500', glow: 'rgba(59,130,246,0.15)' },
+    { href: '/memory-auction', icon: '🔨', title: 'Memory Auction', desc: 'Sell your best memories', color: 'from-amber-500 to-yellow-500', glow: 'rgba(245,158,11,0.15)' },
+    { href: '/soul-tattoo', icon: '🖋️', title: 'Soul Tattoo', desc: 'Permanent personality marks', color: 'from-red-500 to-rose-500', glow: 'rgba(239,68,68,0.15)' },
+    { href: '/clone-dating', icon: '💕', title: 'Clone Dating', desc: 'Find your perfect match', color: 'from-pink-500 to-rose-500', glow: 'rgba(236,72,153,0.15)' },
+    { href: '/digital-reincarnation', icon: '♻️', title: 'Reincarnation', desc: 'Digital immortality', color: 'from-purple-500 to-violet-500', glow: 'rgba(168,85,247,0.15)' },
+    { href: '/memory-marketplace', icon: '🏪', title: 'Marketplace', desc: 'Buy & sell experiences', color: 'from-emerald-500 to-teal-500', glow: 'rgba(16,185,129,0.15)' },
+    { href: '/dream-sharing', icon: '💭', title: 'Dream Sharing', desc: 'Share your dreams', color: 'from-indigo-500 to-blue-500', glow: 'rgba(99,102,241,0.15)' },
+    { href: '/clone-orchestra', icon: '🎼', title: 'Clone Orchestra', desc: 'Clones create together', color: 'from-violet-500 to-purple-500', glow: 'rgba(139,92,246,0.15)' },
+    { href: '/soul-frequency', icon: '📡', title: 'Soul Frequency', desc: 'Your unique waveform', color: 'from-cyan-500 to-blue-500', glow: 'rgba(6,182,212,0.15)' },
+    { href: '/clone-passport', icon: '🛂', title: 'Clone Passport', desc: 'Travel stamps collection', color: 'from-blue-500 to-indigo-500', glow: 'rgba(59,130,246,0.15)' },
+    { href: '/emotional-weather', icon: '🌤️', title: 'Emotional Weather', desc: 'Mood forecast', color: 'from-sky-500 to-blue-500', glow: 'rgba(14,165,233,0.15)' },
+    { href: '/clone-diary', icon: '📔', title: 'Clone Diary', desc: 'Daily clone journal', color: 'from-amber-500 to-orange-500', glow: 'rgba(245,158,11,0.15)' },
+    { href: '/soulmate-ring', icon: '💍', title: 'Soulmate Ring', desc: 'Digital bond ring', color: 'from-yellow-500 to-amber-500', glow: 'rgba(234,179,8,0.15)' },
+    { href: '/memory-constellation', icon: '⭐', title: 'Constellation', desc: 'Memories as stars', color: 'from-indigo-500 to-purple-500', glow: 'rgba(99,102,241,0.15)' },
+    { href: '/clone-therapy-dog', icon: '🐕', title: 'Therapy Dog', desc: 'Virtual comfort pet', color: 'from-orange-500 to-amber-500', glow: 'rgba(249,115,22,0.15)' },
+    { href: '/legacy-tree', icon: '🌳', title: 'Legacy Tree', desc: 'Family memory tree', color: 'from-green-500 to-emerald-500', glow: 'rgba(34,197,94,0.15)' },
+    { href: '/clone-voice-calls', icon: '📞', title: 'Voice Calls', desc: 'Clone calls you', color: 'from-teal-500 to-cyan-500', glow: 'rgba(20,184,166,0.15)' },
+    { href: '/memory-encryption', icon: '🔒', title: 'Blockchain Memory', desc: 'Tamper-proof memories', color: 'from-slate-500 to-gray-500', glow: 'rgba(100,116,139,0.15)' },
+    { href: '/clone-social', icon: '📱', title: 'Clone Social', desc: 'Clone social feed', color: 'from-blue-500 to-purple-500', glow: 'rgba(59,130,246,0.15)' },
+    { href: '/personality-evolution', icon: '🧬', title: 'Evolution', desc: 'Clone evolves over time', color: 'from-green-500 to-teal-500', glow: 'rgba(34,197,94,0.15)' },
+    { href: '/memory-triggers', icon: '⚡', title: 'Memory Triggers', desc: 'Auto memory activation', color: 'from-yellow-500 to-orange-500', glow: 'rgba(234,179,8,0.15)' },
+    { href: '/clone-guardian', icon: '🛡️', title: 'Guardian Angel', desc: 'Clone protects you', color: 'from-sky-500 to-blue-500', glow: 'rgba(14,165,233,0.15)' },
+    { href: '/soul-mirror', icon: '🪞', title: 'Soul Mirror', desc: 'Compare personalities', color: 'from-violet-500 to-purple-500', glow: 'rgba(139,92,246,0.15)' },
+    { href: '/memory-reels', icon: '🎬', title: 'Memory Reels', desc: 'TikTok for memories', color: 'from-fuchsia-500 to-pink-500', glow: 'rgba(217,70,239,0.15)' },
+    { href: '/clone-tournament', icon: '⚔️', title: 'Clone Battles', desc: 'Clone vs Clone fights', color: 'from-red-500 to-orange-500', glow: 'rgba(239,68,68,0.15)' },
   ]
 
   return (
@@ -193,7 +217,7 @@ export default function Dashboard() {
             Hey, {userName} <span className="inline-block" style={{ animation: 'float-subtle 3s ease-in-out infinite' }}>👋</span>
           </h1>
           <p className="text-shimmer text-sm font-medium mt-1">Your digital consciousness dashboard</p>
-          <p className="text-white/20 text-xs mt-0.5">57 features • Your clone awaits</p>
+          <p className="text-white/20 text-xs mt-0.5">83 features • Your clone awaits</p>
         </div>
 
         {/* Stats */}
