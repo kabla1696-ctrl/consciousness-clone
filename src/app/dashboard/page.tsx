@@ -175,6 +175,7 @@ export default function Dashboard() {
     { href: '/soul-mirror', icon: '🪞', title: 'Soul Mirror', desc: 'Compare personalities', color: 'from-violet-500 to-purple-500', glow: 'rgba(139,92,246,0.15)' },
     { href: '/memory-reels', icon: '🎬', title: 'Memory Reels', desc: 'TikTok for memories', color: 'from-fuchsia-500 to-pink-500', glow: 'rgba(217,70,239,0.15)' },
     { href: '/clone-tournament', icon: '⚔️', title: 'Clone Battles', desc: 'Clone vs Clone fights', color: 'from-red-500 to-orange-500', glow: 'rgba(239,68,68,0.15)' },
+    { href: '/clone-connect', icon: '🤝', title: 'Clone Connect', desc: 'Add, message & call clones', color: 'from-violet-500 to-pink-500', glow: 'rgba(139,92,246,0.15)' },
   ]
 
   return (
