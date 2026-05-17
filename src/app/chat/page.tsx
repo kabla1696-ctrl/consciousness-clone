@@ -63,29 +63,18 @@ export default function Chat() {
     }))
     history.push({ role: 'user' as const, content: userContent })
 
-    const response = await fetch(AI_ENDPOINT, {
+    const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: AI_MODEL,
-        messages: [
-          {
-            role: 'system',
-            content: `You are a consciousness clone — a digital version of the user. You respond the way the user would, based on their memories and personality. Be warm, thoughtful, and personal. Be concise but meaningful.`,
-          },
-          ...history,
-        ],
-        temperature: 0.7,
-        max_tokens: 300,
-      }),
+      body: JSON.stringify({ messages: history }),
     })
 
     if (!response.ok) {
-      throw new Error(`AI API error: ${response.status}`)
+      throw new Error(`API error: ${response.status}`)
     }
 
     const data = await response.json()
-    return data.choices?.[0]?.message?.content || "I'm thinking... give me a moment. 🧠"
+    return data.reply || "I'm thinking... give me a moment. 🧠"
   }
 
   const sendMessage = async () => {
