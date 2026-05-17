@@ -5,65 +5,89 @@ import { useState, useRef, useEffect } from 'react'
 import { supabase } from '@/lib/supabase-browser'
 
 interface Message {
-  id: number
+  id: string
   role: 'user' | 'clone'
   content: string
-  time: string
+  created_at: string
 }
 
 export default function Chat() {
   const [user, setUser] = useState<any>(null)
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 1,
-      role: 'clone',
-      content: "Hey! I'm your consciousness clone. I've been learning from your memories. Ask me anything — I'll respond the way YOU would. 🧠",
-      time: 'Now',
-    },
-  ])
+  const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const getUser = async () => {
+    const init = async () => {
       const { data: { user } } = await supabase.auth.getUser()
-      if (user) {
-        setUser(user)
-      } else {
-        window.location.href = '/login'
-      }
+      if (!user) { window.location.href = '/login'; return }
+      setUser(user)
+      loadMessages(user.id)
     }
-    getUser()
+    init()
   }, [])
+
+  const loadMessages = async (userId: string) => {
+    const { data } = await supabase
+      .from('chat_messages')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: true })
+      .limit(50)
+
+    if (data && data.length > 0) {
+      setMessages(data)
+    } else {
+      // First time - show welcome message
+      const welcome: Message = {
+        id: 'welcome',
+        role: 'clone',
+        content: "Hey! I'm your consciousness clone. I've been learning from your memories. Ask me anything — I'll respond the way YOU would. 🧠",
+        created_at: new Date().toISOString(),
+      }
+      setMessages([welcome])
+    }
+  }
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
   const sendMessage = async () => {
-    if (!input.trim() || loading) return
+    if (!input.trim() || loading || !user) return
 
-    const userMsg: Message = {
-      id: Date.now(),
-      role: 'user',
-      content: input,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-    }
-    setMessages((prev) => [...prev, userMsg])
+    const userContent = input.trim()
     setInput('')
+
+    // Save user message to DB
+    const { data: userMsg } = await supabase
+      .from('chat_messages')
+      .insert({ user_id: user.id, role: 'user', content: userContent })
+      .select()
+      .single()
+
+    if (userMsg) {
+      setMessages((prev) => [...prev, userMsg])
+    }
+
     setLoading(true)
 
-    setTimeout(() => {
-      const cloneMsg: Message = {
-        id: Date.now() + 1,
-        role: 'clone',
-        content: getCloneResponse(input),
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      }
+    // Get clone response (mock for now - will connect OpenAI later)
+    const cloneContent = getCloneResponse(userContent)
+
+    // Save clone message to DB
+    const { data: cloneMsg } = await supabase
+      .from('chat_messages')
+      .insert({ user_id: user.id, role: 'clone', content: cloneContent })
+      .select()
+      .single()
+
+    if (cloneMsg) {
       setMessages((prev) => [...prev, cloneMsg])
-      setLoading(false)
-    }, 1500)
+    }
+
+    setLoading(false)
   }
 
   const getCloneResponse = (userInput: string): string => {
@@ -109,7 +133,7 @@ export default function Chat() {
         <div className="space-y-6">
           {messages.map((msg) => (
             <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[80%]`}>
+              <div className="max-w-[80%]">
                 {msg.role === 'clone' && (
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-8 h-8 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-full flex items-center justify-center text-sm">🧠</div>
@@ -124,7 +148,7 @@ export default function Chat() {
                   <p className="text-white/90 leading-relaxed">{msg.content}</p>
                 </div>
                 <p className={`text-white/20 text-xs mt-1.5 ${msg.role === 'user' ? 'text-right' : ''}`}>
-                  {msg.time}
+                  {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </p>
               </div>
             </div>

@@ -4,43 +4,67 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase-browser'
 
+interface Memory {
+  id: string
+  content: string
+  category: string
+  mood: string
+  created_at: string
+}
+
 export default function Memories() {
   const [user, setUser] = useState<any>(null)
   const [activeTab, setActiveTab] = useState('all')
   const [showAdd, setShowAdd] = useState(false)
-  const [newMemory, setNewMemory] = useState('')
-  const [memories, setMemories] = useState([
-    { id: 1, text: 'The day I graduated — my parents were so proud. I remember mom crying happy tears.', category: 'milestone', mood: '😊', date: '2024-03-15' },
-    { id: 2, text: 'My first bike ride without training wheels. I fell 3 times but never gave up.', category: 'childhood', mood: '🚲', date: '2010-06-20' },
-    { id: 3, text: 'The smell of grandma\'s kitchen during Eid. Her biryani was legendary.', category: 'family', mood: '🍚', date: '2015-09-10' },
-    { id: 4, text: 'When I decided to quit my job and start building something of my own.', category: 'decision', mood: '💪', date: '2025-01-05' },
-    { id: 5, text: 'The night sky in Cox\'s Bazar — I had never seen so many stars.', category: 'travel', mood: '✨', date: '2022-12-25' },
-  ])
+  const [newMemory, setNewMemory] = useState(newMemory)
+  const [memories, setMemories] = useState<Memory[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const getUser = async () => {
+    const init = async () => {
       const { data: { user } } = await supabase.auth.getUser()
-      if (user) {
-        setUser(user)
-      } else {
-        window.location.href = '/login'
-      }
+      if (!user) { window.location.href = '/login'; return }
+      setUser(user)
+      loadMemories(user.id)
     }
-    getUser()
+    init()
   }, [])
 
-  const addMemory = () => {
-    if (!newMemory.trim()) return
-    const memory = {
-      id: Date.now(),
-      text: newMemory,
-      category: 'personal',
-      mood: '📝',
-      date: new Date().toISOString().split('T')[0],
+  const loadMemories = async (userId: string) => {
+    const { data } = await supabase
+      .from('memories')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false })
+
+    if (data) setMemories(data)
+    setLoading(false)
+  }
+
+  const addMemory = async () => {
+    if (!newMemory.trim() || !user) return
+
+    const { data } = await supabase
+      .from('memories')
+      .insert({
+        user_id: user.id,
+        content: newMemory.trim(),
+        category: 'personal',
+        mood: '📝',
+      })
+      .select()
+      .single()
+
+    if (data) {
+      setMemories([data, ...memories])
+      setNewMemory('')
+      setShowAdd(false)
     }
-    setMemories([memory, ...memories])
-    setNewMemory('')
-    setShowAdd(false)
+  }
+
+  const deleteMemory = async (id: string) => {
+    await supabase.from('memories').delete().eq('id', id)
+    setMemories(memories.filter(m => m.id !== id))
   }
 
   const filtered = activeTab === 'all' ? memories : memories.filter(m => m.category === activeTab)
@@ -108,7 +132,7 @@ export default function Memories() {
 
         {/* Tabs */}
         <div className="flex gap-2 mb-8 flex-wrap">
-          {['all', 'childhood', 'family', 'milestone', 'travel', 'decision'].map((tab) => (
+          {['all', 'childhood', 'family', 'milestone', 'travel', 'decision', 'personal'].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -120,22 +144,38 @@ export default function Memories() {
         </div>
 
         {/* Memory List */}
-        <div className="space-y-3">
-          {filtered.map((memory) => (
-            <div key={memory.id} className="rounded-xl border border-white/[0.04] hover:border-white/[0.08] p-6 transition" style={{ background: 'rgba(255,255,255,0.01)' }}>
-              <div className="flex items-start gap-4">
-                <div className="text-3xl">{memory.mood}</div>
-                <div className="flex-1">
-                  <p className="text-white/70 text-lg leading-relaxed">{memory.text}</p>
-                  <div className="flex gap-4 mt-3 text-sm text-white/20">
-                    <span>{memory.date}</span>
-                    <span className="bg-white/[0.04] px-2 py-0.5 rounded">{memory.category}</span>
+        {loading ? (
+          <div className="text-center text-white/30 py-20">Loading memories...</div>
+        ) : filtered.length === 0 ? (
+          <div className="text-center py-20">
+            <div className="text-5xl mb-4">📝</div>
+            <p className="text-white/30 text-lg">No memories yet</p>
+            <p className="text-white/20 text-sm mt-2">Click &quot;+ Add Memory&quot; to store your first memory</p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {filtered.map((memory) => (
+              <div key={memory.id} className="rounded-xl border border-white/[0.04] hover:border-white/[0.08] p-6 transition group" style={{ background: 'rgba(255,255,255,0.01)' }}>
+                <div className="flex items-start gap-4">
+                  <div className="text-3xl">{memory.mood}</div>
+                  <div className="flex-1">
+                    <p className="text-white/70 text-lg leading-relaxed">{memory.content}</p>
+                    <div className="flex gap-4 mt-3 text-sm text-white/20">
+                      <span>{new Date(memory.created_at).toLocaleDateString()}</span>
+                      <span className="bg-white/[0.04] px-2 py-0.5 rounded">{memory.category}</span>
+                    </div>
                   </div>
+                  <button
+                    onClick={() => deleteMemory(memory.id)}
+                    className="opacity-0 group-hover:opacity-100 text-white/20 hover:text-red-400 transition text-sm"
+                  >
+                    ✕
+                  </button>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </main>
   )
