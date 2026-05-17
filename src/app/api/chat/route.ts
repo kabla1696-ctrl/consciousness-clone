@@ -19,7 +19,7 @@ export async function POST(req: Request) {
       ...messages.slice(-10),
     ]
 
-    const response = await fetch('https://opengateway.gitlawb.com/v1/xiaomi-mimo/chat/completions', {
+    const response = await fetch('https://opengateway.gitlawb.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
