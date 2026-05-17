@@ -153,18 +153,29 @@ body {
   }
 }
 
+/* Capacitor/Android WebView scrolling fix */
+html {
+  overflow: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+body {
+  overflow: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  min-height: 100vh;
+  height: auto !important;
+}
+
 /* Mobile App Styles */
 html, body {
-  min-height: 100vh;
   overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
   width: 100%;
+  touch-action: pan-y !important;
+  -webkit-touch-callout: none;
 }
 
 main {
-  height: 100%;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  min-height: 100vh;
 }
 
 /* Safe area for notch devices */
