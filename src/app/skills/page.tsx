@@ -22,10 +22,10 @@ interface Lesson {
 }
 
 const LEVELS = [
-  { id: 'beginner', label: 'Beginner', icon: '🌱', color: 'text-emerald-400' },
-  { id: 'intermediate', label: 'Intermediate', icon: '📈', color: 'text-blue-400' },
-  { id: 'advanced', label: 'Advanced', icon: '🔥', color: 'text-orange-400' },
-  { id: 'expert', label: 'Expert', icon: '👑', color: 'text-violet-400' },
+  { id: 'beginner', label: 'Beginner', icon: '🌱', color: 'text-emerald-400', glow: 'shadow-emerald-500/20', bg: 'from-emerald-500/10 to-emerald-500/5' },
+  { id: 'intermediate', label: 'Intermediate', icon: '📈', color: 'text-cyan-400', glow: 'shadow-cyan-500/20', bg: 'from-cyan-500/10 to-cyan-500/5' },
+  { id: 'advanced', label: 'Advanced', icon: '🔥', color: 'text-orange-400', glow: 'shadow-orange-500/20', bg: 'from-orange-500/10 to-orange-500/5' },
+  { id: 'expert', label: 'Expert', icon: '👑', color: 'text-violet-400', glow: 'shadow-violet-500/20', bg: 'from-violet-500/10 to-violet-500/5' },
 ]
 
 export default function Skills() {
@@ -36,7 +36,6 @@ export default function Skills() {
   const [generatingLessons, setGeneratingLessons] = useState<string | null>(null)
   const [expandedSkill, setExpandedSkill] = useState<string | null>(null)
 
-  // Add skill form
   const [skillName, setSkillName] = useState('')
   const [skillDesc, setSkillDesc] = useState('')
   const [skillLevel, setSkillLevel] = useState('beginner')
@@ -96,12 +95,7 @@ export default function Skills() {
         body: JSON.stringify({
           messages: [{
             role: 'user',
-            content: `Generate a structured set of 5-8 progressive lessons for someone learning "${skill.skill_name}" at ${skill.level} level. Context: ${skill.description || 'No additional context provided.'}
-
-Return ONLY valid JSON array with this exact format:
-[{"id":"1","title":"Lesson Title","content":"2-3 sentence description of what this lesson covers and key takeaways","completed":false}]
-
-Make lessons progressively harder. Be practical and specific.`
+            content: `Generate a structured set of 5-8 progressive lessons for someone learning "${skill.skill_name}" at ${skill.level} level. Context: ${skill.description || 'No additional context provided.'}\n\nReturn ONLY valid JSON array with this exact format:\n[{"id":"1","title":"Lesson Title","content":"2-3 sentence description of what this lesson covers and key takeaways","completed":false}]\n\nMake lessons progressively harder. Be practical and specific.`
           }],
           memories: '',
         }),
@@ -111,12 +105,10 @@ Make lessons progressively harder. Be practical and specific.`
       let lessons: Lesson[] = []
 
       try {
-        // Extract JSON from response (handle markdown code blocks)
         const raw = data.reply || '[]'
         const jsonMatch = raw.match(/\[[\s\S]*\]/)
         lessons = jsonMatch ? JSON.parse(jsonMatch[0]) : JSON.parse(raw)
       } catch {
-        // Fallback: generate basic lessons
         lessons = [
           { id: '1', title: `Introduction to ${skill.skill_name}`, content: 'Learn the fundamental concepts and get started with the basics.', completed: false },
           { id: '2', title: 'Core Fundamentals', content: 'Build a solid foundation with essential techniques and principles.', completed: false },
@@ -126,13 +118,7 @@ Make lessons progressively harder. Be practical and specific.`
         ]
       }
 
-      // Update skill in DB
-      await supabase
-        .from('skills')
-        .update({ lessons })
-        .eq('id', skill.id)
-
-      // Update local state
+      await supabase.from('skills').update({ lessons }).eq('id', skill.id)
       setSkills(skills.map(s => s.id === skill.id ? { ...s, lessons } : s))
       setExpandedSkill(skill.id)
     } catch (err) {
@@ -150,14 +136,8 @@ Make lessons progressively harder. Be practical and specific.`
       l.id === lessonId ? { ...l, completed: !l.completed } : l
     )
 
-    await supabase
-      .from('skills')
-      .update({ lessons: updatedLessons })
-      .eq('id', skillId)
-
-    setSkills(skills.map(s =>
-      s.id === skillId ? { ...s, lessons: updatedLessons } : s
-    ))
+    await supabase.from('skills').update({ lessons: updatedLessons }).eq('id', skillId)
+    setSkills(skills.map(s => s.id === skillId ? { ...s, lessons: updatedLessons } : s))
   }
 
   const deleteSkill = async (id: string) => {
@@ -176,98 +156,113 @@ Make lessons progressively harder. Be practical and specific.`
   if (!user) {
     return (
       <main className="min-h-screen bg-[#050510] flex items-center justify-center">
-        <div className="text-white/40">Loading...</div>
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-violet-500/30 border-t-violet-500 rounded-full animate-spin" />
+          <div className="text-white/30 text-sm">Loading...</div>
+        </div>
       </main>
     )
   }
 
   return (
-    <main className="min-h-screen bg-[#050510] page-transition">
+    <main className="min-h-screen bg-[#050510] page-transition relative overflow-hidden">
+      {/* Ambient background glow */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-violet-600/[0.04] rounded-full blur-[128px]" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-fuchsia-600/[0.03] rounded-full blur-[128px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-cyan-600/[0.02] rounded-full blur-[128px]" />
+      </div>
+
       {/* App Header */}
-      <header className="sticky top-0 z-50 bg-[#050510]/95 backdrop-blur-xl border-b border-white/[0.04] safe-top">
+      <header className="sticky top-0 z-50 bg-[#050510]/70 backdrop-blur-2xl border-b border-white/[0.05] safe-top">
         <div className="px-4 py-3 flex items-center gap-3">
-          <Link href="/dashboard" className="tap-feedback p-1">
-            <svg className="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <Link href="/dashboard" className="tap-feedback p-1.5 rounded-lg hover:bg-white/[0.05] transition">
+            <svg className="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </Link>
-          <h1 className="text-base font-bold">Skill Transfer</h1>
+          <h1 className="text-base font-semibold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Skill Transfer</h1>
         </div>
       </header>
 
-      <div className="pt-4 px-4 max-w-5xl mx-auto pb-24">
+      <div className="relative z-10 pt-6 px-4 max-w-5xl mx-auto pb-24">
         {/* Header */}
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div>
-            <h1 className="text-4xl font-bold mb-2">Your Skills 🎯</h1>
-            <p className="text-white/30">{skills.length} skills • {completedLessons}/{totalLessons} lessons completed</p>
+            <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-white via-white/90 to-white/50 bg-clip-text text-transparent">Your Skills 🎯</h1>
+            <p className="text-white/25 text-sm">{skills.length} skills • {completedLessons}/{totalLessons} lessons completed</p>
           </div>
           <button
             onClick={() => setShowAdd(!showAdd)}
-            className="px-6 py-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-semibold hover:opacity-90 transition"
+            className="group relative px-6 py-3 rounded-xl font-semibold transition-all duration-300 overflow-hidden"
           >
-            + Add Skill
+            <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 opacity-90 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 blur-xl opacity-40 group-hover:opacity-60 transition-opacity" />
+            <span className="relative z-10 flex items-center gap-2">+ Add Skill</span>
           </button>
         </div>
 
         {/* Stats */}
         {skills.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-            <div className="rounded-xl border border-white/[0.04] p-4 text-center" style={{ background: 'rgba(255,255,255,0.01)' }}>
-              <div className="text-2xl font-bold text-violet-400">{skills.length}</div>
-              <div className="text-white/30 text-sm">Skills</div>
-            </div>
-            <div className="rounded-xl border border-white/[0.04] p-4 text-center" style={{ background: 'rgba(255,255,255,0.01)' }}>
-              <div className="text-2xl font-bold text-fuchsia-400">{totalLessons}</div>
-              <div className="text-white/30 text-sm">Total Lessons</div>
-            </div>
-            <div className="rounded-xl border border-white/[0.04] p-4 text-center" style={{ background: 'rgba(255,255,255,0.01)' }}>
-              <div className="text-2xl font-bold text-emerald-400">{completedLessons}</div>
-              <div className="text-white/30 text-sm">Completed</div>
-            </div>
-            <div className="rounded-xl border border-white/[0.04] p-4 text-center" style={{ background: 'rgba(255,255,255,0.01)' }}>
-              <div className="text-2xl font-bold text-amber-400">{skills.filter(s => s.lessons?.length > 0).length}</div>
-              <div className="text-white/30 text-sm">With Lessons</div>
-            </div>
+            {[
+              { value: skills.length, label: 'Skills', color: 'text-violet-400', glow: 'shadow-violet-500/10' },
+              { value: totalLessons, label: 'Total Lessons', color: 'text-fuchsia-400', glow: 'shadow-fuchsia-500/10' },
+              { value: completedLessons, label: 'Completed', color: 'text-emerald-400', glow: 'shadow-emerald-500/10' },
+              { value: skills.filter(s => s.lessons?.length > 0).length, label: 'With Lessons', color: 'text-amber-400', glow: 'shadow-amber-500/10' },
+            ].map((stat, i) => (
+              <div key={i} className={`relative rounded-2xl border border-white/[0.06] p-5 text-center backdrop-blur-xl bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.1] transition-all duration-300 shadow-lg ${stat.glow}`}>
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/[0.04] to-transparent pointer-events-none" />
+                <div className={`relative text-3xl font-bold ${stat.color} drop-shadow-lg`}>{stat.value}</div>
+                <div className="relative text-white/25 text-xs mt-1 font-medium tracking-wide uppercase">{stat.label}</div>
+              </div>
+            ))}
           </div>
         )}
 
         {/* Add Skill Form */}
         {showAdd && (
-          <div className="rounded-2xl border border-white/[0.06] p-6 mb-8" style={{ background: 'rgba(255,255,255,0.02)' }}>
-            <h3 className="text-lg font-semibold mb-4">Add New Skill</h3>
+          <div className="relative rounded-2xl border border-white/[0.08] p-6 mb-8 backdrop-blur-2xl bg-white/[0.02] overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-violet-500/[0.03] to-fuchsia-500/[0.03] pointer-events-none" />
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent" />
 
-            <div className="space-y-4">
+            <h3 className="relative text-lg font-semibold mb-5 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Add New Skill</h3>
+
+            <div className="relative space-y-4">
               <div>
-                <label className="text-white/40 text-sm mb-1 block">Skill Name</label>
+                <label className="text-white/35 text-xs mb-1.5 block font-medium uppercase tracking-wider">Skill Name</label>
                 <input
                   type="text"
                   value={skillName}
                   onChange={(e) => setSkillName(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/50 transition text-white placeholder:text-white/20"
+                  className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/40 focus:ring-2 focus:ring-violet-500/10 transition-all text-white placeholder:text-white/15 backdrop-blur-sm"
                   placeholder="e.g., Guitar, Cooking, Python..."
                 />
               </div>
 
               <div>
-                <label className="text-white/40 text-sm mb-1 block">Description</label>
+                <label className="text-white/35 text-xs mb-1.5 block font-medium uppercase tracking-wider">Description</label>
                 <textarea
                   value={skillDesc}
                   onChange={(e) => setSkillDesc(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/50 transition resize-none text-white placeholder:text-white/20"
+                  className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/40 focus:ring-2 focus:ring-violet-500/10 transition-all resize-none text-white placeholder:text-white/15 backdrop-blur-sm"
                   rows={3}
                   placeholder="Describe your experience with this skill..."
                 />
               </div>
 
               <div>
-                <label className="text-white/40 text-sm mb-2 block">Your Level</label>
+                <label className="text-white/35 text-xs mb-2 block font-medium uppercase tracking-wider">Your Level</label>
                 <div className="flex flex-wrap gap-2">
                   {LEVELS.map((level) => (
                     <button
                       key={level.id}
                       onClick={() => setSkillLevel(level.id)}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition ${skillLevel === level.id ? 'bg-violet-500/30 border border-violet-500/50' : 'border border-white/[0.06] hover:bg-white/[0.02] text-white/50'}`}
+                      className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 backdrop-blur-sm ${
+                        skillLevel === level.id
+                          ? `bg-gradient-to-r ${level.bg} border border-white/[0.1] ${level.color} shadow-lg ${level.glow}`
+                          : 'border border-white/[0.06] hover:bg-white/[0.03] hover:border-white/[0.1] text-white/40'
+                      }`}
                     >
                       {level.icon} {level.label}
                     </button>
@@ -276,11 +271,13 @@ Make lessons progressively harder. Be practical and specific.`
               </div>
             </div>
 
-            <div className="flex gap-3 mt-6">
-              <button onClick={addSkill} className="px-6 py-2.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-lg hover:opacity-90 transition">
-                Save Skill
+            <div className="relative flex gap-3 mt-6">
+              <button onClick={addSkill} className="group relative px-6 py-2.5 rounded-xl overflow-hidden transition-all duration-300">
+                <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 opacity-90 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 blur-lg opacity-30" />
+                <span className="relative z-10 font-medium">Save Skill</span>
               </button>
-              <button onClick={() => setShowAdd(false)} className="px-6 py-2.5 border border-white/[0.06] rounded-lg hover:bg-white/[0.02] transition">
+              <button onClick={() => setShowAdd(false)} className="px-6 py-2.5 border border-white/[0.06] rounded-xl hover:bg-white/[0.03] hover:border-white/[0.1] transition-all backdrop-blur-sm">
                 Cancel
               </button>
             </div>
@@ -289,12 +286,15 @@ Make lessons progressively harder. Be practical and specific.`
 
         {/* Skills List */}
         {loading ? (
-          <div className="text-center text-white/30 py-20">Loading skills...</div>
+          <div className="text-center py-20">
+            <div className="w-8 h-8 border-2 border-violet-500/30 border-t-violet-500 rounded-full animate-spin mx-auto mb-3" />
+            <div className="text-white/25 text-sm">Loading skills...</div>
+          </div>
         ) : skills.length === 0 ? (
           <div className="text-center py-20">
-            <div className="text-5xl mb-4">🎯</div>
-            <p className="text-white/30 text-lg">No skills yet</p>
-            <p className="text-white/20 text-sm mt-2">Add your skills and let AI create personalized lessons</p>
+            <div className="text-6xl mb-4 drop-shadow-lg">🎯</div>
+            <p className="text-white/30 text-lg font-medium">No skills yet</p>
+            <p className="text-white/15 text-sm mt-2">Add your skills and let AI create personalized lessons</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -304,31 +304,34 @@ Make lessons progressively harder. Be practical and specific.`
               const levelInfo = LEVELS.find(l => l.id === skill.level) || LEVELS[0]
 
               return (
-                <div key={skill.id} className="rounded-xl border border-white/[0.04] hover:border-white/[0.08] transition" style={{ background: 'rgba(255,255,255,0.01)' }}>
+                <div key={skill.id} className="group relative rounded-2xl border border-white/[0.06] hover:border-white/[0.1] transition-all duration-500 backdrop-blur-xl bg-white/[0.015] overflow-hidden">
+                  {/* Top glow line */}
+                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
                   <div
-                    className="p-5 cursor-pointer"
+                    className="relative p-5 cursor-pointer"
                     onClick={() => setExpandedSkill(isExpanded ? null : skill.id)}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <h3 className="text-lg font-bold">{skill.skill_name}</h3>
-                          <span className={`text-xs px-2 py-0.5 rounded-full bg-white/[0.04] ${levelInfo.color}`}>
+                          <h3 className="text-lg font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">{skill.skill_name}</h3>
+                          <span className={`text-xs px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] backdrop-blur-sm ${levelInfo.color} font-medium`}>
                             {levelInfo.icon} {levelInfo.label}
                           </span>
                         </div>
                         {skill.description && (
-                          <p className="text-white/40 text-sm">{skill.description}</p>
+                          <p className="text-white/30 text-sm">{skill.description}</p>
                         )}
                       </div>
                       <div className="flex items-center gap-3">
                         <button
                           onClick={(e) => { e.stopPropagation(); deleteSkill(skill.id) }}
-                          className="text-white/20 hover:text-red-400 transition text-sm"
+                          className="text-white/15 hover:text-red-400 hover:bg-red-500/10 rounded-lg p-1.5 transition-all duration-300"
                         >
                           ✕
                         </button>
-                        <svg className={`w-5 h-5 text-white/30 transition-transform ${isExpanded ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className={`w-5 h-5 text-white/20 transition-all duration-300 ${isExpanded ? 'rotate-180 text-violet-400' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
                       </div>
@@ -336,14 +339,14 @@ Make lessons progressively harder. Be practical and specific.`
 
                     {/* Progress Bar */}
                     {skill.lessons && skill.lessons.length > 0 && (
-                      <div className="mt-3">
-                        <div className="flex justify-between text-xs text-white/30 mb-1">
+                      <div className="mt-4">
+                        <div className="flex justify-between text-xs text-white/25 mb-1.5">
                           <span>{skill.lessons.filter(l => l.completed).length}/{skill.lessons.length} lessons</span>
                           <span>{progress}%</span>
                         </div>
                         <div className="w-full h-1.5 bg-white/[0.04] rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full transition-all"
+                            className="h-full bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 rounded-full transition-all duration-700 shadow-lg shadow-violet-500/20"
                             style={{ width: `${progress}%` }}
                           />
                         </div>
@@ -358,15 +361,17 @@ Make lessons progressively harder. Be practical and specific.`
                         <button
                           onClick={() => generateLessons(skill)}
                           disabled={generatingLessons === skill.id}
-                          className="w-full py-3 bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 border border-violet-500/30 rounded-xl hover:from-violet-500/30 hover:to-fuchsia-500/30 transition disabled:opacity-50"
+                          className="group relative w-full py-3.5 rounded-xl transition-all duration-300 overflow-hidden disabled:opacity-50"
                         >
+                          <div className="absolute inset-0 bg-gradient-to-r from-violet-600/10 to-fuchsia-600/10 border border-violet-500/20 rounded-xl" />
+                          <div className="absolute inset-0 bg-gradient-to-r from-violet-600/20 to-fuchsia-600/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
                           {generatingLessons === skill.id ? (
-                            <span className="flex items-center justify-center gap-2">
+                            <span className="relative z-10 flex items-center justify-center gap-2 text-white/70">
                               <div className="w-4 h-4 border-2 border-violet-400/30 border-t-violet-400 rounded-full animate-spin" />
                               Generating lessons...
                             </span>
                           ) : (
-                            '✨ Generate AI Lessons'
+                            <span className="relative z-10 text-white/70 group-hover:text-white/90 transition-colors">✨ Generate AI Lessons</span>
                           )}
                         </button>
                       ) : (
@@ -374,11 +379,19 @@ Make lessons progressively harder. Be practical and specific.`
                           {skill.lessons.map((lesson, i) => (
                             <div
                               key={lesson.id}
-                              className={`flex items-start gap-3 p-3 rounded-lg transition ${lesson.completed ? 'bg-emerald-500/5 border border-emerald-500/10' : 'bg-white/[0.01] border border-white/[0.04]'}`}
+                              className={`flex items-start gap-3 p-3.5 rounded-xl transition-all duration-300 backdrop-blur-sm ${
+                                lesson.completed
+                                  ? 'bg-emerald-500/[0.05] border border-emerald-500/10'
+                                  : 'bg-white/[0.01] border border-white/[0.04] hover:bg-white/[0.03] hover:border-white/[0.08]'
+                              }`}
                             >
                               <button
                                 onClick={() => toggleLesson(skill.id, lesson.id)}
-                                className={`mt-0.5 w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition ${lesson.completed ? 'border-emerald-400 bg-emerald-400' : 'border-white/20 hover:border-violet-400'}`}
+                                className={`mt-0.5 w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
+                                  lesson.completed
+                                    ? 'border-emerald-400 bg-emerald-400 shadow-lg shadow-emerald-500/30'
+                                    : 'border-white/15 hover:border-violet-400 hover:shadow-lg hover:shadow-violet-500/20'
+                                }`}
                               >
                                 {lesson.completed && (
                                   <svg className="w-3 h-3 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -387,10 +400,10 @@ Make lessons progressively harder. Be practical and specific.`
                                 )}
                               </button>
                               <div className="flex-1">
-                                <p className={`font-medium text-sm ${lesson.completed ? 'text-white/30 line-through' : 'text-white/80'}`}>
+                                <p className={`font-medium text-sm transition-all duration-300 ${lesson.completed ? 'text-white/20 line-through' : 'text-white/80'}`}>
                                   {i + 1}. {lesson.title}
                                 </p>
-                                <p className="text-white/30 text-xs mt-1">{lesson.content}</p>
+                                <p className="text-white/25 text-xs mt-1">{lesson.content}</p>
                               </div>
                             </div>
                           ))}
@@ -398,7 +411,7 @@ Make lessons progressively harder. Be practical and specific.`
                           <button
                             onClick={() => generateLessons(skill)}
                             disabled={generatingLessons === skill.id}
-                            className="w-full py-2.5 text-sm text-white/30 hover:text-violet-400 transition mt-2"
+                            className="w-full py-2.5 text-sm text-white/20 hover:text-violet-400 transition-all duration-300 mt-2"
                           >
                             {generatingLessons === skill.id ? 'Regenerating...' : '🔄 Regenerate Lessons'}
                           </button>

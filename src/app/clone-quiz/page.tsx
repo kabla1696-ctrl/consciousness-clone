@@ -16,23 +16,23 @@ type QuizState = 'loading' | 'ready' | 'playing' | 'finished'
 function Particles() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-      {Array.from({ length: 12 }).map((_, i) => (
+      {Array.from({ length: 15 }).map((_, i) => (
         <div
           key={i}
           className="particle"
           style={{
-            width: `${Math.random() * 2 + 1}px`,
-            height: `${Math.random() * 2 + 1}px`,
+            width: `${Math.random() * 2.5 + 1}px`,
+            height: `${Math.random() * 2.5 + 1}px`,
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
             background: i % 3 === 0 ? '#8b5cf6' : i % 3 === 1 ? '#d946ef' : '#06b6d4',
-            '--duration': `${Math.random() * 10 + 7}s`,
+            '--duration': `${Math.random() * 10 + 8}s`,
             '--delay': `${Math.random() * 5}s`,
           } as React.CSSProperties}
         />
       ))}
-      <div className="ambient-orb ambient-orb-violet" style={{ width: 280, height: 280, top: '10%', right: '-8%' }} />
-      <div className="ambient-orb ambient-orb-fuchsia" style={{ width: 220, height: 220, bottom: '15%', left: '-5%' }} />
+      <div className="ambient-orb ambient-orb-violet" style={{ width: 300, height: 300, top: '10%', left: '-10%', opacity: 0.2 }} />
+      <div className="ambient-orb ambient-orb-fuchsia" style={{ width: 250, height: 250, bottom: '15%', right: '-8%', opacity: 0.18 }} />
     </div>
   )
 }
@@ -180,6 +180,7 @@ ${memoryContext}`,
 
   const finishQuiz = async (finalScore: number) => {
     setState('finished')
+
     if (user) {
       await supabase.from('clone_quiz_results').insert({
         user_id: user.id,
@@ -193,7 +194,9 @@ ${memoryContext}`,
   const shareResults = async () => {
     const text = `🧠 My Consciousness Clone knows me ${Math.round((score / questions.length) * 100)}%! ${score}/${questions.length} correct. How well does YOUR clone know you? #ConsciousnessClone`
     if (navigator.share) {
-      try { await navigator.share({ text, title: 'Clone Quiz Results' }) } catch {}
+      try {
+        await navigator.share({ text, title: 'Clone Quiz Results' })
+      } catch {}
     } else {
       await navigator.clipboard.writeText(text)
       alert('Results copied to clipboard! 📋')
@@ -213,8 +216,11 @@ ${memoryContext}`,
 
   if (!user) {
     return (
-      <main className="min-h-screen animated-gradient-bg flex items-center justify-center">
-        <div className="w-10 h-10 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+      <main className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #050510 0%, #0a0a1a 50%, #0d0520 100%)' }}>
+        <div className="relative">
+          <div className="w-12 h-12 border-2 border-violet-500/50 border-t-violet-400 rounded-full animate-spin" />
+          <div className="absolute inset-0 w-12 h-12 border border-fuchsia-500/20 rounded-full animate-ping" />
+        </div>
       </main>
     )
   }
@@ -223,53 +229,72 @@ ${memoryContext}`,
   const percentage = questions.length > 0 ? Math.round((score / questions.length) * 100) : 0
 
   return (
-    <main className="min-h-screen animated-gradient-bg noise-overlay page-transition">
+    <main className="min-h-screen page-transition" style={{ background: 'linear-gradient(135deg, #050510 0%, #080818 40%, #0d0520 100%)' }}>
       <Particles />
 
       {/* Header */}
-      <header className="sticky top-0 z-50" style={{ background: 'rgba(5, 5, 16, 0.85)', backdropFilter: 'blur(40px)', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+      <header className="sticky top-0 z-50 safe-top" style={{
+        background: 'rgba(5, 5, 16, 0.7)',
+        backdropFilter: 'blur(40px) saturate(1.8)',
+        WebkitBackdropFilter: 'blur(40px) saturate(1.8)',
+        borderBottom: '1px solid rgba(139, 92, 246, 0.1)',
+        boxShadow: '0 4px 30px rgba(139, 92, 246, 0.05)',
+      }}>
         <div className="px-4 py-3 flex items-center gap-3">
-          <Link href="/dashboard" className="tap-feedback p-1 rounded-lg hover:bg-white/[0.04] transition-all">
-            <svg className="w-6 h-6 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <Link href="/dashboard" className="tap-feedback p-2 rounded-xl hover:bg-white/[0.05] transition-all duration-300">
+            <svg className="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </Link>
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-sm shadow-lg shadow-violet-500/20">🧩</div>
+          <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-lg shadow-lg" style={{
+            background: 'linear-gradient(135deg, #8b5cf6, #d946ef)',
+            boxShadow: '0 0 20px rgba(139, 92, 246, 0.4), 0 0 60px rgba(139, 92, 246, 0.1)',
+          }}>🧩</div>
           <div className="flex-1">
-            <h1 className="text-sm font-bold">Clone Quiz</h1>
-            <p className="text-[10px] text-white/30">How well does your clone know you?</p>
+            <h1 className="text-sm font-bold bg-gradient-to-r from-violet-300 to-fuchsia-300 bg-clip-text text-transparent">Clone Quiz</h1>
+            <p className="text-[10px] text-white/40">How well does your clone know you?</p>
           </div>
         </div>
       </header>
 
-      <div className="px-4 py-6 pb-24 max-w-lg mx-auto relative z-10">
+      <div className="px-4 py-6 pb-24 max-w-lg mx-auto">
         {/* Loading State */}
         {state === 'loading' && (
           <div className="flex flex-col items-center justify-center py-20">
-            <div className="w-12 h-12 border-2 border-violet-500 border-t-transparent rounded-full animate-spin mb-4" />
-            <p className="text-white/30 text-sm">Loading...</p>
+            <div className="relative">
+              <div className="w-14 h-14 border-2 border-violet-500/50 border-t-violet-400 rounded-full animate-spin" />
+              <div className="absolute inset-0 w-14 h-14 border border-fuchsia-500/20 rounded-full animate-ping" />
+            </div>
+            <p className="text-white/40 text-sm mt-4">Loading...</p>
           </div>
         )}
 
         {/* Ready State */}
         {state === 'ready' && (
-          <div className="flex flex-col items-center text-center py-8 animate-slide-up">
-            <div className="relative mb-8">
-              <div className="w-28 h-28 rounded-3xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 border border-violet-500/20 flex items-center justify-center text-6xl shadow-2xl shadow-violet-500/10">
-                🧩
-              </div>
-              <div className="absolute inset-0 bg-violet-500/10 rounded-3xl blur-2xl" />
+          <div className="flex flex-col items-center text-center py-8">
+            <div className="w-28 h-28 rounded-3xl flex items-center justify-center text-5xl mb-6" style={{
+              background: 'linear-gradient(135deg, rgba(139,92,246,0.15), rgba(218,70,239,0.15))',
+              border: '1px solid rgba(139, 92, 246, 0.2)',
+              backdropFilter: 'blur(20px)',
+              boxShadow: '0 0 40px rgba(139, 92, 246, 0.15), inset 0 1px 0 rgba(255,255,255,0.05)',
+            }}>
+              🧩
             </div>
-            <h2 className="text-3xl font-black gradient-text mb-2">Clone Quiz</h2>
-            <p className="text-white/30 text-sm mb-2 max-w-xs leading-relaxed">
+            <h2 className="text-2xl font-bold mb-2 bg-gradient-to-r from-violet-300 to-fuchsia-300 bg-clip-text text-transparent">Clone Quiz</h2>
+            <p className="text-white/40 text-sm mb-2 max-w-xs">
               Test how well your AI clone knows you! 10 questions generated from your memories.
             </p>
-            <p className="text-white/15 text-xs mb-8">
+            <p className="text-white/25 text-xs mb-8">
               ⚡ Requires at least 3 stored memories
             </p>
 
             {error && (
-              <div className="w-full rounded-2xl border border-red-500/20 bg-red-500/5 p-4 mb-6 glass-card">
+              <div className="w-full rounded-xl p-4 mb-6" style={{
+                background: 'rgba(239, 68, 68, 0.06)',
+                border: '1px solid rgba(239, 68, 68, 0.2)',
+                backdropFilter: 'blur(10px)',
+                boxShadow: '0 0 20px rgba(239, 68, 68, 0.05)',
+              }}>
                 <p className="text-red-400 text-sm">{error}</p>
               </div>
             )}
@@ -277,7 +302,11 @@ ${memoryContext}`,
             <button
               onClick={generateQuestions}
               disabled={generating}
-              className="w-full py-4 rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-500 font-bold text-base glow-btn disabled:opacity-50 flex items-center justify-center gap-2"
+              className="relative w-full py-4 rounded-2xl font-semibold text-base tap-feedback disabled:opacity-50 flex items-center justify-center gap-2 overflow-hidden"
+              style={{
+                background: 'linear-gradient(135deg, #8b5cf6, #d946ef)',
+                boxShadow: '0 0 30px rgba(139, 92, 246, 0.3), 0 8px 25px rgba(0,0,0,0.3)',
+              }}
             >
               {generating ? (
                 <>
@@ -289,76 +318,98 @@ ${memoryContext}`,
               )}
             </button>
 
-            <p className="text-white/10 text-xs mt-4">Questions are AI-generated from your memories</p>
+            <p className="text-white/15 text-xs mt-4">Questions are AI-generated from your memories</p>
           </div>
         )}
 
         {/* Playing State */}
         {state === 'playing' && questions.length > 0 && (
-          <div className="animate-slide-up">
+          <div>
             {/* Progress */}
-            <div className="mb-8">
+            <div className="mb-6">
               <div className="flex justify-between items-center mb-2">
-                <span className="text-white/30 text-xs font-medium">
+                <span className="text-white/40 text-xs">
                   Question {currentIndex + 1} of {questions.length}
                 </span>
-                <span className="text-violet-400 text-xs font-bold">
+                <span className="text-xs font-medium" style={{ color: '#a78bfa' }}>
                   Score: {score}
                 </span>
               </div>
-              <div className="w-full h-2 bg-white/[0.04] rounded-full overflow-hidden premium-progress">
+              <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.04)' }}>
                 <div
                   className="h-full rounded-full transition-all duration-500 ease-out"
                   style={{
                     width: `${progress}%`,
                     background: 'linear-gradient(90deg, #8b5cf6, #d946ef)',
+                    boxShadow: '0 0 10px rgba(139, 92, 246, 0.4)',
                   }}
                 />
               </div>
             </div>
 
             {/* Category Badge */}
-            <div className="flex justify-center mb-5">
-              <span className="px-4 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-400 text-xs font-medium">
+            <div className="flex justify-center mb-4">
+              <span className="px-3 py-1 rounded-full text-xs" style={{
+                background: 'rgba(139, 92, 246, 0.1)',
+                border: '1px solid rgba(139, 92, 246, 0.2)',
+                color: '#a78bfa',
+                backdropFilter: 'blur(10px)',
+              }}>
                 {questions[currentIndex].category}
               </span>
             </div>
 
             {/* Question */}
-            <div className="glass-card p-7 mb-6 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-20 h-20 bg-violet-500/5 rounded-full blur-3xl" />
-              <h3 className="text-xl font-bold text-center leading-relaxed text-white/90">
+            <div className="rounded-2xl p-6 mb-6" style={{
+              background: 'rgba(255,255,255,0.02)',
+              border: '1px solid rgba(139, 92, 246, 0.1)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              boxShadow: '0 4px 30px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.03)',
+            }}>
+              <h3 className="text-lg font-semibold text-center leading-relaxed text-white/90">
                 {questions[currentIndex].question}
               </h3>
             </div>
 
             {/* Options */}
-            <div className="space-y-3 stagger-children">
+            <div className="space-y-3">
               {questions[currentIndex].options.map((option, i) => {
                 const isCorrect = i === questions[currentIndex].correctIndex
                 const isSelected = selectedAnswer === i
                 const isWrong = showResult && isSelected && !isCorrect
 
-                let borderColor = 'border-white/[0.06]'
-                let bgColor = 'bg-white/[0.02]'
+                let optionStyle: React.CSSProperties = {
+                  background: 'rgba(255,255,255,0.02)',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                  backdropFilter: 'blur(10px)',
+                }
                 let textColor = 'text-white/80'
-                let shadowStyle = {}
+                let badgeStyle: React.CSSProperties = { background: 'rgba(255,255,255,0.04)' }
 
                 if (showResult) {
                   if (isCorrect) {
-                    borderColor = 'border-emerald-500/50'
-                    bgColor = 'bg-emerald-500/10'
+                    optionStyle = {
+                      background: 'rgba(16, 185, 129, 0.08)',
+                      border: '1px solid rgba(16, 185, 129, 0.3)',
+                      boxShadow: '0 0 20px rgba(16, 185, 129, 0.1)',
+                    }
                     textColor = 'text-emerald-400'
-                    shadowStyle = { boxShadow: '0 0 20px rgba(16, 185, 129, 0.15)' }
+                    badgeStyle = { background: 'rgba(16, 185, 129, 0.2)' }
                   } else if (isWrong) {
-                    borderColor = 'border-red-500/50'
-                    bgColor = 'bg-red-500/10'
+                    optionStyle = {
+                      background: 'rgba(239, 68, 68, 0.08)',
+                      border: '1px solid rgba(239, 68, 68, 0.3)',
+                      boxShadow: '0 0 20px rgba(239, 68, 68, 0.1)',
+                    }
                     textColor = 'text-red-400'
-                    shadowStyle = { boxShadow: '0 0 20px rgba(239, 68, 68, 0.15)' }
+                    badgeStyle = { background: 'rgba(239, 68, 68, 0.2)' }
                   } else {
-                    borderColor = 'border-white/[0.02]'
-                    bgColor = 'bg-white/[0.01]'
-                    textColor = 'text-white/15'
+                    optionStyle = {
+                      background: 'rgba(255,255,255,0.01)',
+                      border: '1px solid rgba(255,255,255,0.03)',
+                    }
+                    textColor = 'text-white/20'
                   }
                 }
 
@@ -367,14 +418,14 @@ ${memoryContext}`,
                     key={i}
                     onClick={() => selectAnswer(i)}
                     disabled={showResult}
-                    className={`w-full p-5 rounded-2xl border ${borderColor} ${bgColor} text-left transition-all duration-300 hover-lift`}
-                    style={shadowStyle}
+                    className="w-full p-4 rounded-xl text-left tap-feedback transition-all duration-200"
+                    style={optionStyle}
                   >
-                    <div className="flex items-center gap-4">
-                      <div className={`w-9 h-9 rounded-xl ${showResult && isCorrect ? 'bg-emerald-500/20' : showResult && isWrong ? 'bg-red-500/20' : 'bg-white/[0.04]'} flex items-center justify-center text-xs font-bold ${textColor} transition-all`}>
+                    <div className="flex items-center gap-3">
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-medium ${textColor}`} style={badgeStyle}>
                         {showResult && isCorrect ? '✓' : showResult && isWrong ? '✗' : String.fromCharCode(65 + i)}
                       </div>
-                      <span className={`text-sm font-medium ${textColor} transition-all`}>{option}</span>
+                      <span className={`text-sm ${textColor}`}>{option}</span>
                     </div>
                   </button>
                 )
@@ -383,8 +434,8 @@ ${memoryContext}`,
 
             {/* Feedback */}
             {showResult && (
-              <div className="mt-5 text-center animate-slide-up">
-                <span className={`text-base font-bold ${selectedAnswer === questions[currentIndex].correctIndex ? 'text-emerald-400' : 'text-red-400'}`}>
+              <div className="mt-4 text-center">
+                <span className={`text-sm font-medium ${selectedAnswer === questions[currentIndex].correctIndex ? 'text-emerald-400' : 'text-red-400'}`}>
                   {selectedAnswer === questions[currentIndex].correctIndex ? '✅ Correct!' : '❌ Wrong!'}
                 </span>
               </div>
@@ -394,9 +445,9 @@ ${memoryContext}`,
 
         {/* Finished State */}
         {state === 'finished' && (
-          <div className="flex flex-col items-center text-center py-8 animate-slide-up">
+          <div className="flex flex-col items-center text-center py-8">
             {/* Score Circle */}
-            <div className="relative w-44 h-44 mb-8">
+            <div className="relative w-44 h-44 mb-6">
               <svg className="w-44 h-44 -rotate-90" viewBox="0 0 128 128">
                 <circle cx="64" cy="64" r="56" stroke="rgba(255,255,255,0.04)" strokeWidth="8" fill="none" />
                 <circle
@@ -417,38 +468,49 @@ ${memoryContext}`,
                 </defs>
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-5xl font-black gradient-text">{percentage}%</span>
-                <span className="text-white/25 text-xs mt-1 font-medium">Knows You</span>
+                <span className="text-4xl font-bold bg-gradient-to-r from-violet-300 to-fuchsia-300 bg-clip-text text-transparent">{percentage}%</span>
+                <span className="text-white/30 text-xs mt-1">Knows You</span>
               </div>
-              <div className="absolute inset-0 bg-violet-500/5 rounded-full blur-3xl" />
             </div>
 
-            <h2 className="text-3xl font-black mb-2">
+            <h2 className="text-2xl font-bold mb-2">
               {percentage >= 80 ? '🧠 Your Clone Knows You!' :
                percentage >= 50 ? '🤔 Getting There...' :
                '📝 Need More Memories!'}
             </h2>
-            <p className="text-white/30 text-base mb-2 font-medium">
+            <p className="text-white/40 text-sm mb-2">
               {score} out of {questions.length} correct
             </p>
-            <p className="text-white/15 text-xs mb-8 max-w-xs">
+            <p className="text-white/25 text-xs mb-8">
               {percentage >= 80 ? 'Your consciousness clone is well-trained!' :
                percentage >= 50 ? 'Add more memories to improve accuracy.' :
                'Your clone needs more data to know you better.'}
             </p>
 
             {/* Answer Summary */}
-            <div className="w-full glass-card p-5 mb-6">
-              <h3 className="text-sm font-semibold text-white/50 mb-3">Answer Summary</h3>
+            <div className="w-full rounded-2xl p-4 mb-6" style={{
+              background: 'rgba(255,255,255,0.02)',
+              border: '1px solid rgba(139, 92, 246, 0.1)',
+              backdropFilter: 'blur(20px)',
+              boxShadow: '0 4px 30px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.03)',
+            }}>
+              <h3 className="text-sm font-medium text-white/60 mb-3">Answer Summary</h3>
               <div className="grid grid-cols-5 gap-2">
                 {answers.map((answer, i) => (
                   <div
                     key={i}
-                    className={`aspect-square rounded-xl flex items-center justify-center text-xs font-bold transition-all duration-300 hover:scale-110 ${
+                    className={`aspect-square rounded-lg flex items-center justify-center text-xs font-medium ${
                       answer === questions[i]?.correctIndex
-                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/20'
-                        : 'bg-red-500/20 text-red-400 border border-red-500/20'
+                        ? 'text-emerald-400'
+                        : 'text-red-400'
                     }`}
+                    style={answer === questions[i]?.correctIndex ? {
+                      background: 'rgba(16, 185, 129, 0.15)',
+                      border: '1px solid rgba(16, 185, 129, 0.2)',
+                    } : {
+                      background: 'rgba(239, 68, 68, 0.15)',
+                      border: '1px solid rgba(239, 68, 68, 0.2)',
+                    }}
                   >
                     {i + 1}
                   </div>
@@ -460,13 +522,22 @@ ${memoryContext}`,
             <div className="w-full space-y-3">
               <button
                 onClick={shareResults}
-                className="w-full py-4 rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-500 font-bold glow-btn flex items-center justify-center gap-2"
+                className="relative w-full py-4 rounded-2xl font-semibold tap-feedback flex items-center justify-center gap-2 overflow-hidden"
+                style={{
+                  background: 'linear-gradient(135deg, #8b5cf6, #d946ef)',
+                  boxShadow: '0 0 30px rgba(139, 92, 246, 0.3), 0 8px 25px rgba(0,0,0,0.3)',
+                }}
               >
                 📤 Share Results
               </button>
               <button
                 onClick={restartQuiz}
-                className="w-full py-4 rounded-2xl glass-card font-semibold flex items-center justify-center gap-2 text-white/50 hover:text-white/70 hover:border-violet-500/20 transition-all"
+                className="w-full py-4 rounded-2xl font-semibold tap-feedback flex items-center justify-center gap-2 text-white/60"
+                style={{
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                  backdropFilter: 'blur(10px)',
+                }}
               >
                 🔄 Play Again
               </button>

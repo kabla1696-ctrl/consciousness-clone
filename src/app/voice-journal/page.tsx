@@ -24,6 +24,30 @@ const MOODS = [
   { emoji: '❤️', label: 'Grateful', color: 'text-pink-400' },
 ]
 
+function Particles() {
+  return (
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+      {Array.from({ length: 15 }).map((_, i) => (
+        <div
+          key={i}
+          className="particle"
+          style={{
+            width: `${Math.random() * 2.5 + 1}px`,
+            height: `${Math.random() * 2.5 + 1}px`,
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            background: i % 3 === 0 ? '#8b5cf6' : i % 3 === 1 ? '#d946ef' : '#06b6d4',
+            '--duration': `${Math.random() * 10 + 8}s`,
+            '--delay': `${Math.random() * 5}s`,
+          } as React.CSSProperties}
+        />
+      ))}
+      <div className="ambient-orb ambient-orb-violet" style={{ width: 300, height: 300, top: '5%', left: '-10%', opacity: 0.2 }} />
+      <div className="ambient-orb ambient-orb-fuchsia" style={{ width: 250, height: 250, bottom: '20%', right: '-8%', opacity: 0.18 }} />
+    </div>
+  )
+}
+
 export default function VoiceJournal() {
   const [user, setUser] = useState<any>(null)
   const [entries, setEntries] = useState<VoiceEntry[]>([])
@@ -80,7 +104,7 @@ export default function VoiceJournal() {
       animFrameRef.current = requestAnimationFrame(draw)
       analyser.getByteFrequencyData(dataArray)
 
-      ctx.fillStyle = 'rgba(5, 5, 16, 0.2)'
+      ctx.fillStyle = 'rgba(5, 5, 16, 0.25)'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       const barWidth = (canvas.width / bufferLength) * 2.5
@@ -91,10 +115,14 @@ export default function VoiceJournal() {
 
         const gradient = ctx.createLinearGradient(0, canvas.height, 0, canvas.height - barHeight)
         gradient.addColorStop(0, '#8b5cf6')
-        gradient.addColorStop(1, '#d946ef')
+        gradient.addColorStop(0.5, '#d946ef')
+        gradient.addColorStop(1, '#06b6d4')
 
         ctx.fillStyle = gradient
+        ctx.shadowColor = '#8b5cf6'
+        ctx.shadowBlur = 8
         ctx.fillRect(x, canvas.height - barHeight, barWidth - 1, barHeight)
+        ctx.shadowBlur = 0
 
         x += barWidth
         if (x > canvas.width) break
@@ -108,7 +136,6 @@ export default function VoiceJournal() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
 
-      // Set up audio analyser for waveform
       audioContextRef.current = new AudioContext()
       const source = audioContextRef.current.createMediaStreamSource(stream)
       analyserRef.current = audioContextRef.current.createAnalyser()
@@ -137,12 +164,10 @@ export default function VoiceJournal() {
       setRecordingTime(0)
       setShowRecorder(true)
 
-      // Start timer
       timerRef.current = setInterval(() => {
         setRecordingTime(prev => prev + 1)
       }, 1000)
 
-      // Start waveform
       setTimeout(() => drawWaveform(), 100)
     } catch (err) {
       console.error('Microphone error:', err)
@@ -171,7 +196,6 @@ export default function VoiceJournal() {
     setSaving(true)
 
     try {
-      // Convert to base64
       const reader = new FileReader()
       const base64 = await new Promise<string>((resolve) => {
         reader.onloadend = () => resolve(reader.result as string)
@@ -186,7 +210,6 @@ export default function VoiceJournal() {
         duration_seconds: recordingTime,
       })
 
-      // Reload entries
       loadEntries(user.id)
       discardRecording()
     } catch (err) {
@@ -231,25 +254,39 @@ export default function VoiceJournal() {
 
   if (!user) {
     return (
-      <main className="min-h-screen bg-[#050510] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+      <main className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #050510 0%, #0a0a1a 50%, #0d0520 100%)' }}>
+        <div className="relative">
+          <div className="w-12 h-12 border-2 border-violet-500/50 border-t-violet-400 rounded-full animate-spin" />
+          <div className="absolute inset-0 w-12 h-12 border border-fuchsia-500/20 rounded-full animate-ping" />
+        </div>
       </main>
     )
   }
 
   return (
-    <main className="min-h-screen bg-[#050510] page-transition">
+    <main className="min-h-screen page-transition" style={{ background: 'linear-gradient(135deg, #050510 0%, #080818 40%, #0d0520 100%)' }}>
+      <Particles />
+
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#050510]/95 backdrop-blur-xl border-b border-white/[0.04] safe-top">
+      <header className="sticky top-0 z-50 safe-top" style={{
+        background: 'rgba(5, 5, 16, 0.7)',
+        backdropFilter: 'blur(40px) saturate(1.8)',
+        WebkitBackdropFilter: 'blur(40px) saturate(1.8)',
+        borderBottom: '1px solid rgba(139, 92, 246, 0.1)',
+        boxShadow: '0 4px 30px rgba(139, 92, 246, 0.05)',
+      }}>
         <div className="px-4 py-3 flex items-center gap-3">
-          <Link href="/dashboard" className="tap-feedback p-1">
-            <svg className="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <Link href="/dashboard" className="tap-feedback p-2 rounded-xl hover:bg-white/[0.05] transition-all duration-300">
+            <svg className="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </Link>
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-sm">🎙️</div>
+          <div className="w-10 h-10 rounded-2xl flex items-center justify-center text-lg shadow-lg" style={{
+            background: 'linear-gradient(135deg, #8b5cf6, #d946ef)',
+            boxShadow: '0 0 20px rgba(139, 92, 246, 0.4), 0 0 60px rgba(139, 92, 246, 0.1)',
+          }}>🎙️</div>
           <div className="flex-1">
-            <h1 className="text-sm font-bold">Voice Journal</h1>
+            <h1 className="text-sm font-bold bg-gradient-to-r from-violet-300 to-fuchsia-300 bg-clip-text text-transparent">Voice Journal</h1>
             <p className="text-[10px] text-white/40">Record your thoughts</p>
           </div>
         </div>
@@ -258,9 +295,19 @@ export default function VoiceJournal() {
       <div className="px-4 py-6 pb-24 max-w-lg mx-auto">
         {/* Recorder Section */}
         {showRecorder ? (
-          <div className="rounded-2xl border border-violet-500/20 bg-violet-500/5 p-6 mb-6">
+          <div className="rounded-2xl p-6 mb-6" style={{
+            background: 'rgba(139, 92, 246, 0.04)',
+            border: '1px solid rgba(139, 92, 246, 0.15)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            boxShadow: '0 0 40px rgba(139, 92, 246, 0.08), 0 8px 30px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.03)',
+          }}>
             {/* Waveform */}
-            <div className="mb-4 rounded-xl overflow-hidden bg-[#050510]">
+            <div className="mb-4 rounded-xl overflow-hidden" style={{
+              background: 'rgba(5, 5, 16, 0.6)',
+              border: '1px solid rgba(139, 92, 246, 0.08)',
+              boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.3)',
+            }}>
               <canvas
                 ref={canvasRef}
                 width={400}
@@ -271,7 +318,7 @@ export default function VoiceJournal() {
 
             {/* Timer */}
             <div className="text-center mb-4">
-              <span className="text-3xl font-mono font-bold text-violet-400">
+              <span className="text-3xl font-mono font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
                 {formatTime(recordingTime)}
               </span>
             </div>
@@ -280,10 +327,15 @@ export default function VoiceJournal() {
             {isRecording ? (
               <button
                 onClick={stopRecording}
-                className="w-full py-4 rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 font-semibold tap-feedback flex items-center justify-center gap-2"
+                className="w-full py-4 rounded-xl font-semibold tap-feedback flex items-center justify-center gap-2"
+                style={{
+                  background: 'rgba(239, 68, 68, 0.1)',
+                  border: '1px solid rgba(239, 68, 68, 0.3)',
+                  boxShadow: '0 0 20px rgba(239, 68, 68, 0.08)',
+                }}
               >
                 <div className="w-4 h-4 rounded-sm bg-red-400" />
-                Stop Recording
+                <span className="text-red-400">Stop Recording</span>
               </button>
             ) : audioURL ? (
               <div className="space-y-4">
@@ -298,11 +350,16 @@ export default function VoiceJournal() {
                       <button
                         key={mood.label}
                         onClick={() => setSelectedMood(mood.label)}
-                        className={`p-3 rounded-xl border text-center tap-feedback transition ${
-                          selectedMood === mood.label
-                            ? 'border-violet-500/40 bg-violet-500/10'
-                            : 'border-white/[0.04] bg-white/[0.02]'
-                        }`}
+                        className="p-3 rounded-xl text-center tap-feedback transition-all duration-300"
+                        style={selectedMood === mood.label ? {
+                          background: 'rgba(139, 92, 246, 0.12)',
+                          border: '1px solid rgba(139, 92, 246, 0.3)',
+                          boxShadow: '0 0 15px rgba(139, 92, 246, 0.1)',
+                        } : {
+                          background: 'rgba(255,255,255,0.02)',
+                          border: '1px solid rgba(255,255,255,0.04)',
+                          backdropFilter: 'blur(10px)',
+                        }}
                       >
                         <div className="text-xl">{mood.emoji}</div>
                         <div className="text-[10px] text-white/40 mt-1">{mood.label}</div>
@@ -315,14 +372,23 @@ export default function VoiceJournal() {
                 <div className="flex gap-3">
                   <button
                     onClick={discardRecording}
-                    className="flex-1 py-3 rounded-xl border border-white/[0.06] bg-white/[0.02] text-white/60 font-medium tap-feedback"
+                    className="flex-1 py-3 rounded-xl font-medium tap-feedback text-white/60"
+                    style={{
+                      background: 'rgba(255,255,255,0.03)',
+                      border: '1px solid rgba(255,255,255,0.06)',
+                      backdropFilter: 'blur(10px)',
+                    }}
                   >
                     Discard
                   </button>
                   <button
                     onClick={saveEntry}
                     disabled={!selectedMood || saving}
-                    className="flex-1 py-3 rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 font-medium tap-feedback disabled:opacity-40 flex items-center justify-center gap-2"
+                    className="relative flex-1 py-3 rounded-xl font-medium tap-feedback disabled:opacity-40 flex items-center justify-center gap-2 overflow-hidden"
+                    style={{
+                      background: 'linear-gradient(135deg, #8b5cf6, #d946ef)',
+                      boxShadow: '0 0 20px rgba(139, 92, 246, 0.25), 0 4px 15px rgba(0,0,0,0.3)',
+                    }}
                   >
                     {saving ? (
                       <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -339,20 +405,27 @@ export default function VoiceJournal() {
           <div className="flex flex-col items-center py-8 mb-6">
             <button
               onClick={startRecording}
-              className="w-24 h-24 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/20 tap-feedback active:scale-95 transition-transform"
+              className="relative w-28 h-28 rounded-full flex items-center justify-center tap-feedback active:scale-95 transition-transform"
+              style={{
+                background: 'linear-gradient(135deg, #8b5cf6, #d946ef)',
+                boxShadow: '0 0 40px rgba(139, 92, 246, 0.35), 0 0 80px rgba(139, 92, 246, 0.15), 0 8px 25px rgba(0,0,0,0.4)',
+              }}
             >
-              <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="absolute inset-0 rounded-full animate-ping opacity-20" style={{
+                background: 'linear-gradient(135deg, #8b5cf6, #d946ef)',
+              }} />
+              <svg className="w-12 h-12 text-white relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-14 0m14 0a7 7 0 00-14 0m14 0v1a7 7 0 01-14 0v-1m7-4V3m0 0L8 6m4-3l4 3" />
               </svg>
             </button>
-            <p className="text-white/40 text-sm mt-4">Tap to record</p>
+            <p className="text-white/50 text-sm mt-4 font-medium">Tap to record</p>
             <p className="text-white/20 text-xs mt-1">Your voice, your thoughts</p>
           </div>
         )}
 
         {/* Journal Entries */}
         <div>
-          <h2 className="text-lg font-bold mb-4">Journal Entries</h2>
+          <h2 className="text-lg font-bold mb-4 bg-gradient-to-r from-violet-300 to-fuchsia-300 bg-clip-text text-transparent">Journal Entries</h2>
 
           {entries.length === 0 ? (
             <div className="text-center py-12">
@@ -367,16 +440,27 @@ export default function VoiceJournal() {
                 return (
                   <div
                     key={entry.id}
-                    className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4"
+                    className="rounded-xl p-4 transition-all duration-300 hover:scale-[1.01]"
+                    style={{
+                      background: 'rgba(255,255,255,0.02)',
+                      border: '1px solid rgba(139, 92, 246, 0.08)',
+                      backdropFilter: 'blur(20px)',
+                      WebkitBackdropFilter: 'blur(20px)',
+                      boxShadow: '0 4px 20px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.02)',
+                    }}
                   >
                     <div className="flex items-center gap-3">
                       <button
                         onClick={() => playEntry(entry)}
-                        className={`w-10 h-10 rounded-full flex items-center justify-center tap-feedback transition ${
-                          playingId === entry.id
-                            ? 'bg-violet-500/20 border border-violet-500/30'
-                            : 'bg-white/[0.04] border border-white/[0.06]'
-                        }`}
+                        className="w-10 h-10 rounded-full flex items-center justify-center tap-feedback transition-all duration-300"
+                        style={playingId === entry.id ? {
+                          background: 'rgba(139, 92, 246, 0.15)',
+                          border: '1px solid rgba(139, 92, 246, 0.3)',
+                          boxShadow: '0 0 15px rgba(139, 92, 246, 0.15)',
+                        } : {
+                          background: 'rgba(255,255,255,0.04)',
+                          border: '1px solid rgba(255,255,255,0.06)',
+                        }}
                       >
                         {playingId === entry.id ? (
                           <div className="w-3 h-3 rounded-sm bg-violet-400" />

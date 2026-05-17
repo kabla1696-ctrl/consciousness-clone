@@ -23,7 +23,6 @@ export default function PublicProfile() {
   const [saving, setSaving] = useState(false)
   const [copied, setCopied] = useState(false)
 
-  // Form state
   const [displayName, setDisplayName] = useState('')
   const [bio, setBio] = useState('')
   const [isPublic, setIsPublic] = useState(false)
@@ -101,99 +100,117 @@ export default function PublicProfile() {
   if (loading) {
     return (
       <main className="min-h-screen bg-[#050510] flex items-center justify-center">
-        <div className="text-white/40">Loading...</div>
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-violet-500/30 border-t-violet-500 rounded-full animate-spin" />
+          <div className="text-white/30 text-sm">Loading...</div>
+        </div>
       </main>
     )
   }
 
   return (
-    <main className="min-h-screen bg-[#050510] page-transition">
+    <main className="min-h-screen bg-[#050510] page-transition relative overflow-hidden">
+      {/* Ambient background glow */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-violet-600/[0.04] rounded-full blur-[128px]" />
+        <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-fuchsia-600/[0.03] rounded-full blur-[128px]" />
+        <div className="absolute top-1/3 right-0 w-[300px] h-[300px] bg-amber-600/[0.02] rounded-full blur-[100px]" />
+      </div>
+
       {/* App Header */}
-      <header className="sticky top-0 z-50 bg-[#050510]/95 backdrop-blur-xl border-b border-white/[0.04] safe-top">
+      <header className="sticky top-0 z-50 bg-[#050510]/70 backdrop-blur-2xl border-b border-white/[0.05] safe-top">
         <div className="px-4 py-3 flex items-center gap-3">
-          <Link href="/dashboard" className="tap-feedback p-1">
-            <svg className="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <Link href="/dashboard" className="tap-feedback p-1.5 rounded-lg hover:bg-white/[0.05] transition">
+            <svg className="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </Link>
-          <h1 className="text-base font-bold">Public Profile</h1>
+          <h1 className="text-base font-semibold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Public Profile</h1>
         </div>
       </header>
 
-      <div className="pt-4 px-4 max-w-2xl mx-auto pb-24">
+      <div className="relative z-10 pt-6 px-4 max-w-2xl mx-auto pb-24">
         {/* Profile Preview Card */}
-        <div className="rounded-2xl border border-white/[0.06] p-6 mb-8" style={{ background: 'rgba(255,255,255,0.02)' }}>
-          <div className="flex items-center gap-4 mb-6">
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-3xl">
-              {displayName ? displayName[0].toUpperCase() : '🧠'}
+        <div className="relative rounded-2xl border border-white/[0.08] p-6 mb-6 backdrop-blur-2xl bg-white/[0.02] overflow-hidden">
+          {/* Top glow line */}
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent" />
+          {/* Inner glow */}
+          <div className="absolute inset-0 bg-gradient-to-br from-violet-500/[0.03] to-fuchsia-500/[0.02] pointer-events-none" />
+
+          <div className="relative flex items-center gap-5 mb-6">
+            {/* Avatar with glow */}
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-2xl blur-lg opacity-40 group-hover:opacity-60 transition-opacity" />
+              <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-3xl font-bold shadow-xl shadow-violet-500/20 border border-white/[0.1]">
+                {displayName ? displayName[0].toUpperCase() : '🧠'}
+              </div>
             </div>
             <div>
-              <h2 className="text-2xl font-bold">{displayName || 'Your Clone'}</h2>
-              <p className="text-white/40 text-sm mt-1">{bio || 'No bio yet'}</p>
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">{displayName || 'Your Clone'}</h2>
+              <p className="text-white/30 text-sm mt-1">{bio || 'No bio yet'}</p>
             </div>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-3">
-            <div className="text-center p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-              <div className="text-xl font-bold text-violet-400">{profile?.total_chats || 0}</div>
-              <div className="text-white/30 text-xs">Chats</div>
-            </div>
-            <div className="text-center p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-              <div className="text-xl font-bold text-amber-400">{profile?.rating?.toFixed(1) || '0.0'} ⭐</div>
-              <div className="text-white/30 text-xs">Rating</div>
-            </div>
-            <div className="text-center p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-              <div className={`text-xl font-bold ${isPublic ? 'text-emerald-400' : 'text-white/30'}`}>
-                {isPublic ? '🌍' : '🔒'}
+          <div className="relative grid grid-cols-3 gap-3">
+            {[
+              { value: profile?.total_chats || 0, label: 'Chats', color: 'text-violet-400', glow: 'shadow-violet-500/10' },
+              { value: profile?.rating?.toFixed(1) || '0.0', suffix: '⭐', label: 'Rating', color: 'text-amber-400', glow: 'shadow-amber-500/10' },
+              { value: isPublic ? '🌍' : '🔒', label: isPublic ? 'Public' : 'Private', color: isPublic ? 'text-emerald-400' : 'text-white/30', glow: isPublic ? 'shadow-emerald-500/10' : '' },
+            ].map((stat, i) => (
+              <div key={i} className={`text-center p-4 rounded-xl bg-white/[0.02] border border-white/[0.05] backdrop-blur-sm hover:bg-white/[0.04] hover:border-white/[0.08] transition-all duration-300 shadow-lg ${stat.glow}`}>
+                <div className={`text-xl font-bold ${stat.color} drop-shadow-lg`}>{stat.value}{stat.suffix}</div>
+                <div className="text-white/20 text-xs mt-1 font-medium uppercase tracking-wider">{stat.label}</div>
               </div>
-              <div className="text-white/30 text-xs">{isPublic ? 'Public' : 'Private'}</div>
-            </div>
+            ))}
           </div>
         </div>
 
         {/* Edit Form */}
-        <div className="rounded-2xl border border-white/[0.06] p-6 mb-8" style={{ background: 'rgba(255,255,255,0.02)' }}>
-          <h3 className="text-lg font-semibold mb-4">Edit Profile</h3>
+        <div className="relative rounded-2xl border border-white/[0.06] p-6 mb-6 backdrop-blur-2xl bg-white/[0.015] overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-fuchsia-500/20 to-transparent" />
 
-          <div className="space-y-5">
+          <h3 className="relative text-lg font-semibold mb-5 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Edit Profile</h3>
+
+          <div className="relative space-y-5">
             {/* Display Name */}
             <div>
-              <label className="text-white/40 text-sm mb-1.5 block">Display Name</label>
+              <label className="text-white/35 text-xs mb-1.5 block font-medium uppercase tracking-wider">Display Name</label>
               <input
                 type="text"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
-                className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/50 transition text-white placeholder:text-white/20"
+                className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/40 focus:ring-2 focus:ring-violet-500/10 transition-all text-white placeholder:text-white/15 backdrop-blur-sm"
                 placeholder="How others will see your clone"
               />
             </div>
 
             {/* Bio */}
             <div>
-              <label className="text-white/40 text-sm mb-1.5 block">Bio</label>
+              <label className="text-white/35 text-xs mb-1.5 block font-medium uppercase tracking-wider">Bio</label>
               <textarea
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
-                className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/50 transition resize-none text-white placeholder:text-white/20"
+                className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/40 focus:ring-2 focus:ring-violet-500/10 transition-all resize-none text-white placeholder:text-white/15 backdrop-blur-sm"
                 rows={3}
                 placeholder="A short description about your clone..."
               />
-              <p className="text-white/20 text-xs mt-1">{bio.length}/200 characters</p>
+              <p className="text-white/15 text-xs mt-1.5">{bio.length}/200 characters</p>
             </div>
 
             {/* Public Toggle */}
-            <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+            <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.02] border border-white/[0.05] backdrop-blur-sm hover:bg-white/[0.03] hover:border-white/[0.08] transition-all duration-300">
               <div>
-                <p className="font-medium">Make Profile Public</p>
-                <p className="text-white/30 text-sm mt-0.5">Allow others to discover and chat with your clone</p>
+                <p className="font-medium text-white/80">Make Profile Public</p>
+                <p className="text-white/25 text-sm mt-0.5">Allow others to discover and chat with your clone</p>
               </div>
               <button
                 onClick={() => setIsPublic(!isPublic)}
-                className={`relative w-14 h-7 rounded-full transition-colors ${isPublic ? 'bg-violet-500' : 'bg-white/[0.08]'}`}
+                className={`relative w-14 h-7 rounded-full transition-all duration-300 ${isPublic ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500 shadow-lg shadow-violet-500/30' : 'bg-white/[0.08]'}`}
               >
-                <div className={`absolute top-0.5 w-6 h-6 rounded-full bg-white shadow-lg transition-transform ${isPublic ? 'translate-x-7.5 left-0.5' : 'left-0.5'}`}
-                  style={{ transform: isPublic ? 'translateX(30px)' : 'translateX(0)' }}
+                <div
+                  className="absolute top-0.5 w-6 h-6 rounded-full bg-white shadow-lg transition-transform duration-300"
+                  style={{ transform: isPublic ? 'translateX(30px)' : 'translateX(0)', left: '2px' }}
                 />
               </button>
             </div>
@@ -201,33 +218,42 @@ export default function PublicProfile() {
             <button
               onClick={saveProfile}
               disabled={saving}
-              className="w-full py-3.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-semibold hover:opacity-90 transition disabled:opacity-50"
+              className="group relative w-full py-3.5 rounded-xl font-semibold transition-all duration-300 overflow-hidden disabled:opacity-50"
             >
-              {saving ? 'Saving...' : 'Save Profile'}
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 opacity-90 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 blur-xl opacity-30 group-hover:opacity-50 transition-opacity" />
+              <span className="relative z-10">{saving ? 'Saving...' : 'Save Profile'}</span>
             </button>
           </div>
         </div>
 
         {/* Share Link */}
-        <div className="rounded-2xl border border-white/[0.06] p-6" style={{ background: 'rgba(255,255,255,0.02)' }}>
-          <h3 className="text-lg font-semibold mb-2">Share Your Clone 🔗</h3>
-          <p className="text-white/30 text-sm mb-4">Send this link to let anyone chat with your AI clone</p>
+        <div className="relative rounded-2xl border border-white/[0.06] p-6 backdrop-blur-2xl bg-white/[0.015] overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/[0.02] to-violet-500/[0.02] pointer-events-none" />
 
-          <div className="flex gap-2">
-            <div className="flex-1 px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-white/50 text-sm truncate">
+          <h3 className="relative text-lg font-semibold mb-2 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Share Your Clone 🔗</h3>
+          <p className="relative text-white/25 text-sm mb-4">Send this link to let anyone chat with your AI clone</p>
+
+          <div className="relative flex gap-2">
+            <div className="flex-1 px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-white/40 text-sm truncate backdrop-blur-sm font-mono">
               {getShareLink()}
             </div>
             <button
               onClick={copyShareLink}
-              className={`px-5 py-3 rounded-xl font-medium transition ${copied ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-violet-500/20 text-violet-400 border border-violet-500/30 hover:bg-violet-500/30'}`}
+              className={`group relative px-5 py-3 rounded-xl font-medium transition-all duration-300 overflow-hidden ${
+                copied
+                  ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 shadow-lg shadow-emerald-500/10'
+                  : 'bg-violet-500/15 text-violet-400 border border-violet-500/25 hover:bg-violet-500/25 hover:shadow-lg hover:shadow-violet-500/10'
+              }`}
             >
               {copied ? '✓ Copied' : 'Copy'}
             </button>
           </div>
 
           {!isPublic && (
-            <p className="text-amber-400/60 text-xs mt-3 flex items-center gap-1">
-              <span>⚠️</span> Your profile is currently private. Toggle public to share.
+            <p className="relative text-amber-400/50 text-xs mt-4 flex items-center gap-1.5">
+              <span className="text-amber-400/70">⚠️</span> Your profile is currently private. Toggle public to share.
             </p>
           )}
         </div>

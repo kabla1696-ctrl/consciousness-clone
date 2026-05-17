@@ -55,7 +55,6 @@ export default function DailyBriefing() {
         const parsed: Briefing[] = JSON.parse(stored)
         setHistory(parsed)
 
-        // Show today's briefing if it exists
         const todayStr = new Date().toISOString().split('T')[0]
         const todayBriefing = parsed.find(b => b.date === todayStr)
         if (todayBriefing) setBriefing(todayBriefing.content)
@@ -103,7 +102,6 @@ Be specific to this person's life based on their memories. Be genuine, not gener
         created_at: new Date().toISOString(),
       }
 
-      // Remove existing today's briefing and add new one
       const filtered = history.filter(b => b.date !== todayStr)
       const updated = [newBriefing, ...filtered].slice(0, 30)
       setHistory(updated)
@@ -118,32 +116,42 @@ Be specific to this person's life based on their memories. Be genuine, not gener
   if (!user) {
     return (
       <main className="min-h-screen bg-[#050510] flex items-center justify-center">
-        <div className="text-white/40">Loading...</div>
+        <div className="relative">
+          <div className="w-12 h-12 rounded-full border-2 border-amber-500/30 border-t-amber-400 animate-spin" />
+          <div className="absolute inset-0 w-12 h-12 rounded-full border-2 border-orange-500/20 border-b-orange-400 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }} />
+        </div>
       </main>
     )
   }
 
   return (
-    <main className="min-h-screen flex flex-col bg-[#050510] page-transition">
+    <main className="min-h-screen flex flex-col bg-[#050510] page-transition relative overflow-hidden">
+      {/* Animated background orbs */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-40 left-1/4 w-[500px] h-[500px] rounded-full bg-amber-600/[0.07] blur-[140px] animate-pulse" />
+        <div className="absolute top-1/3 -right-32 w-96 h-96 rounded-full bg-orange-600/[0.05] blur-[120px] animate-pulse" style={{ animationDelay: '1.5s' }} />
+        <div className="absolute -bottom-20 right-1/3 w-72 h-72 rounded-full bg-rose-600/[0.04] blur-[100px] animate-pulse" style={{ animationDelay: '2.5s' }} />
+      </div>
+
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#050510]/95 backdrop-blur-xl border-b border-white/[0.04] safe-top">
+      <header className="sticky top-0 z-50 bg-[#050510]/80 backdrop-blur-2xl border-b border-white/[0.06] safe-top">
         <div className="px-4 py-3 flex items-center gap-3">
-          <Link href="/dashboard" className="tap-feedback p-1">
-            <svg className="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <Link href="/dashboard" className="tap-feedback p-1 group">
+            <svg className="w-6 h-6 text-white/50 group-hover:text-amber-400 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </Link>
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-sm">☀️</div>
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-sm shadow-lg shadow-amber-500/25">☀️</div>
           <div className="flex-1">
-            <h1 className="text-sm font-bold">Daily Briefing</h1>
-            <p className="text-[10px] text-violet-400 flex items-center gap-1">
-              <span className="w-1.5 h-1.5 bg-violet-400 rounded-full" />
+            <h1 className="text-sm font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Daily Briefing</h1>
+            <p className="text-[10px] text-amber-400 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-pulse" />
               Your morning companion
             </p>
           </div>
           <button
             onClick={() => setShowHistory(!showHistory)}
-            className="text-white/40 hover:text-violet-400 transition p-1"
+            className="text-white/40 hover:text-amber-400 transition-all duration-300 p-2 rounded-xl hover:bg-amber-500/10"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -152,25 +160,25 @@ Be specific to this person's life based on their memories. Be genuine, not gener
         </div>
       </header>
 
-      <div className="flex-1 px-4 py-6 max-w-3xl mx-auto w-full">
+      <div className="flex-1 px-4 py-6 max-w-3xl mx-auto w-full relative z-10">
         {/* History Panel */}
         {showHistory && (
-          <div className="mb-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden">
-            <div className="px-4 py-3 border-b border-white/[0.04] flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-white/80">Briefing History</h3>
-              <span className="text-xs text-white/30">{history.length} days</span>
+          <div className="mb-6 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl overflow-hidden shadow-2xl shadow-amber-500/[0.03]">
+            <div className="px-4 py-3 border-b border-white/[0.06] flex items-center justify-between bg-gradient-to-r from-amber-500/[0.06] to-transparent">
+              <h3 className="text-sm font-semibold text-white/90">Briefing History</h3>
+              <span className="text-xs text-amber-400/70 bg-amber-500/10 px-2 py-0.5 rounded-full">{history.length} days</span>
             </div>
             <div className="max-h-64 overflow-y-auto">
               {history.length === 0 ? (
-                <p className="text-white/30 text-sm p-4 text-center">No briefings yet</p>
+                <p className="text-white/30 text-sm p-6 text-center">No briefings yet</p>
               ) : (
                 history.map(b => (
                   <button
                     key={b.id}
                     onClick={() => { setBriefing(b.content); setShowHistory(false) }}
-                    className="w-full px-4 py-3 text-left border-b border-white/[0.03] hover:bg-white/[0.02] transition"
+                    className="w-full px-4 py-3 text-left border-b border-white/[0.04] hover:bg-white/[0.04] transition-all duration-200 group"
                   >
-                    <p className="text-sm text-white/70 font-medium">{b.date}</p>
+                    <p className="text-sm text-white/70 font-medium group-hover:text-amber-300 transition-colors">{b.date}</p>
                     <p className="text-xs text-white/30 truncate">{b.content.slice(0, 80)}...</p>
                   </button>
                 ))
@@ -182,10 +190,11 @@ Be specific to this person's life based on their memories. Be genuine, not gener
         {/* Morning Greeting */}
         <div className="text-center mb-8">
           <div className="relative inline-block mb-4">
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-full blur-3xl" />
-            <div className="relative text-6xl">🌅</div>
+            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-full blur-3xl animate-pulse" />
+            <div className="absolute inset-0 bg-gradient-to-r from-amber-400/10 to-rose-400/10 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s', transform: 'scale(1.3)' }} />
+            <div className="relative text-6xl drop-shadow-lg">🌅</div>
           </div>
-          <h2 className="text-2xl font-bold text-white/90 mb-1">{greeting}</h2>
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-amber-300 via-white to-orange-300 bg-clip-text text-transparent mb-1">{greeting}</h2>
           <p className="text-white/40 text-sm">{today}</p>
         </div>
 
@@ -193,38 +202,42 @@ Be specific to this person's life based on their memories. Be genuine, not gener
         <button
           onClick={generateBriefing}
           disabled={generating}
-          className="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 font-semibold text-white hover:opacity-90 transition disabled:opacity-30 flex items-center justify-center gap-2 mb-6"
+          className="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 font-semibold text-white transition-all duration-300 disabled:opacity-30 flex items-center justify-center gap-2 mb-6 shadow-lg shadow-amber-500/25 hover:shadow-xl hover:shadow-amber-500/30 hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden group"
         >
+          <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           {generating ? (
             <>
-              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              Preparing Your Briefing...
+              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin relative z-10" />
+              <span className="relative z-10">Preparing Your Briefing...</span>
             </>
           ) : briefing ? (
             <>
-              <span>🔄</span> Refresh Briefing
+              <span className="relative z-10">🔄</span> <span className="relative z-10">Refresh Briefing</span>
             </>
           ) : (
             <>
-              <span>☀️</span> Get Your Briefing
+              <span className="relative z-10">☀️</span> <span className="relative z-10">Get Your Briefing</span>
             </>
           )}
         </button>
 
         {/* Briefing Content */}
         {briefing && (
-          <div className="rounded-2xl border border-amber-500/10 bg-gradient-to-b from-amber-500/5 to-transparent overflow-hidden">
+          <div className="rounded-2xl border border-amber-500/[0.12] bg-gradient-to-b from-amber-500/[0.06] via-white/[0.02] to-transparent backdrop-blur-xl overflow-hidden shadow-2xl shadow-amber-500/[0.05] relative group">
+            {/* Glow border */}
+            <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-amber-500/15 via-orange-500/15 to-amber-500/15 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-sm -z-10" />
+
             <div className="px-5 py-5">
               <p className="text-white/80 text-sm leading-relaxed whitespace-pre-wrap">{briefing}</p>
             </div>
-            <div className="px-5 py-3 border-t border-white/[0.04] flex items-center justify-between">
+            <div className="px-5 py-3 border-t border-white/[0.06] flex items-center justify-between bg-gradient-to-r from-amber-500/[0.04] to-transparent">
               <span className="text-xs text-white/20">Generated by your clone</span>
               <button
                 onClick={() => {
                   navigator.clipboard.writeText(briefing)
                   alert('Briefing copied!')
                 }}
-                className="text-xs text-violet-400 hover:text-violet-300 transition flex items-center gap-1"
+                className="text-xs text-amber-400 hover:text-amber-300 transition-all duration-200 flex items-center gap-1 px-2.5 py-1 rounded-lg hover:bg-amber-500/10"
               >
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -237,10 +250,10 @@ Be specific to this person's life based on their memories. Be genuine, not gener
 
         {/* Empty State */}
         {!briefing && !generating && (
-          <div className="text-center py-12">
-            <div className="text-4xl mb-3">✨</div>
-            <p className="text-white/30 text-sm">Tap the button to receive your daily briefing</p>
-            <p className="text-white/20 text-xs mt-1">Personalized insights based on your memories</p>
+          <div className="text-center py-16">
+            <div className="text-5xl mb-4 animate-bounce">✨</div>
+            <p className="text-white/40 text-sm font-medium">Tap the button to receive your daily briefing</p>
+            <p className="text-white/20 text-xs mt-1.5">Personalized insights based on your memories</p>
           </div>
         )}
       </div>

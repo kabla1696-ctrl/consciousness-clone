@@ -178,80 +178,121 @@ export default function FamilyTreePage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-[#050510] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+      <main className="min-h-screen bg-[#06060f] flex items-center justify-center">
+        <div className="relative">
+          <div className="w-10 h-10 border-2 border-violet-500/40 border-t-violet-400 rounded-full animate-spin" />
+          <div className="absolute inset-0 w-10 h-10 border-2 border-fuchsia-500/20 border-b-fuchsia-400/60 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }} />
+        </div>
       </main>
     )
   }
 
   return (
-    <main className="min-h-screen bg-[#050510] page-transition">
+    <main className="min-h-screen bg-[#06060f] page-transition relative overflow-hidden">
+      {/* Ambient background effects */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-32 -left-32 w-96 h-96 bg-violet-600/8 rounded-full blur-[120px]" />
+        <div className="absolute top-1/2 -right-40 w-80 h-80 bg-fuchsia-600/5 rounded-full blur-[100px]" />
+        <div className="absolute bottom-10 left-1/4 w-64 h-64 bg-cyan-600/4 rounded-full blur-[80px]" />
+        {/* Subtle grid overlay */}
+        <div className="absolute inset-0 opacity-[0.012]" style={{
+          backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+          backgroundSize: '60px 60px'
+        }} />
+      </div>
+
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#050510]/95 backdrop-blur-xl border-b border-white/[0.04]">
-        <div className="px-4 py-3 flex items-center gap-3">
-          <Link href="/dashboard" className="tap-feedback p-1 -ml-1">
-            <svg className="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <header className="sticky top-0 z-50 bg-[#06060f]/80 backdrop-blur-2xl border-b border-white/[0.04]">
+        <div className="px-5 py-3 flex items-center gap-3">
+          <Link href="/dashboard" className="tap-feedback p-1.5 rounded-lg hover:bg-white/[0.04] transition">
+            <svg className="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </Link>
-          <div className="flex items-center gap-2">
-            <span className="text-xl">🧬</span>
-            <h1 className="text-lg font-bold">Family Tree</h1>
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500/25 to-fuchsia-500/20 backdrop-blur-sm border border-violet-400/15 flex items-center justify-center shadow-lg shadow-violet-500/10">
+              <span className="text-sm">🧬</span>
+            </div>
+            <h1 className="text-sm font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">Family Tree</h1>
           </div>
           <div className="flex-1" />
           <button
             onClick={() => { setShowForm(!showForm); if (showForm) resetForm() }}
-            className="bg-violet-500/20 text-violet-400 text-sm font-medium px-3 py-1.5 rounded-lg tap-feedback"
+            className="relative px-3.5 py-1.5 rounded-xl text-sm font-medium tap-feedback overflow-hidden"
           >
-            {showForm ? 'Cancel' : '+ Add'}
+            <div className="absolute inset-0 bg-gradient-to-r from-violet-500/15 to-fuchsia-500/10 border border-violet-400/20 rounded-xl backdrop-blur-sm" />
+            <span className="relative text-violet-300">{showForm ? 'Cancel' : '+ Add'}</span>
           </button>
         </div>
       </header>
 
-      <div className="px-4 py-4 pb-24">
+      <div className="relative px-5 py-4 pb-24">
         {/* Stats Bar */}
         {members.length > 0 && (
-          <div className="flex gap-3 mb-4">
-            <div className="flex-1 rounded-xl border border-white/[0.06] p-3 bg-white/[0.02] text-center">
-              <div className="text-xl font-bold text-violet-400">{members.length}</div>
-              <div className="text-[10px] text-white/30">Members</div>
-            </div>
-            <div className="flex-1 rounded-xl border border-white/[0.06] p-3 bg-white/[0.02] text-center">
-              <div className="text-xl font-bold text-fuchsia-400">{totalMemories}</div>
-              <div className="text-[10px] text-white/30">Memories</div>
-            </div>
-            <div className="flex-1 rounded-xl border border-white/[0.06] p-3 bg-white/[0.02] text-center">
-              <div className="text-xl font-bold text-cyan-400">
-                {new Set(members.map(m => m.relation)).size}
+          <div className="flex gap-3 mb-5">
+            {[
+              { value: members.length, label: 'Members', color: 'violet' },
+              { value: totalMemories, label: 'Memories', color: 'fuchsia' },
+              { value: new Set(members.map(m => m.relation)).size, label: 'Relations', color: 'cyan' },
+            ].map((stat) => (
+              <div key={stat.label} className="group flex-1 relative">
+                <div className={`absolute -inset-px rounded-2xl bg-gradient-to-b ${
+                  stat.color === 'violet' ? 'from-violet-500/15 to-transparent' :
+                  stat.color === 'fuchsia' ? 'from-fuchsia-500/15 to-transparent' :
+                  'from-cyan-500/15 to-transparent'
+                } opacity-0 group-hover:opacity-100 blur-sm transition-opacity`} />
+                <div className="relative rounded-2xl border border-white/[0.05] p-3 bg-white/[0.02] backdrop-blur-sm text-center overflow-hidden">
+                  <div className={`absolute top-0 left-0 w-full h-px bg-gradient-to-r ${
+                    stat.color === 'violet' ? 'from-transparent via-violet-400/20 to-transparent' :
+                    stat.color === 'fuchsia' ? 'from-transparent via-fuchsia-400/20 to-transparent' :
+                    'from-transparent via-cyan-400/20 to-transparent'
+                  }`} />
+                  <div className={`text-xl font-bold ${
+                    stat.color === 'violet' ? 'text-violet-400' :
+                    stat.color === 'fuchsia' ? 'text-fuchsia-400' :
+                    'text-cyan-400'
+                  } drop-shadow-[0_0_8px_${
+                    stat.color === 'violet' ? 'rgba(139,92,246,0.3)' :
+                    stat.color === 'fuchsia' ? 'rgba(217,70,239,0.3)' :
+                    'rgba(34,211,238,0.3)'
+                  }]`}>
+                    {stat.value}
+                  </div>
+                  <div className="text-[10px] text-white/25 mt-0.5">{stat.label}</div>
+                </div>
               </div>
-              <div className="text-[10px] text-white/30">Relations</div>
-            </div>
+            ))}
           </div>
         )}
 
         {/* View Toggle */}
         {members.length > 0 && !showForm && (
-          <div className="flex gap-1 mb-4">
+          <div className="flex gap-1 mb-5 p-1 rounded-xl bg-white/[0.02] border border-white/[0.04] backdrop-blur-sm w-fit">
             {(['tree', 'list'] as const).map(mode => (
               <button
                 key={mode}
                 onClick={() => setViewMode(mode)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm tap-feedback ${
+                className={`relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-sm tap-feedback transition-all ${
                   viewMode === mode
-                    ? 'bg-violet-500/20 text-violet-400 font-medium'
-                    : 'text-white/40'
+                    ? 'text-violet-300 font-medium'
+                    : 'text-white/30 hover:text-white/50'
                 }`}
               >
-                {mode === 'tree' ? (
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h8m-8 6h16" />
-                  </svg>
-                ) : (
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                  </svg>
+                {viewMode === mode && (
+                  <div className="absolute inset-0 bg-violet-500/[0.12] border border-violet-400/15 rounded-lg shadow-[0_0_12px_rgba(139,92,246,0.1)]" />
                 )}
-                {mode === 'tree' ? 'Tree' : 'List'}
+                <span className="relative flex items-center gap-1.5">
+                  {mode === 'tree' ? (
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h8m-8 6h16" />
+                    </svg>
+                  ) : (
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                    </svg>
+                  )}
+                  {mode === 'tree' ? 'Tree' : 'List'}
+                </span>
               </button>
             ))}
           </div>
@@ -259,106 +300,123 @@ export default function FamilyTreePage() {
 
         {/* Create/Edit Form */}
         {showForm && (
-          <div className="mb-6 rounded-xl border border-violet-500/30 p-4 bg-violet-500/5 space-y-4">
-            <h2 className="text-sm font-semibold text-violet-400">
-              {editingId ? 'Edit Family Member' : 'Add Family Member'}
-            </h2>
+          <div className="relative mb-6">
+            <div className="absolute -inset-px rounded-2xl bg-gradient-to-br from-violet-500/20 via-fuchsia-500/15 to-violet-500/5 blur-sm" />
+            <div className="relative rounded-2xl border border-violet-400/15 bg-[#0d0d1f]/80 backdrop-blur-xl p-5 space-y-4 overflow-hidden">
+              <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-violet-400/30 to-transparent" />
+              <h2 className="text-sm font-semibold text-violet-300 flex items-center gap-2">
+                <span className="w-5 h-5 rounded-md bg-violet-500/20 flex items-center justify-center text-[10px]">✏️</span>
+                {editingId ? 'Edit Family Member' : 'Add Family Member'}
+              </h2>
 
-            <div>
-              <label className="text-xs text-white/40 mb-1 block">Name</label>
-              <input
-                type="text"
-                value={formName}
-                onChange={e => setFormName(e.target.value)}
-                placeholder="Their name"
-                className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-violet-500/50"
-              />
-            </div>
-
-            <div>
-              <label className="text-xs text-white/40 mb-2 block">Relation</label>
-              <div className="grid grid-cols-4 gap-2">
-                {RELATIONS.map(rel => (
-                  <button
-                    key={rel.id}
-                    onClick={() => setFormRelation(rel.id)}
-                    className={`flex flex-col items-center gap-1 p-2 rounded-lg text-xs tap-feedback ${
-                      formRelation === rel.id
-                        ? 'bg-violet-500/20 border border-violet-500/40'
-                        : 'bg-white/[0.02] border border-white/[0.06]'
-                    }`}
-                  >
-                    <span className="text-lg">{rel.icon}</span>
-                    <span className={formRelation === rel.id ? 'text-violet-400' : 'text-white/40'}>{rel.label}</span>
-                  </button>
-                ))}
+              <div>
+                <label className="text-[11px] text-white/30 mb-1.5 block font-medium uppercase tracking-wider">Name</label>
+                <input
+                  type="text"
+                  value={formName}
+                  onChange={e => setFormName(e.target.value)}
+                  placeholder="Their name"
+                  className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/15 focus:outline-none focus:border-violet-500/40 focus:shadow-[0_0_20px_rgba(139,92,246,0.08)] transition-all backdrop-blur-sm"
+                />
               </div>
-            </div>
 
-            <div>
-              <label className="text-xs text-white/40 mb-1 block">Birth Year (optional)</label>
-              <input
-                type="number"
-                value={formBirthYear}
-                onChange={e => setFormBirthYear(e.target.value)}
-                placeholder="e.g. 1965"
-                min={1900}
-                max={new Date().getFullYear()}
-                className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-violet-500/50"
-              />
-            </div>
+              <div>
+                <label className="text-[11px] text-white/30 mb-2 block font-medium uppercase tracking-wider">Relation</label>
+                <div className="grid grid-cols-4 gap-2">
+                  {RELATIONS.map(rel => (
+                    <button
+                      key={rel.id}
+                      onClick={() => setFormRelation(rel.id)}
+                      className={`relative flex flex-col items-center gap-1 p-2.5 rounded-xl text-xs tap-feedback transition-all ${
+                        formRelation === rel.id
+                          ? 'text-violet-300'
+                          : 'text-white/35 hover:text-white/50'
+                      }`}
+                    >
+                      {formRelation === rel.id && (
+                        <div className="absolute inset-0 bg-violet-500/[0.12] border border-violet-400/25 rounded-xl shadow-[0_0_12px_rgba(139,92,246,0.1)]" />
+                      )}
+                      <span className="relative text-lg">{rel.icon}</span>
+                      <span className="relative">{rel.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-            <div>
-              <label className="text-xs text-white/40 mb-1 block">Bio (optional)</label>
-              <textarea
-                value={formBio}
-                onChange={e => setFormBio(e.target.value)}
-                placeholder="Tell their story..."
-                rows={3}
-                className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-violet-500/50 resize-none"
-              />
-            </div>
+              <div>
+                <label className="text-[11px] text-white/30 mb-1.5 block font-medium uppercase tracking-wider">Birth Year (optional)</label>
+                <input
+                  type="number"
+                  value={formBirthYear}
+                  onChange={e => setFormBirthYear(e.target.value)}
+                  placeholder="e.g. 1965"
+                  min={1900}
+                  max={new Date().getFullYear()}
+                  className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/15 focus:outline-none focus:border-violet-500/40 focus:shadow-[0_0_20px_rgba(139,92,246,0.08)] transition-all backdrop-blur-sm"
+                />
+              </div>
 
-            <button
-              onClick={handleCreate}
-              disabled={!formName.trim() || saving}
-              className="w-full bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-semibold py-3 rounded-xl tap-feedback disabled:opacity-40 disabled:cursor-not-allowed"
-            >
-              {saving ? 'Saving...' : editingId ? '✏️ Update' : '🧬 Add to Tree'}
-            </button>
+              <div>
+                <label className="text-[11px] text-white/30 mb-1.5 block font-medium uppercase tracking-wider">Bio (optional)</label>
+                <textarea
+                  value={formBio}
+                  onChange={e => setFormBio(e.target.value)}
+                  placeholder="Tell their story..."
+                  rows={3}
+                  className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/15 focus:outline-none focus:border-violet-500/40 focus:shadow-[0_0_20px_rgba(139,92,246,0.08)] transition-all resize-none backdrop-blur-sm"
+                />
+              </div>
+
+              <button
+                onClick={handleCreate}
+                disabled={!formName.trim() || saving}
+                className="relative w-full py-3 rounded-xl font-semibold tap-feedback disabled:opacity-30 disabled:cursor-not-allowed overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600" />
+                <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-fuchsia-500 opacity-0 hover:opacity-100 transition-opacity" />
+                <span className="relative text-white">
+                  {saving ? 'Saving...' : editingId ? '✏️ Update' : '🧬 Add to Tree'}
+                </span>
+              </button>
+            </div>
           </div>
         )}
 
         {/* Empty State */}
         {members.length === 0 && !showForm && (
-          <div className="text-center py-16">
-            <div className="text-6xl mb-4">🧬</div>
-            <h2 className="text-lg font-bold mb-2">Build Your Family Tree</h2>
-            <p className="text-white/30 text-sm mb-6 max-w-sm mx-auto">
+          <div className="text-center py-20">
+            <div className="relative inline-block mb-5">
+              <div className="absolute inset-0 bg-violet-500/10 rounded-full blur-2xl scale-150" />
+              <div className="relative text-7xl">🧬</div>
+            </div>
+            <h2 className="text-lg font-bold mb-2 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Build Your Family Tree</h2>
+            <p className="text-white/25 text-sm mb-8 max-w-sm mx-auto leading-relaxed">
               Map your roots. Add family members, link memories, and preserve your family&apos;s story for generations.
             </p>
             <button
               onClick={() => setShowForm(true)}
-              className="bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-semibold px-6 py-3 rounded-xl tap-feedback"
+              className="relative px-7 py-3 rounded-xl font-semibold tap-feedback overflow-hidden"
             >
-              Add First Member
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 shadow-lg shadow-violet-500/20" />
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-fuchsia-500 opacity-0 hover:opacity-100 transition-opacity" />
+              <span className="relative text-white">Add First Member</span>
             </button>
           </div>
         )}
 
         {/* Tree View */}
         {viewMode === 'tree' && members.length > 0 && !showForm && (
-          <div className="space-y-6">
+          <div className="space-y-7">
             {TREE_GROUPS.map(group => {
               const groupMembers = groupedMembers[group.id]
               if (!groupMembers || groupMembers.length === 0) return null
 
               return (
                 <div key={group.id}>
-                  <h3 className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-3 flex items-center gap-2">
-                    <div className="h-px flex-1 bg-white/[0.06]" />
+                  <h3 className="text-[11px] font-semibold text-white/25 uppercase tracking-widest mb-3 flex items-center gap-3">
+                    <div className="h-px flex-1 bg-gradient-to-r from-white/[0.06] to-transparent" />
                     <span>{group.label}</span>
-                    <div className="h-px flex-1 bg-white/[0.06]" />
+                    <div className="h-px flex-1 bg-gradient-to-l from-white/[0.06] to-transparent" />
                   </h3>
                   <div className="grid grid-cols-2 gap-3">
                     {groupMembers.map(member => (
@@ -446,114 +504,123 @@ function MemberCard({
   const age = member.birth_year ? new Date().getFullYear() - member.birth_year : null
 
   return (
-    <div
-      className={`rounded-xl border border-white/[0.06] bg-white/[0.02] overflow-hidden ${
-        fullWidth ? '' : ''
-      }`}
-    >
-      {/* Card Header */}
-      <button onClick={onToggle} className="w-full p-4 text-left tap-feedback">
-        <div className="flex items-center gap-3">
-          <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${rel.color} flex items-center justify-center text-lg shrink-0`}>
-            {rel.icon}
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="text-sm font-semibold truncate">{member.name}</div>
-            <div className="text-xs text-white/30 capitalize">
-              {rel.label}
-              {member.birth_year && ` · b. ${member.birth_year}`}
-              {age !== null && ` · ${age}y`}
+    <div className="group relative">
+      <div className={`absolute -inset-px rounded-2xl bg-gradient-to-br ${rel.color} ${isExpanded ? 'opacity-15' : 'opacity-0 group-hover:opacity-10'} blur-sm transition-opacity`} />
+      <div
+        className={`relative rounded-2xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm overflow-hidden ${
+          fullWidth ? '' : ''
+        }`}
+      >
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+
+        {/* Card Header */}
+        <button onClick={onToggle} className="w-full p-4 text-left tap-feedback">
+          <div className="flex items-center gap-3">
+            <div className={`relative w-11 h-11 rounded-full bg-gradient-to-br ${rel.color} flex items-center justify-center text-lg shrink-0 shadow-lg shadow-violet-500/10`}>
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/10 to-transparent" />
+              <span className="relative">{rel.icon}</span>
             </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-sm font-semibold text-white/90 truncate">{member.name}</div>
+              <div className="text-xs text-white/25 capitalize mt-0.5">
+                {rel.label}
+                {member.birth_year && ` · b. ${member.birth_year}`}
+                {age !== null && ` · ${age}y`}
+              </div>
+            </div>
+            {member.memories && member.memories.length > 0 && (
+              <span className="text-[10px] text-white/20 bg-white/[0.04] border border-white/[0.04] px-2 py-0.5 rounded-full shrink-0 backdrop-blur-sm">
+                {member.memories.length} 📝
+              </span>
+            )}
+            <svg
+              className={`w-4 h-4 text-white/15 transition-transform shrink-0 ${isExpanded ? 'rotate-180' : ''}`}
+              fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
           </div>
-          {member.memories && member.memories.length > 0 && (
-            <span className="text-xs text-white/20 bg-white/[0.04] px-2 py-0.5 rounded-full shrink-0">
-              {member.memories.length} 📝
-            </span>
-          )}
-          <svg
-            className={`w-4 h-4 text-white/20 transition-transform shrink-0 ${isExpanded ? 'rotate-180' : ''}`}
-            fill="none" stroke="currentColor" viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </div>
-      </button>
+        </button>
 
-      {/* Expanded Content */}
-      {isExpanded && (
-        <div className="px-4 pb-4 space-y-3 border-t border-white/[0.04] pt-3">
-          {member.bio && (
-            <p className="text-sm text-white/50 leading-relaxed">{member.bio}</p>
-          )}
+        {/* Expanded Content */}
+        {isExpanded && (
+          <div className="px-4 pb-4 space-y-3 border-t border-white/[0.04] pt-3">
+            {member.bio && (
+              <p className="text-sm text-white/45 leading-relaxed">{member.bio}</p>
+            )}
 
-          {/* Memories */}
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <h4 className="text-xs font-semibold text-white/40 uppercase tracking-wider">Memories</h4>
+            {/* Memories */}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <h4 className="text-[11px] font-semibold text-white/25 uppercase tracking-widest">Memories</h4>
+                <button
+                  onClick={onAddMemory}
+                  className="relative text-[11px] text-violet-300 px-2.5 py-0.5 rounded-lg tap-feedback overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-violet-500/[0.1] border border-violet-400/10 rounded-lg" />
+                  <span className="relative">+ Add</span>
+                </button>
+              </div>
+
+              {addingMemory && (
+                <div className="flex gap-2 mb-2">
+                  <input
+                    type="text"
+                    value={newMemory}
+                    onChange={e => setNewMemory(e.target.value)}
+                    placeholder="A memory with this person..."
+                    className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2 text-xs text-white placeholder-white/15 focus:outline-none focus:border-violet-500/40 transition-all backdrop-blur-sm"
+                    onKeyDown={e => e.key === 'Enter' && onSaveMemory()}
+                  />
+                  <button onClick={onSaveMemory} className="text-xs text-violet-300 px-2 tap-feedback">Save</button>
+                  <button onClick={onCancelMemory} className="text-xs text-white/25 px-2 tap-feedback">Cancel</button>
+                </div>
+              )}
+
+              {member.memories && member.memories.length > 0 ? (
+                <div className="space-y-1.5">
+                  {member.memories.map((memory, idx) => (
+                    <div key={idx} className="flex items-start gap-2 group/mem">
+                      <span className="text-violet-400/20 mt-1 text-[8px]">●</span>
+                      <span className="text-xs text-white/45 flex-1 leading-relaxed">{memory}</span>
+                      <button
+                        onClick={() => onDeleteMemory(idx)}
+                        className="text-white/10 hover:text-red-400 opacity-0 group-hover/mem:opacity-100 transition-all"
+                      >
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                !addingMemory && (
+                  <p className="text-xs text-white/15 italic">No memories yet. Add one!</p>
+                )
+              )}
+            </div>
+
+            {/* Actions */}
+            <div className="flex gap-2 pt-2 border-t border-white/[0.04]">
               <button
-                onClick={onAddMemory}
-                className="text-xs text-violet-400 px-2 py-0.5 rounded bg-violet-500/10 tap-feedback"
+                onClick={onEdit}
+                className="relative flex-1 text-xs text-violet-300 py-2 rounded-xl tap-feedback overflow-hidden"
               >
-                + Add
+                <div className="absolute inset-0 bg-violet-500/[0.08] border border-violet-400/10 rounded-xl" />
+                <span className="relative">✏️ Edit</span>
+              </button>
+              <button
+                onClick={onDelete}
+                className="relative flex-1 text-xs text-red-400/60 py-2 rounded-xl tap-feedback overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-red-500/[0.04] border border-red-400/10 rounded-xl" />
+                <span className="relative">🗑️ Remove</span>
               </button>
             </div>
-
-            {addingMemory && (
-              <div className="flex gap-2 mb-2">
-                <input
-                  type="text"
-                  value={newMemory}
-                  onChange={e => setNewMemory(e.target.value)}
-                  placeholder="A memory with this person..."
-                  className="flex-1 bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white placeholder-white/20 focus:outline-none focus:border-violet-500/50"
-                  onKeyDown={e => e.key === 'Enter' && onSaveMemory()}
-                />
-                <button onClick={onSaveMemory} className="text-xs text-violet-400 px-2 tap-feedback">Save</button>
-                <button onClick={onCancelMemory} className="text-xs text-white/30 px-2 tap-feedback">Cancel</button>
-              </div>
-            )}
-
-            {member.memories && member.memories.length > 0 ? (
-              <div className="space-y-1.5">
-                {member.memories.map((memory, idx) => (
-                  <div key={idx} className="flex items-start gap-2 group">
-                    <span className="text-white/10 mt-0.5">•</span>
-                    <span className="text-xs text-white/50 flex-1">{memory}</span>
-                    <button
-                      onClick={() => onDeleteMemory(idx)}
-                      className="text-white/10 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              !addingMemory && (
-                <p className="text-xs text-white/20 italic">No memories yet. Add one!</p>
-              )
-            )}
           </div>
-
-          {/* Actions */}
-          <div className="flex gap-2 pt-2 border-t border-white/[0.04]">
-            <button
-              onClick={onEdit}
-              className="flex-1 text-xs text-violet-400 py-2 rounded-lg bg-violet-500/10 tap-feedback"
-            >
-              ✏️ Edit
-            </button>
-            <button
-              onClick={onDelete}
-              className="flex-1 text-xs text-red-400/60 py-2 rounded-lg bg-red-500/5 tap-feedback"
-            >
-              🗑️ Remove
-            </button>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   )
 }
