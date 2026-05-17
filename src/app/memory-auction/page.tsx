@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 const CATEGORIES = ['Life Lessons', 'Travel', 'Love', 'Career', 'Funny'];
 const CAT_ICONS: Record<string, string> = { 'Life Lessons': '💡', 'Travel': '✈️', 'Love': '❤️', 'Career': '🚀', 'Funny': '😂' };
@@ -27,6 +28,7 @@ const SEED: Omit<Auction, 'bids'>[] = [
 ];
 
 export default function MemoryAuctionPage() {
+  const t = useT();
   const [auctions, setAuctions] = useState<Auction[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [bidModal, setBidModal] = useState<Auction | null>(null);
@@ -113,7 +115,7 @@ export default function MemoryAuctionPage() {
       <header style={{ position: 'sticky', top: 0, zIndex: 40, backdropFilter: 'blur(20px)', background: 'rgba(5,5,16,.8)', borderBottom: '1px solid rgba(255,255,255,.06)', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 14 }}>
         <Link href="/dashboard" style={{ color: '#a78bfa', fontSize: 22, textDecoration: 'none' }}>←</Link>
         <div>
-          <h1 style={{ fontSize: 20, fontWeight: 700, margin: 0, background: 'linear-gradient(135deg,#c084fc,#818cf8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Memory Auction</h1>
+          <h1 style={{ fontSize: 20, fontWeight: 700, margin: 0, background: 'linear-gradient(135deg,#c084fc,#818cf8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{t('memory auction')}</h1>
           <p style={{ fontSize: 12, color: '#888', margin: 0 }}>Trade unforgettable moments</p>
         </div>
         <div style={{ marginLeft: 'auto', background: 'rgba(139,92,246,.15)', border: '1px solid rgba(139,92,246,.3)', borderRadius: 12, padding: '6px 14px', fontSize: 13, fontWeight: 600, color: '#c084fc' }}>
@@ -164,11 +166,11 @@ export default function MemoryAuctionPage() {
               <p style={{ fontSize: 13, color: '#999', margin: '0 0 14px', lineHeight: 1.5 }}>{a.description}</p>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ display: 'flex', gap: 16 }}>
-                  <div><span style={{ fontSize: 11, color: '#666' }}>Current Bid</span><div style={{ fontSize: 18, fontWeight: 700, color: '#c084fc' }}>{a.currentBid} CR</div></div>
+                  <div><span style={{ fontSize: 11, color: '#666' }}>{t('current bid')}</span><div style={{ fontSize: 18, fontWeight: 700, color: '#c084fc' }}>{a.currentBid} CR</div></div>
                   <div><span style={{ fontSize: 11, color: '#666' }}>Bids</span><div style={{ fontSize: 18, fontWeight: 700 }}>{a.bidCount}</div></div>
                   <div><span style={{ fontSize: 11, color: '#666' }}>Time Left</span><div style={{ fontSize: 15, fontWeight: 600, color: timeLeft(a.endTime) === 'Ended' ? '#ef4444' : '#34d399' }}>{timeLeft(a.endTime)}</div></div>
                 </div>
-                <button className="bid-btn" onClick={() => setBidModal(a)} style={{ padding: '10px 20px', fontSize: 13 }}>Bid</button>
+                <button className="bid-btn" onClick={() => setBidModal(a)} style={{ padding: '10px 20px', fontSize: 13 }}>{t('bid')}</button>
               </div>
             </div>
           ))}
@@ -185,7 +187,7 @@ export default function MemoryAuctionPage() {
             <input className="bid-input" type="number" placeholder={`Min ${bidModal.currentBid + 10} CR`} value={bidAmount} onChange={e => setBidAmount(e.target.value)} min={bidModal.currentBid + 10} />
             <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
               <button onClick={() => setBidModal(null)} style={{ flex: 1, padding: 12, borderRadius: 12, border: '1px solid rgba(255,255,255,.1)', background: 'transparent', color: '#999', cursor: 'pointer', fontSize: 14 }}>Cancel</button>
-              <button className="bid-btn" disabled={!bidAmount || Number(bidAmount) <= bidModal.currentBid || Number(bidAmount) > credits} onClick={placeBid} style={{ flex: 1 }}>Confirm Bid</button>
+              <button className="bid-btn" disabled={!bidAmount || Number(bidAmount) <= bidModal.currentBid || Number(bidAmount) > credits} onClick={placeBid} style={{ flex: 1 }}>{t('confirm')} {t('bid')}</button>
             </div>
           </div>
         </div>

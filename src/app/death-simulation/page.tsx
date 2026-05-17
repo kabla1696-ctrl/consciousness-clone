@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { useT } from '../../lib/language-context'
 
 interface Person { name: string; relation: string; emoji: string }
 interface Farewell { person: Person; message: string; wouldMiss: string; regret: string; loading: boolean }
@@ -12,6 +13,7 @@ const PRESET_PEOPLE: Person[] = [
 ]
 
 export default function DeathSimulation() {
+  const t = useT()
   const [step, setStep] = useState<'warn' | 'setup' | 'generating' | 'result'>('warn')
   const [people, setPeople] = useState<Person[]>(PRESET_PEOPLE.map(p => ({ ...p })))
   const [farewells, setFarewells] = useState<Farewell[]>([])
@@ -71,7 +73,7 @@ export default function DeathSimulation() {
         <div className="px-4 py-3 flex items-center gap-3">
           <Link href="/dashboard" className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/[0.05] border border-white/[0.06] tap-feedback">←</Link>
           <span className="text-xl">💀</span>
-          <span className="font-bold text-base bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-rose-400">Death Simulation</span>
+          <span className="font-bold text-base bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-rose-400">{t('death simulation')}</span>
         </div>
       </header>
 
@@ -80,8 +82,8 @@ export default function DeathSimulation() {
         {step === 'warn' && (
           <div className="text-center">
             <div className="text-7xl mb-4" style={{ animation: 'float-subtle 4s ease-in-out infinite' }}>💀</div>
-            <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-rose-400 mb-2">Death Simulation</h1>
-            <p className="text-white/40 text-sm mb-4">This will simulate what your loved ones would say if you were gone.</p>
+            <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-rose-400 mb-2">{t('death simulation')}</h1>
+            <p className="text-white/40 text-sm mb-4">{t('what they would say')}</p>
             <div className="rounded-xl border border-red-500/20 p-4 mb-6 text-left" style={{ background: 'rgba(239,68,68,0.05)' }}>
               <p className="text-red-400/80 text-xs font-semibold mb-2">⚠️ Emotional Content Warning</p>
               <p className="text-white/30 text-xs">This feature generates AI-simulated farewell messages. They may be very emotional. Take care of your mental health.</p>
@@ -137,7 +139,7 @@ export default function DeathSimulation() {
             <div className="text-center mb-6">
               <div className="text-5xl mb-2">🕯️</div>
               <h2 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-rose-400">Farewell Messages</h2>
-              <p className="text-white/30 text-xs">What they would say if you were gone</p>
+              <p className="text-white/30 text-xs">{t('what they would say')}</p>
             </div>
             <div className="space-y-4">
               {farewells.map((f, i) => (
@@ -148,7 +150,7 @@ export default function DeathSimulation() {
                     <span className="text-white/20 text-xs">({f.person.relation})</span>
                   </div>
                   <div className="mb-3">
-                    <p className="text-white/20 text-[10px] mb-1">💌 Farewell</p>
+                    <p className="text-white/20 text-[10px] mb-1">💌 {t('final words')}</p>
                     <p className="text-white/70 text-sm italic">&quot;{f.message}&quot;</p>
                   </div>
                   <div className="mb-3">

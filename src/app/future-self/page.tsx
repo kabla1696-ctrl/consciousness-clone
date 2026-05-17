@@ -46,7 +46,9 @@ export default function FutureSelf() {
       setMessages([{
         id: 'welcome',
         role: 'future',
-        content: `Hey there, past me. 👋\n\nI'm you, ${yearsAhead} years from now. I've lived through everything you're going through — the uncertainty, the dreams, the late nights wondering if it'll all work out.\n\nSpoiler: it does. But the path isn't what you'd expect.\n\nAsk me anything. About career, relationships, health, regrets, wins — I've been through it all. I'll give you the honest truth, the way only you can.`,
+        content: `Hey there, past me. 👋\n\nI'm you, ${yearsAhead} years from now. I've lived through everything you're going through — the uncertainty, the dreams, the late nights wondering if it'll all work out.\n\nSpoiler: it does. But the path isn't what you'd expect.\n\nAsk me anything. About career, relationships, health, regrets, wins — I've been through it all. I'll give you the honest truth, the way only you can.
+
+${t('predictions')}`,
         created_at: new Date().toISOString(),
       }])
     }

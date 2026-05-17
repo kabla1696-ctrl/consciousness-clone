@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface ArtPiece {
   id: string;
@@ -52,6 +53,7 @@ const sampleArt: ArtPiece[] = [
 ];
 
 export default function MemoryArtist() {
+  const t = useT();
   const [artworks, setArtworks] = useState<ArtPiece[]>([]);
   const [selectedStyle, setSelectedStyle] = useState<string>('Watercolor');
   const [memoryInput, setMemoryInput] = useState('');
@@ -109,7 +111,7 @@ export default function MemoryArtist() {
 
       <header style={{ position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'blur(20px)', background: 'rgba(5,5,16,0.8)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 16 }}>
         <Link href="/dashboard" style={{ color: '#f093fb', textDecoration: 'none', fontSize: 20 }}>←</Link>
-        <h1 style={{ fontSize: 20, fontWeight: 700, background: 'linear-gradient(135deg,#f093fb,#667eea)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', margin: 0 }}>🎨 Memory AI Artist</h1>
+        <h1 style={{ fontSize: 20, fontWeight: 700, background: 'linear-gradient(135deg,#f093fb,#667eea)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', margin: 0 }}>🎨 {t('memory artist')}</h1>
       </header>
 
       <main style={{ maxWidth: 900, margin: '0 auto', padding: 20 }}>
@@ -117,7 +119,7 @@ export default function MemoryArtist() {
           <textarea value={memoryInput} onChange={e => setMemoryInput(e.target.value)} placeholder="Describe a memory to transform into art..." style={{ width: '100%', minHeight: 80, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 16, color: '#e2e8f0', fontSize: 15, resize: 'vertical', fontFamily: 'inherit', lineHeight: 1.6, outline: 'none' }} />
 
           <div style={{ marginTop: 16, marginBottom: 16 }}>
-            <div style={{ fontSize: 13, color: '#94a3b8', marginBottom: 10 }}>Art Style</div>
+            <div style={{ fontSize: 13, color: '#94a3b8', marginBottom: 10 }}>{t('style')}</div>
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
               {ART_STYLES.map(style => (
                 <button key={style} onClick={() => setSelectedStyle(style)} className="style-btn" style={{ padding: '10px 16px', borderRadius: 12, border: selectedStyle === style ? '2px solid #f093fb' : '1px solid rgba(255,255,255,0.1)', background: selectedStyle === style ? 'rgba(240,147,251,0.12)' : 'rgba(255,255,255,0.04)', color: selectedStyle === style ? '#f093fb' : '#94a3b8', cursor: 'pointer', fontSize: 13, display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -128,12 +130,12 @@ export default function MemoryArtist() {
           </div>
 
           <button onClick={generateArt} disabled={generating || !memoryInput.trim()} style={{ width: '100%', padding: '14px 0', borderRadius: 12, border: 'none', background: generating ? 'rgba(240,147,251,0.2)' : 'linear-gradient(135deg,#f093fb,#667eea)', color: '#fff', cursor: generating || !memoryInput.trim() ? 'not-allowed' : 'pointer', fontSize: 15, fontWeight: 600, opacity: generating || !memoryInput.trim() ? 0.6 : 1 }}>
-            {generating ? '🎨 Creating your masterpiece...' : '✨ Transform Memory into Art'}
+            {generating ? '🎨 Creating your masterpiece...' : `✨ ${t('create art')}`}
           </button>
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-          <h2 style={{ fontSize: 18, fontWeight: 600, color: '#e2e8f0', margin: 0 }}>Gallery ({artworks.length})</h2>
+          <h2 style={{ fontSize: 18, fontWeight: 600, color: '#e2e8f0', margin: 0 }}>{t('gallery')} ({artworks.length})</h2>
           <div style={{ display: 'flex', gap: 8 }}>
             <button onClick={() => setViewMode('grid')} style={{ padding: '6px 12px', borderRadius: 8, border: viewMode === 'grid' ? '1px solid #f093fb' : '1px solid rgba(255,255,255,0.1)', background: viewMode === 'grid' ? 'rgba(240,147,251,0.1)' : 'transparent', color: viewMode === 'grid' ? '#f093fb' : '#64748b', cursor: 'pointer', fontSize: 12 }}>Grid</button>
             <button onClick={() => setViewMode('list')} style={{ padding: '6px 12px', borderRadius: 8, border: viewMode === 'list' ? '1px solid #f093fb' : '1px solid rgba(255,255,255,0.1)', background: viewMode === 'list' ? 'rgba(240,147,251,0.1)' : 'transparent', color: viewMode === 'list' ? '#f093fb' : '#64748b', cursor: 'pointer', fontSize: 12 }}>List</button>

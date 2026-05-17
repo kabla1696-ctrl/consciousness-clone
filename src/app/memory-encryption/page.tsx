@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { useT } from '../../lib/language-context'
 
 function Particles() {
   return (
@@ -72,6 +73,7 @@ const defaultMemories: MemoryBlock[] = [
 ]
 
 export default function MemoryEncryption() {
+  const t = useT();
   const [blocks, setBlocks] = useState<MemoryBlock[]>([])
   const [showAdd, setShowAdd] = useState(false)
   const [newMemory, setNewMemory] = useState('')
@@ -150,8 +152,8 @@ export default function MemoryEncryption() {
               <span className="text-lg">←</span>
             </Link>
             <div className="flex-1">
-              <h1 className="text-lg font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">Memory Encryption</h1>
-              <p className="text-xs text-white/40">Blockchain-secured memories</p>
+              <h1 className="text-lg font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">{t('encryption')}</h1>
+              <p className="text-xs text-white/40">{t('blockchain')}-secured memories</p>
             </div>
             <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
               <span className="text-sm">🔒</span>
@@ -182,7 +184,7 @@ export default function MemoryEncryption() {
                 <span className="text-2xl">🛡️</span>
               </div>
               <div className="flex-1">
-                <div className="text-sm font-semibold text-emerald-400">Tamper-Proof</div>
+                <div className="text-sm font-semibold text-emerald-400">{t('tamper proof')}</div>
                 <div className="text-xs text-white/40">Every memory is cryptographically linked. Tampering breaks the chain.</div>
               </div>
               <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />

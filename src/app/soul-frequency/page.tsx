@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 const TRAITS = [
   { name: 'Empathy', color: '#a78bfa', freq: 0.8, amp: 0.7 },
@@ -15,6 +16,7 @@ const TRAITS = [
 const DEFAULT_VALUES = [70, 55, 85, 45, 60, 75];
 
 export default function SoulFrequencyPage() {
+  const t = useT();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const spectrumRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef<number>(0);
@@ -186,9 +188,9 @@ export default function SoulFrequencyPage() {
         }}>←</Link>
         <div>
           <h1 style={{ fontSize: 16, fontWeight: 700, margin: 0, background: 'linear-gradient(135deg, #22d3ee, #a78bfa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            Soul Frequency
+            {t('soul frequency')}
           </h1>
-          <p style={{ fontSize: 11, color: '#64748b', margin: 0 }}>Your consciousness waveform</p>
+          <p style={{ fontSize: 11, color: '#64748b', margin: 0 }}>{t('your waveform')}</p>
         </div>
       </header>
 
@@ -202,7 +204,7 @@ export default function SoulFrequencyPage() {
           <div style={{ fontSize: 48, fontWeight: 800, background: 'linear-gradient(135deg, #22d3ee, #a78bfa, #f97316)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
             {totalFreq}Hz
           </div>
-          <div style={{ fontSize: 12, color: '#64748b', marginTop: 4 }}>Soul Resonance Frequency</div>
+          <div style={{ fontSize: 12, color: '#64748b', marginTop: 4 }}>{t('soul resonance frequency')}</div>
           <div style={{ display: 'flex', justifyContent: 'center', gap: 4, marginTop: 12 }}>
             {TRAITS.map((t, i) => (
               <div key={i} style={{
@@ -297,7 +299,7 @@ export default function SoulFrequencyPage() {
           background: 'rgba(255,255,255,0.03)', borderRadius: 16, padding: 20,
           border: '1px solid rgba(255,255,255,0.06)', textAlign: 'center', marginBottom: 40,
         }}>
-          <div style={{ fontSize: 11, color: '#64748b', marginBottom: 8 }}>Your Unique Soul Signature</div>
+            {t('your unique soul signature')}
           <div style={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap' }}>
             {values.map((v, i) => (
               <div key={i} style={{

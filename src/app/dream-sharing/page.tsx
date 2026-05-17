@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { useT } from '../../lib/language-context'
 
 interface Dream {
   id: string
@@ -145,6 +146,7 @@ function Particles() {
 }
 
 export default function DreamSharing() {
+  const t = useT()
   const [dreams, setDreams] = useState<Dream[]>([])
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [showCompose, setShowCompose] = useState(false)
@@ -233,7 +235,7 @@ export default function DreamSharing() {
             <span className="text-sm">Back</span>
           </Link>
           <h1 className="text-lg font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
-            💭 Dream Sharing
+            💭 {t('dream sharing')}
           </h1>
           <button onClick={() => setShowCompose(true)} className="p-2 text-purple-400 hover:text-purple-300 transition-colors">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 5v14M5 12h14"/></svg>
@@ -312,13 +314,13 @@ export default function DreamSharing() {
                   onClick={() => setExpandedDream(expandedDream === dream.id ? null : dream.id)}
                   className="text-purple-400 text-xs mt-1 hover:text-purple-300"
                 >
-                  {expandedDream === dream.id ? 'Show less' : 'Read more...'}
+                  {expandedDream === dream.id ? 'Show less' : t('interpret') + '...'}
                 </button>
 
                 {/* AI Analysis */}
                 {expandedDream === dream.id && (
                   <div className="mt-3 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 animate-slide-up">
-                    <p className="text-purple-300 text-xs font-medium mb-1">🤖 AI Dream Analysis</p>
+                    <p className="text-purple-300 text-xs font-medium mb-1">🤖 {t('interpret')}</p>
                     <p className="text-white/60 text-xs leading-relaxed">{dream.aiAnalysis}</p>
                   </div>
                 )}
@@ -349,7 +351,7 @@ export default function DreamSharing() {
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
           <div className="relative w-full max-w-lg glass-strong rounded-t-3xl p-6 animate-slide-up" onClick={e => e.stopPropagation()}>
             <div className="w-10 h-1 rounded-full bg-white/20 mx-auto mb-4" />
-            <h2 className="text-xl font-bold text-white mb-4">✨ Share a Dream</h2>
+            <h2 className="text-xl font-bold text-white mb-4">✨ {t('share dreams')}</h2>
 
             <input
               type="text"
@@ -389,7 +391,7 @@ export default function DreamSharing() {
               disabled={!newTitle.trim() || !newContent.trim()}
               className="w-full py-3 rounded-2xl font-semibold bg-gradient-to-r from-purple-500 to-pink-500 text-white disabled:opacity-30 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-purple-500/25 transition-all active:scale-95"
             >
-              Share Dream 💭
+              {t('share dreams')} 💭
             </button>
           </div>
         </div>

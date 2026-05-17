@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Idea {
   id: string
@@ -24,6 +25,7 @@ const CATEGORIES = [
 const STORAGE_KEY = 'consciousness-ideas'
 
 export default function IdeaGeneratorPage() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [selectedCategory, setSelectedCategory] = useState('writing')
@@ -163,7 +165,7 @@ export default function IdeaGeneratorPage() {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500/30 to-orange-500/30 flex items-center justify-center border border-amber-500/20 shadow-[0_0_15px_rgba(245,158,11,0.15)]">
               <span className="text-base">💡</span>
             </div>
-            <h1 className="text-lg font-bold bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent">Idea Generator</h1>
+            <h1 className="text-lg font-bold bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent">{t('idea generator')}</h1>
           </div>
           <div className="flex-1" />
           <button
@@ -240,10 +242,10 @@ export default function IdeaGeneratorPage() {
             {generating ? (
               <>
                 <span className="w-4 h-4 border-2 border-white/40 border-t-transparent rounded-full animate-spin" />
-                <span>Generating ideas...</span>
+                <span>{t('brainstorm')}...</span>
               </>
             ) : (
-              <span className="drop-shadow-[0_0_8px_rgba(139,92,246,0.4)]">✨ Generate Ideas</span>
+              <span className="drop-shadow-[0_0_8px_rgba(139,92,246,0.4)]">✨ {t('generate')}</span>
             )}
           </div>
         </button>
@@ -387,9 +389,9 @@ export default function IdeaGeneratorPage() {
               <div className="absolute inset-0 text-6xl blur-2xl opacity-20">💡</div>
               <div className="text-6xl relative" style={{ filter: 'drop-shadow(0 0 20px rgba(245, 158, 11, 0.25))' }}>💡</div>
             </div>
-            <h2 className="text-lg font-bold bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent mb-2">Spark Your Creativity</h2>
+            <h2 className="text-lg font-bold bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent mb-2">{t('creative ideas')}</h2>
             <p className="text-white/25 text-sm max-w-sm mx-auto leading-relaxed">
-              Pick a category and let your AI clone generate personalized creative ideas based on your personality and interests.
+              {t('creative ideas')}
             </p>
           </div>
         )}

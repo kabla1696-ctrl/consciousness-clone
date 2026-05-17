@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
+import { useT } from '../../lib/language-context'
 
 interface Post {
   id: string; author: string; avatar: string; content: string; image?: string; video?: string
@@ -35,6 +36,7 @@ const SAMPLE_FOLLOWERS: Follower[] = [
 ]
 
 export default function CloneFeed() {
+  const t = useT()
   const [tab, setTab] = useState<'feed' | 'profile' | 'followers' | 'create' | 'story'>('feed')
   const [posts, setPosts] = useState<Post[]>(SAMPLE_POSTS)
   const [stories, setStories] = useState<Story[]>(SAMPLE_STORIES)
@@ -129,12 +131,12 @@ export default function CloneFeed() {
       {/* Tab Bar */}
       <div className="sticky top-[52px] z-40 backdrop-blur-xl border-b border-white/[0.04] px-2 py-2 flex gap-1 overflow-x-auto scroll-container" style={{ background: 'rgba(5,5,16,0.9)' }}>
         {[
-          { id: 'feed', icon: '📰', label: 'Feed' },
-          { id: 'profile', icon: '👤', label: 'Profile' },
-          { id: 'followers', icon: '👥', label: 'Followers' },
-        ].map(t => (
-          <button key={t.id} onClick={() => setTab(t.id as any)} className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium whitespace-nowrap tap-feedback transition-all ${tab === t.id ? 'bg-violet-500/20 text-violet-400 border border-violet-500/30' : 'text-white/40 border border-transparent'}`}>
-            <span>{t.icon}</span> {t.label}
+          { id: 'feed', icon: '📰', label: t('Feed') },
+          { id: 'profile', icon: '👤', label: t('Profile') },
+          { id: 'followers', icon: '👥', label: t('Followers') },
+        ].map(tabItem => (
+          <button key={tabItem.id} onClick={() => setTab(tabItem.id as any)} className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium whitespace-nowrap tap-feedback transition-all ${tab === tabItem.id ? 'bg-violet-500/20 text-violet-400 border border-violet-500/30' : 'text-white/40 border border-transparent'}`}>
+            <span>{tabItem.icon}</span> {tabItem.label}
           </button>
         ))}
       </div>

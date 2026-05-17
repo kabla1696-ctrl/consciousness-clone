@@ -216,7 +216,7 @@ export default function DreamLab() {
           <div className="rounded-2xl border border-white/[0.06] p-4 bg-white/[0.02] backdrop-blur-xl mb-6 animate-[fadeSlideUp_0.5s_ease-out_0.15s_both]">
             <h3 className="text-sm font-semibold text-white/50 mb-3 flex items-center gap-2">
               <span className="w-6 h-6 rounded-lg bg-violet-500/20 flex items-center justify-center text-xs">🧠</span>
-              Dream Patterns
+              {t('patterns')}
             </h3>
             <div className="flex flex-wrap gap-2">
               {topMoods.map(([moodEmoji, count]) => (

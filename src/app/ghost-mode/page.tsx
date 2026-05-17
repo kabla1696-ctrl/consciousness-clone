@@ -1,11 +1,13 @@
 'use client'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { useT } from '../../lib/language-context'
 
 interface GhostContact { name: string; emoji: string; frequency: string; style: string }
 interface GhostMessage { to: string; message: string; date: string; sent: boolean }
 
 export default function GhostMode() {
+  const t = useT()
   const [enabled, setEnabled] = useState(false)
   const [contacts, setContacts] = useState<GhostContact[]>([])
   const [showAdd, setShowAdd] = useState(false)
@@ -70,7 +72,7 @@ export default function GhostMode() {
         <div className="px-4 py-3 flex items-center gap-3">
           <Link href="/dashboard" className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/[0.05] border border-white/[0.06] tap-feedback">←</Link>
           <span className="text-xl">👻</span>
-          <span className="font-bold text-base bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-purple-400">Ghost Mode</span>
+          <span className="font-bold text-base bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-purple-400">{t('ghost mode')}</span>
         </div>
       </header>
 
@@ -80,7 +82,7 @@ export default function GhostMode() {
           <div className="flex items-center justify-between mb-3">
             <div>
               <h3 className="text-sm font-semibold">Ghost Mode</h3>
-              <p className="text-white/30 text-xs">Send messages after you&apos;re gone</p>
+              <p className="text-white/30 text-xs">{t('messages from beyond')}</p>
             </div>
             <button onClick={() => save(!enabled, contacts, inactivityDays)} className={`w-14 h-7 rounded-full transition-all tap-feedback ${enabled ? 'bg-violet-500' : 'bg-white/[0.1]'}`}>
               <div className={`w-6 h-6 rounded-full bg-white transition-all shadow-lg ${enabled ? 'translate-x-7' : 'translate-x-0.5'}`} />
@@ -89,7 +91,7 @@ export default function GhostMode() {
           {enabled && (
             <div className="flex items-center gap-2 text-violet-400/60 text-xs">
               <div className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
-              Active — will trigger after {inactivityDays} days of inactivity
+              {t('invisible')} — will trigger after {inactivityDays} days of inactivity
             </div>
           )}
         </div>
@@ -147,7 +149,7 @@ export default function GhostMode() {
               </div>
               <div className="flex gap-2">
                 <button onClick={addContact} className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-violet-500 to-purple-500 text-white text-sm font-medium tap-feedback">Add</button>
-                <button onClick={generatePreview} className="flex-1 py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white/60 text-sm tap-feedback">{generating ? '...' : 'Preview'}</button>
+                <button onClick={generatePreview} className="flex-1 py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white/60 text-sm tap-feedback">{generating ? '...' : t('haunt')}</button>
               </div>
             </div>
           )}
@@ -156,7 +158,7 @@ export default function GhostMode() {
         {/* Preview Messages */}
         {previewMsgs.length > 0 && (
           <div className="rounded-xl border border-violet-500/20 p-4 mb-4" style={{ background: 'rgba(139,92,246,0.03)' }}>
-            <h4 className="text-xs font-semibold text-violet-400 mb-3">👻 Ghost Preview</h4>
+            <h4 className="text-xs font-semibold text-violet-400 mb-3">👻 {t('haunt')}</h4>
             {previewMsgs.map((m, i) => (
               <div key={i} className="mb-2 last:mb-0 p-3 rounded-lg bg-white/[0.02] border border-white/[0.04]">
                 <p className="text-white/60 text-xs italic">&quot;{m}&quot;</p>

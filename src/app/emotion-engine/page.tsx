@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useRef, useEffect } from 'react'
+import { useT } from '../../lib/language-context'
 
 interface EmotionData {
   joy: number
@@ -84,6 +85,7 @@ function getDominantEmotion(emotions: EmotionData): string {
 }
 
 export default function EmotionEngine() {
+  const t = useT()
   const [text, setText] = useState('')
   const [currentEmotions, setCurrentEmotions] = useState<EmotionData | null>(null)
   const [currentDominant, setCurrentDominant] = useState('')
@@ -207,8 +209,8 @@ export default function EmotionEngine() {
             <svg className="w-5 h-5 text-gray-400 group-hover:text-violet-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </Link>
           <div className="flex-1">
-            <h1 className="text-white font-bold text-base bg-gradient-to-r from-violet-300 to-fuchsia-300 bg-clip-text text-transparent">Emotion Engine</h1>
-            <p className="text-gray-500 text-[11px]">Real-time emotion detection</p>
+            <h1 className="text-white font-bold text-base bg-gradient-to-r from-violet-300 to-fuchsia-300 bg-clip-text text-transparent">{t('emotion engine')}</h1>
+            <p className="text-gray-500 text-[11px]">{t('detect emotions')}</p>
           </div>
           <button onClick={() => setShowReport(!showReport)} className="px-4 py-2 rounded-xl bg-violet-500/10 backdrop-blur-sm border border-violet-500/20 text-violet-300 text-xs font-medium hover:bg-violet-500/20 hover:border-violet-500/40 hover:shadow-lg hover:shadow-violet-500/10 transition-all duration-300">
             📊 Report
@@ -219,7 +221,7 @@ export default function EmotionEngine() {
       <div className="max-w-lg mx-auto px-4 mt-6 space-y-5 relative z-10">
         {/* Input Card */}
         <div className="bg-white/[0.02] backdrop-blur-xl rounded-2xl p-5 border border-white/[0.06] shadow-2xl shadow-black/20 hover:border-violet-500/20 transition-all duration-500">
-          <label className="text-gray-300 text-xs font-semibold mb-3 block tracking-wide uppercase">How are you feeling?</label>
+          <label className="text-gray-300 text-xs font-semibold mb-3 block tracking-wide uppercase">{t('mood')}</label>
           <textarea
             value={text}
             onChange={e => setText(e.target.value)}
@@ -239,7 +241,7 @@ export default function EmotionEngine() {
                 Analyzing emotions...
               </span>
             ) : (
-              <span className="relative z-10">🧠 Analyze Emotions</span>
+              <span className="relative z-10">🧠 {t('analysis')}</span>
             )}
           </button>
         </div>
@@ -297,7 +299,7 @@ export default function EmotionEngine() {
         {/* Weekly Report */}
         {showReport && weeklyReport && (
           <div className="bg-white/[0.02] backdrop-blur-xl rounded-2xl p-6 border border-white/[0.06] shadow-2xl shadow-black/20">
-            <h3 className="text-white text-sm font-bold mb-5 tracking-wide">📊 Weekly Emotion Report</h3>
+            <h3 className="text-white text-sm font-bold mb-5 tracking-wide">📊 {t('analysis')}</h3>
             <div className="grid grid-cols-2 gap-3 mb-5">
               <div className="bg-white/[0.03] backdrop-blur-sm rounded-xl p-4 text-center border border-white/[0.06] hover:border-violet-500/20 transition-all">
                 <p className="text-3xl font-black bg-gradient-to-b from-violet-300 to-fuchsia-400 bg-clip-text text-transparent">{weeklyReport.totalEntries}</p>

@@ -202,7 +202,7 @@ export default function EmotionalWeatherPage() {
 
         {/* 7-Day Forecast */}
         <div>
-          <h3 className="text-xs font-semibold text-white/40 uppercase tracking-[2px] mb-4">7-Day Forecast</h3>
+          <h3 className="text-xs font-semibold text-white/40 uppercase tracking-[2px] mb-4">{t('forecast')}</h3>
           <div className="space-y-2">
             {forecast.map((day, i) => {
               const dc = MOOD_CONFIG[day.mood]
@@ -243,7 +243,7 @@ export default function EmotionalWeatherPage() {
 
         {/* Mood Distribution */}
         <div className="glass-card rounded-2xl p-5">
-          <h3 className="text-xs font-semibold text-white/40 uppercase tracking-[2px] mb-4">Mood Distribution</h3>
+          <h3 className="text-xs font-semibold text-white/40 uppercase tracking-[2px] mb-4">{t('mood patterns')}</h3>
           <div className="space-y-3">
             {moodDistribution.map(({ mood, count }) => {
               const mc = MOOD_CONFIG[mood]

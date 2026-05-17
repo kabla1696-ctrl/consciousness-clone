@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Memory {
   id: string;
@@ -54,6 +55,7 @@ function generateDefaultMemories(): Memory[] {
 }
 
 export default function MemoryConstellation() {
+  const t = useT();
   const [memories, setMemories] = useState<Memory[]>([]);
   const [selectedMemory, setSelectedMemory] = useState<Memory | null>(null);
   const [zoom, setZoom] = useState(1);
@@ -147,9 +149,9 @@ export default function MemoryConstellation() {
         }}>←</Link>
         <div>
           <h1 style={{ fontSize: 18, fontWeight: 700, margin: 0, background: 'linear-gradient(135deg, #a78bfa, #f472b6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            ✨ Memory Constellation
+            ✨ {t('constellation')}
           </h1>
-          <p style={{ fontSize: 11, color: '#64748b', margin: 0 }}>{memories.length} memories mapped</p>
+          <p style={{ fontSize: 11, color: '#64748b', margin: 0 }}>{memories.length} {t('your stars')}</p>
         </div>
       </div>
 

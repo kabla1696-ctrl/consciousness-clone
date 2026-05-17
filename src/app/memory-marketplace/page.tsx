@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { useT } from '../../lib/language-context'
 
 interface Listing {
   id: string
@@ -96,6 +97,7 @@ function Particles() {
 }
 
 export default function MemoryMarketplace() {
+  const t = useT();
   const [listings, setListings] = useState<Listing[]>([])
   const [cart, setCart] = useState<CartItem[]>([])
   const [selectedCategory, setSelectedCategory] = useState('All')
@@ -166,7 +168,7 @@ export default function MemoryMarketplace() {
             <span className="text-sm">Back</span>
           </Link>
           <h1 className="text-lg font-bold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-            🏪 Memory Marketplace
+            🏪 {t('marketplace')}
           </h1>
           <button onClick={() => setShowCart(!showCart)} className="relative p-2">
             <span className="text-xl">🛒</span>
@@ -185,7 +187,7 @@ export default function MemoryMarketplace() {
           <div className="glass rounded-2xl p-1">
             <input
               type="text"
-              placeholder="🔍 Search memories..."
+              placeholder={`🔍 ${t('browse')}...`}
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               className="w-full bg-transparent text-white placeholder-white/30 px-4 py-3 outline-none text-sm"
@@ -268,7 +270,7 @@ export default function MemoryMarketplace() {
                     onClick={e => { e.stopPropagation(); addToCart(listing) }}
                     className="px-4 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-cyan-500 to-purple-500 text-white hover:shadow-lg hover:shadow-purple-500/25 transition-all active:scale-95"
                   >
-                    + Cart
+                    {t('buy')}
                   </button>
                 </div>
               </div>
@@ -307,7 +309,7 @@ export default function MemoryMarketplace() {
                 onClick={() => { addToCart(selectedListing); setSelectedListing(null) }}
                 className="px-6 py-3 rounded-2xl font-semibold bg-gradient-to-r from-cyan-500 to-purple-500 text-white hover:shadow-lg hover:shadow-purple-500/25 transition-all active:scale-95"
               >
-                Add to Cart 🛒
+                {t('buy')} 🛒
               </button>
             </div>
           </div>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Metric {
   label: string;
@@ -35,6 +36,7 @@ const PRIORITY_COLORS: Record<string, string> = {
 };
 
 export default function SoulDiagnosis() {
+  const t = useT();
   const [metrics, setMetrics] = useState<Metric[]>([]);
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [moodHistory, setMoodHistory] = useState<MoodEntry[]>([]);
@@ -76,12 +78,12 @@ export default function SoulDiagnosis() {
   }, [metrics, recommendations, moodHistory, scanning]);
 
   const defaultMetrics: Metric[] = [
-    { label: 'Stress Level', value: 42, max: 100, color: '#f87171', icon: '😰', trend: 'down' },
-    { label: 'Happiness Index', value: 78, max: 100, color: '#34d399', icon: '😊', trend: 'up' },
-    { label: 'Anxiety Level', value: 35, max: 100, color: '#fbbf24', icon: '😟', trend: 'down' },
-    { label: 'Energy Score', value: 65, max: 100, color: '#60a5fa', icon: '⚡', trend: 'stable' },
-    { label: 'Focus', value: 72, max: 100, color: '#a78bfa', icon: '🎯', trend: 'up' },
-    { label: 'Sleep Quality', value: 68, max: 100, color: '#818cf8', icon: '😴', trend: 'stable' },
+    { label: 'stress level', value: 42, max: 100, color: '#f87171', icon: '😰', trend: 'down' },
+    { label: 'happiness index', value: 78, max: 100, color: '#34d399', icon: '😊', trend: 'up' },
+    { label: 'anxiety level', value: 35, max: 100, color: '#fbbf24', icon: '😟', trend: 'down' },
+    { label: 'energy score', value: 65, max: 100, color: '#60a5fa', icon: '⚡', trend: 'stable' },
+    { label: 'focus', value: 72, max: 100, color: '#a78bfa', icon: '🎯', trend: 'up' },
+    { label: 'sleep quality', value: 68, max: 100, color: '#818cf8', icon: '😴', trend: 'stable' },
   ];
 
   const defaultRecommendations: Recommendation[] = [
@@ -100,7 +102,7 @@ export default function SoulDiagnosis() {
   }));
 
   const overallScore = metrics.length ? Math.round(metrics.reduce((s, m) => {
-    const inverted = m.label.includes('Stress') || m.label.includes('Anxiety');
+    const inverted = m.label === 'stress level' || m.label === 'anxiety level';
     return s + (inverted ? (m.max - m.value) : m.value);
   }, 0) / metrics.length) : 0;
 
@@ -138,8 +140,8 @@ export default function SoulDiagnosis() {
       <div style={{ minHeight: '100vh', background: '#050510', color: '#e2e8f0', fontFamily: 'system-ui, sans-serif', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
         <style>{`@keyframes pulse { 0%,100%{opacity:.4;transform:scale(1)} 50%{opacity:1;transform:scale(1.1)} }`}</style>
         <div style={{ fontSize: 64, marginBottom: 24, animation: 'pulse 1.5s infinite' }}>🧠</div>
-        <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 8, background: 'linear-gradient(135deg,#a78bfa,#6366f1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Scanning Your Soul...</h2>
-        <p style={{ color: '#94a3b8', marginBottom: 24, fontSize: 14 }}>Analyzing consciousness patterns</p>
+        <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 8, background: 'linear-gradient(135deg,#a78bfa,#6366f1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{t('scanning your soul')}</h2>
+        <p style={{ color: '#94a3b8', marginBottom: 24, fontSize: 14 }}>{t('analyzing consciousness patterns')}</p>
         <div style={{ width: 240, height: 6, background: 'rgba(255,255,255,0.06)', borderRadius: 3, overflow: 'hidden' }}>
           <div style={{ width: `${scanProgress}%`, height: '100%', background: 'linear-gradient(90deg,#a78bfa,#6366f1)', borderRadius: 3, transition: 'width .1s linear' }} />
         </div>
@@ -165,7 +167,7 @@ export default function SoulDiagnosis() {
 
       <header style={{ position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'blur(20px)', background: 'rgba(5,5,16,0.8)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 16 }}>
         <Link href="/dashboard" style={{ color: '#a78bfa', textDecoration: 'none', fontSize: 20 }}>←</Link>
-        <h1 style={{ fontSize: 20, fontWeight: 700, background: 'linear-gradient(135deg,#a78bfa,#6366f1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', margin: 0 }}>🧠 Soul Diagnosis</h1>
+        <h1 style={{ fontSize: 20, fontWeight: 700, background: 'linear-gradient(135deg,#a78bfa,#6366f1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', margin: 0 }}>🧠 {t('soul diagnosis')}</h1>
       </header>
 
       <main style={{ maxWidth: 900, margin: '0 auto', padding: 20 }}>
@@ -178,8 +180,8 @@ export default function SoulDiagnosis() {
               <span style={{ fontSize: 11, color: '#94a3b8' }}>Overall</span>
             </div>
           </div>
-          <h2 style={{ margin: '0 0 6px', fontSize: 20, fontWeight: 600 }}>Soul Health Score</h2>
-          <p style={{ margin: 0, fontSize: 13, color: '#94a3b8' }}>{overallScore > 70 ? 'Your soul is thriving ✨' : overallScore > 40 ? 'Your soul needs some care 🌱' : 'Time for deep healing 💚'}</p>
+          <h2 style={{ margin: '0 0 6px', fontSize: 20, fontWeight: 600 }}>{t('soul health score')}</h2>
+          <p style={{ margin: 0, fontSize: 13, color: '#94a3b8' }}>{overallScore > 70 ? t('your soul is thriving') + ' ✨' : overallScore > 40 ? t('your soul needs some care') + ' 🌱' : t('time for deep healing') + ' 💚'}</p>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 16, marginBottom: 32 }}>
@@ -188,7 +190,7 @@ export default function SoulDiagnosis() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span style={{ fontSize: 20 }}>{m.icon}</span>
-                  <span style={{ fontSize: 14, fontWeight: 600, color: '#e2e8f0' }}>{m.label}</span>
+                  <span style={{ fontSize: 14, fontWeight: 600, color: '#e2e8f0' }}>{t(m.label.toLowerCase())}</span>
                 </div>
                 <span style={{ fontSize: 12, color: m.trend === 'up' ? '#34d399' : m.trend === 'down' ? '#f87171' : '#94a3b8' }}>
                   {m.trend === 'up' ? '↑' : m.trend === 'down' ? '↓' : '→'}
@@ -209,7 +211,7 @@ export default function SoulDiagnosis() {
 
         <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 20, padding: 24, border: '1px solid rgba(255,255,255,0.06)', marginBottom: 32 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-            <h3 style={{ margin: 0, fontSize: 16, fontWeight: 600 }}>Mood Trends</h3>
+            <h3 style={{ margin: 0, fontSize: 16, fontWeight: 600 }}>{t('mood trends')}</h3>
             <div style={{ display: 'flex', gap: 6 }}>
               {(['week', 'month'] as const).map(p => (
                 <button key={p} onClick={() => setViewPeriod(p)} style={{ padding: '4px 12px', borderRadius: 8, border: viewPeriod === p ? '1px solid #a78bfa' : '1px solid rgba(255,255,255,0.08)', background: viewPeriod === p ? 'rgba(167,139,250,0.12)' : 'transparent', color: viewPeriod === p ? '#a78bfa' : '#64748b', cursor: 'pointer', fontSize: 12 }}>{p === 'week' ? '7D' : '30D'}</button>
@@ -218,9 +220,9 @@ export default function SoulDiagnosis() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 12 }}>
             {[
-              { label: 'Mood', color: '#34d399', data: moodHistory.slice(viewPeriod === 'week' ? -7 : -30).map(d => d.mood) },
-              { label: 'Energy', color: '#60a5fa', data: moodHistory.slice(viewPeriod === 'week' ? -7 : -30).map(d => d.energy) },
-              { label: 'Stress', color: '#f87171', data: moodHistory.slice(viewPeriod === 'week' ? -7 : -30).map(d => d.stress) },
+              { label: t('mood'), color: '#34d399', data: moodHistory.slice(viewPeriod === 'week' ? -7 : -30).map(d => d.mood) },
+              { label: t('energy'), color: '#60a5fa', data: moodHistory.slice(viewPeriod === 'week' ? -7 : -30).map(d => d.energy) },
+              { label: t('stress'), color: '#f87171', data: moodHistory.slice(viewPeriod === 'week' ? -7 : -30).map(d => d.stress) },
             ].map((g, i) => (
               <div key={i}>
                 <div style={{ fontSize: 11, color: '#64748b', marginBottom: 6 }}>{g.label}</div>
@@ -231,7 +233,7 @@ export default function SoulDiagnosis() {
         </div>
 
         <div style={{ marginBottom: 32 }}>
-          <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>💡 Recommendations</h3>
+          <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>💡 {t('recommendations')}</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {recommendations.map(rec => (
               <div key={rec.id} className="rec-card" style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 14, padding: 18, border: '1px solid rgba(255,255,255,0.06)', borderLeft: `3px solid ${PRIORITY_COLORS[rec.priority]}`, display: 'flex', gap: 14, alignItems: 'flex-start' }}>
