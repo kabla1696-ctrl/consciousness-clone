@@ -36,6 +36,10 @@ const CATEGORIES = [
   { id: 'secret', label: 'Secrets', icon: '🤫' },
   { id: 'opinion', label: 'Opinions', icon: '💬' },
   { id: 'personality', label: 'Personality', icon: '🧬' },
+  { id: 'bad_habits', label: 'Bad Habits', icon: '😈' },
+  { id: 'strengths', label: 'Strengths', icon: '💪' },
+  { id: 'weaknesses', label: 'Weaknesses', icon: '😔' },
+  { id: 'secrets', label: 'Dark Secrets', icon: '🌑' },
 ]
 
 const MOODS = ['😊', '😢', '😡', '😰', '😍', '🤔', '💪', '🙏', '🎉', '💔', '✨', '🔥', '📝', '🧒', '✈️', '🎓', '💼', '❤️', '🎵', '🍕']
