@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Pet {
   type: 'dog' | 'cat' | 'rabbit';
@@ -37,6 +38,7 @@ function getDefaultPet(type: 'dog' | 'cat' | 'rabbit'): Pet {
 }
 
 export default function CloneTherapyDog() {
+  const t = useT();
   const [pet, setPet] = useState<Pet | null>(null);
   const [action, setAction] = useState<string | null>(null);
   const [showPicker, setShowPicker] = useState(false);
@@ -123,11 +125,11 @@ export default function CloneTherapyDog() {
 
   const getMoodText = () => {
     if (!pet) return '';
-    if (pet.mood > 80) return 'Feeling wonderful! 💕';
-    if (pet.mood > 60) return 'Happy and content 😊';
-    if (pet.mood > 40) return 'Could use some love 💭';
-    if (pet.mood > 20) return 'Feeling lonely... 🥺';
-    return 'Please take care of me 😢';
+    if (pet.mood > 80) return `${t('comfort')}! 💕`;
+    if (pet.mood > 60) return `${t('comfort')} 😊`;
+    if (pet.mood > 40) return `${t('comfort')} 💭`;
+    if (pet.mood > 20) return `${t('comfort')}... 🥺`;
+    return `${t('comfort')} 😢`;
   };
 
   if (!pet || showPicker) {
@@ -144,12 +146,12 @@ export default function CloneTherapyDog() {
         }}>
           <Link href="/dashboard" style={{ color: '#f472b6', fontSize: 22, textDecoration: 'none' }}>←</Link>
           <h1 style={{ fontSize: 18, fontWeight: 700, margin: 0, background: 'linear-gradient(135deg, #f472b6, #fbbf24)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            🐾 Therapy Pet
+            🐾 {t('therapy dog')}
           </h1>
         </div>
         <div style={{ padding: 40, textAlign: 'center' }}>
-          <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 8 }}>Choose Your Companion</h2>
-          <p style={{ color: '#64748b', fontSize: 13, marginBottom: 32 }}>Your virtual pet comfort companion</p>
+          <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 8 }}>{t('virtual pet')}</h2>
+          <p style={{ color: '#64748b', fontSize: 13, marginBottom: 32 }}>{t('comfort')}</p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: 20, flexWrap: 'wrap' }}>
             {(['dog', 'cat', 'rabbit'] as const).map((type) => (
               <button

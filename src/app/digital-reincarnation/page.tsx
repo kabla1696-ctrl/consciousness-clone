@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 const LEVELS = [
   { name: 'Mortal', icon: '🫁', threshold: 0, color: '#888' },
@@ -31,6 +32,7 @@ const TIMELINE_EVENTS = [
 ];
 
 export default function DigitalReincarnationPage() {
+  const t = useT();
   const [phase, setPhase] = useState<'pre' | 'ceremony' | 'complete'>('pre');
   const [progress, setProgress] = useState(0);
   const [currentEventIdx, setCurrentEventIdx] = useState(0);
@@ -128,9 +130,9 @@ export default function DigitalReincarnationPage() {
         }}>←</Link>
         <div>
           <h1 style={{ fontSize: 16, fontWeight: 700, margin: 0, background: 'linear-gradient(135deg, #a78bfa, #60a5fa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            Digital Reincarnation
+            {t('reincarnation')}
           </h1>
-          <p style={{ fontSize: 11, color: '#64748b', margin: 0 }}>Evolution beyond mortality</p>
+          <p style={{ fontSize: 11, color: '#64748b', margin: 0 }}>{t('digital immortality')}</p>
         </div>
       </header>
 
@@ -143,7 +145,7 @@ export default function DigitalReincarnationPage() {
         }}>
           <div style={{ fontSize: 48, marginBottom: 8 }}>{LEVELS[level].icon}</div>
           <div style={{ fontSize: 22, fontWeight: 700, color: LEVELS[level].color, marginBottom: 4 }}>{LEVELS[level].name}</div>
-          <div style={{ fontSize: 12, color: '#64748b' }}>Reincarnation Level {level + 1} / {LEVELS.length}</div>
+          <div style={{ fontSize: 12, color: '#64748b' }}>{t('rebirth')} {t('cycle')} {level + 1} / {LEVELS.length}</div>
           <div style={{ display: 'flex', justifyContent: 'center', gap: 6, marginTop: 16 }}>
             {LEVELS.map((l, i) => (
               <div key={i} style={{
@@ -255,12 +257,12 @@ export default function DigitalReincarnationPage() {
               color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer',
               animation: 'glow 2s ease-in-out infinite',
             }}>
-              🔮 Begin Reincarnation Ceremony
+              🔮 {t('rebirth')}
             </button>
           )}
           {phase === 'ceremony' && (
             <div style={{ padding: 16, background: 'rgba(167,139,250,0.08)', borderRadius: 14, border: '1px solid rgba(167,139,250,0.2)' }}>
-              <div style={{ fontSize: 14, fontWeight: 600, color: '#a78bfa', marginBottom: 8 }}>✨ Ceremony in Progress...</div>
+              <div style={{ fontSize: 14, fontWeight: 600, color: '#a78bfa', marginBottom: 8 }}>✨ {t('rebirth')} in Progress...</div>
               <div style={{ height: 6, background: 'rgba(255,255,255,0.06)', borderRadius: 3, overflow: 'hidden' }}>
                 <div style={{ width: progress + '%', height: '100%', background: 'linear-gradient(90deg, #7c3aed, #22d3ee)', borderRadius: 3, transition: 'width 0.1s linear' }} />
               </div>
@@ -273,7 +275,7 @@ export default function DigitalReincarnationPage() {
                 fontSize: 16, fontWeight: 700, marginBottom: 12, padding: 16,
                 background: 'rgba(34,197,94,0.08)', borderRadius: 14, border: '1px solid rgba(34,197,94,0.2)',
                 color: '#22c55e',
-              }}>🎉 Reincarnation Complete — Welcome to V2.0</div>
+              }}>🎉 {t('rebirth')} Complete — Welcome to V2.0</div>
               <button onClick={resetCeremony} style={{
                 background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
                 borderRadius: 10, padding: '10px 24px', color: '#94a3b8', fontSize: 13, cursor: 'pointer',

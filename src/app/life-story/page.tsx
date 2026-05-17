@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Chapter {
   title: string
@@ -20,6 +21,7 @@ const CHAPTER_TITLES = [
 ]
 
 export default function LifeStory() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [chapters, setChapters] = useState<Chapter[]>([])
   const [generating, setGenerating] = useState(false)
@@ -188,7 +190,7 @@ Write in first person, as if the person is telling their own story. Be warm, ref
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </Link>
-          <h1 className="text-base font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">Life Story</h1>
+          <h1 className="text-base font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">{t('life story')}</h1>
           {generated && (
             <div className="flex-1 flex justify-end gap-2">
               <button onClick={generateLifeStory} className="text-xs text-white/30 hover:text-violet-400 px-3 py-1.5 rounded-lg hover:bg-white/[0.02] transition-all">🔄 Regen</button>
@@ -220,7 +222,7 @@ Write in first person, as if the person is telling their own story. Be warm, ref
             </div>
 
             <h1 className="text-3xl font-bold mb-3 bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">Your Life Story</h1>
-            <p className="text-white/40 text-lg mb-2">AI weaves your memories into a beautiful autobiography</p>
+            <p className="text-white/40 text-lg mb-2">{t('ai generated')}</p>
             <p className="text-white/20 text-sm mb-8">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20">
                 ✨ {memoryCount} memories available
@@ -235,7 +237,7 @@ Write in first person, as if the person is telling their own story. Be warm, ref
             ) : (
               <button onClick={() => { setBookOpen(true); generateLifeStory(); }}
                 className="relative overflow-hidden px-10 py-4 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-2xl font-semibold text-lg hover:shadow-[0_0_40px_rgba(139,92,246,0.3)] transition-all group">
-                <span className="relative z-10">✨ Generate My Life Story</span>
+                <span className="relative z-10">✨ {t('write story')}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-fuchsia-500 to-violet-500 opacity-0 group-hover:opacity-100 transition-opacity" />
               </button>
             )}
@@ -329,7 +331,7 @@ Write in first person, as if the person is telling their own story. Be warm, ref
             {/* Chapter Divider */}
             <div className="flex items-center gap-4 mb-12">
               <div className="flex-1 h-px bg-gradient-to-r from-transparent to-violet-500/30" />
-              <span className="text-white/20 text-xs tracking-[0.3em] font-serif">CHAPTERS</span>
+              <span className="text-white/20 text-xs tracking-[0.3em] font-serif">{t('chapters')}</span>
               <div className="flex-1 h-px bg-gradient-to-l from-transparent to-violet-500/30" />
             </div>
 

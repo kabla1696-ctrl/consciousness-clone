@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Connection {
   id: string
@@ -36,6 +37,7 @@ const MEMORY_CATEGORIES = [
 ]
 
 export default function DreamModePage() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [isProcessing, setIsProcessing] = useState(false)
@@ -211,7 +213,7 @@ export default function DreamModePage() {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500/30 to-fuchsia-500/30 flex items-center justify-center border border-violet-500/20 shadow-[0_0_15px_rgba(139,92,246,0.15)]">
               <span className="text-base">🌙</span>
             </div>
-            <h1 className="text-lg font-bold bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent">Dream Mode</h1>
+            <h1 className="text-lg font-bold bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent">{t('dream mode')}</h1>
           </div>
         </div>
       </header>
@@ -318,12 +320,12 @@ export default function DreamModePage() {
             </div>
             {isProcessing ? (
               <div className="text-center mt-4">
-                <div className="text-sm font-semibold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent mb-1">Processing memories...</div>
+                <div className="text-sm font-semibold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent mb-1">{t('processing')} memories...</div>
                 <div className="text-xs text-white/40">{processProgress}% complete</div>
               </div>
             ) : (
               <div className="text-center mt-4">
-                <div className="text-sm text-white/50 font-medium">Your clone is dreaming</div>
+                <div className="text-sm text-white/50 font-medium">Your clone is {t('sleep').toLowerCase()}ing</div>
                 <div className="text-xs text-white/25 mt-1">Finding patterns in your memories</div>
               </div>
             )}
@@ -353,10 +355,10 @@ export default function DreamModePage() {
             {isProcessing ? (
               <>
                 <span className="w-4 h-4 border-2 border-white/40 border-t-transparent rounded-full animate-spin" />
-                <span>Dreaming...</span>
+                <span>{t('sleep').charAt(0).toUpperCase() + t('sleep').slice(1)}ing...</span>
               </>
             ) : (
-              <span className="drop-shadow-[0_0_8px_rgba(139,92,246,0.4)]">✨ Begin Dream Processing</span>
+              <span className="drop-shadow-[0_0_8px_rgba(139,92,246,0.4)]">✨ {t('processing')} Dreams</span>
             )}
           </div>
         </button>

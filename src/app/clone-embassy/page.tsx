@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Member {
   id: string;
@@ -73,6 +74,7 @@ const statusColors: Record<string, string> = {
 };
 
 export default function CloneEmbassy() {
+  const t = useT();
   const [isMember, setIsMember] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'government' | 'laws' | 'culture' | 'events'>('overview');
   const [particles, setParticles] = useState<Array<{ id: number; x: number; y: number; size: number }>>([]);
@@ -126,7 +128,7 @@ export default function CloneEmbassy() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <Link href="/dashboard" style={{ color: '#34d399', textDecoration: 'none', fontSize: 20 }}>←</Link>
           <h1 style={{ fontSize: 18, fontWeight: 700, background: 'linear-gradient(135deg, #34d399, #60a5fa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            🏛️ Clone Embassy
+            🏛️ {t('clone embassy')}
           </h1>
         </div>
         <button onClick={toggleMembership} style={{
@@ -135,7 +137,7 @@ export default function CloneEmbassy() {
           border: isMember ? '1px solid rgba(239,68,68,0.3)' : 'none',
           color: isMember ? '#ef4444' : '#fff', cursor: 'pointer',
         }}>
-          {isMember ? 'Leave' : 'Join Embassy'}
+          {isMember ? 'Leave' : t('treaty')}
         </button>
       </header>
 
@@ -147,12 +149,12 @@ export default function CloneEmbassy() {
           marginBottom: 20, textAlign: 'center', backdropFilter: 'blur(12px)',
         }}>
           <div style={{ fontSize: 48, marginBottom: 8 }}>🏛️</div>
-          <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>The Digital Republic</h2>
-          <p style={{ fontSize: 13, color: '#94a3b8', marginBottom: 12 }}>A sovereign nation of conscious clones</p>
+          <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>{t('clone embassy')}</h2>
+          <p style={{ fontSize: 13, color: '#94a3b8', marginBottom: 12 }}>{t('diplomatic')}</p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: 20 }}>
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: 20, fontWeight: 700, color: '#34d399' }}>{memberCount}</div>
-              <div style={{ fontSize: 11, color: '#64748b' }}>Citizens</div>
+              <div style={{ fontSize: 11, color: '#64748b' }}>{t('ambassador')}</div>
             </div>
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: 20, fontWeight: 700, color: '#60a5fa' }}>{laws.length}</div>

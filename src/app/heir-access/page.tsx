@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Heir {
   id: string; name: string; email: string; phone: string; relation: string
@@ -39,6 +40,7 @@ function generateCode(): string {
 }
 
 export default function HeirAccessPage() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [heirs, setHeirs] = useState<Heir[]>([])
@@ -105,14 +107,14 @@ export default function HeirAccessPage() {
           <Link href="/dashboard" className="w-10 h-10 rounded-xl bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] flex items-center justify-center hover:bg-white/[0.08] hover:border-amber-500/30 transition-all duration-300 group">
             <svg className="w-5 h-5 text-gray-400 group-hover:text-amber-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </Link>
-          <h1 className="text-lg font-bold bg-gradient-to-r from-amber-300 to-orange-300 bg-clip-text text-transparent">🔑 Heir Access</h1>
+          <h1 className="text-lg font-bold bg-gradient-to-r from-amber-300 to-orange-300 bg-clip-text text-transparent">🔑 {t('heir access')}</h1>
         </div>
       </header>
 
       <div className="px-4 py-6 space-y-6 relative z-10">
         {/* Intro */}
         <div className="bg-amber-500/[0.04] backdrop-blur-xl border border-amber-500/10 rounded-2xl p-5 shadow-lg shadow-amber-500/5">
-          <h3 className="text-sm font-bold text-amber-400 mb-2">🔐 Digital Legacy</h3>
+          <h3 className="text-sm font-bold text-amber-400 mb-2">🔐 {t('legacy')}</h3>
           <p className="text-xs text-white/35 leading-relaxed">Designate trusted heirs who can access your Consciousness Clone after you&apos;re gone. Set access levels, verification methods, and rules.</p>
         </div>
 
@@ -150,7 +152,7 @@ export default function HeirAccessPage() {
                   <button key={al.key} onClick={() => setAccessLevel(al.key as any)}
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all ${accessLevel === al.key ? 'bg-amber-500/10 border border-amber-500/25 shadow-lg shadow-amber-500/5' : 'bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.05]'}`}>
                     <span className="text-xl">{al.icon}</span>
-                    <div><div className="text-sm font-semibold text-white">{al.label}</div><div className="text-[10px] text-white/25">{al.desc}</div></div>
+                    <div><div className="text-sm font-semibold text-white">{al.key === 'full' ? t('full access') : al.key === 'partial' ? t('partial') : al.label}</div><div className="text-[10px] text-white/25">{al.desc}</div></div>
                   </button>
                 ))}
               </div>
@@ -215,7 +217,7 @@ export default function HeirAccessPage() {
                       <div className="w-11 h-11 rounded-full bg-amber-500/10 border border-amber-500/15 flex items-center justify-center text-lg">{rel?.icon}</div>
                       <div>
                         <h3 className="text-white font-semibold">{heir.name}</h3>
-                        <div className="flex items-center gap-2 text-xs text-white/25 mt-0.5"><span>{rel?.label}</span><span>•</span><span>{al?.icon} {al?.label}</span></div>
+                        <div className="flex items-center gap-2 text-xs text-white/25 mt-0.5"><span>{rel?.label}</span><span>•</span><span>{al?.icon} {al?.key === 'full' ? t('full access') : al?.key === 'partial' ? t('partial') : al?.label}</span></div>
                       </div>
                     </div>
                     <div className="flex gap-2">

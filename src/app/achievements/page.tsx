@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Achievement {
   id: string
@@ -61,6 +62,7 @@ function FloatingParticles() {
 }
 
 export default function AchievementsPage() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [achievements, setAchievements] = useState<Achievement[]>([])
@@ -144,7 +146,7 @@ export default function AchievementsPage() {
           <Link href="/dashboard" className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
             <svg className="w-5 h-5 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </Link>
-          <h1 className="text-lg font-bold gradient-text">Achievements</h1>
+          <h1 className="text-lg font-bold gradient-text">{t('achievements')}</h1>
         </div>
       </header>
 
@@ -153,22 +155,22 @@ export default function AchievementsPage() {
         <div className="grid grid-cols-3 gap-3 stagger-children">
           <div className="glass-card hover-lift rounded-2xl p-4 text-center">
             <div className="text-2xl font-bold text-violet-400">{stats.unlocked}</div>
-            <div className="text-[10px] text-white/30 uppercase tracking-wider">Unlocked</div>
+            <div className="text-[10px] text-white/30 uppercase tracking-wider">{t('unlocked')}</div>
           </div>
           <div className="glass-card hover-lift rounded-2xl p-4 text-center">
             <div className="text-2xl font-bold text-white">{stats.total}</div>
-            <div className="text-[10px] text-white/30 uppercase tracking-wider">Total</div>
+            <div className="text-[10px] text-white/30 uppercase tracking-wider">{t('badges')}</div>
           </div>
           <div className="glass-card hover-lift rounded-2xl p-4 text-center">
             <div className="text-2xl font-bold text-amber-400">⭐ {stats.points}</div>
-            <div className="text-[10px] text-white/30 uppercase tracking-wider">Points</div>
+            <div className="text-[10px] text-white/30 uppercase tracking-wider">{t('level')}</div>
           </div>
         </div>
 
         {/* Progress Bar */}
         <div className="glass-card rounded-2xl p-4">
           <div className="flex justify-between text-xs text-white/40 mb-2">
-            <span className="font-medium">Completion</span>
+            <span className="font-medium">{t('progress')}</span>
             <span className="font-mono text-violet-400">{Math.round((stats.unlocked / stats.total) * 100)}%</span>
           </div>
           <div className="w-full bg-white/5 rounded-full h-3 overflow-hidden">
@@ -237,7 +239,7 @@ export default function AchievementsPage() {
         {filtered.length === 0 && (
           <div className="text-center py-16">
             <div className="text-5xl mb-3">🏆</div>
-            <p className="text-white/20">No achievements in this category</p>
+            <p className="text-white/20">{t('locked')}</p>
           </div>
         )}
       </div>

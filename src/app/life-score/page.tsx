@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface ScoreEntry {
   id: string
@@ -35,6 +36,7 @@ function getLevel(total: number) {
 }
 
 export default function LifeScorePage() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [scores, setScores] = useState<Record<string, number>>({})
@@ -172,7 +174,7 @@ export default function LifeScorePage() {
           <Link href="/dashboard" className="w-10 h-10 rounded-2xl bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] flex items-center justify-center hover:bg-white/[0.08] hover:border-white/[0.12] transition-all duration-300 group">
             <svg className="w-5 h-5 text-white/50 group-hover:text-white/80 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </Link>
-          <h1 className="text-lg font-bold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Life Score</h1>
+          <h1 className="text-lg font-bold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">{t('life score')}</h1>
         </div>
       </header>
 
@@ -237,7 +239,7 @@ export default function LifeScorePage() {
                       {p.icon}
                     </text>
                     <text x={p.labelX} y={p.labelY + 14} textAnchor="middle" dominantBaseline="middle" fill="rgba(255,255,255,0.35)" fontSize={9} fontWeight={500}>
-                      {p.label}
+                      {t(p.key)}
                     </text>
                   </g>
                 ))}
@@ -248,7 +250,7 @@ export default function LifeScorePage() {
 
         {/* Sliders */}
         <div className="space-y-4">
-          <h2 className="text-xs font-bold text-white/30 uppercase tracking-[0.2em] px-1">Rate Your Life</h2>
+          <h2 className="text-xs font-bold text-white/30 uppercase tracking-[0.2em] px-1">{t('rate')}</h2>
           {AREAS.map(area => (
             <div key={area.key} className="relative rounded-2xl overflow-hidden group">
               <div className="absolute inset-0 backdrop-blur-xl bg-white/[0.02]" />
@@ -260,7 +262,7 @@ export default function LifeScorePage() {
                     <div className="w-9 h-9 rounded-xl flex items-center justify-center text-base" style={{ background: `${area.color}15`, border: `1px solid ${area.color}30` }}>
                       {area.icon}
                     </div>
-                    <span className="text-white font-semibold text-sm">{area.label}</span>
+                    <span className="text-white font-semibold text-sm">{t(area.key)}</span>
                   </div>
                   <div className="flex items-baseline gap-0.5">
                     <span className="text-3xl font-black" style={{ color: area.color, textShadow: `0 0 20px ${area.color}40` }}>{scores[area.key] || 0}</span>
@@ -331,10 +333,10 @@ export default function LifeScorePage() {
             <div className="relative p-5">
               <h3 className="text-sm font-bold text-amber-400 mb-2 flex items-center gap-2">
                 <span className="w-6 h-6 rounded-lg bg-amber-500/20 flex items-center justify-center text-xs">🎯</span>
-                Focus Area
+                {t('balance')}
               </h3>
               <p className="text-white/50 text-sm leading-relaxed">
-                Your <strong className="text-white/80">{weakest.label}</strong> score is <strong style={{ color: weakest.color }}>{scores[weakest.key] || 0}/10</strong>. Consider making this your next growth priority.
+                Your <strong className="text-white/80">{t(weakest.key)}</strong> score is <strong style={{ color: weakest.color }}>{scores[weakest.key] || 0}/10</strong>. Consider making this your next growth priority.
               </p>
             </div>
           </div>

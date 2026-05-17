@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Trait { name: string; percentage: number; description: string; color: string; icon: string }
 interface DNAReport {
@@ -24,6 +25,7 @@ const TRAIT_COLORS: Record<string, string> = {
 const STORAGE_KEY = 'consciousness-memory-dna'
 
 export default function MemoryDNAPage() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [generating, setGenerating] = useState(false)
@@ -137,7 +139,7 @@ export default function MemoryDNAPage() {
           <Link href="/dashboard" className="w-9 h-9 rounded-xl bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] flex items-center justify-center hover:bg-white/[0.08] hover:border-white/[0.1] transition-all duration-300 hover:shadow-lg hover:shadow-violet-500/10">
             <svg className="w-5 h-5 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </Link>
-          <h1 className="text-lg font-semibold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">🧬 Memory DNA</h1>
+          <h1 className="text-lg font-semibold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">🧬 {t('memory dna')}</h1>
         </div>
       </header>
 
@@ -149,7 +151,7 @@ export default function MemoryDNAPage() {
               <div className="relative text-7xl">🧬</div>
             </div>
             <div>
-              <h2 className="text-2xl font-bold bg-gradient-to-r from-white via-white/90 to-white/60 bg-clip-text text-transparent">Memory DNA Report</h2>
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-white via-white/90 to-white/60 bg-clip-text text-transparent">{t('personality genome')}</h2>
               <p className="text-white/30 text-sm max-w-xs mx-auto mt-2 leading-relaxed">Discover who you truly are at your core. AI analyzes your memories to reveal your unique personality DNA.</p>
             </div>
             <button onClick={generateReport} className="relative px-8 py-3.5 rounded-xl font-medium overflow-hidden group transition-all duration-300 hover:shadow-xl hover:shadow-violet-500/20">
@@ -197,7 +199,7 @@ export default function MemoryDNAPage() {
             <div className="relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-violet-500/10 via-fuchsia-500/5 to-indigo-500/10 rounded-2xl blur-xl opacity-40" />
               <div className="relative bg-white/[0.02] backdrop-blur-2xl rounded-2xl border border-white/[0.06] p-5 shadow-xl shadow-black/20">
-                <h3 className="text-sm font-medium text-white/30 mb-4 text-center uppercase tracking-widest">Trait Helix</h3>
+                <h3 className="text-sm font-medium text-white/30 mb-4 text-center uppercase tracking-widest">{t('strands')}</h3>
                 <div className="relative h-64 flex items-end justify-center">
                   <div className="flex items-end gap-2 h-full pb-2">
                     {report.traits.map((trait, i) => (
@@ -217,7 +219,7 @@ export default function MemoryDNAPage() {
 
             {/* Trait Cards */}
             <div className="space-y-3">
-              <h3 className="text-sm font-medium text-white/25 uppercase tracking-widest">Trait Breakdown</h3>
+              <h3 className="text-sm font-medium text-white/25 uppercase tracking-widest">{t('code')}</h3>
               {report.traits.map((trait, i) => (
                 <div key={i} className="relative group">
                   <div className="absolute -inset-0.5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-md" style={{ background: `linear-gradient(135deg, ${trait.color}20, transparent)` }} />

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface BackupEntry {
   id: string;
@@ -20,6 +21,7 @@ const defaultBackups: BackupEntry[] = [
 ];
 
 export default function ConsciousnessBackupPage() {
+  const t = useT();
   const [backups, setBackups] = useState<BackupEntry[]>([]);
   const [autoBackup, setAutoBackup] = useState(true);
   const [backing, setBacking] = useState(false);
@@ -109,7 +111,7 @@ export default function ConsciousnessBackupPage() {
         padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12,
       }}>
         <Link href="/dashboard" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: 20 }}>←</Link>
-        <h1 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>☁️ Consciousness Backup</h1>
+        <h1 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>☁️ {t('cloud backup')}</h1>
       </header>
 
       <main style={{ position: 'relative', zIndex: 1, maxWidth: 480, margin: '0 auto', padding: '24px 16px' }}>
@@ -122,7 +124,7 @@ export default function ConsciousnessBackupPage() {
           }}>☁️</div>
           {lastBackup && (
             <p style={{ fontSize: 13, color: '#64748b', marginTop: 8 }}>
-              Last backup: {lastBackup.date}
+              Last {t('backup')}: {lastBackup.date}
             </p>
           )}
         </div>
@@ -134,7 +136,7 @@ export default function ConsciousnessBackupPage() {
             border: '1px solid rgba(139,92,246,0.15)', marginBottom: 24,
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-              <span style={{ fontSize: 13, color: '#a78bfa' }}>Backing up consciousness...</span>
+              <span style={{ fontSize: 13, color: '#a78bfa' }}>{t('sync')}...</span>
               <span style={{ fontSize: 13, color: '#a78bfa' }}>{progress}%</span>
             </div>
             <div style={{ height: 8, borderRadius: 4, background: 'rgba(255,255,255,0.06)', overflow: 'hidden' }}>
@@ -156,7 +158,7 @@ export default function ConsciousnessBackupPage() {
           fontSize: 15, fontWeight: 700, marginBottom: 16,
           boxShadow: '0 0 30px rgba(139,92,246,0.25)',
         }}>
-          {backing ? '⏳ Backing Up...' : '☁️ Backup Now'}
+          {backing ? `⏳ ${t('sync')}...` : `☁️ ${t('backup')}`}
         </button>
 
         {/* Auto Backup Toggle */}
@@ -166,7 +168,7 @@ export default function ConsciousnessBackupPage() {
           border: '1px solid rgba(255,255,255,0.06)', marginBottom: 24,
         }}>
           <div>
-            <div style={{ fontSize: 14, fontWeight: 600 }}>Auto-Backup</div>
+            <div style={{ fontSize: 14, fontWeight: 600 }}>{t('sync')}</div>
             <div style={{ fontSize: 12, color: '#64748b' }}>Daily at 3:00 AM</div>
           </div>
           <button onClick={toggleAutoBackup} style={{
@@ -188,7 +190,7 @@ export default function ConsciousnessBackupPage() {
           border: '1px solid rgba(255,255,255,0.06)', marginBottom: 24,
         }}>
           <h3 style={{ fontSize: 13, color: '#64748b', textTransform: 'uppercase', letterSpacing: 1, marginTop: 0, marginBottom: 12 }}>
-            Backup Includes
+            {t('backup')}
           </h3>
           {['Memories', 'Personality', 'Chat History'].map(item => (
             <div key={item} style={{
@@ -203,7 +205,7 @@ export default function ConsciousnessBackupPage() {
 
         {/* Backup History */}
         <h3 style={{ fontSize: 13, color: '#64748b', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 }}>
-          Backup History
+          {t('backup')} History
         </h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {backups.map(b => (
@@ -236,7 +238,7 @@ export default function ConsciousnessBackupPage() {
                     background: 'rgba(139,92,246,0.1)', color: '#a78bfa',
                     border: '1px solid rgba(139,92,246,0.2)', cursor: 'pointer',
                   }}>
-                    {restoring === b.id ? '⏳ Restoring...' : ' Restore'}
+                    {restoring === b.id ? `⏳ ${t('restore')}...` : ` ${t('restore')}`}
                   </button>
                 )}
               </div>

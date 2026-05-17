@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Gene {
   name: string;
@@ -26,6 +27,7 @@ const defaultGenes: Gene[] = [
 ];
 
 export default function CloneDNA() {
+  const t = useT();
   const [genes, setGenes] = useState<Gene[]>([]);
   const [selectedGene, setSelectedGene] = useState<string | null>(null);
   const [animating, setAnimating] = useState(false);
@@ -91,7 +93,7 @@ export default function CloneDNA() {
         <div style={{ display:'flex',alignItems:'center',gap:12,maxWidth:800,margin:'0 auto' }}>
           <Link href="/dashboard" style={{ color:'#888',textDecoration:'none',fontSize:20 }}>←</Link>
           <h1 style={{ fontSize:20,fontWeight:700,background:'linear-gradient(135deg,#C084FC,#60A5FA)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent' }}>
-            🧬 Clone DNA
+            🧬 {t('clone dna')}
           </h1>
         </div>
       </header>
@@ -127,15 +129,15 @@ export default function CloneDNA() {
             })}
           </svg>
           <div style={{ fontSize:32,fontWeight:800,background:'linear-gradient(135deg,#C084FC,#60A5FA)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',marginTop:8 }}>
-            DNA Score: {totalScore}
+            {t('genetic code')}: {totalScore}
           </div>
-          <p style={{ color:'#888',fontSize:13 }}>Personality genome • {genes.length} active genes</p>
+          <p style={{ color:'#888',fontSize:13 }}>{t('helix')} • {genes.length} {t('traits')}</p>
         </div>
 
         {/* Category Sections */}
         {categories.map(cat => (
           <div key={cat} className="glass" style={{ padding:20,marginBottom:16 }}>
-            <h3 style={{ fontSize:15,fontWeight:600,color:'#aaa',marginBottom:16 }}>{cat} Genes</h3>
+            <h3 style={{ fontSize:15,fontWeight:600,color:'#aaa',marginBottom:16 }}>{cat} {t('traits')}</h3>
             <div style={{ display:'flex',flexDirection:'column',gap:14 }}>
               {genes.filter(g => g.category === cat).map(gene => (
                 <div key={gene.name} onClick={() => setSelectedGene(selectedGene === gene.name ? null : gene.name)}
@@ -151,7 +153,7 @@ export default function CloneDNA() {
                     <div style={{ marginTop:12,display:'flex',gap:8 }}>
                       <button onClick={(e) => { e.stopPropagation(); mutateGene(gene.name); }}
                         style={{ padding:'6px 14px',borderRadius:8,border:'none',background:animating?'#FBBF24':'linear-gradient(135deg,#C084FC,#60A5FA)',color:'#050510',fontWeight:600,cursor:'pointer',fontSize:13 }}>
-                        🧬 Mutate
+                        🧬 {t('helix')}
                       </button>
                       <div style={{ fontSize:12,color:'#666',alignSelf:'center' }}>
                         {gene.value >= 80 ? 'Dominant' : gene.value >= 50 ? 'Active' : 'Recessive'}
@@ -166,15 +168,15 @@ export default function CloneDNA() {
 
         {/* DNA Analysis */}
         <div className="glass" style={{ padding:20 }}>
-          <h3 style={{ fontSize:15,fontWeight:600,color:'#aaa',marginBottom:16 }}>DNA Analysis</h3>
+          <h3 style={{ fontSize:15,fontWeight:600,color:'#aaa',marginBottom:16 }}>{t('clone dna')}</h3>
           <div style={{ display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:12 }}>
             <div style={{ textAlign:'center',padding:16,borderRadius:12,background:'rgba(192,132,252,0.08)' }}>
               <div style={{ fontSize:24,fontWeight:700,color:'#C084FC' }}>{genes.filter(g=>g.value>=80).length}</div>
-              <div style={{ fontSize:12,color:'#888' }}>Dominant Traits</div>
+              <div style={{ fontSize:12,color:'#888' }}>{t('traits')}</div>
             </div>
             <div style={{ textAlign:'center',padding:16,borderRadius:12,background:'rgba(96,165,250,0.08)' }}>
               <div style={{ fontSize:24,fontWeight:700,color:'#60A5FA' }}>{genes.filter(g=>g.value<50).length}</div>
-              <div style={{ fontSize:12,color:'#888' }}>Recessive Traits</div>
+              <div style={{ fontSize:12,color:'#888' }}>{t('genetic code')}</div>
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 type TherapyType = 'anxiety' | 'relationships' | 'career' | 'self-worth' | 'grief' | 'motivation'
 
@@ -23,24 +24,10 @@ interface Session {
   insight?: string
 }
 
-const THERAPY_TYPES: { key: TherapyType; icon: string; label: string; color: string; gradient: string }[] = [
-  { key: 'anxiety', icon: '🫧', label: 'Anxiety', color: 'blue', gradient: 'from-blue-500 to-cyan-500' },
-  { key: 'relationships', icon: '💜', label: 'Relationships', color: 'purple', gradient: 'from-purple-500 to-pink-500' },
-  { key: 'career', icon: '🚀', label: 'Career', color: 'amber', gradient: 'from-amber-500 to-orange-500' },
-  { key: 'self-worth', icon: '🌟', label: 'Self-Worth', color: 'rose', gradient: 'from-rose-500 to-pink-500' },
-  { key: 'grief', icon: '🕊️', label: 'Grief', color: 'indigo', gradient: 'from-indigo-500 to-blue-500' },
-  { key: 'motivation', icon: '🔥', label: 'Motivation', color: 'orange', gradient: 'from-orange-500 to-red-500' },
-]
-
 const MOOD_EMOJIS = ['😢', '😟', '😐', '🙂', '😊', '😄', '🥰', '✨', '💫', '🌟']
 
-const BREATHING_STEPS = [
-  { label: 'Breathe In', duration: 4, scale: 1.4 },
-  { label: 'Hold', duration: 7, scale: 1.4 },
-  { label: 'Breathe Out', duration: 8, scale: 1 },
-]
-
 export default function CloneTherapy() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [activeType, setActiveType] = useState<TherapyType | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
@@ -58,6 +45,21 @@ export default function CloneTherapy() {
   const [breathingStep, setBreathingStep] = useState(0)
   const [breathingCount, setBreathingCount] = useState(0)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  const THERAPY_TYPES: { key: TherapyType; icon: string; label: string; color: string; gradient: string }[] = [
+    { key: 'anxiety', icon: '🫧', label: t('Anxiety'), color: 'blue', gradient: 'from-blue-500 to-cyan-500' },
+    { key: 'relationships', icon: '💜', label: t('Relationships'), color: 'purple', gradient: 'from-purple-500 to-pink-500' },
+    { key: 'career', icon: '🚀', label: t('Career'), color: 'amber', gradient: 'from-amber-500 to-orange-500' },
+    { key: 'self-worth', icon: '🌟', label: t('Self-Worth'), color: 'rose', gradient: 'from-rose-500 to-pink-500' },
+    { key: 'grief', icon: '🕊️', label: t('Grief'), color: 'indigo', gradient: 'from-indigo-500 to-blue-500' },
+    { key: 'motivation', icon: '🔥', label: t('Motivation'), color: 'orange', gradient: 'from-orange-500 to-red-500' },
+  ]
+
+  const BREATHING_STEPS = [
+    { label: t('Breathe In'), duration: 4, scale: 1.4 },
+    { label: t('Hold'), duration: 7, scale: 1.4 },
+    { label: t('Breathe Out'), duration: 8, scale: 1 },
+  ]
 
   useEffect(() => {
     const init = async () => {
@@ -154,7 +156,7 @@ export default function CloneTherapy() {
     setLoading(true)
 
     try {
-      const therapyType = THERAPY_TYPES.find(t => t.key === activeType)
+      const therapyType = THERAPY_TYPES.find(tp => tp.key === activeType)
       const response = await fetch('https://consciousness-clone.vercel.app/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -209,7 +211,7 @@ export default function CloneTherapy() {
     )
   }
 
-  const activeTypeInfo = THERAPY_TYPES.find(t => t.key === activeType)
+  const activeTypeInfo = THERAPY_TYPES.find(tp => tp.key === activeType)
 
   // Mood Check-in Overlay
   if (showMoodCheckIn) {
@@ -221,8 +223,8 @@ export default function CloneTherapy() {
         </div>
         <div className="relative z-10 text-center px-6 max-w-md mx-auto">
           <div className="text-5xl mb-6 animate-bounce">{showMoodCheckIn === 'before' ? '🫧' : '✨'}</div>
-          <h2 className="text-xl font-bold text-white mb-2">{showMoodCheckIn === 'before' ? 'How are you feeling?' : 'How do you feel now?'}</h2>
-          <p className="text-white/40 text-sm mb-8">Rate your mood on a scale of 1–10</p>
+          <h2 className="text-xl font-bold text-white mb-2">{showMoodCheckIn === 'before' ? t('How are you feeling?') : t('How do you feel now?')}</h2>
+          <p className="text-white/40 text-sm mb-8">{t('Rate your mood on a scale of 1–10')}</p>
           <div className="flex flex-wrap justify-center gap-3 mb-8">
             {MOOD_EMOJIS.map((emoji, i) => {
               const val = i + 1
@@ -246,7 +248,7 @@ export default function CloneTherapy() {
             disabled={showMoodCheckIn === 'before' ? moodBefore === null : moodAfter === null}
             className="px-8 py-3 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold disabled:opacity-30 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25 active:scale-95"
           >
-            {showMoodCheckIn === 'before' ? 'Start Session' : 'Save & Close'}
+            {showMoodCheckIn === 'before' ? t('Start Session') : t('Save & Close')}
           </button>
         </div>
       </main>
@@ -274,7 +276,7 @@ export default function CloneTherapy() {
               <h1 className="text-sm font-bold text-white/90">{activeTypeInfo?.label} Therapy</h1>
               <p className="text-[10px] text-blue-400 flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" />
-                Safe space — take your time
+                {t('Safe space — take your time')}
               </p>
             </div>
             <button onClick={() => setBreathingActive(true)} className="p-2 rounded-xl hover:bg-blue-500/10 transition-all text-white/40 hover:text-blue-400" title="Breathing Exercise">
@@ -290,7 +292,7 @@ export default function CloneTherapy() {
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
             <div className="text-center">
-              <div className="text-sm text-blue-400 mb-4 font-medium">4-7-8 Breathing · Round {breathingCount + 1}/4</div>
+              <div className="text-sm text-blue-400 mb-4 font-medium">{t('4-7-8 Breathing')} · {t('Round')} {breathingCount + 1}/4</div>
               <div className="relative w-48 h-48 mx-auto mb-6">
                 <div
                   className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/30 to-purple-500/30 transition-all duration-1000 ease-in-out"
@@ -313,8 +315,8 @@ export default function CloneTherapy() {
           {messages.length === 0 && (
             <div className="text-center py-16">
               <div className="text-5xl mb-4">{activeTypeInfo?.icon}</div>
-              <h2 className="text-lg font-bold text-white/90 mb-2">Welcome to your {activeTypeInfo?.label} session</h2>
-              <p className="text-white/40 text-sm max-w-xs mx-auto">I know your story. Let&apos;s work through this together. Share what&apos;s on your mind.</p>
+              <h2 className="text-lg font-bold text-white/90 mb-2">{t('Welcome to your')} {activeTypeInfo?.label} {t('session')}</h2>
+              <p className="text-white/40 text-sm max-w-xs mx-auto">{t('I know your story. Let\'s work through this together. Share what\'s on your mind.')}</p>
             </div>
           )}
 
@@ -340,7 +342,7 @@ export default function CloneTherapy() {
                   <div className="w-2 h-2 bg-blue-400/60 rounded-full animate-bounce" style={{ animationDelay: '0.15s' }} />
                   <div className="w-2 h-2 bg-blue-400/60 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }} />
                 </div>
-                <span className="text-xs text-white/30">Reflecting...</span>
+                <span className="text-xs text-white/30">{t('Reflecting...')}</span>
               </div>
             </div>
           )}
@@ -354,7 +356,7 @@ export default function CloneTherapy() {
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage()}
-              placeholder="Share what's on your mind..."
+              placeholder={t('Share what\'s on your mind...')}
               className="flex-1 bg-white/[0.05] border border-white/[0.08] rounded-2xl px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-blue-500/40 focus:bg-white/[0.07] transition-all"
               disabled={loading}
             />
@@ -368,7 +370,7 @@ export default function CloneTherapy() {
           </div>
           {messages.length >= 2 && (
             <button onClick={endSession} className="mt-3 w-full text-center text-xs text-white/30 hover:text-blue-400 transition-colors py-1">
-              End session & rate mood →
+              {t('End session & rate mood')} →
             </button>
           )}
         </div>
@@ -394,10 +396,10 @@ export default function CloneTherapy() {
           </Link>
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-sm shadow-lg shadow-blue-500/25">🫧</div>
           <div className="flex-1">
-            <h1 className="text-sm font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Clone Therapy</h1>
+            <h1 className="text-sm font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">{t('Clone Therapy')}</h1>
             <p className="text-[10px] text-blue-400 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" />
-              Your safe space
+              {t('Your safe space')}
             </p>
           </div>
           <button onClick={() => setShowHistory(!showHistory)} className="text-white/40 hover:text-blue-400 transition-all duration-300 p-2 rounded-xl hover:bg-blue-500/10">
@@ -411,14 +413,14 @@ export default function CloneTherapy() {
         {showHistory && (
           <div className="mb-6 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl overflow-hidden shadow-2xl shadow-blue-500/[0.03]">
             <div className="px-4 py-3 border-b border-white/[0.06] flex items-center justify-between bg-gradient-to-r from-blue-500/[0.06] to-transparent">
-              <h3 className="text-sm font-semibold text-white/90">Session History</h3>
-              <span className="text-xs text-blue-400/70 bg-blue-500/10 px-2 py-0.5 rounded-full">{sessions.length} sessions</span>
+              <h3 className="text-sm font-semibold text-white/90">{t('Session History')}</h3>
+              <span className="text-xs text-blue-400/70 bg-blue-500/10 px-2 py-0.5 rounded-full">{sessions.length} {t('sessions')}</span>
             </div>
             <div className="max-h-64 overflow-y-auto">
               {sessions.length === 0 ? (
-                <p className="text-white/30 text-sm p-6 text-center">No sessions yet</p>
+                <p className="text-white/30 text-sm p-6 text-center">{t('No sessions yet')}</p>
               ) : sessions.map(s => {
-                const info = THERAPY_TYPES.find(t => t.key === s.type)
+                const info = THERAPY_TYPES.find(tp => tp.key === s.type)
                 const improvement = s.moodAfter !== null ? s.moodAfter - s.moodBefore : 0
                 return (
                   <div key={s.id} className="px-4 py-3 border-b border-white/[0.04] flex items-center gap-3">
@@ -446,7 +448,7 @@ export default function CloneTherapy() {
           <div className="px-5 py-4">
             <div className="flex items-center gap-2 mb-3">
               <span className="text-lg">💡</span>
-              <h3 className="text-sm font-semibold text-white/90">Today&apos;s Insight</h3>
+              <h3 className="text-sm font-semibold text-white/90">{t('Today\'s Insight')}</h3>
             </div>
             {todayInsight ? (
               <p className="text-sm text-white/70 leading-relaxed">{todayInsight}</p>
@@ -457,8 +459,8 @@ export default function CloneTherapy() {
                 className="w-full py-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-300 text-sm font-medium hover:bg-blue-500/15 transition-all disabled:opacity-30"
               >
                 {generatingInsight ? (
-                  <span className="flex items-center justify-center gap-2"><div className="w-4 h-4 border-2 border-blue-400/30 border-t-blue-400 rounded-full animate-spin" /> Generating...</span>
-                ) : '✨ Generate Today\'s Insight'}
+                  <span className="flex items-center justify-center gap-2"><div className="w-4 h-4 border-2 border-blue-400/30 border-t-blue-400 rounded-full animate-spin" /> {t('Generating...')}</span>
+                ) : '✨ ' + t('Generate Today\'s Insight')}
               </button>
             )}
           </div>
@@ -472,23 +474,23 @@ export default function CloneTherapy() {
           <div className="flex items-center justify-center gap-3">
             <span className="text-2xl group-hover:animate-pulse">🫧</span>
             <div>
-              <p className="text-sm font-semibold text-white/80">4-7-8 Breathing Exercise</p>
-              <p className="text-xs text-white/30">Calm your mind in 2 minutes</p>
+              <p className="text-sm font-semibold text-white/80">{t('4-7-8 Breathing Exercise')}</p>
+              <p className="text-xs text-white/30">{t('Calm your mind in 2 minutes')}</p>
             </div>
           </div>
         </button>
 
         {/* Therapy Types */}
-        <h3 className="text-sm font-semibold text-white/50 mb-4 uppercase tracking-wider">Choose a Focus</h3>
+        <h3 className="text-sm font-semibold text-white/50 mb-4 uppercase tracking-wider">{t('Choose a Focus')}</h3>
         <div className="grid grid-cols-2 gap-3">
-          {THERAPY_TYPES.map(t => (
+          {THERAPY_TYPES.map(therapy => (
             <button
-              key={t.key}
-              onClick={() => startSession(t.key)}
+              key={therapy.key}
+              onClick={() => startSession(therapy.key)}
               className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl hover:bg-white/[0.06] hover:border-white/[0.12] transition-all duration-300 group text-left"
             >
-              <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${t.gradient} flex items-center justify-center text-lg mb-3 shadow-lg group-hover:scale-110 transition-transform`}>{t.icon}</div>
-              <p className="text-sm font-semibold text-white/80 group-hover:text-white transition-colors">{t.label}</p>
+              <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${therapy.gradient} flex items-center justify-center text-lg mb-3 shadow-lg group-hover:scale-110 transition-transform`}>{therapy.icon}</div>
+              <p className="text-sm font-semibold text-white/80 group-hover:text-white transition-colors">{therapy.label}</p>
             </button>
           ))}
         </div>
@@ -498,13 +500,13 @@ export default function CloneTherapy() {
           <div className="mt-8 grid grid-cols-3 gap-3">
             <div className="text-center p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
               <p className="text-xl font-bold text-blue-400">{sessions.length}</p>
-              <p className="text-[10px] text-white/30 mt-1">Sessions</p>
+              <p className="text-[10px] text-white/30 mt-1">{t('Sessions')}</p>
             </div>
             <div className="text-center p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
               <p className="text-xl font-bold text-purple-400">
                 {sessions.filter(s => s.moodAfter !== null && s.moodAfter > s.moodBefore).length}
               </p>
-              <p className="text-[10px] text-white/30 mt-1">Improved</p>
+              <p className="text-[10px] text-white/30 mt-1">{t('Improved')}</p>
             </div>
             <div className="text-center p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
               <p className="text-xl font-bold text-green-400">
@@ -512,7 +514,7 @@ export default function CloneTherapy() {
                   ? (sessions.filter(s => s.moodAfter !== null).reduce((sum, s) => sum + (s.moodAfter! - s.moodBefore), 0) / sessions.filter(s => s.moodAfter !== null).length).toFixed(1)
                   : '0'}
               </p>
-              <p className="text-[10px] text-white/30 mt-1">Avg Mood Δ</p>
+              <p className="text-[10px] text-white/30 mt-1">{t('Avg Mood Δ')}</p>
             </div>
           </div>
         )}

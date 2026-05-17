@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Briefing {
   id: string
@@ -12,6 +13,7 @@ interface Briefing {
 }
 
 export default function DailyBriefing() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [generating, setGenerating] = useState(false)
   const [briefing, setBriefing] = useState('')
@@ -143,10 +145,10 @@ Be specific to this person's life based on their memories. Be genuine, not gener
           </Link>
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-sm shadow-lg shadow-amber-500/25">☀️</div>
           <div className="flex-1">
-            <h1 className="text-sm font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Daily Briefing</h1>
+            <h1 className="text-sm font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">{t('daily briefing')}</h1>
             <p className="text-[10px] text-amber-400 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-pulse" />
-              Your morning companion
+              {t('morning')}
             </p>
           </div>
           <button
@@ -165,7 +167,7 @@ Be specific to this person's life based on their memories. Be genuine, not gener
         {showHistory && (
           <div className="mb-6 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl overflow-hidden shadow-2xl shadow-amber-500/[0.03]">
             <div className="px-4 py-3 border-b border-white/[0.06] flex items-center justify-between bg-gradient-to-r from-amber-500/[0.06] to-transparent">
-              <h3 className="text-sm font-semibold text-white/90">Briefing History</h3>
+              <h3 className="text-sm font-semibold text-white/90">{t('summary')}</h3>
               <span className="text-xs text-amber-400/70 bg-amber-500/10 px-2 py-0.5 rounded-full">{history.length} days</span>
             </div>
             <div className="max-h-64 overflow-y-auto">
@@ -194,7 +196,7 @@ Be specific to this person's life based on their memories. Be genuine, not gener
             <div className="absolute inset-0 bg-gradient-to-r from-amber-400/10 to-rose-400/10 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s', transform: 'scale(1.3)' }} />
             <div className="relative text-6xl drop-shadow-lg">🌅</div>
           </div>
-          <h2 className="text-2xl font-bold bg-gradient-to-r from-amber-300 via-white to-orange-300 bg-clip-text text-transparent mb-1">{greeting}</h2>
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-amber-300 via-white to-orange-300 bg-clip-text text-transparent mb-1">{t('morning')}</h2>
           <p className="text-white/40 text-sm">{today}</p>
         </div>
 
@@ -208,15 +210,15 @@ Be specific to this person's life based on their memories. Be genuine, not gener
           {generating ? (
             <>
               <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin relative z-10" />
-              <span className="relative z-10">Preparing Your Briefing...</span>
+              <span className="relative z-10">{t('schedule')}</span>
             </>
           ) : briefing ? (
             <>
-              <span className="relative z-10">🔄</span> <span className="relative z-10">Refresh Briefing</span>
+              <span className="relative z-10">🔄</span> <span className="relative z-10">{t('daily briefing')}</span>
             </>
           ) : (
             <>
-              <span className="relative z-10">☀️</span> <span className="relative z-10">Get Your Briefing</span>
+              <span className="relative z-10">☀️</span> <span className="relative z-10">{t('daily briefing')}</span>
             </>
           )}
         </button>
@@ -252,8 +254,8 @@ Be specific to this person's life based on their memories. Be genuine, not gener
         {!briefing && !generating && (
           <div className="text-center py-16">
             <div className="text-5xl mb-4 animate-bounce">✨</div>
-            <p className="text-white/40 text-sm font-medium">Tap the button to receive your daily briefing</p>
-            <p className="text-white/20 text-xs mt-1.5">Personalized insights based on your memories</p>
+            <p className="text-white/40 text-sm font-medium">{t('daily briefing')}</p>
+            <p className="text-white/20 text-xs mt-1.5">{t('summary')}</p>
           </div>
         )}
       </div>

@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface PersonProfile {
   id: string
@@ -29,6 +30,7 @@ const PRIVACY_LEVELS = ['open', 'moderate', 'guarded', 'minimal']
 const STORAGE_KEY = 'consciousness-clone-identity'
 
 export default function CloneIdentityPage() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [profiles, setProfiles] = useState<PersonProfile[]>([])
@@ -147,7 +149,7 @@ export default function CloneIdentityPage() {
           <Link href="/dashboard" className="w-9 h-9 rounded-xl bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] flex items-center justify-center hover:bg-white/[0.08] hover:border-white/[0.1] transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10">
             <svg className="w-5 h-5 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </Link>
-          <h1 className="text-lg font-semibold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">🧠 Clone Identity</h1>
+          <h1 className="text-lg font-semibold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">🧠 {t('clone identity')}</h1>
         </div>
       </header>
 
@@ -156,15 +158,15 @@ export default function CloneIdentityPage() {
         <div className="relative">
           <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500/15 to-blue-500/10 rounded-xl blur-lg opacity-60" />
           <div className="relative bg-cyan-500/[0.04] backdrop-blur-2xl border border-cyan-500/[0.08] rounded-xl p-4 shadow-lg shadow-black/20">
-            <h3 className="text-sm font-medium text-cyan-400 mb-1.5">🧠 Who&apos;s Talking?</h3>
-            <p className="text-xs text-white/35 leading-relaxed">Teach your clone to recognize different people and respond accordingly. Mom gets warmth, friends get slang, strangers get guarded responses.</p>
+            <h3 className="text-sm font-medium text-cyan-400 mb-1.5">🧠 {t('who talks')}</h3>
+            <p className="text-xs text-white/35 leading-relaxed">{t('recognizes')}</p>
           </div>
         </div>
 
         <button onClick={() => { resetForm(); setShowAdd(!showAdd) }} className="relative w-full py-3 rounded-xl font-medium overflow-hidden group transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/20">
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 via-blue-600 to-cyan-600 bg-[length:200%_100%] group-hover:animate-[shimmer_2s_ease-in-out_infinite]" />
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-cyan-400/20 to-blue-400/20 blur-xl" />
-          <span className="relative z-10 text-white">{showAdd ? '✕ Cancel' : '＋ Add Person Profile'}</span>
+          <span className="relative z-10 text-white">{showAdd ? `✕ ${t('cancel')}` : `＋ ${t('add person')}`}</span>
         </button>
 
         {/* Add Form */}
@@ -172,7 +174,7 @@ export default function CloneIdentityPage() {
           <div className="relative">
             <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/15 via-blue-500/10 to-teal-500/15 rounded-2xl blur-xl opacity-50" />
             <div className="relative bg-white/[0.02] backdrop-blur-2xl rounded-2xl border border-cyan-500/[0.08] p-5 space-y-4 shadow-xl shadow-black/20">
-              <h3 className="text-sm font-medium text-cyan-400">{editingId ? 'Edit Profile' : 'New Person'}</h3>
+              <h3 className="text-sm font-medium text-cyan-400">{editingId ? t('edit') + ' Profile' : t('add person')}</h3>
               <div className="grid grid-cols-2 gap-3">
                 <input value={name} onChange={e => setName(e.target.value)} placeholder="Name *" className="col-span-2 bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10 focus:shadow-lg focus:shadow-cyan-500/10 transition-all duration-300" />
                 <select value={relation} onChange={e => setRelation(e.target.value)} className="bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10 transition-all duration-300 appearance-none">
@@ -187,7 +189,7 @@ export default function CloneIdentityPage() {
 
               {recognitionMethod === 'text_pattern' && (
                 <div>
-                  <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium mb-1.5 block pl-1">Sample messages (one per line)</label>
+                  <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium mb-1.5 block pl-1">{t('face')}</label>
                   <textarea value={textSamples} onChange={e => setTextSamples(e.target.value)} placeholder="Hey what's up!\nAmi bhalo achi\nLet's grab lunch tmrw" className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2.5 text-white text-sm h-24 resize-none placeholder:text-white/15 focus:outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10 transition-all duration-300" />
                 </div>
               )}
@@ -205,7 +207,7 @@ export default function CloneIdentityPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium mb-1.5 block pl-1">Tone</label>
+                  <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium mb-1.5 block pl-1">{t('tone')}</label>
                   <div className="flex gap-1.5 flex-wrap">
                     {TONES.map(t => (
                       <button key={t} onClick={() => setTone(t)} className={`px-2.5 py-1 rounded-full text-[10px] transition-all duration-300 ${tone === t ? 'bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 shadow-lg shadow-cyan-500/10' : 'bg-white/[0.03] text-white/25 border border-white/[0.04] hover:border-white/[0.08] hover:text-white/40'}`}>{t}</button>
@@ -213,7 +215,7 @@ export default function CloneIdentityPage() {
                   </div>
                 </div>
                 <div>
-                  <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium mb-1.5 block pl-1">Language</label>
+                  <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium mb-1.5 block pl-1">{t('language')}</label>
                   <select value={language} onChange={e => setLanguage(e.target.value)} className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-2.5 py-2 text-white text-xs focus:outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10 transition-all duration-300 appearance-none">
                     {LANGUAGES.map(l => <option key={l} value={l}>{l}</option>)}
                   </select>
@@ -221,7 +223,7 @@ export default function CloneIdentityPage() {
               </div>
 
               <div>
-                <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium mb-1.5 block pl-1">Detail Level</label>
+                <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium mb-1.5 block pl-1">{t('level')}</label>
                 <div className="flex gap-2">
                   {DETAIL_LEVELS.map(d => (
                     <button key={d} onClick={() => setDetailLevel(d)} className={`flex-1 py-2 rounded-lg text-xs transition-all duration-300 ${detailLevel === d ? 'bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 shadow-lg shadow-cyan-500/10' : 'bg-white/[0.03] text-white/25 border border-white/[0.04] hover:border-white/[0.08] hover:text-white/40'}`}>{d}</button>
@@ -230,7 +232,7 @@ export default function CloneIdentityPage() {
               </div>
 
               <div>
-                <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium mb-1.5 block pl-1">Privacy Level</label>
+                <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium mb-1.5 block pl-1">{t('privacy level')}</label>
                 <select value={privacyLevel} onChange={e => setPrivacyLevel(e.target.value)} className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10 transition-all duration-300 appearance-none">
                   {PRIVACY_LEVELS.map(p => <option key={p} value={p}>{p}</option>)}
                 </select>
@@ -239,7 +241,7 @@ export default function CloneIdentityPage() {
               <button onClick={addProfile} disabled={!name.trim()} className="relative w-full py-2.5 rounded-xl font-medium text-sm disabled:opacity-30 overflow-hidden group transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/20">
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600" />
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-cyan-400/20 to-blue-400/20 blur-xl" />
-                <span className="relative z-10 text-white">{editingId ? '💾 Update Profile' : '🧠 Save Profile'}</span>
+                <span className="relative z-10 text-white">{editingId ? `💾 ${t('save')}` : `🧠 ${t('save')}`}</span>
               </button>
             </div>
           </div>
@@ -252,8 +254,8 @@ export default function CloneIdentityPage() {
               <div className="absolute inset-0 text-5xl flex items-center justify-center blur-lg opacity-20 animate-pulse">🧠</div>
               <div className="relative text-5xl">🧠</div>
             </div>
-            <p className="text-white/20 font-medium">No profiles yet</p>
-            <p className="text-xs text-white/10 mt-1">Teach your clone who&apos;s who</p>
+            <p className="text-white/20 font-medium">{t('no data')}</p>
+            <p className="text-xs text-white/10 mt-1">{t('recognizes')}</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -294,7 +296,7 @@ export default function CloneIdentityPage() {
                           <input value={testInput} onChange={e => setTestInput(e.target.value)} placeholder="Type a sample message..." className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-white text-xs placeholder:text-white/15 focus:outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10 transition-all duration-300" />
                           <button onClick={() => runTest(profile)} className="relative px-4 py-2 rounded-lg text-xs overflow-hidden group/btn transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/20">
                             <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600" />
-                            <span className="relative z-10 text-white">Analyze</span>
+                            <span className="relative z-10 text-white">{t('search')}</span>
                           </button>
                         </div>
                         {testResult && <p className="text-xs text-white/40 bg-white/[0.02] backdrop-blur-sm border border-white/[0.04] rounded-lg p-2.5 leading-relaxed">{testResult}</p>}

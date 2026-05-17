@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 const AURA_COLORS = [
   { name: 'Violet', color: '#8b5cf6', meaning: 'Spiritual awareness, intuition, higher consciousness', chakra: 'Crown' },
@@ -20,6 +21,7 @@ const AURA_COLORS = [
 interface AuraReading { id: string; date: string; primary: string; secondary: string; energy: number; insight: string }
 
 export default function CloneAuraPage() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [scanning, setScanning] = useState(false)
@@ -103,7 +105,7 @@ export default function CloneAuraPage() {
           <Link href="/dashboard" className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
             <svg className="w-5 h-5 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </Link>
-          <h1 className="text-lg font-semibold text-white">🔮 Clone Aura</h1>
+          <h1 className="text-lg font-semibold text-white">🔮 {t('clone aura')}</h1>
         </div>
       </header>
 
@@ -122,7 +124,7 @@ export default function CloneAuraPage() {
 
         {/* Scan Button */}
         <button onClick={scan} disabled={scanning} className="w-full py-3.5 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-medium disabled:opacity-50">
-          {scanning ? `Scanning... ${scanProgress}%` : '🔮 Scan Aura'}
+          {scanning ? `Scanning... ${scanProgress}%` : '🔮 ' + t('your energy')}
         </button>
         {scanning && (
           <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden">
@@ -135,20 +137,20 @@ export default function CloneAuraPage() {
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-3">
               <div className="rounded-xl p-4 text-center" style={{ background: `${primaryColor.color}11`, border: `1px solid ${primaryColor.color}22` }}>
-                <div className="text-xs text-white/30 mb-1">Primary</div>
+                <div className="text-xs text-white/30 mb-1">{t('color')}</div>
                 <div className="w-8 h-8 rounded-full mx-auto mb-2" style={{ background: primaryColor.color, boxShadow: `0 0 20px ${primaryColor.color}66` }} />
                 <div className="text-sm font-semibold" style={{ color: primaryColor.color }}>{reading.primary}</div>
                 <div className="text-[10px] text-white/30 mt-1">{primaryColor.chakra} Chakra</div>
               </div>
               <div className="rounded-xl p-4 text-center" style={{ background: `${secondaryColor.color}11`, border: `1px solid ${secondaryColor.color}22` }}>
-                <div className="text-xs text-white/30 mb-1">Secondary</div>
+                <div className="text-xs text-white/30 mb-1">{t('vibe')}</div>
                 <div className="w-8 h-8 rounded-full mx-auto mb-2" style={{ background: secondaryColor.color, boxShadow: `0 0 20px ${secondaryColor.color}66` }} />
                 <div className="text-sm font-semibold" style={{ color: secondaryColor.color }}>{reading.secondary}</div>
                 <div className="text-[10px] text-white/30 mt-1">{secondaryColor.chakra} Chakra</div>
               </div>
             </div>
             <div className="bg-white/5 rounded-xl border border-white/5 p-4">
-              <div className="text-xs text-white/30 mb-1">Meaning</div>
+              <div className="text-xs text-white/30 mb-1">{t('vibe')}</div>
               <p className="text-sm text-white/60">{primaryColor.meaning}</p>
             </div>
             <div className="bg-violet-500/5 border border-violet-500/10 rounded-xl p-4">

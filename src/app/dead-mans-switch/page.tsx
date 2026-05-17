@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface EmergencyContact {
   id: string
@@ -26,6 +27,7 @@ const DEFAULT_SETTINGS: SwitchSettings = {
 }
 
 export default function DeadMansSwitch() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [settings, setSettings] = useState<SwitchSettings>(DEFAULT_SETTINGS)
@@ -113,8 +115,8 @@ export default function DeadMansSwitch() {
           </Link>
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center text-sm shadow-lg shadow-red-500/20">⏰</div>
           <div className="flex-1">
-            <h1 className="text-sm font-bold gradient-text">Dead Man&apos;s Switch</h1>
-            <p className="text-[10px] text-red-400 flex items-center gap-1"><span className={`w-1.5 h-1.5 rounded-full animate-pulse ${settings.enabled ? 'bg-red-400' : 'bg-white/20'}`} />{settings.enabled ? 'Active' : 'Inactive'}</p>
+            <h1 className="text-sm font-bold gradient-text">{t('dead man switch')}</h1>
+            <p className="text-[10px] text-red-400 flex items-center gap-1"><span className={`w-1.5 h-1.5 rounded-full animate-pulse ${settings.enabled ? 'bg-red-400' : 'bg-white/20'}`} />{settings.enabled ? t('countdown') : t('inactive')}</p>
           </div>
         </div>
       </header>
@@ -125,8 +127,8 @@ export default function DeadMansSwitch() {
           <div className={`absolute inset-0 bg-gradient-to-br ${u.bg} opacity-30`} />
           <div className="relative z-10">
             <div className="text-5xl mb-3">{settings.enabled ? (daysRemaining() <= 3 ? '🚨' : daysRemaining() <= 7 ? '⚠️' : '🛡️') : '⏸️'}</div>
-            <h2 className={`text-2xl font-bold ${u.color} mb-1`}>{settings.enabled ? `${daysRemaining()} days` : 'Disabled'}</h2>
-            <p className="text-xs text-white/30">{settings.enabled ? `until switch activates · ${u.label}` : 'Enable to start monitoring'}</p>
+            <h2 className={`text-2xl font-bold ${u.color} mb-1`}>{settings.enabled ? `${daysRemaining()} ${t('days')}` : t('inactive')}</h2>
+            <p className="text-xs text-white/30">{settings.enabled ? `${t('countdown')} · ${u.label}` : t('inactive')}</p>
             {settings.enabled && (
               <div className="mt-4 w-full bg-white/5 rounded-full h-2 overflow-hidden">
                 <div className={`h-2 rounded-full transition-all duration-1000 ${daysRemaining() <= 3 ? 'bg-gradient-to-r from-red-500 to-rose-500' : daysRemaining() <= 7 ? 'bg-gradient-to-r from-amber-500 to-orange-500' : 'bg-gradient-to-r from-emerald-500 to-teal-500'}`}
@@ -140,15 +142,15 @@ export default function DeadMansSwitch() {
         {settings.enabled && (
           <button onClick={checkIn}
             className="w-full py-4 rounded-2xl glow-btn bg-gradient-to-r from-emerald-500 to-teal-500 font-semibold text-white shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 text-lg">
-            ✅ Check In Now
+            ✅ {t('countdown')}
           </button>
         )}
 
         {/* Toggle */}
         <div className="glass-card rounded-2xl p-4 flex items-center justify-between">
           <div>
-            <h3 className="text-sm font-semibold text-white/80">Enable Switch</h3>
-            <p className="text-xs text-white/30">Monitor your activity</p>
+            <h3 className="text-sm font-semibold text-white/80">{t('auto deliver')}</h3>
+            <p className="text-xs text-white/30">{t('inactive')}</p>
           </div>
           <button onClick={() => setSettings(prev => ({ ...prev, enabled: !prev.enabled }))}
             className={`w-14 h-8 rounded-full transition-all duration-300 ${settings.enabled ? 'bg-gradient-to-r from-emerald-500 to-teal-500' : 'bg-white/10'}`}>

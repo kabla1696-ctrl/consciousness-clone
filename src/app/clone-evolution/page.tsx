@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface EvolutionStage {
   name: string;
@@ -21,6 +22,7 @@ const stages: EvolutionStage[] = [
 ];
 
 export default function CloneEvolutionPage() {
+  const t = useT();
   const [xp, setXp] = useState(0);
   const [currentStage, setCurrentStage] = useState(0);
   const [evolving, setEvolving] = useState(false);
@@ -91,7 +93,7 @@ export default function CloneEvolutionPage() {
         padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12,
       }}>
         <Link href="/dashboard" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: 20 }}>←</Link>
-        <h1 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>Clone Evolution</h1>
+        <h1 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>{t('evolution')}</h1>
         <span style={{ marginLeft: 'auto', fontSize: 14, color: stage.color }}>Lvl {level}</span>
       </header>
 
@@ -124,7 +126,7 @@ export default function CloneEvolutionPage() {
           border: '1px solid rgba(255,255,255,0.06)', marginBottom: 24,
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-            <span style={{ fontSize: 13, color: '#94a3b8' }}>XP Progress</span>
+            <span style={{ fontSize: 13, color: '#94a3b8' }}>{t('growth')}</span>
             <span style={{ fontSize: 13, color: stage.color }}>{xp} XP (Level {level})</span>
           </div>
           <div style={{ height: 10, borderRadius: 5, background: 'rgba(255,255,255,0.06)', overflow: 'hidden' }}>
@@ -156,13 +158,13 @@ export default function CloneEvolutionPage() {
             boxShadow: `0 0 30px ${stage.color}44`,
             opacity: evolving ? 0.7 : 1,
           }}>
-            {evolving ? '✨ Evolving...' : `✨ Evolve to ${stages[currentStage + 1]?.name}`}
+            {evolving ? '✨ ' + t('evolve') + '...' : `✨ ${t('evolve')} ${stages[currentStage + 1]?.name}`}
           </button>
         )}
 
         {/* Evolution Tree */}
         <h3 style={{ fontSize: 14, color: '#64748b', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 16 }}>
-          Evolution Tree
+          {t('stages')}
         </h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {stages.map((s, i) => {
@@ -191,7 +193,7 @@ export default function CloneEvolutionPage() {
                 {isActive && <span style={{
                   fontSize: 10, padding: '3px 8px', borderRadius: 8,
                   background: s.color + '22', color: s.color, fontWeight: 700,
-                }}>CURRENT</span>}
+                }}>{t('evolve')}</span>}
                 {i < stages.length - 1 && (
                   <div style={{
                     position: 'absolute', left: 39, bottom: -8, width: 2, height: 16,

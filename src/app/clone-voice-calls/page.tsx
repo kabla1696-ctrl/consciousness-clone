@@ -5,13 +5,6 @@ import { useT } from '../../lib/language-context';
 
 interface CallLog { id: string; type: string; cloneName: string; duration: number; timestamp: string; message: string; }
 
-  const CALL_TYPES = [
-    { id: 'checkin', name: t('Check-in'), icon: '💬', color: '#4FC3F7', desc: t('Quick wellness check') },
-    { id: 'morning', name: t('Good Morning'), icon: '🌅', color: '#FFD54F', desc: t('Start your day right') },
-    { id: 'motivation', name: t('Motivation'), icon: '🔥', color: '#FF7043', desc: t('Power boost call') },
-    { id: 'emergency', name: t('Emergency'), icon: '🚨', color: '#EF5350', desc: t('Urgent alert') },
-  ];
-
 const DEFAULT_CALLS: CallLog[] = [
   { id: '1', type: 'morning', cloneName: 'Aria', duration: 45, timestamp: '2026-05-17T07:30:00', message: 'Good morning! Today is going to be amazing. You have 3 meetings but I believe in you!' },
   { id: '2', type: 'motivation', cloneName: 'Aria', duration: 120, timestamp: '2026-05-16T14:00:00', message: 'Hey, I noticed you\'ve been working hard. Remember to take breaks. You\'re doing incredible.' },
@@ -21,6 +14,12 @@ const DEFAULT_CALLS: CallLog[] = [
 
 export default function CloneVoiceCallsPage() {
   const t = useT();
+  const CALL_TYPES = [
+    { id: 'checkin', name: t('Check-in'), icon: '💬', color: '#4FC3F7', desc: t('Quick wellness check') },
+    { id: 'morning', name: t('Good Morning'), icon: '🌅', color: '#FFD54F', desc: t('Start your day right') },
+    { id: 'motivation', name: t('Motivation'), icon: '🔥', color: '#FF7043', desc: t('Power boost call') },
+    { id: 'emergency', name: t('Emergency'), icon: '🚨', color: '#EF5350', desc: t('Urgent alert') },
+  ];
   const [callLogs, setCallLogs] = useState<CallLog[]>([]);
   const [activeCall, setActiveCall] = useState<{ type: string; cloneName: string } | null>(null);
   const [callTimer, setCallTimer] = useState(0);
@@ -68,7 +67,7 @@ export default function CloneVoiceCallsPage() {
     setCallTimer(0);
   };
 
-  const getTypeInfo = (typeId: string) => CALL_TYPES.find(t => t.id === typeId) || CALL_TYPES[0];
+  const getTypeInfo = (typeId: string) => CALL_TYPES.find(ct => ct.id === typeId) || CALL_TYPES[0];
 
   // Active call screen
   if (activeCall) {

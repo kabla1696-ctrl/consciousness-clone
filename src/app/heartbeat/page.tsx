@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { useT } from '../../lib/language-context'
 
 interface HeartbeatMemory {
   id: string
@@ -24,6 +25,7 @@ function getEmotion(bpm: number) {
 }
 
 export default function HeartbeatMemory() {
+  const t = useT()
   const [user, setUser] = useState(true)
   const [view, setView] = useState<'measure' | 'history' | 'add'>('measure')
   const [measuring, setMeasuring] = useState(false)
@@ -293,7 +295,7 @@ export default function HeartbeatMemory() {
           </Link>
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-500 to-pink-500 flex items-center justify-center text-sm shadow-lg shadow-red-500/30">🫀</div>
           <div className="flex-1">
-            <h1 className="text-sm font-bold">Heartbeat Memory</h1>
+            <h1 className="text-sm font-bold">{t('heartbeat')} {t('memory')}</h1>
             <p className="text-[10px] text-red-400 flex items-center gap-1">
               <span className="w-1.5 h-1.5 bg-red-400 rounded-full animate-pulse" />
               {measuring ? `Measuring... ${bpm > 0 ? bpm + ' BPM' : ''}` : 'Capture your heartbeat'}
@@ -371,7 +373,7 @@ export default function HeartbeatMemory() {
                         {Math.round(displayBpm)}
                       </div>
                     </div>
-                    <div className="text-xs text-white/40 mt-2 uppercase tracking-[0.3em] font-medium">BPM</div>
+                    <div className="text-xs text-white/40 mt-2 uppercase tracking-[0.3em] font-medium">{t('bpm')}</div>
                     <div className="mt-3 flex items-center gap-2 justify-center">
                       <span className="text-xl drop-shadow-lg">{getEmotion(bpm).icon}</span>
                       <span className={`text-sm font-semibold bg-gradient-to-r ${getEmotion(bpm).color} bg-clip-text text-transparent`}>
@@ -384,9 +386,9 @@ export default function HeartbeatMemory() {
                     {measuring ? (
                       <span className="flex items-center gap-2">
                         <span className="w-2 h-2 bg-red-400 rounded-full animate-pulse" />
-                        Place finger on camera lens...
+                        {t('camera')} {t('detection')}...
                       </span>
-                    ) : 'Start measuring to see BPM'}
+                    ) : t('heart rate')}
                   </div>
                 )}
               </div>
@@ -414,9 +416,9 @@ export default function HeartbeatMemory() {
                   <div className="absolute inset-0 bg-gradient-to-r from-red-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <span className="relative flex items-center justify-center gap-2">
                     <span className="text-lg">📸</span>
-                    Start Heart Rate Measurement
+                    {t('heart rate')} {t('detection')}
                   </span>
-                  <span className="relative block text-xs text-white/60 mt-1">Place finger on camera lens</span>
+                  <span className="relative block text-xs text-white/60 mt-1">{t('camera')} {t('detection')}</span>
                 </button>
               ) : (
                 <button
@@ -606,7 +608,7 @@ export default function HeartbeatMemory() {
                         <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-500/10 border border-red-500/20">
                           <span className="text-red-400 text-xs">🫀</span>
                           <span className="text-sm font-bold text-red-300">{m.bpm}</span>
-                          <span className="text-[10px] text-white/30">BPM</span>
+                          <span className="text-[10px] text-white/30">{t('bpm')}</span>
                         </div>
                         <div className="h-3 w-px bg-white/10" />
                         <p className="text-xs text-white/30 italic">

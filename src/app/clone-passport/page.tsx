@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { useT } from '../../lib/language-context'
 
 interface Stamp {
   id: string
@@ -39,6 +40,7 @@ function FloatingParticles() {
 }
 
 export default function ClonePassportPage() {
+  const t = useT()
   const [stamps, setStamps] = useState<Stamp[]>([])
   const [selectedStamp, setSelectedStamp] = useState<Stamp | null>(null)
   const [isOpen, setIsOpen] = useState(false)
@@ -74,8 +76,8 @@ export default function ClonePassportPage() {
             <svg className="w-5 h-5 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </Link>
           <div>
-            <h1 className="text-lg font-bold gradient-text">Clone Passport</h1>
-            <p className="text-[11px] text-white/30">Your digital travel journal</p>
+            <h1 className="text-lg font-bold gradient-text">{t('clone passport')}</h1>
+            <p className="text-[11px] text-white/30">{t('travel stamps')}</p>
           </div>
         </div>
       </header>
@@ -87,23 +89,23 @@ export default function ClonePassportPage() {
           <div className="text-center mb-5">
             <div className="text-5xl mb-2">📕</div>
             <p className="text-[11px] font-semibold text-amber-400/70 tracking-[4px] uppercase">Consciousness Clone</p>
-            <h2 className="text-xl font-extrabold mt-1 bg-gradient-to-r from-amber-400 to-yellow-300 bg-clip-text text-transparent">PASSPORT</h2>
+            <h2 className="text-xl font-extrabold mt-1 bg-gradient-to-r from-amber-400 to-yellow-300 bg-clip-text text-transparent">{t('clone passport').toUpperCase()}</h2>
           </div>
 
           <div className="grid grid-cols-2 gap-3 mb-5">
             <div className="bg-white/[0.03] rounded-2xl p-4 text-center border border-amber-500/10">
               <p className="text-3xl font-extrabold text-amber-400">{countriesVisited}</p>
-              <p className="text-[10px] text-white/40 uppercase tracking-wider mt-1">Countries</p>
+              <p className="text-[10px] text-white/40 uppercase tracking-wider mt-1">{t('destinations')}</p>
             </div>
             <div className="bg-white/[0.03] rounded-2xl p-4 text-center border border-amber-500/10">
               <p className="text-3xl font-extrabold text-amber-400">{stamps.length}</p>
-              <p className="text-[10px] text-white/40 uppercase tracking-wider mt-1">Stamps</p>
+              <p className="text-[10px] text-white/40 uppercase tracking-wider mt-1">{t('stamps')}</p>
             </div>
           </div>
 
           <button onClick={() => setShowMap(!showMap)}
             className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500/15 to-yellow-500/10 border border-amber-500/20 text-amber-400 font-semibold text-sm hover:from-amber-500/25 hover:to-yellow-500/20 transition-all">
-            {showMap ? '✕ Close Map' : '🗺️ View World Map'}
+            {showMap ? `✕ ${t('close')}` : `🗺️ ${t('destinations')}`}
           </button>
         </div>
 
@@ -132,7 +134,7 @@ export default function ClonePassportPage() {
 
         {/* Stamp Gallery */}
         <div>
-          <h3 className="text-xs font-semibold text-white/40 uppercase tracking-[2px] mb-4">Stamp Gallery</h3>
+          <h3 className="text-xs font-semibold text-white/40 uppercase tracking-[2px] mb-4">{t('stamps')}</h3>
           <div className="grid grid-cols-2 gap-3">
             {stamps.map((stamp, i) => (
               <button key={stamp.id} onClick={() => setSelectedStamp(stamp)}
@@ -168,7 +170,7 @@ export default function ClonePassportPage() {
             </div>
             <button onClick={() => setSelectedStamp(null)}
               className="w-full mt-5 py-3.5 rounded-xl bg-gradient-to-r from-amber-500/20 to-yellow-500/15 border border-amber-500/25 text-amber-400 font-semibold text-sm hover:from-amber-500/30 transition-all">
-              Close
+              {t('close')}
             </button>
           </div>
         </div>

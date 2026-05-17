@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Goal {
   id: string
@@ -33,6 +34,7 @@ const STATUS_OPTIONS = [
 const STORAGE_KEY = 'consciousness-goals'
 
 export default function GoalsPage() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [goals, setGoals] = useState<Goal[]>([])
@@ -203,7 +205,7 @@ export default function GoalsPage() {
           </Link>
           <div className="flex items-center gap-2.5">
             <span className="text-xl drop-shadow-lg">🎯</span>
-            <h1 className="text-lg font-bold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Life Goals</h1>
+            <h1 className="text-lg font-bold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">{t('life goals')}</h1>
           </div>
           <div className="flex-1" />
           <button
@@ -212,7 +214,7 @@ export default function GoalsPage() {
           >
             <div className="absolute inset-0 bg-violet-500/15 backdrop-blur-xl" />
             <div className="absolute inset-0 rounded-xl border border-violet-500/25 group-hover:border-violet-500/40 transition-colors duration-300" />
-            <span className="relative text-violet-400 font-semibold">{showAdd ? '✕' : '+ Add'}</span>
+            <span className="relative text-violet-400 font-semibold">{showAdd ? '✕' : '+ ' + t('add goal')}</span>
           </button>
         </div>
       </header>
@@ -225,7 +227,7 @@ export default function GoalsPage() {
               { label: 'Total Goals', value: stats.total, color: '#8b5cf6', glow: 'rgba(139,92,246,0.25)' },
               { label: 'Completed', value: stats.completed, color: '#10b981', glow: 'rgba(16,185,129,0.25)' },
               { label: 'Best Streak', value: `🔥 ${stats.maxStreak}`, color: '#f59e0b', glow: 'rgba(245,158,11,0.25)' },
-              { label: 'Completion', value: `${stats.progress}%`, color: '#06b6d4', glow: 'rgba(6,182,212,0.25)' },
+              { label: t('achieve'), value: `${stats.progress}%`, color: '#06b6d4', glow: 'rgba(6,182,212,0.25)' },
             ].map((stat, i) => (
               <div key={i} className="relative rounded-2xl overflow-hidden group">
                 <div className="absolute inset-0 backdrop-blur-xl bg-white/[0.015]" />
@@ -493,9 +495,9 @@ export default function GoalsPage() {
         {goals.length === 0 && !showAdd && (
           <div className="text-center py-20">
             <div className="text-7xl mb-5 drop-shadow-lg">🎯</div>
-            <h2 className="text-xl font-bold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent mb-2">Set Your Life Goals</h2>
+            <h2 className="text-xl font-bold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent mb-2">{t('life goals')}</h2>
             <p className="text-white/25 text-sm mb-8 max-w-sm mx-auto leading-relaxed">
-              Define what you want to achieve. Track progress, build streaks, and get AI-powered motivation along the way.
+              {t('track')} {t('achieve')}. {t('progress')}.
             </p>
             <button
               onClick={() => setShowAdd(true)}

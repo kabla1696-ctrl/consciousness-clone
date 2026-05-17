@@ -53,6 +53,7 @@ const SAMPLE_CLONES: CloneProfile[] = [
 ]
 
 export default function CloneConnect() {
+  const t = useT()
   const [tab, setTab] = useState<'discover' | 'friends' | 'messages' | 'calls' | 'requests'>('discover')
   const [clones, setClones] = useState<CloneProfile[]>(SAMPLE_CLONES)
   const [friends, setFriends] = useState<string[]>([])
@@ -170,10 +171,10 @@ export default function CloneConnect() {
 
       {/* Tab Bar */}
       <div className="sticky top-[52px] z-40 backdrop-blur-xl border-b border-white/[0.04] px-2 py-2 flex gap-1 overflow-x-auto scroll-container" style={{ background: 'rgba(5,5,16,0.9)' }}>
-        {TABS.map(t => (
-          <button key={t.id} onClick={() => setTab(t.id as any)} className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium whitespace-nowrap tap-feedback transition-all ${tab === t.id ? 'bg-violet-500/20 text-violet-400 border border-violet-500/30' : 'text-white/40 border border-transparent'}`}>
-            <span>{t.icon}</span> {t.label}
-            {t.id === 'requests' && requests.filter(r => r.status === 'pending').length > 0 && (
+        {TABS.map(tabItem => (
+          <button key={tabItem.id} onClick={() => setTab(tabItem.id as any)} className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium whitespace-nowrap tap-feedback transition-all ${tab === tabItem.id ? 'bg-violet-500/20 text-violet-400 border border-violet-500/30' : 'text-white/40 border border-transparent'}`}>
+            <span>{tabItem.icon}</span> {tabItem.label}
+            {tabItem.id === 'requests' && requests.filter(r => r.status === 'pending').length > 0 && (
               <span className="w-4 h-4 rounded-full bg-red-500 text-white text-[10px] flex items-center justify-center">{requests.filter(r => r.status === 'pending').length}</span>
             )}
           </button>

@@ -135,7 +135,7 @@ export default function CloneNetwork() {
                 <h3 className="text-sm font-semibold text-white/80">{t('Chat with')} {selectedClone.name}</h3>
               </div>
               <div className="h-64 overflow-y-auto px-4 py-3 space-y-3">
-                {chatMessages.length === 0 && <p className="text-white/20 text-sm text-center mt-8">{t('Say hello to')} {selectedClone.name}!</p>}}
+                {chatMessages.length === 0 && <p className="text-white/20 text-sm text-center mt-8">{t('Say hello to')} {selectedClone.name}!</p>}
                 {chatMessages.map((msg, i) => (
                   <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                     <div className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm ${

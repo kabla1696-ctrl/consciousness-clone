@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface FamilyMember {
   id: string;
@@ -158,6 +159,7 @@ function TreeNode({ member, allMembers, depth, offsetX, onAddMemory, selectedMem
 }
 
 export default function LegacyTree() {
+  const t = useT();
   const [members, setMembers] = useState<FamilyMember[]>([]);
   const [selectedMember, setSelectedMember] = useState<string | null>(null);
   const [showAdd, setShowAdd] = useState(false);
@@ -252,7 +254,7 @@ export default function LegacyTree() {
           <Link href="/dashboard" style={{ color: '#34d399', fontSize: 22, textDecoration: 'none' }}>←</Link>
           <div>
             <h1 style={{ fontSize: 18, fontWeight: 700, margin: 0, background: 'linear-gradient(135deg, #34d399, #fbbf24)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              🌳 Legacy Tree
+              🌳 {t('legacy tree')}
             </h1>
             <p style={{ fontSize: 11, color: '#64748b', margin: 0 }}>{members.length} members · {members.reduce((s, m) => s + m.memories.length, 0)} memories</p>
           </div>
@@ -343,10 +345,10 @@ export default function LegacyTree() {
             </div>
 
             <h4 style={{ fontSize: 12, color: '#64748b', margin: '0 0 10px', textTransform: 'uppercase', letterSpacing: 1 }}>
-              🍃 Memories ({selected.memories.length})
+              🍃 {t('branches')} ({selected.memories.length})
             </h4>
             {selected.memories.length === 0 ? (
-              <p style={{ fontSize: 13, color: '#475569', textAlign: 'center', padding: 16 }}>No memories yet</p>
+              <p style={{ fontSize: 13, color: '#475569', textAlign: 'center', padding: 16 }}>{t('roots')}</p>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {selected.memories.map((mem) => (
@@ -398,7 +400,7 @@ export default function LegacyTree() {
           }}>
             <h3 style={{ fontSize: 18, fontWeight: 700, margin: '0 0 16px', textAlign: 'center',
               background: 'linear-gradient(135deg, #34d399, #fbbf24)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              🌱 Add Family Member
+              🌱 {t('family memory')}
             </h3>
             <input value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="Name..."
               style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid rgba(52,211,153,0.2)',
@@ -416,7 +418,7 @@ export default function LegacyTree() {
             <button onClick={addMember} style={{
               width: '100%', padding: '12px 0', borderRadius: 12, border: 'none',
               background: 'linear-gradient(135deg, #34d399, #fbbf24)', color: 'white', fontSize: 14, fontWeight: 700, cursor: 'pointer',
-            }}>🌳 Add to Tree</button>
+            }}>🌳 {t('grow')}</button>
           </div>
         </div>
       )}

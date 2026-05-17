@@ -206,7 +206,7 @@ export default function CloneFeed() {
                   {/* Action Buttons */}
                   <div className="px-4 py-2 flex items-center gap-1 border-t border-white/[0.04]">
                     <button onClick={() => toggleLike(post.id)} className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs tap-feedback transition-all ${post.liked ? 'text-pink-400' : 'text-white/40'}`}>
-                      {post.liked ? '❤️' : '🤍'} {post.liked ? t('Liked') : t('Like')}}
+                      {post.liked ? '❤️' : '🤍'} {post.liked ? t('Liked') : t('Like')}
                     </button>
                     <button onClick={() => setCommentPost(commentPost === post.id ? null : post.id)} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs text-white/40 tap-feedback">💬 {t('Comment')}</button>
                     <button onClick={() => sharePost(post.id)} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs text-white/40 tap-feedback">↗️ {t('Share')}</button>
@@ -354,8 +354,8 @@ export default function CloneFeed() {
                 { id: 'text', icon: '📝', label: 'Text' },
                 { id: 'image', icon: '📸', label: 'Photo' },
                 { id: 'video', icon: '🎥', label: 'Video' },
-              ].map(t => (
-                <button key={t.id} onClick={() => setPostType(t.id as any)} className={`flex-1 py-2 rounded-xl text-xs tap-feedback ${postType === t.id ? 'bg-violet-500/20 border-violet-500/40 text-violet-400' : 'bg-white/[0.03] border-white/[0.06] text-white/40'} border`}>{t.icon} {t.label}</button>
+              ].map(tabItem => (
+                <button key={tabItem.id} onClick={() => setPostType(tabItem.id as any)} className={`flex-1 py-2 rounded-xl text-xs tap-feedback ${postType === tabItem.id ? 'bg-violet-500/20 border-violet-500/40 text-violet-400' : 'bg-white/[0.03] border-white/[0.06] text-white/40'} border`}>{tabItem.icon} {tabItem.label}</button>
               ))}
             </div>
 

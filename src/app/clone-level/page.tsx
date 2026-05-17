@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface LevelData {
   level: number;
@@ -34,6 +35,7 @@ interface XpEvent {
 }
 
 export default function CloneLevel() {
+  const t = useT();
   const [xp, setXp] = useState(0);
   const [xpEvents, setXpEvents] = useState<XpEvent[]>([]);
   const [particles, setParticles] = useState<{ id: number; x: number; y: number; size: number; delay: number }[]>([]);
@@ -119,7 +121,7 @@ export default function CloneLevel() {
         <div style={{ display:'flex',alignItems:'center',gap:12,maxWidth:800,margin:'0 auto' }}>
           <Link href="/dashboard" style={{ color:'#888',textDecoration:'none',fontSize:20 }}>←</Link>
           <h1 style={{ fontSize:20,fontWeight:700,background:'linear-gradient(135deg,#FBBF24,#FF6B9D)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent' }}>
-            ⚡ Clone Level
+            ⚡ {t('clone level')}
           </h1>
         </div>
       </header>
@@ -128,14 +130,14 @@ export default function CloneLevel() {
         {/* Level Display */}
         <div className="glass" style={{ padding:32,marginBottom:24,textAlign:'center',animation:levelUpAnim?'levelUp 0.8s ease-out':'none' }}
           onAnimationEnd={() => setLevelUpAnim(false)}>
-          <div style={{ fontSize:20,fontWeight:600,color:'#888',marginBottom:4 }}>Level {current.level}</div>
+          <div style={{ fontSize:20,fontWeight:600,color:'#888',marginBottom:4 }}>{t('level')} {current.level}</div>
           <div style={{ fontSize:72,marginBottom:8 }}>{current.emoji}</div>
           <h2 style={{ fontSize:28,fontWeight:800,color:current.color }}>{current.title}</h2>
           <p style={{ color:'#666',fontSize:13,marginTop:4 }}>{current.reward}</p>
 
           <div style={{ marginTop:24 }}>
             <div style={{ display:'flex',justifyContent:'space-between',fontSize:13,color:'#888',marginBottom:8 }}>
-              <span>{xp.toLocaleString()} XP</span>
+              <span>{xp.toLocaleString()} {t('xp')}</span>
               <span>{next ? `${next.xpRequired.toLocaleString()} XP` : 'MAX'}</span>
             </div>
             <div style={{ height:12,background:'rgba(255,255,255,0.06)',borderRadius:6,overflow:'hidden',position:'relative' }}>
@@ -143,7 +145,7 @@ export default function CloneLevel() {
             </div>
             {next && (
               <div style={{ fontSize:12,color:'#555',marginTop:6 }}>
-                {(next.xpRequired - xp).toLocaleString()} XP to {next.title}
+                {(next.xpRequired - xp).toLocaleString()} {t('xp')} to {t('rank')}
               </div>
             )}
           </div>
@@ -151,14 +153,14 @@ export default function CloneLevel() {
 
         {/* XP Sources */}
         <div className="glass" style={{ padding:20,marginBottom:24 }}>
-          <h3 style={{ fontSize:15,fontWeight:600,color:'#aaa',marginBottom:16 }}>Earn XP</h3>
+          <h3 style={{ fontSize:15,fontWeight:600,color:'#aaa',marginBottom:16 }}>{t('experience')}</h3>
           <div style={{ display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(140px,1fr))',gap:10 }}>
             {xpSources.map(s => (
               <button key={s.label} onClick={() => addXp(s.label, s.xp)}
                 style={{ padding:16,borderRadius:12,border:'1px solid rgba(255,255,255,0.08)',background:'rgba(255,255,255,0.02)',cursor:'pointer',textAlign:'center',transition:'all 0.2s' }}>
                 <div style={{ fontSize:28 }}>{s.emoji}</div>
                 <div style={{ fontSize:13,fontWeight:500,marginTop:4 }}>{s.label}</div>
-                <div style={{ fontSize:12,color:'#FBBF24',marginTop:2 }}>+{s.xp} XP</div>
+                <div style={{ fontSize:12,color:'#FBBF24',marginTop:2 }}>+{s.xp} {t('xp')}</div>
               </button>
             ))}
           </div>
@@ -166,7 +168,7 @@ export default function CloneLevel() {
 
         {/* Level Progression Tree */}
         <div className="glass" style={{ padding:20,marginBottom:24 }}>
-          <h3 style={{ fontSize:15,fontWeight:600,color:'#aaa',marginBottom:16 }}>Level Progression</h3>
+          <h3 style={{ fontSize:15,fontWeight:600,color:'#aaa',marginBottom:16 }}>{t('level up')}</h3>
           <div style={{ display:'flex',flexDirection:'column',gap:0,position:'relative' }}>
             <div style={{ position:'absolute',left:23,top:0,bottom:0,width:2,background:'rgba(255,255,255,0.06)',zIndex:0 }} />
             {levels.map((l, i) => {
@@ -179,11 +181,11 @@ export default function CloneLevel() {
                   </div>
                   <div style={{ flex:1 }}>
                     <div style={{ display:'flex',alignItems:'center',gap:8 }}>
-                      <span style={{ fontWeight:600,color:unlocked?'#E0E0E0':'#555' }}>Lv.{l.level} {l.title}</span>
-                      {isCurrent && <span style={{ fontSize:10,padding:'2px 8px',borderRadius:10,background:l.color+'22',color:l.color }}>Current</span>}
+                      <span style={{ fontWeight:600,color:unlocked?'#E0E0E0':'#555' }}>{t('level')}.{l.level} {t('rank')}</span>
+                      {isCurrent && <span style={{ fontSize:10,padding:'2px 8px',borderRadius:10,background:l.color+'22',color:l.color }}>{t('rank')}</span>}
                     </div>
                     <div style={{ fontSize:12,color:'#666',marginTop:2 }}>{l.reward}</div>
-                    <div style={{ fontSize:11,color:'#555' }}>{l.xpRequired.toLocaleString()} XP</div>
+                    <div style={{ fontSize:11,color:'#555' }}>{l.xpRequired.toLocaleString()} {t('xp')}</div>
                   </div>
                 </div>
               );
@@ -193,9 +195,9 @@ export default function CloneLevel() {
 
         {/* XP History */}
         <div className="glass" style={{ padding:20 }}>
-          <h3 style={{ fontSize:15,fontWeight:600,color:'#aaa',marginBottom:16 }}>XP History</h3>
+          <h3 style={{ fontSize:15,fontWeight:600,color:'#aaa',marginBottom:16 }}>{t('xp')} History</h3>
           {xpEvents.length === 0 ? (
-            <p style={{ color:'#555',textAlign:'center',padding:20 }}>No XP earned yet. Start your journey!</p>
+            <p style={{ color:'#555',textAlign:'center',padding:20 }}>No {t('xp')} earned yet. Start your journey!</p>
           ) : (
             <div style={{ display:'flex',flexDirection:'column',gap:8 }}>
               {xpEvents.slice(0, 15).map(ev => (
@@ -204,7 +206,7 @@ export default function CloneLevel() {
                     <div style={{ fontSize:13 }}>{ev.source}</div>
                     <div style={{ fontSize:11,color:'#666' }}>{ev.date}</div>
                   </div>
-                  <span style={{ fontWeight:700,color:'#FBBF24',fontSize:14 }}>+{ev.xp} XP</span>
+                  <span style={{ fontWeight:700,color:'#FBBF24',fontSize:14 }}>+{ev.xp} {t('xp')}</span>
                 </div>
               ))}
             </div>

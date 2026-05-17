@@ -176,7 +176,7 @@ export default function PersonalityQuiz() {
   if (completed) {
     const topTraits = getTopTraits()
     return (
-      <main className="min-h-screen animated-gradient-bg noise-overlay flex items-center justify-center px-6">
+      <main className="min-h-screen animated-gradient-bg noise-overlay flex items-center justify-center px-6 pb-24 md:pb-0">
         <Particles />
         <div className="max-w-2xl w-full relative z-10">
           {/* Hero */}
@@ -258,7 +258,7 @@ export default function PersonalityQuiz() {
   const q = questions[currentQuestion]
 
   return (
-    <main className="min-h-screen animated-gradient-bg noise-overlay flex items-center justify-center px-6">
+    <main className="min-h-screen animated-gradient-bg noise-overlay flex items-center justify-center px-6 pb-24 md:pb-0">
       <Particles />
       <div className="max-w-xl w-full relative z-10">
         {/* Progress */}

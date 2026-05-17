@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Alert { id: string; type: 'warning' | 'danger' | 'info'; title: string; message: string; timestamp: string; prevented: boolean; risk: number; }
 interface GuardianStats { warningsGiven: number; decisionsPrevented: number; shieldStrength: number; daysActive: number; }
@@ -14,6 +15,7 @@ const DEFAULT_ALERTS: Alert[] = [
 ];
 
 export default function CloneGuardianPage() {
+  const t = useT();
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [stats, setStats] = useState<GuardianStats>({ warningsGiven: 0, decisionsPrevented: 0, shieldStrength: 0, daysActive: 0 });
   const [wingFlap, setWingFlap] = useState(0);
@@ -65,8 +67,8 @@ export default function CloneGuardianPage() {
       <div style={{ position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'blur(20px)', background: 'rgba(5,5,16,0.8)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <Link href="/dashboard" style={{ color: '#888', fontSize: 22, textDecoration: 'none' }}>←</Link>
         <div>
-          <h1 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>🛡️ Clone Guardian Angel</h1>
-          <p style={{ margin: 0, fontSize: 12, color: '#666' }}>Your digital protector</p>
+          <h1 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>🛡️ {t('guardian angel')}</h1>
+          <p style={{ margin: 0, fontSize: 12, color: '#666' }}>{t('protection')}</p>
         </div>
       </div>
 
@@ -82,7 +84,7 @@ export default function CloneGuardianPage() {
               <div style={{ fontSize: 50, filter: `drop-shadow(0 0 10px ${shieldColor}30)`, animation: 'shieldPulse 3s ease-in-out infinite' }}>🪽</div>
             </div>
           </div>
-          <div style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>Guardian Active</div>
+          <div style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>{t('guardian angel')}</div>
           <div style={{ fontSize: 13, color: '#81C784', marginBottom: 16 }}>Protecting you for {stats.daysActive} days</div>
           {/* Shield Strength Meter */}
           <div style={{ background: 'rgba(255,255,255,0.05)', borderRadius: 10, height: 10, overflow: 'hidden', marginBottom: 8 }}>
@@ -112,7 +114,7 @@ export default function CloneGuardianPage() {
 
         {/* Recent Alerts */}
         <div>
-          <div style={{ fontSize: 13, color: '#888', marginBottom: 12, fontWeight: 600 }}>Protection Alerts</div>
+          <div style={{ fontSize: 13, color: '#888', marginBottom: 12, fontWeight: 600 }}>{t('alert')}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {alerts.map((alert, i) => {
               const color = getAlertColor(alert.type);
@@ -148,9 +150,9 @@ export default function CloneGuardianPage() {
         <div style={{ marginTop: 24, background: 'rgba(129,199,132,0.05)', border: '1px solid rgba(129,199,132,0.15)', borderRadius: 16, padding: 20, textAlign: 'center' }}>
           <div style={{ fontSize: 28, marginBottom: 8 }}>👼</div>
           <p style={{ margin: 0, fontSize: 13, color: '#aaa', lineHeight: 1.6, fontStyle: 'italic' }}>
-            &ldquo;I watch over you when you can&apos;t watch over yourself. Every warning is love. Every block is care. Your wellbeing is my purpose.&rdquo;
+            &ldquo;{t('watch over')}&rdquo;
           </p>
-          <div style={{ fontSize: 12, color: '#81C784', marginTop: 8, fontWeight: 600 }}>— Your Guardian Clone</div>
+          <div style={{ fontSize: 12, color: '#81C784', marginTop: 8, fontWeight: 600 }}>— {t('guardian angel')}</div>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface DreamInsight {
   id: string
@@ -21,6 +22,7 @@ interface Memory {
 }
 
 export default function AstronautMode() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [isDreaming, setIsDreaming] = useState(false)
   const [isFaceDown, setIsFaceDown] = useState(false)
@@ -240,10 +242,10 @@ export default function AstronautMode() {
           </Link>
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-sm shadow-lg shadow-violet-500/30">🌌</div>
           <div className="flex-1">
-            <h1 className="text-sm font-bold">Astronaut Mode</h1>
+            <h1 className="text-sm font-bold">{t('astronaut mode')}</h1>
             <p className="text-[10px] text-indigo-400 flex items-center gap-1">
               <span className={`w-1.5 h-1.5 rounded-full ${isDreaming ? 'bg-violet-400 animate-pulse' : 'bg-white/20'}`} />
-              {isDreaming ? 'Clone is dreaming...' : 'Night Mode'}
+              {isDreaming ? "{t('dream mode')}..." : 'Night Mode'}
             </p>
           </div>
           <button
@@ -362,9 +364,9 @@ export default function AstronautMode() {
               <span className="text-6xl drop-shadow-[0_0_40px_rgba(139,92,246,0.6)]">🌙</span>
             </div>
             <h2 className="text-2xl font-bold bg-gradient-to-r from-violet-300 via-indigo-300 to-cyan-300 bg-clip-text text-transparent mb-2">
-              Clone is dreaming...
+              {t('dream mode')}...
             </h2>
-            <p className="text-white/30 text-sm mb-8">Analyzing memories, finding hidden connections</p>
+            <p className="text-white/30 text-sm mb-8">{t('weightless')}</p>
 
             {generating && (
               <div className="flex items-center gap-3">
@@ -473,9 +475,9 @@ export default function AstronautMode() {
                   <span className="text-5xl relative z-10 drop-shadow-[0_0_30px_rgba(99,102,241,0.4)]">🌌</span>
                 </div>
               </div>
-              <h2 className="text-lg font-bold bg-gradient-to-r from-indigo-300 to-violet-300 bg-clip-text text-transparent mb-1">Astronaut Mode</h2>
+              <h2 className="text-lg font-bold bg-gradient-to-r from-indigo-300 to-violet-300 bg-clip-text text-transparent mb-1">{t('astronaut mode')}</h2>
               <p className="text-white/30 text-sm max-w-xs mx-auto">
-                Place your phone face-down to enter dream mode. Your clone will analyze memories and find hidden connections.
+                {t('phone down')}
               </p>
             </div>
 
@@ -509,7 +511,7 @@ export default function AstronautMode() {
               <div className="absolute inset-0 bg-gradient-to-r from-indigo-400 to-violet-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <span className="relative flex items-center justify-center gap-2">
                 <span className="text-lg">🌙</span>
-                Enter Dream Mode
+                {t('dream mode')}
               </span>
               <span className="relative block text-xs text-white/50 mt-1">
                 {memories.length > 0

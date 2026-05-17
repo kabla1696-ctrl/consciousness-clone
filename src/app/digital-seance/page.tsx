@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Message {
   id: number;
@@ -26,6 +27,7 @@ const SPIRIT_RESPONSES = [
 ];
 
 export default function DigitalSeancePage() {
+  const t = useT();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [connectionStrength, setConnectionStrength] = useState(0);
@@ -152,7 +154,7 @@ export default function DigitalSeancePage() {
 
       <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, backdropFilter: 'blur(20px)', background: 'rgba(5,5,16,0.85)', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <Link href="/dashboard" style={{ color: '#8888cc', textDecoration: 'none', fontSize: 18 }}>←</Link>
-        <h1 style={{ fontSize: 18, fontWeight: 600, margin: 0, background: 'linear-gradient(135deg, #ffab40, #ff6d00)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Digital Seance</h1>
+        <h1 style={{ fontSize: 18, fontWeight: 600, margin: 0, background: 'linear-gradient(135deg, #ffab40, #ff6d00)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{t('digital seance')}</h1>
       </div>
 
       <div style={{ position: 'relative', zIndex: 1, paddingTop: 60, padding: '60px 16px 16px', maxWidth: 600, margin: '0 auto', display: 'flex', flexDirection: 'column', height: '100vh' }}>
@@ -169,7 +171,7 @@ export default function DigitalSeancePage() {
         {/* Session info bar */}
         <div style={{ display: 'flex', gap: 12, marginBottom: 16 }}>
           <div style={{ flex: 1, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12, padding: '10px 14px', textAlign: 'center' }}>
-            <p style={{ margin: '0 0 2px', fontSize: 10, textTransform: 'uppercase', letterSpacing: 1, color: '#666' }}>Session</p>
+            <p style={{ margin: '0 0 2px', fontSize: 10, textTransform: 'uppercase', letterSpacing: 1, color: '#666' }}>{t('session')}</p>
             <p style={{ margin: 0, fontSize: 16, fontFamily: 'monospace', color: '#ffa726' }}>{formatTime(sessionTime)}</p>
           </div>
           <div style={{ flex: 1, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12, padding: '10px 14px', textAlign: 'center' }}>
@@ -194,7 +196,7 @@ export default function DigitalSeancePage() {
           {!isConnected && messages.length === 0 ? (
             <div style={{ textAlign: 'center', padding: 60, color: '#444' }}>
               <div style={{ fontSize: 48, marginBottom: 16 }}>🕯️</div>
-              <p style={{ fontSize: 15, margin: '0 0 8px', color: '#888' }}>The seance room awaits</p>
+              <p style={{ fontSize: 15, margin: '0 0 8px', color: '#888' }}>{t('communicate')} with {t('spirits')}</p>
               <p style={{ fontSize: 13, margin: 0 }}>Light the candles to begin</p>
             </div>
           ) : (
@@ -226,7 +228,7 @@ export default function DigitalSeancePage() {
               <button onClick={startSession} style={{
                 flex: 1, background: 'linear-gradient(135deg, #ffab40, #ff6d00)', border: 'none', borderRadius: 12,
                 padding: 14, color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer',
-              }}>🕯️ Begin Seance</button>
+              }}>🕯️ {t('digital seance')}</button>
               {messages.length > 0 && (
                 <button onClick={clearHistory} style={{
                   background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12,
@@ -236,7 +238,7 @@ export default function DigitalSeancePage() {
             </div>
           ) : (
             <div style={{ display: 'flex', gap: 8 }}>
-              <input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && sendMessage()} placeholder="Speak to the spirit..." style={{
+              <input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && sendMessage()} placeholder={t('communicate') + '...'} style={{
                 flex: 1, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
                 borderRadius: 12, padding: '12px 16px', color: '#e0e0ff', fontSize: 14, outline: 'none',
               }} />

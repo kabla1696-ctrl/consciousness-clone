@@ -146,208 +146,240 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'memory museum': 'Memory Museum', 'exhibits': 'Exhibits', 'timeline': 'Timeline',
     'memory reels': 'Memory Reels', 'tiktok': 'TikTok', 'watch': 'Watch', 'like': 'Like',
     'clone dating': 'Clone Dating', 'find match': 'Find My Match', 'swipe': 'Swipe to Find a Date',
-    'like': 'Like', 'pass': 'Pass', 'match': 'Match', 'interests': 'Shared Interests', 'soul score': 'Soul Score',
+ 'pass': 'Pass', 'match': 'Match', 'interests': 'Shared Interests', 'soul score': 'Soul Score',
     'anonymous': 'Confess Anonymously', 'post confession': 'Anonymous Confession',
-    'unlocked': 'Unlocked', 'locked': 'Locked', 'progress': 'Progress', 'badges': 'Badges',
+ 'locked': 'Locked', 'progress': 'Progress',
     'your future': 'Channeling the future', 'ai predicts': 'Generate Prediction', 'probability': 'Confidence',
     'clone poet': 'Clone Poet', 'poetry': 'Let your clone weave words from the threads of memory',
-    'generate poem': 'Generate Poem', 'style': 'Poem Style',
-    'episodes': 'AI-generated episodes', 'generate': 'Generate Episode', 'listen': 'Listen',
+    'generate poem': 'Generate Poem',
+    'episodes': 'AI-generated episodes', 'listen': 'Listen',
     'clone sleep': 'Clone Sleep', 'sleeping': 'Clone is dreaming', 'dreams': 'Dream Journal', 'wake up': 'Wake Up',
     'clone orchestra': 'Clone Orchestra', 'instruments': 'Select Clones (3-5)', 'compose': 'Start Composing', 'play': 'Play',
+    'reincarnation': 'Digital Reincarnation', 'digital immortality': 'Evolution beyond mortality', 'rebirth': 'Rebirth', 'cycle': 'Cycle',
+    'digital seance': 'Digital Seance', 'communicate': 'Communicate', 'spirits': 'Spirits', 'session': 'Session',
+ 'background': 'Background', 'processing': 'Processing', 'sleep': 'Sleep',
+ 'track': 'Track', 'achieve': 'Achieve', 'add goal': 'Add Goal',
+ 'heart rate': 'Heart Rate', 'camera': 'Camera', 'detection': 'Detection', 'bpm': 'BPM',
+ 'who gets': 'Who Gets Access', 'after you': 'After You', 'partial': 'Partial',
+    'last breath': 'Last Breath', 'final moment': 'Final Moment', 'goodbye': 'Goodbye',
+ 'final message': 'Final Message', 'for the world': 'For the World', 'record': 'Record',
+    'legacy tree': 'Legacy Tree', 'family memory': 'Family Memory', 'branches': 'Branches', 'roots': 'Roots', 'grow': 'Grow',
+    'rate': 'Rate', 'balance': 'Balance', 'health': 'Health', 'career': 'Career', 'relationships': 'Relationships',
+    'ai generated': 'AI Generated', 'chapters': 'Chapters', 'write story': 'Write Story',
+    'personality genome': 'Personality Genome', 'strands': 'Strands', 'code': 'Code',
+    'memory ghost': 'Memory Ghost', 'haunted': 'Haunted', 'forgotten': 'Forgotten', 'resurface': 'Resurface',
+    'where memories': 'Where Memories Live', 'locations': 'Locations', 'explore': 'Explore',
+    'memory palace': 'Memory Palace', 'rooms': 'Rooms', 'store': 'Store', 'navigate': 'Navigate',
+    'memory replay': 'Memory Replay', 'relive': 'Relive', 'playback': 'Playback', 'moments': 'Moments',
+ 'who talks': "Who's Talking?", 'recognizes': 'Teach your clone to recognize different people and respond accordingly.', 'face': 'Sample messages',
+    'clone level': 'Clone Level', 'experience': 'Earn XP', 'level up': 'Level Progression', 'rank': 'Rank',
+    'clone passport': 'Clone Passport', 'travel stamps': 'Your digital travel journal', 'destinations': 'Countries',
+    'clone social': 'Clone Social', 'feed': 'Feed', 'posts': 'Posts', 'followers': 'Followers', 'following': 'Trending',
+    'therapy dog': 'Therapy Pet', 'virtual pet': 'Choose Your Companion', 'comfort': 'Comfort', 'fetch': 'Fetch',
+    'cloud backup': 'Cloud Backup', 'backup': 'Backup', 'restore': 'Restore', 'sync': 'Auto-Backup',
+ 'morning': 'Good Morning', 'summary': 'Summary', 'schedule': 'Schedule',
+    'dead man switch': "Dead Man's Switch", 'auto deliver': 'Enable Switch', 'inactive': 'Inactive', 'countdown': 'Countdown',
   },
   bn: {
     dashboard: 'ড্যাশবোর্ড', memories: 'স্মৃতি', chat: 'চ্যাট', mood: 'মেজাজ', settings: 'সেটিংস',
     profile: 'প্রোফাইল', logout: 'লগ আউট', login: 'লগ ইন', signup: 'সাইন আপ', save: 'সেভ', cancel: 'বাতিল',
     delete: 'মুছুন', edit: 'এডিট', add: 'যোগ করুন', search: 'খুঁজুন', loading: 'লোড হচ্ছে...', back: 'পিছনে',
     welcome: 'স্বাগতম', home: 'হোম', features: 'ফিচার', personality: 'ব্যক্তিত্ব', analytics: 'বিশ্লেষণ',
-    'talk to clone': 'ক্লোনের সাথে কথা বলুন', 'mood tracker': 'মেজাজ ট্র্যাকার', 'life goals': 'লাইফ গোল',
-    'time capsule': 'টাইম ক্যাপসুল', 'legacy letters': 'উত্তরাধিকার চিঠি', 'family tree': 'পরিবার গাছ',
-    'voice journal': 'ভয়েস জার্নাল', 'memory map': 'মেমরি ম্যাপ', 'clone settings': 'ক্লোন সেটিংস',
-    'soul sync': 'সোল সিঙ্ক', 'time travel': 'টাইম ট্রাভেল', 'death simulation': 'ডেথ সিমুলেশন',
-    'ghost mode': 'ঘোস্ট মোড', 'clone therapy': 'ক্লোন থেরাপি', 'milestones': 'মাইলস্টোন',
-    'confessions': 'কনফেশন', 'dream lab': 'ড্রিম ল্যাব', 'mirror mode': 'মিরর মোড',
-    'your clone awaits': 'আপনার ক্লোন অপেক্ষা করছে', 'features count': 'ফিচার',
-    'hey': 'হেই', 'type message': 'মেসেজ লিখুন...', 'send': 'পাঠান',
-    'how are you': 'কেমন লাগছে?', 'select mood': 'আপনার মেজাজ বাছুন',
-    'add person': 'ব্যক্তি যোগ করুন', 'name': 'নাম', 'relation': 'সম্পর্ক',
-    'language': 'ভাষা', 'no data': 'এখনো কোনো ডেটা নেই', 'success': 'সফল', 'error': 'ত্রুটি',
-    'clone dating': 'ক্লোন ডেটিং', 'find match': 'ম্যাচ খুঁজুন', 'swipe': 'ডেট খুঁজতে সোয়াইপ করুন',
-    'like': 'পছন্দ', 'pass': 'পাস', 'match': 'ম্যাচ', 'interests': 'শেয়ার্ড ইন্টারেস্ট', 'soul score': 'সোল স্কোর',
-    'anonymous': 'বেনামে কনফেস করুন', 'post confession': 'বেনামী কনফেশন',
-    'unlocked': 'আনলকড', 'locked': 'লকড', 'progress': 'প্রগ্রেস', 'badges': 'ব্যাজ',
-    'your future': 'ভবিষ্যৎ চ্যানেল করা হচ্ছে', 'ai predicts': 'প্রেডিকশন তৈরি করুন', 'probability': 'কনফিডেন্স',
-    'clone poet': 'ক্লোন কবি', 'poetry': 'আপনার ক্লোনকে স্মৃতির সুতো থেকে শব্দ বুনতে দিন',
-    'generate poem': 'কবিতা তৈরি করুন', 'style': 'কবিতার স্টাইল',
-    'episodes': 'এআই-জেনারেটেড এপিসোড', 'generate': 'এপিসোড তৈরি করুন', 'listen': 'শুনুন',
-    'clone sleep': 'ক্লোন স্লিপ', 'sleeping': 'ক্লোন স্বপ্ন দেখছে', 'dreams': 'ড্রিম জার্নাল', 'wake up': 'জেগে উঠুন',
-    'clone orchestra': 'ক্লোন অর্কেস্ট্রা', 'instruments': 'ক্লোন বাছুন (৩-৫)', 'compose': 'কম্পোজ শুরু করুন', 'play': 'প্লে',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   },
   hi: {
     dashboard: 'डैशबोर्ड', memories: 'यादें', chat: 'चैट', mood: 'मूड', settings: 'सेटिंग्स',
     profile: 'प्रोफ़ाइल', logout: 'लॉग आउट', login: 'लॉग इन', signup: 'साइन अप', save: 'सेव', cancel: 'रद्द',
     delete: 'हटाएं', edit: 'एडिट', add: 'जोड़ें', search: 'खोजें', loading: 'लोड हो रहा है...', back: 'पीछे',
     welcome: 'स्वागत है', home: 'होम', features: 'फ़ीचर', personality: 'व्यक्तित्व', analytics: 'विश्लेषण',
-    'talk to clone': 'क्लोन से बात करें', 'mood tracker': 'मूड ट्रैकर', 'life goals': 'लाइफ गोल',
-    'your clone awaits': 'आपका क्लोन इंतज़ार कर रहा है', 'features count': 'फ़ीचर',
-    'hey': 'हेय', 'type message': 'संदेश लिखें...', 'send': 'भेजें',
-    'language': 'भाषा', 'no data': 'अभी कोई डेटा नहीं', 'success': 'सफल', 'error': 'त्रुटि',
+
+
+
+
   },
   ar: {
     dashboard: 'لوحة التحكم', memories: 'الذكريات', chat: 'المحادثة', mood: 'المزاج', settings: 'الإعدادات',
     profile: 'الملف الشخصي', logout: 'تسجيل خروج', login: 'تسجيل دخول', signup: 'إنشاء حساب', save: 'حفظ', cancel: 'إلغاء',
     delete: 'حذف', edit: 'تعديل', add: 'إضافة', search: 'بحث', loading: 'جاري التحميل...', back: 'رجوع',
     welcome: 'مرحباً', home: 'الرئيسية', features: 'الميزات', personality: 'الشخصية', analytics: 'التحليلات',
-    'talk to clone': 'تحدث مع النسخة', 'your clone awaits': 'نسخنتك في انتظارك', 'features count': 'ميزة',
-    'hey': 'مرحباً', 'type message': 'اكتب رسالة...', 'send': 'إرسال',
-    'language': 'اللغة', 'no data': 'لا توجد بيانات بعد', 'success': 'نجاح', 'error': 'خطأ',
+
+
+
   },
   es: {
     dashboard: 'Panel', memories: 'Recuerdos', chat: 'Chat', mood: 'Ánimo', settings: 'Ajustes',
     profile: 'Perfil', logout: 'Cerrar sesión', login: 'Iniciar sesión', signup: 'Registrarse', save: 'Guardar', cancel: 'Cancelar',
     delete: 'Eliminar', edit: 'Editar', add: 'Agregar', search: 'Buscar', loading: 'Cargando...', back: 'Atrás',
     welcome: 'Bienvenido', home: 'Inicio', features: 'Funciones', personality: 'Personalidad', analytics: 'Analíticas',
-    'talk to clone': 'Hablar con tu clon', 'your clone awaits': 'Tu clon te espera', 'features count': 'funciones',
-    'hey': 'Hola', 'type message': 'Escribe un mensaje...', 'send': 'Enviar',
-    'language': 'Idioma', 'no data': 'Sin datos aún', 'success': 'Éxito', 'error': 'Error',
+
+
+
   },
   zh: {
     dashboard: '仪表板', memories: '记忆', chat: '聊天', mood: '心情', settings: '设置',
     profile: '个人资料', logout: '退出登录', login: '登录', signup: '注册', save: '保存', cancel: '取消',
     delete: '删除', edit: '编辑', add: '添加', search: '搜索', loading: '加载中...', back: '返回',
     welcome: '欢迎', home: '首页', features: '功能', personality: '性格', analytics: '分析',
-    'talk to clone': '与克隆交谈', 'your clone awaits': '你的克隆在等你', 'features count': '个功能',
-    'hey': '嗨', 'type message': '输入消息...', 'send': '发送',
-    'language': '语言', 'no data': '暂无数据', 'success': '成功', 'error': '错误',
+
+
+
   },
   ja: {
     dashboard: 'ダッシュボード', memories: 'メモリー', chat: 'チャット', mood: '気分', settings: '設定',
     profile: 'プロフィール', logout: 'ログアウト', login: 'ログイン', signup: 'サインアップ', save: '保存', cancel: 'キャンセル',
     delete: '削除', edit: '編集', add: '追加', search: '検索', loading: '読み込み中...', back: '戻る',
     welcome: 'ようこそ', home: 'ホーム', features: '機能', personality: '性格', analytics: '分析',
-    'talk to clone': 'クローンと話す', 'your clone awaits': 'クローンが待っています', 'features count': '機能',
-    'hey': 'やあ', 'type message': 'メッセージを入力...', 'send': '送信',
-    'language': '言語', 'no data': 'まだデータがありません', 'success': '成功', 'error': 'エラー',
+
+
+
   },
   ko: {
     dashboard: '대시보드', memories: '추억', chat: '채팅', mood: '기분', settings: '설정',
     profile: '프로필', logout: '로그아웃', login: '로그인', signup: '회원가입', save: '저장', cancel: '취소',
     delete: '삭제', edit: '편집', add: '추가', search: '검색', loading: '로딩 중...', back: '뒤로',
     welcome: '환영합니다', home: '홈', features: '기능', personality: '성격', analytics: '분석',
-    'talk to clone': '클론과 대화', 'your clone awaits': '클론이 기다리고 있습니다', 'features count': '기능',
-    'hey': '안녕', 'type message': '메시지를 입력하세요...', 'send': '보내기',
-    'language': '언어', 'no data': '아직 데이터가 없습니다', 'success': '성공', 'error': '오류',
+
+
+
   },
   fr: {
     dashboard: 'Tableau de bord', memories: 'Souvenirs', chat: 'Chat', mood: 'Humeur', settings: 'Paramètres',
     profile: 'Profil', logout: 'Déconnexion', login: 'Connexion', signup: "S'inscrire", save: 'Enregistrer', cancel: 'Annuler',
     delete: 'Supprimer', edit: 'Modifier', add: 'Ajouter', search: 'Rechercher', loading: 'Chargement...', back: 'Retour',
     welcome: 'Bienvenue', home: 'Accueil', features: 'Fonctionnalités', personality: 'Personnalité', analytics: 'Analyses',
-    'talk to clone': 'Parler au clone', 'your clone awaits': 'Votre clone vous attend', 'features count': 'fonctionnalités',
-    'hey': 'Salut', 'type message': 'Écrivez un message...', 'send': 'Envoyer',
-    'language': 'Langue', 'no data': 'Pas encore de données', 'success': 'Succès', 'error': 'Erreur',
+
+
+
   },
   de: {
     dashboard: 'Dashboard', memories: 'Erinnerungen', chat: 'Chat', mood: 'Stimmung', settings: 'Einstellungen',
     profile: 'Profil', logout: 'Abmelden', login: 'Anmelden', signup: 'Registrieren', save: 'Speichern', cancel: 'Abbrechen',
     delete: 'Löschen', edit: 'Bearbeiten', add: 'Hinzufügen', search: 'Suchen', loading: 'Laden...', back: 'Zurück',
     welcome: 'Willkommen', home: 'Startseite', features: 'Funktionen', personality: 'Persönlichkeit', analytics: 'Analysen',
-    'talk to clone': 'Mit Klon sprechen', 'your clone awaits': 'Dein Klon wartet', 'features count': 'Funktionen',
-    'hey': 'Hey', 'type message': 'Nachricht eingeben...', 'send': 'Senden',
-    'language': 'Sprache', 'no data': 'Noch keine Daten', 'success': 'Erfolg', 'error': 'Fehler',
+
+
+
   },
   ru: {
     dashboard: 'Панель', memories: 'Воспоминания', chat: 'Чат', mood: 'Настроение', settings: 'Настройки',
     profile: 'Профиль', logout: 'Выйти', login: 'Войти', signup: 'Регистрация', save: 'Сохранить', cancel: 'Отмена',
     delete: 'Удалить', edit: 'Редактировать', add: 'Добавить', search: 'Поиск', loading: 'Загрузка...', back: 'Назад',
     welcome: 'Добро пожаловать', home: 'Главная', features: 'Функции', personality: 'Личность', analytics: 'Аналитика',
-    'talk to clone': 'Говорить с клоном', 'your clone awaits': 'Ваш клон ждёт', 'features count': 'функций',
-    'hey': 'Привет', 'type message': 'Введите сообщение...', 'send': 'Отправить',
-    'language': 'Язык', 'no data': 'Пока нет данных', 'success': 'Успех', 'error': 'Ошибка',
+
+
+
   },
   tr: {
     dashboard: 'Kontrol Paneli', memories: 'Anılar', chat: 'Sohbet', mood: 'Ruh Hali', settings: 'Ayarlar',
     profile: 'Profil', logout: 'Çıkış', login: 'Giriş', signup: 'Kayıt', save: 'Kaydet', cancel: 'İptal',
     delete: 'Sil', edit: 'Düzenle', add: 'Ekle', search: 'Ara', loading: 'Yükleniyor...', back: 'Geri',
     welcome: 'Hoş geldiniz', home: 'Ana Sayfa', features: 'Özellikler', personality: 'Kişilik', analytics: 'Analitik',
-    'talk to clone': 'Klonla konuş', 'your clone awaits': 'Klonun seni bekliyor', 'features count': 'özellik',
-    'hey': 'Selam', 'type message': 'Mesaj yaz...', 'send': 'Gönder',
-    'language': 'Dil', 'no data': 'Henüz veri yok', 'success': 'Başarılı', 'error': 'Hata',
+
+
+
   },
   id: {
     dashboard: 'Dasbor', memories: 'Kenangan', chat: 'Obrolan', mood: 'Suasana', settings: 'Pengaturan',
     profile: 'Profil', logout: 'Keluar', login: 'Masuk', signup: 'Daftar', save: 'Simpan', cancel: 'Batal',
     delete: 'Hapus', edit: 'Edit', add: 'Tambah', search: 'Cari', loading: 'Memuat...', back: 'Kembali',
     welcome: 'Selamat datang', home: 'Beranda', features: 'Fitur', personality: 'Kepribadian', analytics: 'Analitik',
-    'talk to clone': 'Bicara dengan klon', 'your clone awaits': 'Klonmu menunggu', 'features count': 'fitur',
-    'hey': 'Hai', 'type message': 'Ketik pesan...', 'send': 'Kirim',
-    'language': 'Bahasa', 'no data': 'Belum ada data', 'success': 'Berhasil', 'error': 'Kesalahan',
+
+
+
   },
   th: {
     dashboard: 'แดชบอร์ด', memories: 'ความทรงจำ', chat: 'แชท', mood: 'อารมณ์', settings: 'การตั้งค่า',
     profile: 'โปรไฟล์', logout: 'ออกจากระบบ', login: 'เข้าสู่ระบบ', signup: 'สมัคร', save: 'บันทึก', cancel: 'ยกเลิก',
-    'hey': 'สวัสดี', 'type message': 'พิมพ์ข้อความ...', 'send': 'ส่ง',
-    'language': 'ภาษา', 'no data': 'ยังไม่มีข้อมูล', 'success': 'สำเร็จ', 'error': 'ข้อผิดพลาด',
+
+
   },
   vi: {
     dashboard: 'Bảng điều khiển', memories: 'Ký ức', chat: 'Trò chuyện', mood: 'Tâm trạng', settings: 'Cài đặt',
-    'hey': 'Xin chào', 'type message': 'Nhập tin nhắn...', 'send': 'Gửi',
-    'language': 'Ngôn ngữ', 'no data': 'Chưa có dữ liệu', 'success': 'Thành công', 'error': 'Lỗi',
+
+
   },
   sw: {
     dashboard: 'Dashibodi', memories: 'Kumbukumbu', chat: 'Mazungumzo', mood: 'Hali', settings: 'Mipangilio',
-    'hey': 'Habari', 'type message': 'Andika ujumbe...', 'send': 'Tuma',
-    'language': 'Lugha', 'no data': 'Hakuna data bado', 'success': 'Imefanikiwa', 'error': 'Hitilafu',
+
+
   },
   ur: {
     dashboard: 'ڈیش بورڈ', memories: 'یادیں', chat: 'چیٹ', mood: 'مزاج', settings: 'ترتیبات',
-    'hey': 'ہیلو', 'type message': 'پیغام لکھیں...', 'send': 'بھیجیں',
-    'language': 'زبان', 'no data': 'ابھی تک کوئی ڈیٹا نہیں', 'success': 'کامیابی', 'error': 'خرابی',
+
+
   },
   fa: {
     dashboard: 'داشبورد', memories: 'خاطرات', chat: 'گفتگو', mood: 'حال', settings: 'تنظیمات',
-    'hey': 'سلام', 'type message': 'پیام بنویسید...', 'send': 'ارسال',
-    'language': 'زبان', 'no data': 'هنوز داده‌ای نیست', 'success': 'موفقیت', 'error': 'خطا',
+
+
   },
   pt: {
     dashboard: 'Painel', memories: 'Memórias', chat: 'Bate-papo', mood: 'Humor', settings: 'Configurações',
-    'hey': 'Olá', 'type message': 'Digite uma mensagem...', 'send': 'Enviar',
-    'language': 'Idioma', 'no data': 'Sem dados ainda', 'success': 'Sucesso', 'error': 'Erro',
+
+
   },
   it: {
     dashboard: 'Pannello', memories: 'Ricordi', chat: 'Chat', mood: 'Umore', settings: 'Impostazioni',
-    'hey': 'Ciao', 'type message': 'Scrivi un messaggio...', 'send': 'Invia',
-    'language': 'Lingua', 'no data': 'Nessun dato ancora', 'success': 'Successo', 'error': 'Errore',
+
+
   },
   nl: {
     dashboard: 'Dashboard', memories: 'Herinneringen', chat: 'Chat', mood: 'Stemming', settings: 'Instellingen',
-    'hey': 'Hoi', 'type message': 'Typ een bericht...', 'send': 'Verstuur',
-    'language': 'Taal', 'no data': 'Nog geen gegevens', 'success': 'Succes', 'error': 'Fout',
+
+
   },
   pl: {
     dashboard: 'Panel', memories: 'Wspomnienia', chat: 'Czat', mood: 'Nastrój', settings: 'Ustawienia',
-    'hey': 'Cześć', 'type message': 'Napisz wiadomość...', 'send': 'Wyślij',
-    'language': 'Język', 'no data': 'Brak danych', 'success': 'Sukces', 'error': 'Błąd',
+
+
   },
   uk: {
     dashboard: 'Панель', memories: 'Спогади', chat: 'Чат', mood: 'Настрій', settings: 'Налаштування',
-    'hey': 'Привіт', 'type message': 'Введіть повідомлення...', 'send': 'Надіслати',
-    'language': 'Мова', 'no data': 'Ще немає даних', 'success': 'Успіх', 'error': 'Помилка',
+
+
   },
   ne: {
     dashboard: 'ड्यासबोर्ड', memories: 'सम्झना', chat: 'च्याट', mood: 'मूड', settings: 'सेटिङहरू',
-    'hey': 'नमस्ते', 'type message': 'सन्देश लेख्नुहोस्...', 'send': 'पठाउनुहोस्',
-    'language': 'भाषा', 'no data': 'अझै डेटा छैन', 'success': 'सफल', 'error': 'त्रुटि',
+
+
   },
   ha: {
     dashboard: 'Dashboard', memories: 'Tunani', chat: 'Tattaunawa', mood: 'Yanayi', settings: 'Saiti',
-    'hey': 'Sannu', 'type message': 'Rubuta sakon...', 'send': 'Aika',
-    'language': 'Harshe', 'no data': 'Babu bayanai har yanzu', 'success': 'Nasara', 'error': 'Kuskure',
+
+
   },
   am: {
     dashboard: 'ዳሽቦርድ', memories: 'ማስታወሻዎች', chat: 'ውይይት', mood: 'ስሜት', settings: 'ቅንብሮች',
-    'hey': 'ሰላም', 'type message': 'መልእክት ይተይቡ...', 'send': 'ላክ',
-    'language': 'ቋንቋ', 'no data': 'ገና መረጃ የለም', 'success': 'ስኬት', 'error': 'ስህተት',
+
+
   },
 }
 

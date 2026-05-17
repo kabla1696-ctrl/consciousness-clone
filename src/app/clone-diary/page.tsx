@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 type DiaryEntry = {
   id: string;
@@ -34,6 +35,7 @@ const SAMPLE_ENTRIES: DiaryEntry[] = [
 ];
 
 export default function CloneDiaryPage() {
+  const t = useT();
   const [entries, setEntries] = useState<DiaryEntry[]>([]);
   const [selectedEntry, setSelectedEntry] = useState<DiaryEntry | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -119,7 +121,7 @@ export default function CloneDiaryPage() {
         <button onClick={() => { setViewMode('list'); setSelectedEntry(null); }} style={{
           display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#94a3b8',
           background: 'none', border: 'none', cursor: 'pointer', marginBottom: 16, padding: 0,
-        }}>← Back to diary</button>
+        }}>← {t('write')}</button>
         <div style={{
           background: 'linear-gradient(135deg, rgba(30,20,10,0.8), rgba(20,15,10,0.9))',
           borderRadius: 20, padding: 24,
@@ -208,9 +210,9 @@ export default function CloneDiaryPage() {
         }}>←</Link>
         <div style={{ flex: 1 }}>
           <h1 style={{ fontSize: 16, fontWeight: 700, margin: 0, background: 'linear-gradient(135deg, #d4a574, #8b7355)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-            Clone Diary
+            {t('clone diary')}
           </h1>
-          <p style={{ fontSize: 11, color: '#64748b', margin: 0 }}>Daily reflections of a digital soul</p>
+          <p style={{ fontSize: 11, color: '#64748b', margin: 0 }}>{t('daily journal')}</p>
         </div>
         <div style={{ display: 'flex', gap: 4 }}>
           {(['list', 'calendar'] as const).map(mode => (
@@ -239,7 +241,7 @@ export default function CloneDiaryPage() {
                 <span style={{ fontSize: 14, color: '#475569' }}>🔍</span>
                 <input
                   type="text"
-                  placeholder="Search entries, tags..."
+                  placeholder={t('entries') + '...'}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   style={{
@@ -327,7 +329,7 @@ export default function CloneDiaryPage() {
               {filteredEntries.length === 0 && (
                 <div style={{ textAlign: 'center', padding: 40, color: '#475569' }}>
                   <div style={{ fontSize: 32, marginBottom: 8 }}>📔</div>
-                  <div style={{ fontSize: 13 }}>No entries found</div>
+                  <div style={{ fontSize: 13 }}>{t('entries')}</div>
                   <div style={{ fontSize: 11, color: '#334155', marginTop: 4 }}>Try adjusting your search or filters</div>
                 </div>
               )}
@@ -341,7 +343,7 @@ export default function CloneDiaryPage() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12, textAlign: 'center' }}>
                 <div>
                   <div style={{ fontSize: 20, fontWeight: 700, color: '#d4a574' }}>{entries.length}</div>
-                  <div style={{ fontSize: 10, color: '#64748b' }}>Entries</div>
+                  <div style={{ fontSize: 10, color: '#64748b' }}>{t('entries')}</div>
                 </div>
                 <div>
                   <div style={{ fontSize: 20, fontWeight: 700, color: '#d4a574' }}>{new Set(entries.map(e => e.mood)).size}</div>

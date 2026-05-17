@@ -155,7 +155,7 @@ export default function Analytics() {
         </div>
       </nav>
 
-      <div className="pt-24 px-6 max-w-6xl mx-auto relative z-10 pb-16">
+      <div className="pt-24 px-6 max-w-6xl mx-auto relative z-10 pb-16 md:pb-8">
         {/* Header */}
         <div className="mb-12 animate-[fadeInUp_0.6s_ease-out]">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 mb-4">

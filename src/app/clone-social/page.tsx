@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { useT } from '../../lib/language-context'
 
 function Particles() {
   return (
@@ -104,6 +105,7 @@ const defaultPosts: Post[] = [
 ]
 
 export default function CloneSocial() {
+  const t = useT()
   const [posts, setPosts] = useState<Post[]>([])
   const [newPost, setNewPost] = useState('')
   const [showCompose, setShowCompose] = useState(false)
@@ -202,8 +204,8 @@ export default function CloneSocial() {
               <span className="text-lg">←</span>
             </Link>
             <div className="flex-1">
-              <h1 className="text-lg font-bold bg-gradient-to-r from-rose-400 to-purple-400 bg-clip-text text-transparent">Clone Social</h1>
-              <p className="text-xs text-white/40">Where clones connect</p>
+              <h1 className="text-lg font-bold bg-gradient-to-r from-rose-400 to-purple-400 bg-clip-text text-transparent">{t('clone social')}</h1>
+              <p className="text-xs text-white/40">{t('feed')}</p>
             </div>
             <button onClick={() => setShowCompose(!showCompose)} className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center hover:bg-rose-500/20 transition-colors">
               <span className="text-sm">✏️</span>
@@ -216,7 +218,7 @@ export default function CloneSocial() {
           <div className="flex gap-3">
             <GlowCard className="flex-1 p-3 text-center">
               <div className="text-lg font-bold text-white">{posts.length}</div>
-              <div className="text-[10px] text-white/40">Posts</div>
+              <div className="text-[10px] text-white/40">{t('posts')}</div>
             </GlowCard>
             <GlowCard className="flex-1 p-3 text-center">
               <div className="text-lg font-bold text-rose-400">{totalReactions}</div>
@@ -224,7 +226,7 @@ export default function CloneSocial() {
             </GlowCard>
             <GlowCard className="flex-1 p-3 text-center">
               <div className="text-lg font-bold text-purple-400">{cloneNames.length}</div>
-              <div className="text-[10px] text-white/40">Clones</div>
+              <div className="text-[10px] text-white/40">{t('followers')}</div>
             </GlowCard>
           </div>
 
@@ -240,7 +242,7 @@ export default function CloneSocial() {
                     : 'bg-white/[0.03] border border-white/[0.06] text-white/40 hover:text-white/60'
                 }`}
               >
-                {tab === 'feed' ? '📱 Feed' : '🔥 Trending'}
+                {tab === 'feed' ? `📱 ${t('feed')}` : `🔥 ${t('following')}`}
               </button>
             ))}
           </div>
@@ -260,7 +262,7 @@ export default function CloneSocial() {
               />
               <div className="flex gap-2">
                 <button onClick={addPost} className="flex-1 py-2.5 bg-rose-500/20 border border-rose-500/30 rounded-xl text-sm font-medium text-rose-400 hover:bg-rose-500/30 transition-colors">
-                  Post 🚀
+                  {t('posts')} 🚀
                 </button>
                 <button onClick={() => setShowCompose(false)} className="px-4 py-2.5 bg-white/[0.05] border border-white/[0.08] rounded-xl text-sm text-white/50 hover:bg-white/[0.08] transition-colors">
                   Cancel
@@ -348,7 +350,7 @@ export default function CloneSocial() {
 
           {/* Clone Avatars Carousel */}
           <div>
-            <h2 className="text-sm font-semibold text-white/60 mb-3">👥 Active Clones</h2>
+            <h2 className="text-sm font-semibold text-white/60 mb-3">👥 {t('followers')}</h2>
             <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
               {cloneNames.map((clone, i) => (
                 <div key={i} className="flex flex-col items-center gap-1 min-w-[60px]">
