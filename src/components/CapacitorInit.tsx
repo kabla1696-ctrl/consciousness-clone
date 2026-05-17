@@ -6,10 +6,6 @@ export default function CapacitorInit() {
   useEffect(() => {
     if (typeof window === 'undefined') return
 
-    // Check if running in Capacitor
-    const ua = navigator.userAgent || ''
-    const isNative = ua.includes('Capacitor') || ua.includes('Android')
-
     const init = async () => {
       // Status bar
       try {
@@ -45,19 +41,11 @@ export default function CapacitorInit() {
         App.addListener('backButton', ({ canGoBack }) => {
           const path = window.location.pathname
           
-          // Main screens — exit app
-          if (path === '/' || path === '/login' || path === '/signup') {
+          if (path === '/' || path === '/login' || path === '/signup' || path === '/dashboard' || path === '/dashboard/') {
             App.exitApp()
             return
           }
           
-          // Dashboard — exit app
-          if (path === '/dashboard' || path === '/dashboard/') {
-            App.exitApp()
-            return
-          }
-          
-          // Other screens — go back
           if (canGoBack) {
             window.history.back()
           } else {
@@ -72,7 +60,6 @@ export default function CapacitorInit() {
         
         Network.addListener('networkStatusChange', (status) => {
           if (!status.connected) {
-            // Show offline toast
             const toast = document.createElement('div')
             toast.className = 'offline-toast'
             toast.textContent = '📵 You are offline'
@@ -84,30 +71,6 @@ export default function CapacitorInit() {
     }
 
     init()
-
-    // Add native-like page transitions
-    const handleClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement
-      const link = target.closest('a[href]') as HTMLAnchorElement
-      
-      if (link && link.href.startsWith(window.location.origin)) {
-        e.preventDefault()
-        const href = link.getAttribute('href') || '/'
-        
-        // Add transition class
-        document.body.classList.add('page-exit')
-        
-        setTimeout(() => {
-          window.location.href = href
-        }, 150)
-      }
-    }
-
-    document.addEventListener('click', handleClick)
-
-    return () => {
-      document.removeEventListener('click', handleClick)
-    }
   }, [])
 
   return null
