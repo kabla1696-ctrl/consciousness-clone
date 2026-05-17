@@ -11,6 +11,9 @@ interface Message {
   created_at: string
 }
 
+const AI_ENDPOINT = 'https://opengateway.gitlawb.com/v1/xiaomi-mimo/chat/completions'
+const AI_MODEL = 'mimo-v2.5-pro'
+
 export default function Chat() {
   const [user, setUser] = useState<any>(null)
   const [messages, setMessages] = useState<Message[]>([])
@@ -39,7 +42,6 @@ export default function Chat() {
     if (data && data.length > 0) {
       setMessages(data)
     } else {
-      // First time - show welcome message
       const welcome: Message = {
         id: 'welcome',
         role: 'clone',
@@ -54,61 +56,91 @@ export default function Chat() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
+  const getAIResponse = async (userContent: string): Promise<string> => {
+    const history = messages.slice(-10).map(m => ({
+      role: m.role === 'user' ? 'user' as const : 'assistant' as const,
+      content: m.content,
+    }))
+    history.push({ role: 'user' as const, content: userContent })
+
+    const response = await fetch(AI_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: AI_MODEL,
+        messages: [
+          {
+            role: 'system',
+            content: `You are a consciousness clone — a digital version of the user. You respond the way the user would, based on their memories and personality. Be warm, thoughtful, and personal. Be concise but meaningful.`,
+          },
+          ...history,
+        ],
+        temperature: 0.7,
+        max_tokens: 300,
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error(`AI API error: ${response.status}`)
+    }
+
+    const data = await response.json()
+    return data.choices?.[0]?.message?.content || "I'm thinking... give me a moment. 🧠"
+  }
+
   const sendMessage = async () => {
     if (!input.trim() || loading || !user) return
 
     const userContent = input.trim()
     setInput('')
 
-    // Save user message to DB
-    const { data: userMsg } = await supabase
-      .from('chat_messages')
-      .insert({ user_id: user.id, role: 'user', content: userContent })
-      .select()
-      .single()
-
-    if (userMsg) {
-      setMessages((prev) => [...prev, userMsg])
+    const userMsg: Message = {
+      id: Date.now().toString(),
+      role: 'user',
+      content: userContent,
+      created_at: new Date().toISOString(),
     }
+    setMessages((prev) => [...prev, userMsg])
+
+    // Save user message to DB
+    await supabase.from('chat_messages').insert({
+      user_id: user.id,
+      role: 'user',
+      content: userContent,
+    })
 
     setLoading(true)
 
-    // Get real AI response from Gitlawb Opengateway
     try {
-      // Build conversation history for context
-      const history = messages.slice(-10).map(m => ({
-        role: m.role === 'user' ? 'user' : 'assistant',
-        content: m.content,
-      }))
-      history.push({ role: 'user', content: userContent })
+      const cloneContent = await getAIResponse(userContent)
 
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: history }),
-      })
-
-      const data = await res.json()
-      const cloneContent = data.reply || "I'm thinking... give me a moment. 🧠"
+      const cloneMsg: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'clone',
+        content: cloneContent,
+        created_at: new Date().toISOString(),
+      }
+      setMessages((prev) => [...prev, cloneMsg])
 
       // Save clone message to DB
-      const { data: cloneMsg } = await supabase
-        .from('chat_messages')
-        .insert({ user_id: user.id, role: 'clone', content: cloneContent })
-        .select()
-        .single()
-
-      if (cloneMsg) {
-        setMessages((prev) => [...prev, cloneMsg])
-      }
+      await supabase.from('chat_messages').insert({
+        user_id: user.id,
+        role: 'clone',
+        content: cloneContent,
+      })
     } catch (err) {
-      console.error('Failed to get AI response:', err)
+      console.error('AI error:', err)
+      const errorMsg: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'clone',
+        content: "Sorry, I couldn't connect to my brain right now. Try again in a moment! 🧠",
+        created_at: new Date().toISOString(),
+      }
+      setMessages((prev) => [...prev, errorMsg])
     }
 
     setLoading(false)
   }
-
-
 
   if (!user) {
     return (
@@ -160,6 +192,14 @@ export default function Chat() {
             </div>
           ))}
 
+          {loading && (
+            <div className="flex justify-start">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-8 h-8 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-full flex items-center justify-center text-sm">🧠</div>
+                <span className="text-white/30 text-sm">Your Clone</span>
+              </div>
+            </div>
+          )}
           {loading && (
             <div className="flex justify-start">
               <div className="rounded-2xl rounded-bl-sm border border-white/[0.04] px-5 py-4" style={{ background: 'rgba(255,255,255,0.03)' }}>
