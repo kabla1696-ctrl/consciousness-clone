@@ -16,6 +16,9 @@ export async function POST(req: NextRequest) {
       ...messages.slice(-10),
     ]
 
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 25000)
+
     const response = await fetch('https://opengateway.gitlawb.com/v1/xiaomi-mimo/chat/completions', {
       method: 'POST',
       headers: {
@@ -25,27 +28,32 @@ export async function POST(req: NextRequest) {
         model: 'mimo-v2.5-pro',
         messages: apiMessages,
         temperature: 0.7,
-        max_tokens: 500,
+        max_tokens: 300,
       }),
+      signal: controller.signal,
     })
+
+    clearTimeout(timeout)
 
     if (!response.ok) {
       const errorText = await response.text()
       console.error('AI API error:', response.status, errorText)
-      return NextResponse.json({ error: 'AI service unavailable', details: errorText }, { status: 500 })
+      return NextResponse.json({ error: 'AI service unavailable' }, { status: 500 })
     }
 
     const data = await response.json()
     const reply = data.choices?.[0]?.message?.content
 
     if (!reply) {
-      console.error('No reply in response:', JSON.stringify(data))
       return NextResponse.json({ error: 'No response from AI' }, { status: 500 })
     }
 
     return NextResponse.json({ reply })
   } catch (error: any) {
+    if (error?.name === 'AbortError') {
+      return NextResponse.json({ error: 'Request timed out' }, { status: 504 })
+    }
     console.error('Chat API error:', error?.message || error)
-    return NextResponse.json({ error: 'Something went wrong', details: error?.message }, { status: 500 })
+    return NextResponse.json({ error: 'Something went wrong' }, { status: 500 })
   }
 }
