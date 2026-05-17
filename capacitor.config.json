@@ -3,18 +3,27 @@
   "appName": "Consciousness Clone",
   "webDir": "out",
   "server": {
-    "androidScheme": "https"
+    "url": "https://consciousness-clone.vercel.app",
+    "androidScheme": "https",
+    "cleartext": true
   },
   "plugins": {
     "SplashScreen": {
-      "launchShowDuration": 2000,
+      "launchShowDuration": 3000,
       "backgroundColor": "#050510",
       "androidSplashResourceName": "splash",
-      "showSpinner": false
+      "showSpinner": false,
+      "launchAutoHide": true
     },
     "StatusBar": {
       "style": "DARK",
-      "backgroundColor": "#050510"
+      "backgroundColor": "#050510",
+      "overlaysWebView": false
+    },
+    "Keyboard": {
+      "resize": "body",
+      "style": "DARK",
+      "resizeOnFullScreen": true
     },
     "LocalNotifications": {
       "smallIcon": "ic_stat_icon",
@@ -27,6 +36,7 @@
   "android": {
     "allowMixedContent": true,
     "captureInput": true,
-    "webContentsDebuggingEnabled": false
+    "webContentsDebuggingEnabled": false,
+    "backgroundColor": "#050510"
   }
 }

@@ -1,9 +1,11 @@
 import Link from 'next/link'
 import Testimonials from '../components/Testimonials'
+import AppRedirect from '../components/AppRedirect'
 
 export default function Home() {
   return (
     <main className="min-h-screen overflow-hidden bg-[#050510]">
+      <AppRedirect />
       {/* Ultra Premium Background */}
       <div className="fixed inset-0 z-0">
         {/* Deep space gradient */}
