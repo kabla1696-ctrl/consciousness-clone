@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Testimonials from '@/components/Testimonials'
 
 export default function Home() {
   return (
@@ -377,6 +378,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* TESTIMONIALS */}
+      <Testimonials />
 
       {/* FINAL CTA */}
       <section className="relative py-32 px-6">

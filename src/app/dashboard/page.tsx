@@ -55,7 +55,8 @@ export default function Dashboard() {
           </Link>
           <div className="flex gap-6 items-center">
             <Link href="/memories" className="text-sm text-white/40 hover:text-white transition">Memories</Link>
-            <Link href="/chat" className="text-sm text-white/40 hover:text-white transition">Chat</Link>
+            <Link href="/analytics" className="text-sm text-white/40 hover:text-white transition">Analytics</Link>
+            <Link href="/referral" className="text-sm text-white/40 hover:text-white transition">Refer</Link>
             <button onClick={logout} className="text-sm text-white/40 hover:text-white transition">Logout</button>
           </div>
         </div>
@@ -109,15 +110,15 @@ export default function Dashboard() {
             <h3 className="text-xl font-bold mb-2 group-hover:text-cyan-400 transition">Personality Quiz</h3>
             <p className="text-white/30 text-sm">Define your clone&apos;s personality traits</p>
           </Link>
-          <Link href="/analytics" className="group rounded-2xl border border-white/[0.04] hover:border-emerald-500/30 p-8 transition" style={{ background: 'rgba(255,255,255,0.01)' }}>
-            <div className="text-4xl mb-4">📊</div>
-            <h3 className="text-xl font-bold mb-2 group-hover:text-emerald-400 transition">Analytics</h3>
-            <p className="text-white/30 text-sm">Insights about your digital consciousness</p>
+          <Link href="/voice" className="group rounded-2xl border border-white/[0.04] hover:border-emerald-500/30 p-8 transition" style={{ background: 'rgba(255,255,255,0.01)' }}>
+            <div className="text-4xl mb-4">🎤</div>
+            <h3 className="text-xl font-bold mb-2 group-hover:text-emerald-400 transition">Voice Clone</h3>
+            <p className="text-white/30 text-sm">Make your clone sound like you</p>
           </Link>
-          <Link href="/pricing" className="group rounded-2xl border border-white/[0.04] hover:border-amber-500/30 p-8 transition" style={{ background: 'rgba(255,255,255,0.01)' }}>
-            <div className="text-4xl mb-4">⚡</div>
-            <h3 className="text-xl font-bold mb-2 group-hover:text-amber-400 transition">Upgrade Plan</h3>
-            <p className="text-white/30 text-sm">Unlock voice clone, unlimited memories, and more</p>
+          <Link href="/referral" className="group rounded-2xl border border-white/[0.04] hover:border-amber-500/30 p-8 transition" style={{ background: 'rgba(255,255,255,0.01)' }}>
+            <div className="text-4xl mb-4">🎁</div>
+            <h3 className="text-xl font-bold mb-2 group-hover:text-amber-400 transition">Refer & Earn</h3>
+            <p className="text-white/30 text-sm">Get free Pro by inviting friends</p>
           </Link>
         </div>
 
