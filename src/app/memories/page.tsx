@@ -81,7 +81,6 @@ export default function MemoriesPage() {
   const [saving, setSaving] = useState(false)
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
-  const [deleteId, setDeleteId] = useState<string | null>(null)
   const [editMemory, setEditMemory] = useState<Memory | null>(null)
   const [editTitle, setEditTitle] = useState('')
   const [editContent, setEditContent] = useState('')
@@ -166,12 +165,6 @@ export default function MemoriesPage() {
     setSaving(false)
   }
 
-  const confirmDelete = async () => {
-    if (!deleteId) return
-    await supabase.from('memories').delete().eq('id', deleteId)
-    setMemories(memories.filter(m => m.id !== deleteId))
-    setDeleteId(null)
-  }
 
   const openEdit = (m: Memory) => {
     setEditMemory(m); setEditTitle(m.title); setEditContent(m.content); setEditCategory(m.category)
@@ -311,9 +304,6 @@ export default function MemoriesPage() {
                     <button onClick={() => openEdit(memory)} className="p-1.5 rounded-lg hover:bg-white/10 text-white/30 hover:text-violet-400 transition">
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                     </button>
-                    <button onClick={() => setDeleteId(memory.id)} className="p-1.5 rounded-lg hover:bg-red-500/10 text-white/30 hover:text-red-400 transition">
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                    </button>
                   </div>
                 </div>
                 <h3 className="text-white/90 font-semibold text-sm mb-2 line-clamp-1">{memory.title}</h3>
@@ -328,22 +318,7 @@ export default function MemoriesPage() {
         )}
       </div>
 
-      {/* Delete Confirmation Modal */}
-      {deleteId && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setDeleteId(null)}>
-          <div className="w-full max-w-sm p-6 rounded-2xl bg-[#0a0a1a] border border-white/[0.08] shadow-2xl" onClick={e => e.stopPropagation()}>
-            <div className="text-center mb-6">
-              <div className="text-4xl mb-3">🗑️</div>
-              <h3 className="text-white font-bold text-lg mb-1">{t('are you sure')}</h3>
-              <p className="text-white/30 text-sm">This action cannot be undone.</p>
-            </div>
-            <div className="flex gap-3">
-              <button onClick={() => setDeleteId(null)} className="flex-1 py-3 rounded-xl bg-white/[0.05] border border-white/[0.08] text-sm text-white/50 hover:text-white/70 transition">{t('cancel')}</button>
-              <button onClick={confirmDelete} className="flex-1 py-3 rounded-xl bg-red-500/20 border border-red-500/30 text-sm text-red-400 font-semibold hover:bg-red-500/30 transition">{t('delete')}</button>
-            </div>
-          </div>
-        </div>
-      )}
+
 
       {/* Edit Modal */}
       {editMemory && (
