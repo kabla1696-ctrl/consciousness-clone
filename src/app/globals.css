@@ -156,10 +156,9 @@ body {
 /* Mobile App Styles */
 html, body {
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
   overscroll-behavior: none;
   -webkit-overflow-scrolling: touch;
-  position: fixed;
   width: 100%;
 }
 
