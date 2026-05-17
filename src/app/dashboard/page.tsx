@@ -56,6 +56,7 @@ export default function Dashboard() {
           <div className="flex gap-6 items-center">
             <Link href="/memories" className="text-sm text-white/40 hover:text-white transition">Memories</Link>
             <Link href="/analytics" className="text-sm text-white/40 hover:text-white transition">Analytics</Link>
+            <Link href="/share" className="text-sm text-white/40 hover:text-white transition">Share</Link>
             <Link href="/referral" className="text-sm text-white/40 hover:text-white transition">Refer</Link>
             <button onClick={logout} className="text-sm text-white/40 hover:text-white transition">Logout</button>
           </div>

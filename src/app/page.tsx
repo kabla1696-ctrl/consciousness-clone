@@ -425,8 +425,8 @@ export default function Home() {
             <div>
               <h4 className="font-semibold mb-4 text-sm">Product</h4>
               <ul className="space-y-3">
-                {['Features', 'Pricing', 'API', 'Changelog'].map((link, i) => (
-                  <li key={i}><a href="#" className="text-sm text-white/25 hover:text-white/60 transition">{link}</a></li>
+                {[{name: 'Features', href: '/#features'}, {name: 'Pricing', href: '/pricing'}, {name: 'Blog', href: '/blog'}, {name: 'API', href: '#'}].map((link, i) => (
+                  <li key={i}><a href={link.href} className="text-sm text-white/25 hover:text-white/60 transition">{link.name}</a></li>
                 ))}
               </ul>
             </div>
@@ -442,8 +442,8 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/[0.03]">
             <p className="text-white/15 text-sm">© 2026 Consciousness Clone. All rights reserved.</p>
             <div className="flex gap-6 mt-4 md:mt-0">
-              <a href="#" className="text-white/15 hover:text-white/40 transition text-sm">Privacy</a>
-              <a href="#" className="text-white/15 hover:text-white/40 transition text-sm">Terms</a>
+              <a href="/privacy" className="text-white/15 hover:text-white/40 transition text-sm">Privacy</a>
+              <a href="/terms" className="text-white/15 hover:text-white/40 transition text-sm">Terms</a>
               <a href="#" className="text-white/15 hover:text-white/40 transition text-sm">Security</a>
             </div>
           </div>
