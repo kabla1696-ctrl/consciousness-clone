@@ -134,6 +134,15 @@ export default function Dashboard() {
     { href: '/clone-settings', icon: '⚙️', title: 'Clone Settings', desc: 'Customize your clone', color: 'from-gray-500 to-slate-500', glow: 'rgba(100,116,139,0.15)' },
     { href: '/referral', icon: '🎁', title: 'Refer & Earn', desc: 'Get free Pro', color: 'from-pink-500 to-fuchsia-500', glow: 'rgba(236,72,153,0.15)' },
     { href: '/share', icon: '🔗', title: 'Share Clone', desc: 'Let others meet your clone', color: 'from-violet-500 to-purple-500', glow: 'rgba(139,92,246,0.15)' },
+    { href: '/relationships', icon: '👨‍👩‍👧‍👦', title: 'Relationships', desc: 'Map your people & legacy access', color: 'from-rose-500 to-pink-500', glow: 'rgba(244,63,94,0.15)' },
+    { href: '/heir-access', icon: '🔑', title: 'Heir Access', desc: 'Who gets your clone after you', color: 'from-amber-500 to-orange-500', glow: 'rgba(245,158,11,0.15)' },
+    { href: '/heartbeat', icon: '💓', title: 'Heartbeat Memory', desc: 'Camera heart rate detection', color: 'from-red-500 to-rose-500', glow: 'rgba(239,68,68,0.15)' },
+    { href: '/astronaut', icon: '🚀', title: 'Astronaut Mode', desc: 'Phone down = dream mode', color: 'from-blue-500 to-indigo-500', glow: 'rgba(59,130,246,0.15)' },
+    { href: '/vault', icon: '🔐', title: 'Memory Vault', desc: 'Encrypted secret memories', color: 'from-emerald-500 to-teal-500', glow: 'rgba(16,185,129,0.15)' },
+    { href: '/memory-dna', icon: '🧬', title: 'Memory DNA', desc: 'Your personality genome', color: 'from-purple-500 to-violet-500', glow: 'rgba(168,85,247,0.15)' },
+    { href: '/clone-identity', icon: '🪪', title: 'Clone Identity', desc: 'Clone recognizes who talks', color: 'from-cyan-500 to-blue-500', glow: 'rgba(6,182,212,0.15)' },
+    { href: '/daily-briefing', icon: '☀️', title: 'Daily Briefing', desc: 'Morning clone briefing', color: 'from-yellow-500 to-amber-500', glow: 'rgba(234,179,8,0.15)' },
+    { href: '/widget', icon: '📱', title: 'Widget', desc: 'Home screen widget', color: 'from-slate-500 to-gray-500', glow: 'rgba(100,116,139,0.15)' },
   ]
 
   return (
@@ -176,7 +185,7 @@ export default function Dashboard() {
             Hey, {userName} <span className="inline-block" style={{ animation: 'float-subtle 3s ease-in-out infinite' }}>👋</span>
           </h1>
           <p className="text-shimmer text-sm font-medium mt-1">Your digital consciousness dashboard</p>
-          <p className="text-white/20 text-xs mt-0.5">37 features • Your clone awaits</p>
+          <p className="text-white/20 text-xs mt-0.5">48 features • Your clone awaits</p>
         </div>
 
         {/* Stats */}
