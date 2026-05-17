@@ -19,23 +19,32 @@ export async function POST(req: Request) {
       ...messages.slice(-10),
     ]
 
-    const response = await fetch('https://opengateway.gitlawb.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'mimo-v2.5-pro',
-        messages: apiMessages,
-        temperature: 0.7,
-        max_tokens: 300,
-      }),
-    })
+    let response: Response
+    try {
+      response = await fetch('https://opengateway.gitlawb.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'mimo-v2.5-pro',
+          messages: apiMessages,
+          temperature: 0.7,
+          max_tokens: 300,
+        }),
+      })
+    } catch (fetchError: any) {
+      console.error('Fetch error:', fetchError?.message)
+      return new Response(JSON.stringify({ error: 'Network error', details: fetchError?.message }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    }
 
     if (!response.ok) {
       const errorText = await response.text()
       console.error('AI API error:', response.status, errorText)
-      return new Response(JSON.stringify({ error: 'AI service unavailable' }), {
+      return new Response(JSON.stringify({ error: 'AI service unavailable', status: response.status, details: errorText }), {
         status: 500,
         headers: { 'Content-Type': 'application/json' },
       })
@@ -45,7 +54,7 @@ export async function POST(req: Request) {
     const reply = data.choices?.[0]?.message?.content
 
     if (!reply) {
-      return new Response(JSON.stringify({ error: 'No response from AI' }), {
+      return new Response(JSON.stringify({ error: 'No response from AI', data }), {
         status: 500,
         headers: { 'Content-Type': 'application/json' },
       })
@@ -57,7 +66,7 @@ export async function POST(req: Request) {
     })
   } catch (error: any) {
     console.error('Chat API error:', error?.message || error)
-    return new Response(JSON.stringify({ error: 'Something went wrong' }), {
+    return new Response(JSON.stringify({ error: 'Something went wrong', details: error?.message }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     })
