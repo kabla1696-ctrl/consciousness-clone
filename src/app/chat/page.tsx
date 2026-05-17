@@ -63,10 +63,20 @@ export default function Chat() {
     }))
     history.push({ role: 'user' as const, content: userContent })
 
+    // Fetch user's memories for context
+    const { data: memories } = await supabase
+      .from('memories')
+      .select('content')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false })
+      .limit(20)
+
+    const memoryContext = memories?.map(m => m.content).join('\n') || ''
+
     const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: history }),
+      body: JSON.stringify({ messages: history, memories: memoryContext }),
     })
 
     if (!response.ok) {
