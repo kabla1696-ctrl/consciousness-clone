@@ -86,6 +86,54 @@ export default function MemoriesPage() {
   const [editTitle, setEditTitle] = useState('')
   const [editContent, setEditContent] = useState('')
   const [editCategory, setEditCategory] = useState('other')
+  const [vaultUnlocked, setVaultUnlocked] = useState(false)
+  const [vaultPin, setVaultPin] = useState('')
+  const [vaultError, setVaultError] = useState('')
+
+  // Vault PIN check
+  const VAULT_PIN = typeof window !== 'undefined' ? localStorage.getItem('cc_vault_pin') : null
+
+  const tryUnlock = () => {
+    if (!VAULT_PIN || vaultPin === VAULT_PIN) {
+      setVaultUnlocked(true)
+      setVaultError('')
+    } else {
+      setVaultError('Wrong PIN! Try again.')
+      setVaultPin('')
+    }
+  }
+
+  // If vault has PIN and not unlocked, show lock screen
+  if (VAULT_PIN && !vaultUnlocked) {
+    return (
+      <main className="min-h-screen bg-[#050510] flex items-center justify-center px-6">
+        <div className="w-full max-w-sm">
+          <div className="text-center mb-8">
+            <div className="text-6xl mb-4">🔐</div>
+            <h1 className="text-2xl font-bold text-white mb-2">Memories Locked</h1>
+            <p className="text-white/40 text-sm">Enter your vault PIN to access memories</p>
+          </div>
+          <div className="bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/[0.06] p-6">
+            <input
+              type="password"
+              value={vaultPin}
+              onChange={e => { setVaultPin(e.target.value); setVaultError('') }}
+              onKeyDown={e => e.key === 'Enter' && tryUnlock()}
+              placeholder="Enter PIN"
+              maxLength={6}
+              className="w-full px-4 py-3 bg-white/[0.05] border border-white/[0.1] rounded-xl text-white text-center text-2xl tracking-[0.5em] placeholder:text-white/20 placeholder:tracking-normal placeholder:text-sm focus:outline-none focus:border-violet-500/50"
+              autoFocus
+            />
+            {vaultError && <p className="text-red-400 text-sm text-center mt-3">{vaultError}</p>}
+            <button onClick={tryUnlock} className="w-full mt-4 py-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl text-white font-medium tap-feedback">
+              🔓 Unlock
+            </button>
+            <a href="/vault" className="block text-center text-violet-400 text-sm mt-3">Go to Vault Settings</a>
+          </div>
+        </div>
+      </main>
+    )
+  }
 
   useEffect(() => {
     const init = async () => {

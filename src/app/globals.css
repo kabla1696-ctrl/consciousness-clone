@@ -155,7 +155,8 @@ body {
 
 /* Mobile App Styles */
 html, body {
-  height: 100%;
+  height: auto;
+  min-height: 100vh;
   overflow-x: hidden;
   overscroll-behavior: none;
   -webkit-overflow-scrolling: touch;

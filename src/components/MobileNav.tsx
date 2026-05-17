@@ -5,13 +5,19 @@ import { usePathname } from 'next/navigation'
 const TABS = [
   { href: '/dashboard', icon: '🏠', label: 'Home' },
   { href: '/clone-feed', icon: '📰', label: 'Feed' },
-  { href: '/voice-call', icon: '📞', label: 'Call' },
+  { href: '/vault', icon: '🔐', label: 'Vault' },
   { href: '/clone-connect', icon: '💬', label: 'Chat' },
-  { href: '/memories', icon: '🧠', label: 'Memories' },
+  { href: '/memories', icon: '🧠', label: 'Memory' },
 ]
+
+// Pages that have their own bottom input bars
+const HIDE_NAV_PAGES = ['/chat', '/clone-connect', '/chat-user', '/voice-call', '/voice-user', '/video-user', '/call-user']
 
 export default function MobileNav() {
   const pathname = usePathname()
+  
+  // Hide bottom nav on pages with their own input
+  if (HIDE_NAV_PAGES.some(p => pathname.startsWith(p))) return null
   
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-[100] bg-[#0a0a1a]/95 backdrop-blur-xl border-t border-white/[0.06] md:hidden safe-bottom" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
