@@ -4,50 +4,143 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-:root {
-  --foreground: #ffffff;
-  --background: #0A0A1A;
-}
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Smooth scroll */
 html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #0A0A1A;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(108, 99, 255, 0.3);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(108, 99, 255, 0.5);
+body {
+  color: #ffffff;
+  background: #050510;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 /* Selection */
 ::selection {
-  background: rgba(108, 99, 255, 0.3);
+  background: rgba(139, 92, 246, 0.3);
   color: white;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050510;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.2);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.4);
+}
+
+/* Gradient animation */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Orb animations */
+@keyframes orb1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(100px, -50px) scale(1.1); }
+  50% { transform: translate(-50px, 100px) scale(0.9); }
+  75% { transform: translate(-100px, -80px) scale(1.05); }
+}
+
+@keyframes orb2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-80px, 60px) scale(1.05); }
+  50% { transform: translate(60px, -80px) scale(0.95); }
+  75% { transform: translate(80px, 60px) scale(1.1); }
+}
+
+@keyframes orb3 {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  33% { transform: translate(-45%, -55%) scale(1.1); }
+  66% { transform: translate(-55%, -45%) scale(0.9); }
+}
+
+/* Star field */
+.stars, .stars2, .stars3 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.stars {
+  background: transparent;
+  z-index: 0;
+}
+
+.stars::after, .stars2::after, .stars3::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 40px 70px, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 50px 160px, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.2), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1.5px 1.5px at 200px 50px, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1.5px 1.5px at 250px 190px, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 300px 100px, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1.2px 1.2px at 350px 150px, rgba(255,255,255,0.3), transparent);
+  background-size: 400px 200px;
+  animation: twinkle 8s ease-in-out infinite;
+}
+
+.stars2::after {
+  background-image: 
+    radial-gradient(1px 1px at 10px 40px, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 150px 180px, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1.5px 1.5px at 60px 100px, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 200px 60px, rgba(255,255,255,0.2), transparent),
+    radial-gradient(1px 1px at 280px 140px, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1.5px 1.5px at 320px 20px, rgba(255,255,255,0.3), transparent);
+  background-size: 350px 250px;
+  animation: twinkle 12s ease-in-out infinite reverse;
+}
+
+.stars3::after {
+  background-image: 
+    radial-gradient(2px 2px at 80px 60px, rgba(139, 92, 246, 0.4), transparent),
+    radial-gradient(2px 2px at 200px 120px, rgba(236, 72, 153, 0.3), transparent),
+    radial-gradient(1.5px 1.5px at 320px 80px, rgba(139, 92, 246, 0.3), transparent);
+  background-size: 400px 200px;
+  animation: twinkle 15s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Smooth page transitions */
+@layer base {
+  * {
+    @apply border-white/5;
+  }
 }
