@@ -61,7 +61,7 @@ ${memorySection}`,
         model: 'mimo-v2.5-pro',
         messages: apiMessages,
         temperature: 0.7,
-        max_tokens: 300,
+        max_tokens: 1000,
       }),
     })
 
