@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import { useT } from '../../lib/language-context'
 
@@ -65,7 +66,9 @@ export default function CloneConnect() {
   const [showSoul, setShowSoul] = useState<CloneProfile | null>(null)
   const [showCall, setShowCall] = useState<{ clone: CloneProfile; active: boolean; duration: number } | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
+  const [userCallLogs, setUserCallLogs] = useState<any[]>([])
   const chatRef = useRef<HTMLDivElement>(null)
+  const router = useRouter()
 
   useEffect(() => {
     const saved = localStorage.getItem('cc_clone_connect')
@@ -76,6 +79,10 @@ export default function CloneConnect() {
       setCalls(d.calls || [])
       setRequests(d.requests || [])
     }
+    try {
+      const logs = JSON.parse(localStorage.getItem('cc_user_call_logs') || '[]')
+      setUserCallLogs(logs)
+    } catch {}
   }, [])
 
   const save = (f: string[], m: Message[], c: CallLog[], r: FriendRequest[]) => {
@@ -123,14 +130,8 @@ export default function CloneConnect() {
   }
 
   const startCall = (clone: CloneProfile) => {
-    setShowCall({ clone, active: false, duration: 0 })
-    setTimeout(() => {
-      setShowCall(prev => prev ? { ...prev, active: true } : null)
-      const interval = setInterval(() => {
-        setShowCall(prev => prev ? { ...prev, duration: prev.duration + 1 } : null)
-      }, 1000)
-      setTimeout(() => clearInterval(interval), 300000)
-    }, 2000)
+    // Navigate to premium voice call page
+    router.push(`/call-user?name=${encodeURIComponent(clone.name)}&id=${encodeURIComponent(clone.id)}`)
   }
 
   const endCall = () => {
@@ -219,10 +220,17 @@ export default function CloneConnect() {
                   <div className="flex gap-2 mt-3">
                     <button onClick={() => setShowSoul(clone)} className="flex-1 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white/60 text-xs tap-feedback">👁️ {t('Soul Profile')}</button>
                     {friends.includes(clone.id) ? (
-                      <>
-                        <button onClick={() => { setSelectedChat(clone.id); setTab('messages') }} className="flex-1 py-2 rounded-xl bg-violet-500/20 border border-violet-500/30 text-violet-400 text-xs tap-feedback">💬 {t('Message')}</button>
-                        <button onClick={() => startCall(clone)} className="py-2 px-3 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs tap-feedback">📞</button>
-                      </>
+                      <div className="flex gap-1.5">
+                        <Link href={`/chat-user?user=${encodeURIComponent(clone.name)}&id=${clone.id}${clone.avatar ? `&avatar=${encodeURIComponent(clone.avatar)}` : ''}`} className="flex-1 py-2 rounded-xl bg-blue-500/20 border border-blue-500/30 text-blue-400 text-xs tap-feedback text-center flex items-center justify-center gap-1 hover:bg-blue-500/30 transition-all" style={{ boxShadow: '0 0 0px transparent' }} onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 0 15px rgba(59,130,246,0.2)')} onMouseLeave={e => (e.currentTarget.style.boxShadow = '0 0 0px transparent')}>
+                          💬 Chat
+                        </Link>
+                        <Link href={`/voice-user?user=${encodeURIComponent(clone.name)}&id=${clone.id}`} className="flex-1 py-2 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs tap-feedback text-center flex items-center justify-center gap-1 hover:bg-emerald-500/30 transition-all" style={{ boxShadow: '0 0 0px transparent' }} onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 0 15px rgba(16,185,129,0.2)')} onMouseLeave={e => (e.currentTarget.style.boxShadow = '0 0 0px transparent')}>
+                          📞 Call
+                        </Link>
+                        <Link href={`/video-user?user=${encodeURIComponent(clone.name)}&id=${clone.id}`} className="flex-1 py-2 rounded-xl bg-violet-500/20 border border-violet-500/30 text-violet-400 text-xs tap-feedback text-center flex items-center justify-center gap-1 hover:bg-violet-500/30 transition-all" style={{ boxShadow: '0 0 0px transparent' }} onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 0 15px rgba(139,92,246,0.2)')} onMouseLeave={e => (e.currentTarget.style.boxShadow = '0 0 0px transparent')}>
+                          📹 Video
+                        </Link>
+                      </div>
                     ) : (
                       <button onClick={() => sendRequest(clone)} className="flex-1 py-2 rounded-xl bg-gradient-to-r from-violet-500 to-pink-500 text-white text-xs font-medium tap-feedback">➕ {t('Add Friend')}</button>
                     )}
@@ -254,9 +262,10 @@ export default function CloneConnect() {
                       <span className="text-sm font-medium">{clone.name}</span>
                       <p className="text-white/20 text-[10px]">{clone.online ? '🟢 ' + t('Online') : t('Last seen') + ' ' + clone.lastSeen}</p>
                     </div>
-                    <div className="flex gap-2">
-                      <button onClick={() => { setSelectedChat(clone.id); setTab('messages') }} className="w-9 h-9 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center text-sm tap-feedback">💬</button>
-                      <button onClick={() => startCall(clone)} className="w-9 h-9 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-sm tap-feedback">📞</button>
+                    <div className="flex gap-1.5">
+                      <Link href={`/chat-user?user=${encodeURIComponent(clone.name)}&id=${clone.id}${clone.avatar ? `&avatar=${encodeURIComponent(clone.avatar)}` : ''}`} className="w-9 h-9 rounded-lg bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-sm tap-feedback hover:bg-blue-500/30 hover:shadow-[0_0_12px_rgba(59,130,246,0.2)] transition-all">💬</Link>
+                      <Link href={`/voice-user?user=${encodeURIComponent(clone.name)}&id=${clone.id}`} className="w-9 h-9 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-sm tap-feedback hover:bg-emerald-500/30 hover:shadow-[0_0_12px_rgba(16,185,129,0.2)] transition-all">📞</Link>
+                      <Link href={`/video-user?user=${encodeURIComponent(clone.name)}&id=${clone.id}`} className="w-9 h-9 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center text-sm tap-feedback hover:bg-violet-500/30 hover:shadow-[0_0_12px_rgba(139,92,246,0.2)] transition-all">📹</Link>
                       <button onClick={() => setShowSoul(clone)} className="w-9 h-9 rounded-lg bg-white/[0.03] border border-white/[0.06] flex items-center justify-center text-sm tap-feedback">👁️</button>
                     </div>
                   </div>
@@ -335,23 +344,69 @@ export default function CloneConnect() {
         {/* CALLS TAB */}
         {tab === 'calls' && (
           <>
-            {calls.length === 0 ? (
+            {/* Recent Voice Calls with other users' clones */}
+            {userCallLogs.length > 0 && (
+              <div className="mb-6">
+                <h3 className="text-sm font-semibold text-violet-400/70 mb-3 flex items-center gap-2">
+                  🎙️ {t('Voice Calls with Clones')}
+                </h3>
+                <div className="space-y-2">
+                  {userCallLogs.slice(0, 10).map((log: any) => (
+                    <Link
+                      key={log.id}
+                      href={`/call-user?name=${encodeURIComponent(log.userName)}&id=${encodeURIComponent(log.userId)}`}
+                      className="flex items-center gap-3 p-3 rounded-xl border border-violet-500/10 hover:border-violet-500/20 transition-colors"
+                      style={{ background: 'rgba(139,92,246,0.03)' }}
+                    >
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center text-sm">
+                        {log.userName?.[0]?.toUpperCase() || '?'}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <span className="text-sm font-medium text-white/80">{log.userName}</span>
+                        <p className="text-white/20 text-[10px] truncate">
+                          {log.transcript?.slice(0, 2).map((m: any) => m.text).join(' → ') || t('Voice call')}
+                        </p>
+                        <p className="text-white/10 text-[10px]">
+                          {new Date(log.timestamp).toLocaleDateString()} · {Math.floor(log.duration / 60)}:{(log.duration % 60).toString().padStart(2, '0')}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-violet-400 text-[10px]">{log.transcript?.length || 0} msgs</span>
+                        <p className="text-emerald-400 text-[10px]">📞</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Existing simple call logs */}
+            {calls.length > 0 && (
+              <div>
+                <h3 className="text-sm font-semibold text-white/40 mb-3 flex items-center gap-2">
+                  📞 {t('Quick Calls')}
+                </h3>
+                <div className="space-y-2">
+                  {calls.map(call => (
+                    <div key={call.id} className="flex items-center gap-3 p-3 rounded-xl border border-white/[0.06]" style={{ background: 'rgba(255,255,255,0.02)' }}>
+                      <span className="text-lg">{call.type === 'incoming' ? '📥' : call.type === 'outgoing' ? '📤' : '📵'}</span>
+                      <div className="flex-1">
+                        <span className="text-sm font-medium">{call.with}</span>
+                        <p className="text-white/20 text-[10px]">{call.duration} • {call.time}</p>
+                      </div>
+                      <span className={`text-xs ${call.type === 'missed' ? 'text-red-400' : 'text-emerald-400'}`}>{call.type}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Empty state */}
+            {calls.length === 0 && userCallLogs.length === 0 && (
               <div className="text-center py-16">
                 <div className="text-5xl mb-3">📞</div>
                 <p className="text-white/30 text-sm">{t('No call history')}</p>
-              </div>
-            ) : (
-              <div className="space-y-2">
-                {calls.map(call => (
-                  <div key={call.id} className="flex items-center gap-3 p-3 rounded-xl border border-white/[0.06]" style={{ background: 'rgba(255,255,255,0.02)' }}>
-                    <span className="text-lg">{call.type === 'incoming' ? '📥' : call.type === 'outgoing' ? '📤' : '📵'}</span>
-                    <div className="flex-1">
-                      <span className="text-sm font-medium">{call.with}</span>
-                      <p className="text-white/20 text-[10px]">{call.duration} • {call.time}</p>
-                    </div>
-                    <span className={`text-xs ${call.type === 'missed' ? 'text-red-400' : 'text-emerald-400'}`}>{call.type}</span>
-                  </div>
-                ))}
+                <p className="text-white/15 text-xs">{t('Call a friend\'s clone to start!')}</p>
               </div>
             )}
           </>

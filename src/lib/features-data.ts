@@ -101,6 +101,9 @@ export const FEATURES: Feature[] = [
   { href: '/memory-reels', icon: '🎬', title: 'Memory Reels', desc: 'TikTok for memories', color: 'from-fuchsia-500 to-pink-500', glow: 'rgba(217,70,239,0.15)', category: 'Creative' },
   { href: '/clone-tournament', icon: '⚔️', title: 'Clone Battles', desc: 'Clone vs Clone fights', color: 'from-red-500 to-orange-500', glow: 'rgba(239,68,68,0.15)', category: 'Fun' },
   { href: '/clone-connect', icon: '🤝', title: 'Clone Connect', desc: 'Add, message & call clones', color: 'from-violet-500 to-pink-500', glow: 'rgba(139,92,246,0.15)', category: 'Social' },
+  { href: '/chat-user', icon: '💬', title: 'User Chat', desc: 'Chat with connections', color: 'from-blue-500 to-cyan-500', glow: 'rgba(59,130,246,0.15)', category: 'Social' },
+  { href: '/voice-user', icon: '📞', title: 'User Voice Call', desc: 'Voice call connections', color: 'from-emerald-500 to-teal-500', glow: 'rgba(16,185,129,0.15)', category: 'Social' },
+  { href: '/video-user', icon: '📹', title: 'User Video Call', desc: 'Video call connections', color: 'from-violet-500 to-purple-500', glow: 'rgba(139,92,246,0.15)', category: 'Social' },
   { href: '/clone-feed', icon: '📰', title: 'Clone Social', desc: 'Social media for clones', color: 'from-blue-500 to-purple-500', glow: 'rgba(59,130,246,0.15)', category: 'Social' },
   { href: '/clone-evolution', icon: '🧬', title: 'Evolution Tree', desc: 'Clone evolution stages', color: 'from-green-500 to-emerald-500', glow: 'rgba(34,197,94,0.15)', category: 'Advanced' },
   { href: '/consciousness-backup', icon: '☁️', title: 'Cloud Backup', desc: 'Backup your consciousness', color: 'from-sky-500 to-blue-500', glow: 'rgba(14,165,233,0.15)', category: 'Advanced' },
@@ -128,4 +131,5 @@ export const FEATURES: Feature[] = [
   { href: '/clone-aura', icon: '✨', title: 'Clone Aura', desc: 'Visual aura of your clone', color: 'from-violet-500 to-purple-500', glow: 'rgba(139,92,246,0.15)', category: 'Advanced' },
   { href: '/memory-palace', icon: '🏰', title: 'Memory Palace', desc: 'Build your memory palace', color: 'from-amber-500 to-orange-500', glow: 'rgba(245,158,11,0.15)', category: 'Memory' },
   { href: '/memory-replay', icon: '▶️', title: 'Memory Replay', desc: 'Replay memories like video', color: 'from-blue-500 to-indigo-500', glow: 'rgba(59,130,246,0.15)', category: 'Memory' },
+  { href: '/call-user', icon: '📞', title: 'Voice Call Users', desc: 'Call your connections', color: 'from-emerald-500 to-teal-500', glow: 'rgba(16,185,129,0.15)', category: 'Social' },
 ]
