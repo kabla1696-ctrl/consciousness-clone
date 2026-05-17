@@ -1,44 +1,40 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Consciousness Clone — Live Forever Digitally',
   description: 'Preserve your personality, memories, and voice forever. Create a digital version of yourself that lives on forever. Free to start.',
-  keywords: ['consciousness clone', 'digital immortality', 'AI clone', 'personality preservation', 'digital twin', 'voice clone', 'memory preservation', 'live forever', 'AI personality', 'digital consciousness'],
-  authors: [{ name: 'Consciousness Clone' }],
+  keywords: ['consciousness clone', 'digital immortality', 'AI clone', 'personality preservation', 'digital twin', 'voice clone', 'memory preservation', 'live forever'],
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Consciousness Clone',
+  },
   openGraph: {
     title: 'Consciousness Clone — Live Forever Digitally',
-    description: 'Preserve your personality, memories, and voice forever. Create a digital version of yourself that lives on forever.',
+    description: 'Preserve your personality, memories, and voice forever.',
     url: 'https://consciousness-clone.vercel.app',
     siteName: 'Consciousness Clone',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Consciousness Clone — Digital Immortality',
-      },
-    ],
-    locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Consciousness Clone — Live Forever Digitally',
-    description: 'Preserve your personality, memories, and voice forever. Create a digital version of yourself.',
-    images: ['/og-image.png'],
+    description: 'Preserve your personality, memories, and voice forever.',
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
   },
+}
+
+export const viewport: Viewport = {
+  themeColor: '#050510',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 }
 
 export default function RootLayout({
@@ -49,12 +45,29 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="theme-color" content="#050510" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <link rel="icon" href="/icon-192.png" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="mobile-web-app-capable" content="yes" />
       </head>
       <body className="bg-[#050510] text-white antialiased">
         {children}
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            if ('serviceWorker' in navigator) {
+              window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                  .then(function(registration) {
+                    console.log('SW registered:', registration.scope);
+                  })
+                  .catch(function(error) {
+                    console.log('SW registration failed:', error);
+                  });
+              });
+            }
+          `
+        }} />
       </body>
     </html>
   )

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Consciousness Clone</string>
+    <string name="title_activity_main">Consciousness Clone</string>
+    <string name="package_name">com.consciousness.clone</string>
+    <string name="custom_url_scheme">com.consciousness.clone</string>
+</resources>
