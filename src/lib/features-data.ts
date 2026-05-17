@@ -124,4 +124,7 @@ export const FEATURES: Feature[] = [
   { href: '/memory-ghost', icon: '👻', title: 'Memory Ghost', desc: 'Haunting memories', color: 'from-slate-500 to-gray-500', glow: 'rgba(100,116,139,0.15)', category: 'Fun' },
   { href: '/soul-cemetery', icon: '⚰️', title: 'Soul Cemetery', desc: 'Memorial for clones', color: 'from-gray-500 to-slate-500', glow: 'rgba(107,114,128,0.15)', category: 'Legacy' },
   { href: '/digital-seance', icon: '🕯️', title: 'Digital Seance', desc: 'Talk to dead clones', color: 'from-purple-500 to-indigo-500', glow: 'rgba(168,85,247,0.15)', category: 'Fun' },
+  { href: '/clone-aura', icon: '✨', title: 'Clone Aura', desc: 'Visual aura of your clone', color: 'from-violet-500 to-purple-500', glow: 'rgba(139,92,246,0.15)', category: 'Advanced' },
+  { href: '/memory-palace', icon: '🏰', title: 'Memory Palace', desc: 'Build your memory palace', color: 'from-amber-500 to-orange-500', glow: 'rgba(245,158,11,0.15)', category: 'Memory' },
+  { href: '/memory-replay', icon: '▶️', title: 'Memory Replay', desc: 'Replay memories like video', color: 'from-blue-500 to-indigo-500', glow: 'rgba(59,130,246,0.15)', category: 'Memory' },
 ]
