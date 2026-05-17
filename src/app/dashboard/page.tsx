@@ -150,6 +150,7 @@ export default function Dashboard() {
     { href: '/clone-therapy', icon: '🧘', title: 'Clone Therapy', desc: 'AI therapy sessions', color: 'from-teal-500 to-cyan-500', glow: 'rgba(20,184,166,0.15)' },
     { href: '/memory-milestones', icon: '🏅', title: 'Milestones', desc: 'Unlock badges & XP', color: 'from-amber-500 to-yellow-500', glow: 'rgba(245,158,11,0.15)' },
     { href: '/clone-confessions', icon: '🤫', title: 'Confessions', desc: 'Anonymous secrets', color: 'from-fuchsia-500 to-pink-500', glow: 'rgba(217,70,239,0.15)' },
+    { href: '/language', icon: '🌍', title: 'Language', desc: '47+ languages supported', color: 'from-blue-500 to-cyan-500', glow: 'rgba(59,130,246,0.15)' },
   ]
 
   return (
@@ -192,7 +193,7 @@ export default function Dashboard() {
             Hey, {userName} <span className="inline-block" style={{ animation: 'float-subtle 3s ease-in-out infinite' }}>👋</span>
           </h1>
           <p className="text-shimmer text-sm font-medium mt-1">Your digital consciousness dashboard</p>
-          <p className="text-white/20 text-xs mt-0.5">56 features • Your clone awaits</p>
+          <p className="text-white/20 text-xs mt-0.5">57 features • Your clone awaits</p>
         </div>
 
         {/* Stats */}
