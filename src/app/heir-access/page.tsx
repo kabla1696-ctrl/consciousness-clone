@@ -18,9 +18,9 @@ const RELATIONS = [
   { key: 'friend', label: 'Friend', icon: '🤝' }, { key: 'other', label: 'Other', icon: '👤' },
 ]
 const ACCESS_LEVELS = [
-  { key: 'full', label: 'Full Access', desc: 'All memories + chat', icon: '🔓' },
-  { key: 'partial', label: 'Partial', desc: 'Selected memories only', icon: '🔑' },
-  { key: 'chat_only', label: 'Chat Only', desc: 'Can chat, no raw memories', icon: '💬' },
+  { key: 'full', label: 'Full Access', desc: 'Chat + Voice + Selected Memories', icon: '🔓' },
+  { key: 'partial', label: 'Partial', desc: 'Chat + Voice only, no memories', icon: '🔑' },
+  { key: 'chat_only', label: 'Chat Only', desc: 'Text chat only', icon: '💬' },
 ]
 const ACCESS_RULES = [
   { key: 'immediately', label: 'Immediately' }, { key: 'inactivity', label: 'After Inactivity' },

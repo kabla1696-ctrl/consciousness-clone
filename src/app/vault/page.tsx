@@ -150,7 +150,7 @@ export default function VaultPage() {
           setEntries([])
           currentPinRef.current = ''
           setPinInput('')
-        }, 30000)
+        }, 5000) // Lock after 5 seconds of leaving
       } else {
         clearTimeout(lockTimerRef.current)
       }
