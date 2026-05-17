@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface LastMessage {
   id: string
@@ -39,6 +40,7 @@ const TIMER_OPTIONS = [
 ]
 
 export default function LastWords() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [messages, setMessages] = useState<LastMessage[]>([])
   const [contacts, setContacts] = useState<Contact[]>([])
@@ -157,7 +159,7 @@ export default function LastWords() {
               <span className="text-xl">🕊️</span>
               <div className="absolute -inset-1 bg-rose-500/20 rounded-full blur-md" />
             </div>
-            <h1 className="text-base font-bold bg-gradient-to-r from-white via-rose-200 to-white bg-clip-text text-transparent">Last Words</h1>
+            <h1 className="text-base font-bold bg-gradient-to-r from-white via-rose-200 to-white bg-clip-text text-transparent">{t('last words')}</h1>
           </div>
         </div>
       </header>
@@ -218,7 +220,7 @@ export default function LastWords() {
               onClick={() => setShowAddMsg(!showAddMsg)}
               className="w-full mb-5 px-4 py-3.5 bg-gradient-to-r from-violet-500 to-purple-600 rounded-xl font-semibold text-sm hover:opacity-90 transition-all duration-300 tap-feedback shadow-lg shadow-violet-500/20 hover:shadow-violet-500/30"
             >
-              {showAddMsg ? '✕ Cancel' : '💌 Write New Message'}
+              {showAddMsg ? '✕ Cancel' : '💌 ' + t('record')}
             </button>
 
             {showAddMsg && (
@@ -235,7 +237,7 @@ export default function LastWords() {
                   onChange={e => setMsgContent(e.target.value)}
                   className="w-full px-4 py-3.5 bg-white/[0.04] border border-white/[0.08] rounded-xl focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all duration-300 resize-none text-white placeholder:text-white/20 text-sm backdrop-blur-sm"
                   rows={4}
-                  placeholder="Write your final message..."
+                  placeholder={t('final message') + '...'}
                 />
                 <button
                   onClick={addMessage}
@@ -253,8 +255,8 @@ export default function LastWords() {
                   <div className="text-6xl">💌</div>
                   <div className="absolute inset-0 bg-violet-500/20 rounded-full blur-2xl scale-150" />
                 </div>
-                <p className="text-white/40 text-lg font-medium">No messages yet</p>
-                <p className="text-white/20 text-sm mt-1">Write messages for your loved ones</p>
+                <p className="text-white/40 text-lg font-medium">{t('last words')}</p>
+                <p className="text-white/20 text-sm mt-1">{t('for the world')}</p>
               </div>
             ) : (
               <div className="space-y-3">

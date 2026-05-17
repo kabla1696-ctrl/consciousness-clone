@@ -3,8 +3,10 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 export default function Referral() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [referralCode, setReferralCode] = useState('')
   const [copied, setCopied] = useState(false)
@@ -60,13 +62,13 @@ export default function Referral() {
       <div className="pt-24 px-6 max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <div className="text-6xl mb-4">🎁</div>
-          <h1 className="text-4xl font-bold mb-4">Refer Friends, Earn Rewards</h1>
-          <p className="text-white/30 text-lg">Share Consciousness Clone and earn points & badges</p>
+          <h1 className="text-4xl font-bold mb-4">{t('refer and earn')}</h1>
+          <p className="text-white/30 text-lg">{t('invite friends')}</p>
         </div>
 
         {/* Referral Link */}
         <div className="rounded-2xl border border-violet-500/30 p-8 mb-10" style={{ background: 'rgba(139, 92, 246, 0.05)' }}>
-          <h2 className="text-xl font-bold mb-4">Your Referral Link</h2>
+          <h2 className="text-xl font-bold mb-4">{t('share link')}</h2>
           <div className="flex gap-3">
             <input
               type="text"
@@ -81,7 +83,7 @@ export default function Referral() {
               {copied ? '✓ Copied!' : 'Copy Link'}
             </button>
           </div>
-          <p className="text-white/20 text-sm mt-3">Share this link with friends. When they sign up, you both earn rewards!</p>
+          <p className="text-white/20 text-sm mt-3">{t('share link')}</p>
         </div>
 
         {/* Stats */}
@@ -102,7 +104,7 @@ export default function Referral() {
 
         {/* Rewards Tiers */}
         <div className="rounded-2xl border border-white/[0.04] p-8 mb-10" style={{ background: 'rgba(255,255,255,0.01)' }}>
-          <h2 className="text-xl font-bold mb-6">Reward Tiers 🏆</h2>
+          <h2 className="text-xl font-bold mb-6">{t('rewards')} 🏆</h2>
           <div className="space-y-4">
             {rewards.map((tier, i) => (
               <div key={i} className={`flex items-center gap-4 p-4 rounded-xl border ${referrals >= tier.referrals ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-white/[0.04]'}`}>

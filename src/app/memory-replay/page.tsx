@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface MemoryEntry {
   id: string; title: string; content: string; mood: string; date: string; tags: string[]; intensity: number
@@ -18,6 +19,7 @@ const MOODS = [
 ]
 
 export default function MemoryReplayPage() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [memories, setMemories] = useState<MemoryEntry[]>([])
@@ -107,7 +109,7 @@ export default function MemoryReplayPage() {
           <Link href="/dashboard" className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
             <svg className="w-5 h-5 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </Link>
-          <h1 className="text-lg font-semibold text-white">📽️ Memory Replay</h1>
+          <h1 className="text-lg font-semibold text-white">📽️ {t('memory replay')}</h1>
         </div>
       </header>
 
@@ -118,7 +120,7 @@ export default function MemoryReplayPage() {
           <div className="relative p-6 space-y-4">
             <div className="text-center">
               <div className="text-5xl mb-2">{moodObj.emoji}</div>
-              <h2 className="text-xl font-bold text-white">{current?.title || 'No Memories'}</h2>
+              <h2 className="text-xl font-bold text-white">{current?.title || t('relive')}</h2>
               <p className="text-xs text-white/30 mt-1">{current?.date}</p>
             </div>
             {current && (
@@ -126,7 +128,7 @@ export default function MemoryReplayPage() {
                 <p className="text-white/60 text-sm leading-relaxed text-center italic">&ldquo;{current.content}&rdquo;</p>
                 <div className="flex items-center justify-center gap-3">
                   <span className="text-xs px-3 py-1 rounded-full" style={{ background: `${moodObj.color}22`, color: moodObj.color }}>{moodObj.emoji} {moodObj.key}</span>
-                  <span className="text-xs text-white/20">Intensity: {current.intensity}%</span>
+                  <span className="text-xs text-white/20">{t('intensity')}: {current.intensity}%</span>
                 </div>
                 {/* Intensity bar */}
                 <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
@@ -148,7 +150,7 @@ export default function MemoryReplayPage() {
 
         {/* Speed */}
         <div className="flex items-center gap-3">
-          <span className="text-xs text-white/30">Speed:</span>
+          <span className="text-xs text-white/30">{t('playback')}:</span>
           {[5000, 3000, 1500, 800].map(s => (
             <button key={s} onClick={() => setSpeed(s)} className={`text-xs px-3 py-1 rounded-full ${speed === s ? 'bg-violet-500/20 text-violet-400' : 'bg-white/5 text-white/30'}`}>{s / 1000}s</button>
           ))}
@@ -156,7 +158,7 @@ export default function MemoryReplayPage() {
 
         {/* Mood Filter */}
         <div className="flex gap-2 overflow-x-auto pb-1">
-          <button onClick={() => setFilterMood(null)} className={`px-3 py-1.5 rounded-full text-xs whitespace-nowrap ${!filterMood ? 'bg-violet-500/20 text-violet-400' : 'bg-white/5 text-white/30'}`}>All</button>
+          <button onClick={() => setFilterMood(null)} className={`px-3 py-1.5 rounded-full text-xs whitespace-nowrap ${!filterMood ? 'bg-violet-500/20 text-violet-400' : 'bg-white/5 text-white/30'}`}>{t('all')}</button>
           {MOODS.map(m => (
             <button key={m.key} onClick={() => { setFilterMood(m.key); setCurrentIndex(0) }} className={`px-3 py-1.5 rounded-full text-xs whitespace-nowrap ${filterMood === m.key ? 'text-white/80' : 'bg-white/5 text-white/30'}`} style={filterMood === m.key ? { background: `${m.color}22`, color: m.color } : {}}>{m.emoji} {m.key}</button>
           ))}
@@ -164,24 +166,24 @@ export default function MemoryReplayPage() {
 
         {/* Add */}
         <button onClick={() => setShowAdd(!showAdd)} className="w-full py-3 rounded-xl bg-white/5 border border-white/10 text-white/50 text-sm hover:bg-white/10 transition-colors">
-          {showAdd ? '✕ Cancel' : '＋ Add Memory'}
+          {showAdd ? '✕ ' + t('cancel') : '＋ ' + t('add memory')}
         </button>
         {showAdd && (
           <div className="bg-white/5 rounded-xl border border-violet-500/10 p-4 space-y-3">
-            <input value={newTitle} onChange={e => setNewTitle(e.target.value)} placeholder="Memory title" className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm" />
-            <textarea value={newContent} onChange={e => setNewContent(e.target.value)} placeholder="Describe this memory..." className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm h-20 resize-none" />
+            <input value={newTitle} onChange={e => setNewTitle(e.target.value)} placeholder={t('memory title')} className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm" />
+            <textarea value={newContent} onChange={e => setNewContent(e.target.value)} placeholder={t('describe this memory')} className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm h-20 resize-none" />
             <div className="flex gap-2 flex-wrap">
               {MOODS.map(m => (
                 <button key={m.key} onClick={() => setNewMood(m.key)} className={`px-3 py-1 rounded-full text-xs ${newMood === m.key ? 'border' : 'bg-white/5 text-white/30'}`} style={newMood === m.key ? { background: `${m.color}22`, color: m.color, borderColor: `${m.color}44` } : {}}>{m.emoji} {m.key}</button>
               ))}
             </div>
-            <button onClick={addMemory} disabled={!newTitle.trim() || !newContent.trim()} className="w-full py-2.5 rounded-xl bg-violet-600 text-white text-sm disabled:opacity-30">Save Memory</button>
+            <button onClick={addMemory} disabled={!newTitle.trim() || !newContent.trim()} className="w-full py-2.5 rounded-xl bg-violet-600 text-white text-sm disabled:opacity-30">{t('save memory')}</button>
           </div>
         )}
 
         {/* Memory List */}
         <div className="space-y-2">
-          <h3 className="text-xs text-white/30 font-medium">All Memories ({filtered.length})</h3>
+          <h3 className="text-xs text-white/30 font-medium">{t('moments')} ({filtered.length})</h3>
           {filtered.map((m, i) => {
             const mm = MOODS.find(x => x.key === m.mood) || MOODS[0]
             return (

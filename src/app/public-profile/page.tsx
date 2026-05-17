@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Profile {
   id: string
@@ -17,6 +18,7 @@ interface Profile {
 }
 
 export default function PublicProfile() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
@@ -128,7 +130,7 @@ export default function PublicProfile() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </Link>
-          <h1 className="text-base font-semibold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Public Profile</h1>
+          <h1 className="text-base font-semibold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">{t('public profile')}</h1>
         </div>
       </header>
 
@@ -189,7 +191,7 @@ export default function PublicProfile() {
           <div className="relative space-y-5">
             {/* Display Name */}
             <div>
-              <label className="text-white/35 text-xs mb-1.5 block font-medium uppercase tracking-wider">Display Name</label>
+              <label className="text-white/35 text-xs mb-1.5 block font-medium uppercase tracking-wider">{t('display name')}</label>
               <input
                 type="text"
                 value={displayName}
@@ -201,7 +203,7 @@ export default function PublicProfile() {
 
             {/* Bio */}
             <div>
-              <label className="text-white/35 text-xs mb-1.5 block font-medium uppercase tracking-wider">Bio</label>
+              <label className="text-white/35 text-xs mb-1.5 block font-medium uppercase tracking-wider">{t('bio')}</label>
               <textarea
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
@@ -215,7 +217,7 @@ export default function PublicProfile() {
             {/* Public Toggle */}
             <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.02] border border-white/[0.05] backdrop-blur-sm hover:bg-white/[0.03] hover:border-white/[0.08] transition-all duration-300">
               <div>
-                <p className="font-medium text-white/80">Make Profile Public</p>
+                <p className="font-medium text-white/80">{t('public')}</p>
                 <p className="text-white/25 text-sm mt-0.5">Allow others to discover and chat with your clone</p>
               </div>
               <button
@@ -246,7 +248,7 @@ export default function PublicProfile() {
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/[0.02] to-violet-500/[0.02] pointer-events-none" />
 
-          <h3 className="relative text-lg font-semibold mb-2 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Share Your Clone 🔗</h3>
+          <h3 className="relative text-lg font-semibold mb-2 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">{t('share link')} 🔗</h3>
           <p className="relative text-white/25 text-sm mb-4">Send this link to let anyone chat with your AI clone</p>
 
           <div className="relative flex gap-2">

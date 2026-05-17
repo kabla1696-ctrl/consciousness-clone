@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Snapshot {
   id: string
@@ -45,6 +46,7 @@ function FloatingParticles() {
 }
 
 export default function PersonalitySnapshotsPage() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [snapshots, setSnapshots] = useState<Snapshot[]>([])
@@ -176,10 +178,10 @@ export default function PersonalitySnapshotsPage() {
           </Link>
           <div className="flex items-center gap-2">
             <span className="text-xl">📸</span>
-            <h1 className="text-lg font-bold gradient-text">Personality Snapshots</h1>
+            <h1 className="text-lg font-bold gradient-text">{t('personality snapshots')}</h1>
           </div>
           <div className="flex-1" />
-          <span className="text-xs text-white/30 glass-card px-2 py-1">{snapshots.length} snapshots</span>
+          <span className="text-xs text-white/30 glass-card px-2 py-1">{snapshots.length} {t('snapshots')}</span>
         </div>
       </header>
 
@@ -189,7 +191,7 @@ export default function PersonalitySnapshotsPage() {
           <div className="glass-card glow-pulse-hover rounded-2xl border border-emerald-500/20 p-5 mb-6 bg-emerald-500/[0.03]">
             <div className="text-xs text-emerald-400 mb-3 font-medium flex items-center gap-2">
               <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-              Today&apos;s snapshot taken
+              {t('today\'s snapshot taken')}
             </div>
             <div className="flex gap-3">
               {TRAITS.map(trait => (
@@ -208,8 +210,8 @@ export default function PersonalitySnapshotsPage() {
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">📸</div>
               <div className="text-left">
-                <div className="text-sm font-semibold text-white/90">Take today&apos;s snapshot</div>
-                <div className="text-xs text-white/40">Rate yourself on 5 traits</div>
+                <div className="text-sm font-semibold text-white/90">{t('take today\'s snapshot')}</div>
+                <div className="text-xs text-white/40">{t('rate yourself on 5 traits')}</div>
               </div>
             </div>
           </button>
@@ -219,12 +221,12 @@ export default function PersonalitySnapshotsPage() {
         {showCheckIn && (
           <div className="gradient-border-card rounded-2xl p-5 mb-6 space-y-5 bg-violet-500/5">
             <h3 className="text-sm font-semibold text-violet-400 flex items-center gap-2">
-              <span className="text-lg">✨</span> How are you today?
+              <span className="text-lg">✨</span> {t('how are you today?')}
             </h3>
             {TRAITS.map(trait => (
               <div key={trait.key}>
                 <div className="flex items-center justify-between mb-2">
-                  <label className="text-xs text-white/50 font-medium">{trait.emoji} {trait.label}</label>
+                  <label className="text-xs text-white/50 font-medium">{trait.emoji} {t(trait.label.toLowerCase())}</label>
                   <span className="text-sm font-bold font-mono" style={{ color: trait.color }}>{scores[trait.key]}</span>
                 </div>
                 <input
@@ -241,7 +243,7 @@ export default function PersonalitySnapshotsPage() {
               </div>
             ))}
             <button onClick={handleSave} className="w-full glow-btn bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-semibold py-3.5 rounded-xl shadow-lg shadow-violet-500/20">
-              ✨ Save Snapshot
+              ✨ {t('save snapshot')}
             </button>
           </div>
         )}
@@ -251,7 +253,7 @@ export default function PersonalitySnapshotsPage() {
           <div className="mb-6">
             <h2 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-3 flex items-center gap-2">
               <span className="w-8 h-px bg-gradient-to-r from-violet-500 to-transparent" />
-              {compareSnapshot && compareSnapshot.id !== latestSnapshot.id ? 'Compare Snapshots' : 'Latest Snapshot'}
+              {compareSnapshot && compareSnapshot.id !== latestSnapshot.id ? t('compare snapshots') : t('latest snapshot')}
               <span className="flex-1 h-px bg-gradient-to-r from-transparent to-white/5" />
             </h2>
             <div className="glass-card rounded-2xl p-5 relative overflow-hidden">
@@ -309,13 +311,13 @@ export default function PersonalitySnapshotsPage() {
               {aiLoading ? (
                 <span className="flex items-center justify-center gap-2">
                   <span className="w-4 h-4 border-2 border-amber-400/40 border-t-amber-400 rounded-full animate-spin" />
-                  Analyzing trends...
+                  {t('analyzing trends...')}
                 </span>
-              ) : '🤖 Get AI Trend Insight'}
+              ) : `🤖 ${t('get ai trend insight')}`}
             </button>
             {aiInsight && (
               <div className="glass-card rounded-2xl border border-amber-500/10 p-4 bg-amber-500/[0.03] animate-slide-up">
-                <div className="text-[10px] text-amber-400 mb-1 font-medium">AI Analysis</div>
+                <div className="text-[10px] text-amber-400 mb-1 font-medium">{t('ai analysis')}</div>
                 <p className="text-sm text-white/60 leading-relaxed">{aiInsight}</p>
               </div>
             )}
@@ -327,7 +329,7 @@ export default function PersonalitySnapshotsPage() {
           <div>
             <h2 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-3 flex items-center gap-2">
               <span className="w-8 h-px bg-gradient-to-r from-violet-500 to-transparent" />
-              History
+              {t('history')}
               <span className="flex-1 h-px bg-gradient-to-r from-transparent to-white/5" />
             </h2>
             <div className="space-y-2 stagger-children">
@@ -342,7 +344,7 @@ export default function PersonalitySnapshotsPage() {
                     }`}>
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        {isLatest && <span className="text-[10px] px-2 py-0.5 rounded-full bg-gradient-to-r from-violet-500/30 to-fuchsia-500/30 text-violet-300 font-medium">Latest</span>}
+                        {isLatest && <span className="text-[10px] px-2 py-0.5 rounded-full bg-gradient-to-r from-violet-500/30 to-fuchsia-500/30 text-violet-300 font-medium">{t('latest')}</span>}
                         <span className="text-xs text-white/40">{date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</span>
                       </div>
                       <span className="text-[10px] text-white/20">{date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</span>
@@ -369,12 +371,12 @@ export default function PersonalitySnapshotsPage() {
               <div className="absolute inset-0 bg-violet-500/20 rounded-full blur-3xl" />
               <div className="relative text-7xl">📸</div>
             </div>
-            <h2 className="text-xl font-bold gradient-text mb-2">Track Your Personality</h2>
+            <h2 className="text-xl font-bold gradient-text mb-2">{t('track your personality')}</h2>
             <p className="text-white/30 text-sm mb-8 max-w-sm mx-auto leading-relaxed">
-              Take daily snapshots of your personality traits. Over time, discover patterns and trends in how you feel and think.
+              {t('take daily snapshots description')}
             </p>
             <button onClick={() => setShowCheckIn(true)} className="glow-btn bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg shadow-violet-500/20">
-              📸 Take First Snapshot
+              📸 {t('take first snapshot')}
             </button>
           </div>
         )}

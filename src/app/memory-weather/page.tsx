@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Memory {
   id: string;
@@ -42,6 +43,7 @@ const forecast = [
 ];
 
 export default function MemoryWeather() {
+  const t = useT();
   const [memories, setMemories] = useState<Memory[]>([]);
   const [showAdd, setShowAdd] = useState(false);
   const [newText, setNewText] = useState('');
@@ -103,7 +105,7 @@ export default function MemoryWeather() {
         <div style={{ display:'flex',alignItems:'center',gap:12,maxWidth:800,margin:'0 auto' }}>
           <Link href="/dashboard" style={{ color:'#888',textDecoration:'none',fontSize:20 }}>←</Link>
           <h1 style={{ fontSize:20,fontWeight:700,background:'linear-gradient(135deg,#FFD700,#E040FB)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent' }}>
-            🌤️ Memory Weather
+            🌤️ {t('memory weather')}
           </h1>
         </div>
       </header>
@@ -118,7 +120,7 @@ export default function MemoryWeather() {
 
         {/* Forecast */}
         <div className="weather-card" style={{ marginBottom:24 }}>
-          <h3 style={{ fontSize:16,fontWeight:600,marginBottom:16,color:'#aaa' }}>7-Day Mood Forecast</h3>
+          <h3 style={{ fontSize:16,fontWeight:600,marginBottom:16,color:'#aaa' }}>{t('forecast')}</h3>
           <div style={{ display:'flex',gap:12,overflowX:'auto',paddingBottom:8 }}>
             {forecast.map((f, i) => (
               <div key={i} style={{ textAlign:'center',minWidth:70,flex:1 }}>
@@ -135,7 +137,7 @@ export default function MemoryWeather() {
 
         {/* Mood Distribution */}
         <div className="weather-card" style={{ marginBottom:24 }}>
-          <h3 style={{ fontSize:16,fontWeight:600,marginBottom:16,color:'#aaa' }}>Weather Patterns</h3>
+          <h3 style={{ fontSize:16,fontWeight:600,marginBottom:16,color:'#aaa' }}>{t('emotional climate')}</h3>
           <div style={{ display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:12 }}>
             {Object.entries(moodConfig).map(([key, cfg]) => (
               <div key={key} style={{ textAlign:'center',padding:12,borderRadius:12,background:cfg.bg }}>

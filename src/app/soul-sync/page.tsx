@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { useT } from '../../lib/language-context'
 
 const QUESTIONS = [
   { q: "What matters most to you in life?", options: ["Family & Love", "Success & Achievement", "Freedom & Adventure", "Knowledge & Growth", "Peace & Happiness"] },
@@ -54,6 +55,7 @@ function getCompatibility(p1: string, p2: string): number {
 }
 
 export default function SoulSync() {
+  const t = useT()
   const [step, setStep] = useState<'intro' | 'quiz' | 'result' | 'compare'>('intro')
   const [current, setCurrent] = useState(0)
   const [answers, setAnswers] = useState<number[]>([])
@@ -101,7 +103,7 @@ export default function SoulSync() {
         <div className="px-4 py-3 flex items-center gap-3">
           <Link href="/dashboard" className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/[0.05] border border-white/[0.06] tap-feedback">←</Link>
           <span className="text-xl">💕</span>
-          <span className="font-bold text-base bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-rose-400">Soul Sync</span>
+          <span className="font-bold text-base bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-rose-400">{t('soul sync')}</span>
         </div>
       </header>
 
@@ -110,14 +112,14 @@ export default function SoulSync() {
         {step === 'intro' && (
           <div className="text-center">
             <div className="text-7xl mb-4" style={{ animation: 'float-subtle 3s ease-in-out infinite' }}>💕</div>
-            <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-rose-400 mb-2">Soul Sync</h1>
-            <p className="text-white/40 text-sm mb-8">Discover your consciousness profile & find your soul match</p>
+            <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-rose-400 mb-2">{t('soul sync')}</h1>
+            <p className="text-white/40 text-sm mb-8">{t('discover your consciousness profile')}</p>
             <button onClick={() => setStep('quiz')} className="w-full py-3.5 rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold tap-feedback" style={{ boxShadow: '0 0 30px rgba(236,72,153,0.3)' }}>
-              Start Quiz ✨
+              {t('start quiz')} ✨
             </button>
             {myProfile && (
               <button onClick={() => setStep('result')} className="w-full py-3 mt-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white/60 text-sm tap-feedback">
-                View My Profile
+                {t('view my profile')}
               </button>
             )}
           </div>
@@ -127,7 +129,7 @@ export default function SoulSync() {
         {step === 'quiz' && (
           <div>
             <div className="flex items-center justify-between mb-6">
-              <span className="text-white/30 text-xs">Question {current + 1}/{QUESTIONS.length}</span>
+              <span className="text-white/30 text-xs">{t('question')} {current + 1}/{QUESTIONS.length}</span>
               <div className="flex-1 mx-3 h-1.5 rounded-full bg-white/[0.05] overflow-hidden">
                 <div className="h-full rounded-full bg-gradient-to-r from-pink-500 to-rose-500 transition-all duration-500" style={{ width: `${((current + 1) / QUESTIONS.length) * 100}%` }} />
               </div>
@@ -155,13 +157,13 @@ export default function SoulSync() {
             <p className="text-white/40 text-sm mb-6 max-w-xs mx-auto">{profileData.desc}</p>
 
             <div className="rounded-xl border border-white/[0.06] p-4 mb-4 backdrop-blur-xl" style={{ background: 'rgba(255,255,255,0.02)' }}>
-              <p className="text-white/30 text-xs mb-2">Your Soul Code</p>
+              <p className="text-white/30 text-xs mb-2">{t('your soul code')}</p>
               <p className="text-2xl font-mono font-bold text-pink-400 tracking-widest">{localStorage.getItem('cc_soul_code') || '------'}</p>
-              <p className="text-white/20 text-[10px] mt-1">Share this with someone to compare souls</p>
+              <p className="text-white/20 text-[10px] mt-1">{t('share with someone to compare')}</p>
             </div>
 
             <button onClick={() => setStep('compare')} className="w-full py-3 rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold tap-feedback" style={{ boxShadow: '0 0 20px rgba(236,72,153,0.3)' }}>
-              Compare with Someone 💕
+              {t('compare with someone')} 💕
             </button>
           </div>
         )}
@@ -169,9 +171,9 @@ export default function SoulSync() {
         {/* COMPARE */}
         {step === 'compare' && (
           <div>
-            <h2 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-rose-400 mb-4">Compare Souls</h2>
+            <h2 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-rose-400 mb-4">{t('compare souls')}</h2>
             <div className="rounded-xl border border-white/[0.06] p-4 mb-4 backdrop-blur-xl" style={{ background: 'rgba(255,255,255,0.02)' }}>
-              <label className="text-white/40 text-xs mb-2 block">Enter their Soul Code</label>
+              <label className="text-white/40 text-xs mb-2 block">{t('enter their soul code')}</label>
               <input value={partnerCode} onChange={e => setPartnerCode(e.target.value.toUpperCase())} placeholder="ABC123" className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-center text-lg font-mono tracking-widest focus:outline-none focus:border-pink-500/40" maxLength={6} />
             </div>
 
@@ -180,7 +182,7 @@ export default function SoulSync() {
                 <div className="rounded-2xl border border-pink-500/20 p-6 mb-4 backdrop-blur-xl" style={{ background: 'linear-gradient(135deg, rgba(236,72,153,0.05), rgba(139,92,246,0.05))' }}>
                   <div className="text-6xl mb-3" style={{ animation: 'float-subtle 3s ease-in-out infinite' }}>💕</div>
                   <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-rose-400 mb-1">{78 + Math.floor(Math.random() * 18)}%</div>
-                  <p className="text-white/40 text-sm">Soul Compatibility</p>
+                  <p className="text-white/40 text-sm">{t('soul compatibility')}</p>
                 </div>
 
                 <div className="space-y-3 mb-6">

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Contact {
   name: string;
@@ -10,6 +11,7 @@ interface Contact {
 }
 
 export default function LastBreathPage() {
+  const t = useT();
   const [lastMessage, setLastMessage] = useState('');
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [newContact, setNewContact] = useState<Contact>({ name: '', relation: '', phone: '' });
@@ -76,7 +78,7 @@ export default function LastBreathPage() {
     <div style={{ minHeight: '100vh', background: '#050510', color: '#e0e0ff', fontFamily: 'system-ui' }}>
       <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, backdropFilter: 'blur(20px)', background: 'rgba(5,5,16,0.8)', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <Link href="/dashboard" style={{ color: '#8888cc', textDecoration: 'none', fontSize: 18 }}>←</Link>
-        <h1 style={{ fontSize: 18, fontWeight: 600, margin: 0, background: 'linear-gradient(135deg, #ff6b6b, #ffa07a)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Last Breath</h1>
+        <h1 style={{ fontSize: 18, fontWeight: 600, margin: 0, background: 'linear-gradient(135deg, #ff6b6b, #ffa07a)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{t('last breath')}</h1>
       </div>
 
       <div style={{ paddingTop: 60, padding: '60px 16px 16px', maxWidth: 600, margin: '0 auto' }}>
@@ -90,7 +92,7 @@ export default function LastBreathPage() {
 
         {/* Countdown */}
         <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: 24, backdropFilter: 'blur(20px)', marginBottom: 16 }}>
-          <p style={{ margin: '0 0 8px', fontSize: 12, textTransform: 'uppercase', letterSpacing: 2, color: '#888' }}>Time Remaining</p>
+          <p style={{ margin: '0 0 8px', fontSize: 12, textTransform: 'uppercase', letterSpacing: 2, color: '#888' }}>{t('final moment')}</p>
           <p style={{ margin: 0, fontSize: 48, fontFamily: 'monospace', fontWeight: 200, color: timeLeft < 3600 ? '#ff6b6b' : '#ffa07a', textAlign: 'center' }}>{formatTime(timeLeft)}</p>
           <div style={{ marginTop: 12, height: 4, borderRadius: 2, background: 'rgba(255,255,255,0.05)', overflow: 'hidden' }}>
             <div style={{ height: '100%', width: `${progress}%`, background: 'linear-gradient(90deg, #ff6b6b, #ffa07a)', borderRadius: 2, transition: 'width 1s linear' }} />
@@ -100,16 +102,16 @@ export default function LastBreathPage() {
         {/* Last message editor */}
         <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: 24, backdropFilter: 'blur(20px)', marginBottom: 16 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-            <p style={{ margin: 0, fontSize: 12, textTransform: 'uppercase', letterSpacing: 2, color: '#888' }}>Your Final Words</p>
+            <p style={{ margin: 0, fontSize: 12, textTransform: 'uppercase', letterSpacing: 2, color: '#888' }}>{t('goodbye')}</p>
             {autoSaved && <span style={{ fontSize: 11, color: '#66bb6a', animation: 'fadeIn 0.3s' }}>✓ Auto-saved</span>}
           </div>
           <textarea
             value={lastMessage}
             onChange={(e) => setLastMessage(e.target.value)}
-            placeholder="Write your final message to the world..."
+            placeholder={t('final message') + '...'}
             style={{ width: '100%', minHeight: 160, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12, padding: 16, color: '#e0e0ff', fontSize: 15, lineHeight: 1.6, resize: 'vertical', outline: 'none', fontFamily: 'inherit', boxSizing: 'border-box' }}
           />
-          <p style={{ margin: '8px 0 0', fontSize: 11, color: '#666', fontStyle: 'italic' }}>Your final words, preserved forever.</p>
+          <p style={{ margin: '8px 0 0', fontSize: 11, color: '#666', fontStyle: 'italic' }}>{t('legacy')}.</p>
         </div>
 
         {/* Emergency contacts */}

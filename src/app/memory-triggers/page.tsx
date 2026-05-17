@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Trigger { id: string; type: 'location' | 'time' | 'weather'; name: string; condition: string; memory: string; active: boolean; emoji: string; color: string; }
 
@@ -15,6 +16,7 @@ const DEFAULT_TRIGGERS: Trigger[] = [
 ];
 
 export default function MemoryTriggersPage() {
+  const t = useT();
   const [triggers, setTriggers] = useState<Trigger[]>([]);
   const [filter, setFilter] = useState<'all' | 'location' | 'time' | 'weather'>('all');
   const [selectedTrigger, setSelectedTrigger] = useState<Trigger | null>(null);
@@ -58,8 +60,8 @@ export default function MemoryTriggersPage() {
       <div style={{ position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'blur(20px)', background: 'rgba(5,5,16,0.8)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <Link href="/dashboard" style={{ color: '#888', fontSize: 22, textDecoration: 'none' }}>←</Link>
         <div style={{ flex: 1 }}>
-          <h1 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>🧠 Memory Triggers</h1>
-          <p style={{ margin: 0, fontSize: 12, color: '#666' }}>Context-aware memory activation</p>
+          <h1 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>🧠 {t('memory triggers')}</h1>
+          <p style={{ margin: 0, fontSize: 12, color: '#666' }}>{t('auto activation')}</p>
         </div>
         <div style={{ fontSize: 12, color: '#81C784', fontWeight: 600 }}>{activeCount} active</div>
       </div>
@@ -98,7 +100,7 @@ export default function MemoryTriggersPage() {
                 borderRadius: 20, padding: '8px 16px', cursor: 'pointer', color: '#fff', fontSize: 13, fontWeight: 600,
                 transition: 'all 0.2s', whiteSpace: 'nowrap',
               }}>
-              {f === 'all' ? '✨ All' : `${typeLabels[f].icon} ${typeLabels[f].label}`}
+              {f === 'all' ? `✨ ${t('triggers')}` : `${typeLabels[f].icon} ${typeLabels[f].label}`}
             </button>
           ))}
         </div>
@@ -131,7 +133,7 @@ export default function MemoryTriggersPage() {
               {/* Expanded Memory */}
               {selectedTrigger?.id === trigger.id && (
                 <div style={{ marginTop: 14, paddingTop: 14, borderTop: `1px solid ${trigger.color}15` }}>
-                  <div style={{ fontSize: 11, color: trigger.color, fontWeight: 600, marginBottom: 6, textTransform: 'uppercase', letterSpacing: 1 }}>Triggered Memory</div>
+                  <div style={{ fontSize: 11, color: trigger.color, fontWeight: 600, marginBottom: 6, textTransform: 'uppercase', letterSpacing: 1 }}>{t('recall')}</div>
                   <p style={{ margin: 0, fontSize: 13, color: '#bbb', lineHeight: 1.6, fontStyle: 'italic' }}>&ldquo;{trigger.memory}&rdquo;</p>
                   <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
                     <span style={{ fontSize: 10, background: `${trigger.color}15`, color: trigger.color, padding: '3px 10px', borderRadius: 10, fontWeight: 600 }}>{trigger.type}</span>

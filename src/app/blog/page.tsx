@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useT } from '../../lib/language-context'
 
 const posts = [
   {
@@ -60,6 +61,7 @@ const posts = [
 ]
 
 export default function Blog() {
+  const t = useT()
   return (
     <main className="min-h-screen bg-[#050510]">
       <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(5, 5, 16, 0.8)', backdropFilter: 'blur(40px)', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
@@ -77,9 +79,9 @@ export default function Blog() {
 
       <div className="pt-24 px-6 max-w-6xl mx-auto pb-20">
         <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold mb-6">The Consciousness Blog</h1>
+          <h1 className="text-5xl font-bold mb-6">{t('blog')}</h1>
           <p className="text-white/30 text-xl max-w-2xl mx-auto">
-            Insights on digital immortality, AI consciousness, and preserving what makes you — you.
+            {t('articles')}
           </p>
         </div>
 
@@ -94,7 +96,7 @@ export default function Blog() {
           <div className="flex items-center gap-4 text-white/20 text-sm">
             <span>{posts[0].date}</span>
             <span>•</span>
-            <span>{posts[0].readTime} read</span>
+            <span>{posts[0].readTime} {t('read more')}</span>
           </div>
         </div>
 
@@ -111,7 +113,7 @@ export default function Blog() {
               <div className="flex items-center gap-3 text-white/20 text-xs">
                 <span>{post.date}</span>
                 <span>•</span>
-                <span>{post.readTime} read</span>
+                <span>{post.readTime} {t('read more')}</span>
               </div>
             </div>
           ))}
@@ -119,7 +121,7 @@ export default function Blog() {
 
         {/* Newsletter */}
         <div className="mt-20 rounded-2xl border border-white/[0.04] p-10 text-center" style={{ background: 'rgba(255,255,255,0.01)' }}>
-          <h2 className="text-2xl font-bold mb-4">Stay Updated 📬</h2>
+          <h2 className="text-2xl font-bold mb-4">{t('latest posts')} 📬</h2>
           <p className="text-white/30 mb-6">Get the latest insights on digital consciousness delivered to your inbox.</p>
           <div className="flex gap-3 max-w-md mx-auto">
             <input

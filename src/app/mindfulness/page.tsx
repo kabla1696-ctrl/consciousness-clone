@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface CheckIn {
   id: string
@@ -42,6 +43,7 @@ const FEELINGS = [
 ]
 
 export default function Mindfulness() {
+  const t = useT();
   const [user, setUser] = useState<any>(null)
   const [tab, setTab] = useState<'checkin' | 'breathe' | 'gratitude' | 'meditate'>('checkin')
 
@@ -184,7 +186,7 @@ export default function Mindfulness() {
               <span className="text-xl">🧘</span>
               <div className="absolute -inset-1 bg-emerald-500/20 rounded-full blur-md" />
             </div>
-            <h1 className="text-base font-bold bg-gradient-to-r from-white via-emerald-200 to-white bg-clip-text text-transparent">Mindfulness</h1>
+            <h1 className="text-base font-bold bg-gradient-to-r from-white via-emerald-200 to-white bg-clip-text text-transparent">{t('mindfulness')}</h1>
           </div>
         </div>
       </header>
@@ -193,8 +195,8 @@ export default function Mindfulness() {
         {/* Stats */}
         <div className="grid grid-cols-3 gap-3 mb-6">
           {[
-            { value: checkins.length, label: 'Check-ins', color: 'violet', icon: '💭' },
-            { value: breathCycles, label: 'Breath Cycles', color: 'fuchsia', icon: '🌬️' },
+            { value: checkins.length, label: t('session'), color: 'violet', icon: '💭' },
+            { value: breathCycles, label: t('breathing'), color: 'fuchsia', icon: '🌬️' },
             { value: gratitudeEntries.length, label: 'Gratitude', color: 'cyan', icon: '🙏' },
           ].map((stat, i) => (
             <div key={i} className="rounded-2xl border border-white/[0.08] p-4 bg-white/[0.02] backdrop-blur-sm text-center shadow-lg shadow-black/10 hover:bg-white/[0.04] transition-all duration-300 group">
@@ -299,8 +301,8 @@ export default function Mindfulness() {
         {tab === 'breathe' && (
           <div className="flex flex-col items-center">
             <div className="rounded-2xl border border-white/[0.08] p-8 bg-white/[0.02] backdrop-blur-sm w-full text-center mb-6 shadow-lg shadow-black/10">
-              <h3 className="text-lg font-bold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent mb-2">4-7-8 Breathing</h3>
-              <p className="text-white/30 text-xs mb-8 uppercase tracking-wider">Inhale 4s • Hold 7s • Exhale 8s</p>
+              <h3 className="text-lg font-bold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent mb-2">{t('meditation')}</h3>
+              <p className="text-white/30 text-xs mb-8 uppercase tracking-wider">{t('calm')}</p>
 
               {/* Animated Circle */}
               <div className="relative w-52 h-52 mx-auto mb-8">

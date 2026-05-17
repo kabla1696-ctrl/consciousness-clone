@@ -3,8 +3,10 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 export default function Share() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [shareLink, setShareLink] = useState('')
   const [copied, setCopied] = useState(false)
@@ -56,8 +58,8 @@ export default function Share() {
       <div className="pt-24 px-6 max-w-3xl mx-auto pb-20">
         <div className="text-center mb-12">
           <div className="text-6xl mb-4">🔗</div>
-          <h1 className="text-4xl font-bold mb-4">Share Your Clone</h1>
-          <p className="text-white/30 text-lg">Let others interact with your digital consciousness</p>
+          <h1 className="text-4xl font-bold mb-4">{t('share clone')}</h1>
+          <p className="text-white/30 text-lg">{t('let others meet')}</p>
         </div>
 
         {/* Preview Card */}
@@ -87,7 +89,7 @@ export default function Share() {
 
         {/* Share Link */}
         <div className="rounded-2xl border border-white/[0.04] p-6 mb-10" style={{ background: 'rgba(255,255,255,0.01)' }}>
-          <h3 className="text-lg font-bold mb-4">Your Public Link</h3>
+          <h3 className="text-lg font-bold mb-4">{t('copy link')}</h3>
           <div className="flex gap-3">
             <input
               type="text"
@@ -132,7 +134,7 @@ export default function Share() {
 
         {/* Social Share */}
         <div className="rounded-2xl border border-white/[0.04] p-6" style={{ background: 'rgba(255,255,255,0.01)' }}>
-          <h3 className="text-lg font-bold mb-6">Share on Social Media 📱</h3>
+          <h3 className="text-lg font-bold mb-6">{t('share')} 📱</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
               { name: 'Twitter', icon: '🐦', color: 'from-blue-500 to-blue-600' },

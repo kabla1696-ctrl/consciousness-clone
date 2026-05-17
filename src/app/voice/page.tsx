@@ -2,8 +2,10 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { useT } from '../../lib/language-context'
 
 export default function VoiceClone() {
+  const t = useT()
   const [step, setStep] = useState(1)
   const [recording, setRecording] = useState(false)
 
@@ -25,8 +27,8 @@ export default function VoiceClone() {
       <div className="pt-24 px-6 max-w-3xl mx-auto">
         <div className="text-center mb-12">
           <div className="text-6xl mb-4">🎤</div>
-          <h1 className="text-4xl font-bold mb-4">Voice Clone</h1>
-          <p className="text-white/30 text-lg">Make your clone sound exactly like you</p>
+          <h1 className="text-4xl font-bold mb-4">{t('voice clone')}</h1>
+          <p className="text-white/30 text-lg">{t('make clone sound')}</p>
         </div>
 
         {/* Free Feature Banner */}
@@ -42,7 +44,7 @@ export default function VoiceClone() {
           <div className={`rounded-2xl border p-6 transition ${step === 1 ? 'border-violet-500/50' : 'border-white/[0.04]'}`} style={{ background: step === 1 ? 'rgba(139, 92, 246, 0.03)' : 'rgba(255,255,255,0.01)' }}>
             <div className="flex items-center gap-4 mb-4">
               <div className={`w-10 h-10 rounded-full flex items-center justify-center ${step === 1 ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500' : 'bg-white/[0.04]'}`}>1</div>
-              <h3 className="text-lg font-bold">Record Your Voice</h3>
+              <h3 className="text-lg font-bold">{t('record')}</h3>
             </div>
             <p className="text-white/40 text-sm mb-6 ml-14">Read the following script naturally. We need about 5 minutes of clear audio.</p>
             <div className="ml-14">
@@ -84,7 +86,7 @@ export default function VoiceClone() {
 
         {/* How it works */}
         <div className="mt-16 rounded-2xl border border-white/[0.04] p-8" style={{ background: 'rgba(255,255,255,0.01)' }}>
-          <h2 className="text-xl font-bold mb-6">How Voice Cloning Works 🔬</h2>
+          <h2 className="text-xl font-bold mb-6">{t('voice sample')} 🔬</h2>
           <div className="space-y-4">
             {[
               { icon: '🎤', title: 'Record', desc: '5 minutes of clear speech in a quiet environment' },

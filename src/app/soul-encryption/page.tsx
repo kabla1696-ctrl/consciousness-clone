@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 const generateHex = (length: number) => {
   const chars = '0123456789abcdef';
@@ -20,6 +21,7 @@ const generateQRGrid = () => {
 };
 
 export default function SoulEncryptionPage() {
+  const t = useT();
   const [soulKey, setSoulKey] = useState('');
   const [signature, setSignature] = useState('');
   const [qrGrid, setQrGrid] = useState<boolean[][]>([]);
@@ -107,7 +109,7 @@ export default function SoulEncryptionPage() {
         padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12,
       }}>
         <Link href="/dashboard" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: 20 }}>←</Link>
-        <h1 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>🔐 Soul Encryption</h1>
+        <h1 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>🔐 {t('soul encryption')}</h1>
       </header>
 
       <main style={{ position: 'relative', zIndex: 1, maxWidth: 480, margin: '0 auto', padding: '24px 16px' }}>
@@ -125,7 +127,7 @@ export default function SoulEncryptionPage() {
             transition: 'top 0.04s linear',
           }} />
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-            <span style={{ fontSize: 12, color: '#22d3ee', fontWeight: 700, letterSpacing: 1 }}>ENCRYPTED SOUL CODE</span>
+            <span style={{ fontSize: 12, color: '#22d3ee', fontWeight: 700, letterSpacing: 1 }}>{t('encrypted soul code')}</span>
             <span style={{ fontSize: 10, color: '#475569', fontFamily: 'monospace' }}>AES-256</span>
           </div>
           <div style={{
@@ -147,7 +149,7 @@ export default function SoulEncryptionPage() {
               background: 'rgba(34,211,238,0.06)', border: '1px solid rgba(34,211,238,0.15)',
               animation: 'fadeIn 0.5s ease',
             }}>
-              <div style={{ fontSize: 13, color: '#22d3ee', marginBottom: 8, fontWeight: 600 }}>✨ Decrypted Soul Essence</div>
+              <div style={{ fontSize: 13, color: '#22d3ee', marginBottom: 8, fontWeight: 600 }}>✨ {t('decrypted soul essence')}</div>
               <div style={{ fontSize: 12, color: '#94a3b8', lineHeight: 1.6 }}>
                 Curiosity: 94% | Empathy: 88% | Creativity: 91%<br/>
                 Loyalty: 97% | Humor: 85% | Wisdom: 79%<br/>
@@ -166,7 +168,7 @@ export default function SoulEncryptionPage() {
           fontSize: 15, fontWeight: 700, marginBottom: 24,
           boxShadow: '0 0 30px rgba(34,211,238,0.2)',
         }}>
-          {decrypting ? '🔓 Decrypting Soul...' : '🔓 Decrypt Soul'}
+          {decrypting ? `🔓 ${t('decrypting soul...')}` : `🔓 ${t('decrypt soul')}`}
         </button>
 
         {/* Security Level */}
@@ -175,7 +177,7 @@ export default function SoulEncryptionPage() {
           border: '1px solid rgba(255,255,255,0.06)', marginBottom: 24,
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-            <span style={{ fontSize: 13, color: '#94a3b8' }}>Security Level</span>
+            <span style={{ fontSize: 13, color: '#94a3b8' }}>{t('security level')}</span>
             <span style={{ fontSize: 13, color: secColor, fontWeight: 700 }}>{securityLevel}%</span>
           </div>
           <div style={{ height: 10, borderRadius: 5, background: 'rgba(255,255,255,0.06)', overflow: 'hidden' }}>
@@ -187,8 +189,8 @@ export default function SoulEncryptionPage() {
             }} />
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
-            <span style={{ fontSize: 11, color: '#475569' }}>Vulnerable</span>
-            <span style={{ fontSize: 11, color: '#475569' }}>Fortress</span>
+            <span style={{ fontSize: 11, color: '#475569' }}>{t('vulnerable')}</span>
+            <span style={{ fontSize: 11, color: '#475569' }}>{t('fortress')}</span>
           </div>
         </div>
 
@@ -199,7 +201,7 @@ export default function SoulEncryptionPage() {
           textAlign: 'center',
         }}>
           <h3 style={{ fontSize: 13, color: '#64748b', textTransform: 'uppercase', letterSpacing: 1, marginTop: 0, marginBottom: 16 }}>
-            Soul Identity QR
+            {t('soul identity qr')}
           </h3>
           <div style={{
             display: 'inline-grid', gridTemplateColumns: 'repeat(21, 1fr)', gap: 1,
@@ -222,7 +224,7 @@ export default function SoulEncryptionPage() {
           border: '1px solid rgba(255,255,255,0.06)', marginBottom: 24,
         }}>
           <h3 style={{ fontSize: 13, color: '#64748b', textTransform: 'uppercase', letterSpacing: 1, marginTop: 0, marginBottom: 12 }}>
-            Soul Signature
+            {t('soul signature')}
           </h3>
           <div style={{
             fontFamily: 'monospace', fontSize: 16, color: '#22d3ee', letterSpacing: 2,
@@ -233,7 +235,7 @@ export default function SoulEncryptionPage() {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 12, justifyContent: 'center' }}>
             <span style={{ width: 8, height: 8, borderRadius: 4, background: '#4ade80', display: 'inline-block' }} />
-            <span style={{ fontSize: 12, color: '#4ade80' }}>Verified & Authentic</span>
+            <span style={{ fontSize: 12, color: '#4ade80' }}>{t('verified and authentic')}</span>
           </div>
         </div>
 
@@ -244,13 +246,13 @@ export default function SoulEncryptionPage() {
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
             <h3 style={{ fontSize: 13, color: '#64748b', textTransform: 'uppercase', letterSpacing: 1, margin: 0 }}>
-              Encryption Key
+              {t('encryption key')}
             </h3>
             <button onClick={regenerateKey} style={{
               fontSize: 11, padding: '4px 10px', borderRadius: 8,
               background: 'rgba(34,211,238,0.1)', color: '#22d3ee',
               border: '1px solid rgba(34,211,238,0.2)', cursor: 'pointer',
-            }}>🔄 Regenerate</button>
+            }}>🔄 {t('regenerate')}</button>
           </div>
           <div style={{
             fontFamily: 'monospace', fontSize: 10, color: '#64748b',
@@ -267,8 +269,8 @@ export default function SoulEncryptionPage() {
           border: '1px solid rgba(74,222,128,0.12)', textAlign: 'center',
         }}>
           <div style={{ fontSize: 32, marginBottom: 8 }}>🛡️</div>
-          <div style={{ fontSize: 15, fontWeight: 700, color: '#4ade80', marginBottom: 4 }}>Soul Integrity Verified</div>
-          <div style={{ fontSize: 12, color: '#64748b' }}>No tampering detected. Clone authenticity confirmed.</div>
+          <div style={{ fontSize: 15, fontWeight: 700, color: '#4ade80', marginBottom: 4 }}>{t('soul integrity verified')}</div>
+          <div style={{ fontSize: 12, color: '#64748b' }}>{t('no tampering detected')}</div>
         </div>
       </main>
 

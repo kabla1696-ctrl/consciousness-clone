@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 const THEMES = [
   { id: 'dark', name: 'Dark', bg: '#050510', text: '#ffffff', accent: '#8b5cf6', border: 'rgba(255,255,255,0.06)' },
@@ -24,6 +25,7 @@ interface WidgetConfig { theme: string; bgColor: string; textSize: string; showI
 const defaultConfig: WidgetConfig = { theme: 'dark', bgColor: '#050510', textSize: 'medium', showIcon: true, showTitle: true, showSubtitle: true }
 
 export default function WidgetDashboard() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [selectedWidget, setSelectedWidget] = useState<number | null>(null)
@@ -186,8 +188,8 @@ export default function WidgetDashboard() {
           <div className="flex items-center gap-2.5 flex-1">
             <span className="text-xl">📱</span>
             <div>
-              <h1 className="text-base font-bold bg-gradient-to-r from-amber-300 to-orange-300 bg-clip-text text-transparent">Widget Dashboard</h1>
-              <p className="text-[10px] text-white/25">Customize your home screen widgets</p>
+              <h1 className="text-base font-bold bg-gradient-to-r from-amber-300 to-orange-300 bg-clip-text text-transparent">{t('widget')}</h1>
+              <p className="text-[10px] text-white/25">{t('home screen')}</p>
             </div>
           </div>
           <span className="text-[10px] px-3 py-1.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 font-semibold backdrop-blur-sm">Coming Soon</span>
@@ -315,7 +317,7 @@ export default function WidgetDashboard() {
 
         {/* Widget Themes */}
         <section className="mb-8">
-          <h2 className="text-lg font-bold mb-1">Widget Themes</h2>
+          <h2 className="text-lg font-bold mb-1">{t('customize')}</h2>
           <p className="text-white/25 text-xs mb-4">Choose a visual style for your widgets</p>
           <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x">
             {THEMES.map((theme) => (
@@ -335,7 +337,7 @@ export default function WidgetDashboard() {
 
         {/* Install Instructions */}
         <section className="mb-8">
-          <h2 className="text-lg font-bold mb-1">How to Install</h2>
+          <h2 className="text-lg font-bold mb-1">{t('quick access')}</h2>
           <p className="text-white/25 text-xs mb-4">Add widgets to your Android home screen</p>
           <div className="space-y-3">
             {installSteps.map((step) => (

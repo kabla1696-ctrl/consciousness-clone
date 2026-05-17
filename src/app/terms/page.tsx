@@ -1,8 +1,10 @@
 'use client'
 
 import Link from 'next/link'
+import { useT } from '../../lib/language-context'
 
 export default function Terms() {
+  const t = useT()
   return (
     <main className="min-h-screen bg-[#050510]">
       <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(5, 5, 16, 0.8)', backdropFilter: 'blur(40px)', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
@@ -15,7 +17,7 @@ export default function Terms() {
       </nav>
 
       <div className="pt-24 px-6 max-w-4xl mx-auto pb-20">
-        <h1 className="text-4xl font-bold mb-2">Terms of Service</h1>
+        <h1 className="text-4xl font-bold mb-2">{t('terms of service')}</h1>
         <p className="text-white/30 mb-10">Last updated: May 2026</p>
 
         <div className="space-y-8 text-white/60 text-sm leading-relaxed">
@@ -40,7 +42,7 @@ export default function Terms() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-3">5. Acceptable Use</h2>
+            <h2 className="text-xl font-bold text-white mb-3">5. {t('acceptable use')}</h2>
             <p>You agree not to: use the Service for illegal purposes; upload harmful or offensive content; attempt to reverse-engineer the AI models; impersonate others; or disrupt the Service&apos;s infrastructure.</p>
           </section>
 
@@ -55,12 +57,12 @@ export default function Terms() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-3">8. Limitation of Liability</h2>
+            <h2 className="text-xl font-bold text-white mb-3">8. {t('liability')}</h2>
             <p>The Service is provided &quot;as is&quot; without warranties. We are not liable for any indirect, incidental, or consequential damages arising from your use of the Service.</p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-3">9. Termination</h2>
+            <h2 className="text-xl font-bold text-white mb-3">9. {t('termination')}</h2>
             <p>We may terminate or suspend your account at any time for violation of these Terms. You may delete your account at any time through the dashboard settings.</p>
           </section>
 

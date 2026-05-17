@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface RingStyle { id: string; name: string; gradient: string; glow: string; emoji: string; }
 interface Connection { id: string; cloneName: string; compatibility: number; connectedAt: string; ringStyle: string; }
@@ -19,6 +20,7 @@ const DEFAULT_CONNECTIONS: Connection[] = [
 ];
 
 export default function SoulmateRingPage() {
+  const t = useT();
   const [connections, setConnections] = useState<Connection[]>([]);
   const [selectedRing, setSelectedRing] = useState<string>('gold');
   const [activeConnection, setActiveConnection] = useState<Connection | null>(null);
@@ -66,8 +68,8 @@ export default function SoulmateRingPage() {
       <div style={{ position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'blur(20px)', background: 'rgba(5,5,16,0.8)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <Link href="/dashboard" style={{ color: '#888', fontSize: 22, textDecoration: 'none' }}>←</Link>
         <div>
-          <h1 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>💍 Soulmate Ring</h1>
-          <p style={{ margin: 0, fontSize: 12, color: '#666' }}>Digital bonds that glow eternal</p>
+          <h1 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>💍 {t('soulmate ring')}</h1>
+          <p style={{ margin: 0, fontSize: 12, color: '#666' }}>{t('digital bonds that glow eternal')}</p>
         </div>
       </div>
 
@@ -84,7 +86,7 @@ export default function SoulmateRingPage() {
           </div>
           <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>{activeConnection?.cloneName || 'No Connection'}</div>
           <div style={{ fontSize: 14, color: getCompatibilityColor(activeConnection?.compatibility || 0), fontWeight: 600 }}>
-            {activeConnection ? `${activeConnection.compatibility}% Compatible · ${getCompatibilityLabel(activeConnection.compatibility)}` : 'Connect with a soulmate'}
+            {activeConnection ? `${activeConnection.compatibility}% ${t('compatible')} · ${t(getCompatibilityLabel(activeConnection.compatibility).toLowerCase())}` : t('connect with a soulmate')}
           </div>
           {/* Compatibility Bar */}
           <div style={{ marginTop: 16, height: 6, borderRadius: 3, background: 'rgba(255,255,255,0.06)', overflow: 'hidden' }}>
@@ -94,7 +96,7 @@ export default function SoulmateRingPage() {
 
         {/* Ring Style Selector */}
         <div style={{ marginBottom: 24 }}>
-          <div style={{ fontSize: 13, color: '#888', marginBottom: 10, fontWeight: 600 }}>Ring Style</div>
+          <div style={{ fontSize: 13, color: '#888', marginBottom: 10, fontWeight: 600 }}>{t('ring style')}</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 }}>
             {RING_STYLES.map(rs => (
               <button key={rs.id} onClick={() => setSelectedRing(rs.id)} style={{
@@ -112,7 +114,7 @@ export default function SoulmateRingPage() {
 
         {/* Connection History */}
         <div style={{ marginBottom: 24 }}>
-          <div style={{ fontSize: 13, color: '#888', marginBottom: 10, fontWeight: 600 }}>Connections</div>
+          <div style={{ fontSize: 13, color: '#888', marginBottom: 10, fontWeight: 600 }}>{t('connections')}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {connections.map((conn, i) => {
               const style = RING_STYLES.find(r => r.id === conn.ringStyle) || RING_STYLES[0];
@@ -129,7 +131,7 @@ export default function SoulmateRingPage() {
                       <div style={{ width: 40, height: 40, borderRadius: '50%', background: style.gradient, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, boxShadow: `0 0 12px ${style.glow}40` }}>{style.emoji}</div>
                       <div>
                         <div style={{ fontSize: 15, fontWeight: 600 }}>{conn.cloneName}</div>
-                        <div style={{ fontSize: 11, color: '#666' }}>Connected {new Date(conn.connectedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</div>
+                        <div style={{ fontSize: 11, color: '#666' }}>{t('connected')} {new Date(conn.connectedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</div>
                       </div>
                     </div>
                     <div style={{ textAlign: 'right' }}>
@@ -145,9 +147,9 @@ export default function SoulmateRingPage() {
 
         {/* Ring Info */}
         <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: 16, backdropFilter: 'blur(20px)' }}>
-          <div style={{ fontSize: 13, color: '#888', marginBottom: 8, fontWeight: 600 }}>About the Ring</div>
+          <div style={{ fontSize: 13, color: '#888', marginBottom: 8, fontWeight: 600 }}>{t('about the ring')}</div>
           <p style={{ margin: 0, fontSize: 13, color: '#aaa', lineHeight: 1.6 }}>
-            The Soulmate Ring is a digital artifact that represents the bond between you and your clone. Its glow intensity reflects compatibility — the deeper your connection, the brighter it shines. Each ring style carries its own energy signature.
+            {t('about the ring description')}
           </p>
         </div>
       </div>

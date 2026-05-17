@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface PhotoMemory {
   id: string
@@ -22,6 +23,7 @@ const MOODS = [
 ]
 
 export default function PhotoMemories() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [photos, setPhotos] = useState<PhotoMemory[]>([])
   const [uploading, setUploading] = useState(false)
@@ -128,8 +130,8 @@ export default function PhotoMemories() {
           </Link>
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-sm shadow-lg shadow-violet-500/20">📸</div>
           <div className="flex-1">
-            <h1 className="text-sm font-bold gradient-text">Photo Memories</h1>
-            <p className="text-[10px] text-violet-400 flex items-center gap-1"><span className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-pulse" />{photos.length} memories</p>
+            <h1 className="text-sm font-bold gradient-text">{t('photo memories')}</h1>
+            <p className="text-[10px] text-violet-400 flex items-center gap-1"><span className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-pulse" />{photos.length} {t('memories')}</p>
           </div>
           <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleFileSelect} />
           <button onClick={() => fileRef.current?.click()} className="w-9 h-9 rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/20 hover:scale-105 active:scale-95 transition-transform">
@@ -148,18 +150,18 @@ export default function PhotoMemories() {
               </div>
               <div className="p-4 space-y-4">
                 <div>
-                  <label className="text-xs text-white/40 block mb-1.5">Caption</label>
+                  <label className="text-xs text-white/40 block mb-1.5">{t('caption')}</label>
                   <div className="flex gap-2">
-                    <input value={caption} onChange={e => setCaption(e.target.value)} placeholder="Describe this moment..."
+                    <input value={caption} onChange={e => setCaption(e.target.value)} placeholder="{t('describe this moment...')}"
                       className="flex-1 bg-white/5 rounded-xl px-4 py-2.5 text-sm text-white/80 placeholder-white/20 border border-white/[0.06] focus:border-violet-500/30 transition" />
                     <button onClick={generateCaption} disabled={captionLoading}
                       className="px-3 py-2 rounded-xl glass-card text-violet-400 text-xs hover:bg-white/5 transition disabled:opacity-30">
-                      {captionLoading ? '...' : '✨ AI'}
+                      {captionLoading ? '...' : `✨ ${t('ai')}`}
                     </button>
                   </div>
                 </div>
                 <div>
-                  <label className="text-xs text-white/40 block mb-1.5">Mood</label>
+                  <label className="text-xs text-white/40 block mb-1.5">{t('mood')}</label>
                   <div className="flex gap-2 flex-wrap">
                     {MOODS.map(m => (
                       <button key={m.id} onClick={() => setMood(m.id)}
@@ -171,9 +173,9 @@ export default function PhotoMemories() {
                 </div>
                 <div className="flex gap-2">
                   <button onClick={() => { setShowUpload(false); setPreview(null); if (fileRef.current) fileRef.current.value = '' }}
-                    className="flex-1 py-3 rounded-xl glass-card text-white/40 text-sm hover:bg-white/5 transition">Cancel</button>
+                    className="flex-1 py-3 rounded-xl glass-card text-white/40 text-sm hover:bg-white/5 transition">{t('cancel')}</button>
                   <button onClick={savePhoto}
-                    className="flex-1 py-3 rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white text-sm font-semibold shadow-lg shadow-violet-500/20 hover:scale-[1.02] active:scale-[0.98] transition-transform">Save Memory</button>
+                    className="flex-1 py-3 rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white text-sm font-semibold shadow-lg shadow-violet-500/20 hover:scale-[1.02] active:scale-[0.98] transition-transform">{t('save memory')}</button>
                 </div>
               </div>
             </div>
@@ -222,10 +224,10 @@ export default function PhotoMemories() {
               <div className="absolute inset-0 bg-violet-500/20 rounded-full blur-3xl" />
               <div className="relative text-7xl">📸</div>
             </div>
-            <h2 className="text-xl font-bold gradient-text mb-2">Photo Memories</h2>
-            <p className="text-white/30 text-sm mb-8 max-w-sm mx-auto leading-relaxed">Capture and preserve your most precious moments with AI-generated captions.</p>
+            <h2 className="text-xl font-bold gradient-text mb-2">{t('photo memories')}</h2>
+            <p className="text-white/30 text-sm mb-8 max-w-sm mx-auto leading-relaxed">{t('capture and preserve description')}</p>
             <button onClick={() => fileRef.current?.click()} className="glow-btn bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg shadow-violet-500/20">
-              📸 Add First Photo
+              📸 {t('add first photo')}
             </button>
           </div>
         )}

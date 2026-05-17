@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Prediction {
   id: string
@@ -28,6 +29,7 @@ const CATEGORIES = [
 ]
 
 export default function Predictions() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [selectedTimeframe, setSelectedTimeframe] = useState('5')
   const [selectedCategory, setSelectedCategory] = useState('career')
@@ -149,10 +151,10 @@ Structure your prediction as a narrative — paint a picture of what their ${cat
           </Link>
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center text-sm shadow-lg shadow-violet-500/25">🔮</div>
           <div className="flex-1">
-            <h1 className="text-sm font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Predictions</h1>
+            <h1 className="text-sm font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">{t('predictions')}</h1>
             <p className="text-[10px] text-violet-400 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-pulse" />
-              AI-powered forecasts
+              {t('ai powered forecasts')}
             </p>
           </div>
           <button
@@ -171,12 +173,12 @@ Structure your prediction as a narrative — paint a picture of what their ${cat
         {showSaved && (
           <div className="mb-6 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl overflow-hidden shadow-2xl shadow-violet-500/[0.03]">
             <div className="px-4 py-3 border-b border-white/[0.06] flex items-center justify-between bg-gradient-to-r from-violet-500/[0.06] to-transparent">
-              <h3 className="text-sm font-semibold text-white/90">Saved Predictions</h3>
+              <h3 className="text-sm font-semibold text-white/90">{t('saved predictions')}</h3>
               <span className="text-xs text-violet-400/70 bg-violet-500/10 px-2 py-0.5 rounded-full">{predictions.length}</span>
             </div>
             <div className="max-h-64 overflow-y-auto">
               {predictions.length === 0 ? (
-                <p className="text-white/30 text-sm p-6 text-center">No predictions yet</p>
+                <p className="text-white/30 text-sm p-6 text-center">{t('no predictions yet')}</p>
               ) : (
                 predictions.map(p => (
                   <div key={p.id} className="px-4 py-3 border-b border-white/[0.04] flex items-center gap-3 hover:bg-white/[0.04] transition-all duration-200 group">
@@ -205,7 +207,7 @@ Structure your prediction as a narrative — paint a picture of what their ${cat
 
         {/* Timeframe Selector */}
         <div className="mb-4">
-          <label className="text-xs text-white/40 mb-2 block uppercase tracking-wider font-medium">Time Horizon</label>
+          <label className="text-xs text-white/40 mb-2 block uppercase tracking-wider font-medium">{t('time horizon')}</label>
           <div className="flex gap-2">
             {TIMEFRAMES.map(tf => (
               <button
@@ -225,7 +227,7 @@ Structure your prediction as a narrative — paint a picture of what their ${cat
 
         {/* Category Selector */}
         <div className="mb-6">
-          <label className="text-xs text-white/40 mb-2 block uppercase tracking-wider font-medium">Life Category</label>
+          <label className="text-xs text-white/40 mb-2 block uppercase tracking-wider font-medium">{t('life category')}</label>
           <div className="grid grid-cols-2 gap-2">
             {CATEGORIES.map(cat => (
               <button
@@ -257,11 +259,11 @@ Structure your prediction as a narrative — paint a picture of what their ${cat
           {generating ? (
             <>
               <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin relative z-10" />
-              <span className="relative z-10">Reading the Stars...</span>
+              <span className="relative z-10">{t('reading the stars...')}</span>
             </>
           ) : (
             <>
-              <span className="relative z-10">🔮</span> <span className="relative z-10">Predict My Future</span>
+              <span className="relative z-10">🔮</span> <span className="relative z-10">{t('predict my future')}</span>
             </>
           )}
         </button>
@@ -274,7 +276,7 @@ Structure your prediction as a narrative — paint a picture of what their ${cat
               <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-violet-500/15 via-indigo-500/15 to-violet-500/15 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-sm -z-10" />
 
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-semibold text-white/90">Prediction Confidence</h3>
+                <h3 className="text-sm font-semibold text-white/90">{t('prediction confidence')}</h3>
                 <span className="text-lg font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">{accuracy}%</span>
               </div>
               <div className="w-full bg-white/[0.06] rounded-full h-3 overflow-hidden">
@@ -284,8 +286,8 @@ Structure your prediction as a narrative — paint a picture of what their ${cat
                 />
               </div>
               <div className="flex justify-between mt-2">
-                <span className="text-[10px] text-white/20">Speculative</span>
-                <span className="text-[10px] text-white/20">Highly Likely</span>
+                <span className="text-[10px] text-white/20">{t('speculative')}</span>
+                <span className="text-[10px] text-white/20">{t('highly likely')}</span>
               </div>
               {/* Fun visual gauge */}
               <div className="flex justify-center mt-4">
@@ -351,18 +353,18 @@ Structure your prediction as a narrative — paint a picture of what their ${cat
                 <p className="text-white/70 text-sm leading-relaxed whitespace-pre-wrap">{prediction}</p>
               </div>
               <div className="px-5 py-3 border-t border-white/[0.06] flex items-center justify-between bg-gradient-to-r from-violet-500/[0.04] to-transparent">
-                <span className="text-xs text-white/20">AI prediction · For entertainment only</span>
+                <span className="text-xs text-white/20">{t('ai prediction disclaimer')}</span>
                 <button
                   onClick={() => {
                     navigator.clipboard.writeText(prediction)
-                    alert('Prediction copied!')
+                    alert(t('prediction copied!'))
                   }}
                   className="text-xs text-violet-400 hover:text-violet-300 transition-all duration-200 flex items-center gap-1 px-2.5 py-1 rounded-lg hover:bg-violet-500/10"
                 >
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                   </svg>
-                  Copy
+                  {t('copy')}
                 </button>
               </div>
             </div>
@@ -373,8 +375,8 @@ Structure your prediction as a narrative — paint a picture of what their ${cat
         {!prediction && !generating && (
           <div className="text-center py-16">
             <div className="text-5xl mb-4 animate-bounce">✨</div>
-            <p className="text-white/40 text-sm font-medium">Choose a timeframe and category to see your future</p>
-            <p className="text-white/20 text-xs mt-1.5">Based on patterns in your memories</p>
+            <p className="text-white/40 text-sm font-medium">{t('choose timeframe and category')}</p>
+            <p className="text-white/20 text-xs mt-1.5">{t('based on patterns in memories')}</p>
           </div>
         )}
       </div>

@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { useT } from '../../lib/language-context'
 
 function Particles() {
   return (
@@ -79,6 +80,7 @@ const defaultTraits: Trait[] = [
 ]
 
 export default function PersonalityEvolution() {
+  const t = useT();
   const [traits, setTraits] = useState<Trait[]>([])
   const [xp, setXp] = useState(0)
   const [level, setLevel] = useState(1)
@@ -168,8 +170,8 @@ export default function PersonalityEvolution() {
               <span className="text-lg">←</span>
             </Link>
             <div className="flex-1">
-              <h1 className="text-lg font-bold bg-gradient-to-r from-amber-400 to-violet-400 bg-clip-text text-transparent">Personality Evolution</h1>
-              <p className="text-xs text-white/40">Watch your clone grow</p>
+              <h1 className="text-lg font-bold bg-gradient-to-r from-amber-400 to-violet-400 bg-clip-text text-transparent">{t('personality evolution')}</h1>
+              <p className="text-xs text-white/40">{t('how you changed')}</p>
             </div>
             <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
               <span className="text-sm">🧬</span>
@@ -237,7 +239,7 @@ export default function PersonalityEvolution() {
 
           {/* Traits */}
           <div>
-            <h2 className="text-sm font-semibold text-white/60 mb-3">🧬 Personality Traits</h2>
+            <h2 className="text-sm font-semibold text-white/60 mb-3">🧬 {t('growth')}</h2>
             <div className="space-y-3">
               {traits.map((trait, i) => (
                 <GlowCard key={trait.name} className="p-3">
@@ -266,7 +268,7 @@ export default function PersonalityEvolution() {
 
           {/* Evolution Timeline */}
           <div>
-            <h2 className="text-sm font-semibold text-white/60 mb-3">📈 Evolution Timeline</h2>
+            <h2 className="text-sm font-semibold text-white/60 mb-3">📈 {t('timeline')}</h2>
             <div className="space-y-1">
               {evolutionStages.map((stage, i) => (
                 <div

@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Room { id: string; name: string; emoji: string; description: string; memories: PalaceMemory[]; color: string }
 interface PalaceMemory { id: string; title: string; placement: string; vividness: number }
@@ -19,6 +20,7 @@ const DEFAULT_ROOMS: Room[] = [
 ]
 
 export default function MemoryPalacePage() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [rooms, setRooms] = useState<Room[]>(DEFAULT_ROOMS)
@@ -77,7 +79,7 @@ export default function MemoryPalacePage() {
           <Link href="/dashboard" className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
             <svg className="w-5 h-5 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </Link>
-          <h1 className="text-lg font-semibold text-white">🏰 Memory Palace</h1>
+          <h1 className="text-lg font-semibold text-white">🏰 {t('memory palace')}</h1>
         </div>
       </header>
 
@@ -86,7 +88,7 @@ export default function MemoryPalacePage() {
         <div className="grid grid-cols-3 gap-3">
           <div className="bg-white/5 rounded-xl p-3 text-center border border-white/5">
             <div className="text-xl font-bold text-white">{rooms.length}</div>
-            <div className="text-[10px] text-white/30">Rooms</div>
+            <div className="text-[10px] text-white/30">{t('rooms')}</div>
           </div>
           <div className="bg-white/5 rounded-xl p-3 text-center border border-white/5">
             <div className="text-xl font-bold text-white">{totalMemories}</div>
@@ -122,7 +124,7 @@ export default function MemoryPalacePage() {
 
             {/* Journey */}
             <div className="bg-white/5 rounded-xl border border-white/5 p-4">
-              <h3 className="text-xs font-medium text-white/30 mb-3">🏰 Palace Journey</h3>
+              <h3 className="text-xs font-medium text-white/30 mb-3">🏰 {t('navigate')}</h3>
               <div className="flex items-center gap-1 overflow-x-auto pb-1">
                 {rooms.map((r, i) => (
                   <div key={r.id} className="flex items-center">
@@ -148,7 +150,7 @@ export default function MemoryPalacePage() {
 
             {/* Add Memory */}
             <button onClick={() => setShowAdd(!showAdd)} className="w-full py-3 rounded-xl bg-white/5 border border-white/10 text-white/50 text-sm">
-              {showAdd ? '✕ Cancel' : '＋ Place Memory Here'}
+              {showAdd ? '✕ Cancel' : '＋ ' + t('store')}
             </button>
             {showAdd && (
               <div className="bg-white/5 rounded-xl border border-violet-500/10 p-4 space-y-3">

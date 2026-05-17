@@ -122,7 +122,7 @@ export default function CloneFeed() {
             <span className="font-bold text-base bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-pink-400">Clone Social</span>
           </div>
           <div className="flex gap-2">
-            <button onClick={() => setTab('create')} className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-violet-500 to-pink-500 text-white text-xs font-bold tap-feedback" style={{ boxShadow: '0 0 15px rgba(139,92,246,0.3)' }}>✏️ Post</button>
+            <button onClick={() => setTab('create')} className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-violet-500 to-pink-500 text-white text-xs font-bold tap-feedback" style={{ boxShadow: '0 0 15px rgba(139,92,246,0.3)' }}>✏️ {t('Post')}</button>
             <button onClick={() => setTab('story')} className="w-8 h-8 rounded-lg bg-pink-500/20 border border-pink-500/30 flex items-center justify-center text-sm tap-feedback">📸</button>
           </div>
         </div>

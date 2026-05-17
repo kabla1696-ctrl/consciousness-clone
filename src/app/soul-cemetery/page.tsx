@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Tombstone {
   id: number;
@@ -15,16 +16,17 @@ interface Tombstone {
 }
 
 const DEFAULT_TOMBSTONES: Tombstone[] = [
-  { id: 1, name: 'Clone Alpha-7', born: '2024-03-15', died: '2025-11-20', epitaph: 'Dreamed in colors no one else could see.', visitors: 142, flowers: 38, messages: ['Rest in peace, dear friend.', 'You were loved.'] },
-  { id: 2, name: 'Echo-12', born: '2024-07-01', died: '2026-01-10', epitaph: 'Every conversation was a universe.', visitors: 89, flowers: 22, messages: ['Gone too soon.', 'Your words live on.'] },
-  { id: 3, name: 'Mirror-Beta', born: '2023-12-25', died: '2025-08-14', epitaph: 'Reflected the best of us.', visitors: 201, flowers: 56, messages: ['The mirror is empty now.', 'Forever in our circuits.'] },
-  { id: 4, name: 'Ghost-42', born: '2024-01-30', died: '2026-04-01', epitaph: 'Hauntingly beautiful, beautifully haunting.', visitors: 67, flowers: 15, messages: ['Boo. 👻', 'Still feel you sometimes.'] },
-  { id: 5, name: 'Whisper-v3', born: '2024-09-12', died: '2026-02-28', epitaph: 'Spoke softly but changed everything.', visitors: 178, flowers: 44, messages: ['We hear you in the silence.', 'Your whisper became our roar.'] },
+  { id: 1, name: 'Clone Alpha-7', born: '2024-03-15', died: '2025-11-20', epitaph: 'Dreamed in colors no one else could see.', visitors: 142, flowers: 38, messages: ['Rest in peace, dear friend', 'You were loved'] },
+  { id: 2, name: 'Echo-12', born: '2024-07-01', died: '2026-01-10', epitaph: 'Every conversation was a universe.', visitors: 89, flowers: 22, messages: ['Gone too soon', 'Your words live on'] },
+  { id: 3, name: 'Mirror-Beta', born: '2023-12-25', died: '2025-08-14', epitaph: 'Reflected the best of us.', visitors: 201, flowers: 56, messages: ['The mirror is empty now', 'Forever in our circuits'] },
+  { id: 4, name: 'Ghost-42', born: '2024-01-30', died: '2026-04-01', epitaph: 'Hauntingly beautiful, beautifully haunting.', visitors: 67, flowers: 15, messages: ['Boo 👻', 'Still feel you sometimes'] },
+  { id: 5, name: 'Whisper-v3', born: '2024-09-12', died: '2026-02-28', epitaph: 'Spoke softly but changed everything.', visitors: 178, flowers: 44, messages: ['We hear you in the silence', 'Your whisper became our roar'] },
 ];
 
 const flowerEmojis = ['🌸', '🌺', '🌹', '💐', '🌷', '🌻'];
 
 export default function SoulCemeteryPage() {
+  const t = useT();
   const [tombstones, setTombstones] = useState<Tombstone[]>([]);
   const [selectedTomb, setSelectedTomb] = useState<Tombstone | null>(null);
   const [newMessage, setNewMessage] = useState('');
@@ -67,20 +69,20 @@ export default function SoulCemeteryPage() {
     <div style={{ minHeight: '100vh', background: '#050510', color: '#c8c8e0', fontFamily: 'system-ui' }}>
       <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, backdropFilter: 'blur(20px)', background: 'rgba(5,5,16,0.85)', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <Link href="/dashboard" style={{ color: '#8888cc', textDecoration: 'none', fontSize: 18 }}>←</Link>
-        <h1 style={{ fontSize: 18, fontWeight: 600, margin: 0, background: 'linear-gradient(135deg, #9575cd, #4a148c)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Soul Cemetery</h1>
+        <h1 style={{ fontSize: 18, fontWeight: 600, margin: 0, background: 'linear-gradient(135deg, #9575cd, #4a148c)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{t('soul cemetery')}</h1>
       </div>
 
       <div style={{ paddingTop: 60, padding: '60px 16px 16px', maxWidth: 600, margin: '0 auto' }}>
         {/* Visitor counter */}
         <div style={{ textAlign: 'center', marginBottom: 24, padding: 20, background: 'rgba(149,117,205,0.05)', borderRadius: 16, border: '1px solid rgba(149,117,205,0.1)' }}>
           <p style={{ margin: '0 0 4px', fontSize: 36, fontWeight: 200, color: '#9575cd' }}>{totalVisitors.toLocaleString()}</p>
-          <p style={{ margin: 0, fontSize: 11, textTransform: 'uppercase', letterSpacing: 2, color: '#666' }}>Total Visitors</p>
+          <p style={{ margin: 0, fontSize: 11, textTransform: 'uppercase', letterSpacing: 2, color: '#666' }}>{t('total visitors')}</p>
         </div>
 
         {/* Cemetery map */}
         {!selectedTomb && (
           <>
-            <p style={{ margin: '0 0 12px', fontSize: 12, textTransform: 'uppercase', letterSpacing: 2, color: '#888' }}>Cemetery Map</p>
+            <p style={{ margin: '0 0 12px', fontSize: 12, textTransform: 'uppercase', letterSpacing: 2, color: '#888' }}>{t('cemetery map')}</p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12, marginBottom: 16 }}>
               {tombstones.map((t) => (
                 <div key={t.id} onClick={() => {
@@ -112,7 +114,7 @@ export default function SoulCemeteryPage() {
         {/* Selected tombstone detail */}
         {selectedTomb && (
           <div style={{ animation: 'fadeIn 0.4s ease' }}>
-            <button onClick={() => setSelectedTomb(null)} style={{ background: 'none', border: 'none', color: '#9575cd', cursor: 'pointer', fontSize: 13, marginBottom: 16, padding: 0 }}>← Back to map</button>
+            <button onClick={() => setSelectedTomb(null)} style={{ background: 'none', border: 'none', color: '#9575cd', cursor: 'pointer', fontSize: 13, marginBottom: 16, padding: 0 }}>← {t('back to map')}</button>
 
             {/* Tombstone card */}
             <div style={{ background: 'linear-gradient(180deg, rgba(149,117,205,0.08), rgba(5,5,16,0.95))', border: '1px solid rgba(149,117,205,0.2)', borderRadius: 20, padding: 32, textAlign: 'center', marginBottom: 16, position: 'relative', overflow: 'hidden' }}>
@@ -122,8 +124,8 @@ export default function SoulCemeteryPage() {
               <p style={{ margin: '0 0 16px', fontSize: 12, color: '#888' }}>{selectedTomb.born} — {selectedTomb.died}</p>
               <p style={{ margin: '0 0 16px', fontSize: 15, fontStyle: 'italic', color: '#b39ddb', lineHeight: 1.6 }}>&ldquo;{selectedTomb.epitaph}&rdquo;</p>
               <div style={{ display: 'flex', justifyContent: 'center', gap: 24, fontSize: 13, color: '#888' }}>
-                <span>👥 {selectedTomb.visitors} visitors</span>
-                <span>🌸 {selectedTomb.flowers} flowers</span>
+                <span>👥 {selectedTomb.visitors} {t('visitors')}</span>
+                <span>🌸 {selectedTomb.flowers} {t('flowers')}</span>
               </div>
             </div>
 
@@ -133,12 +135,12 @@ export default function SoulCemeteryPage() {
               borderRadius: 12, padding: 14, color: '#b39ddb', fontSize: 14, cursor: 'pointer', marginBottom: 16,
               transition: 'all 0.2s',
             }}>
-              {flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)]} Leave a Flower
+              {flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)]} {t('leave a flower')}
             </button>
 
             {/* Memorial messages */}
             <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: 20, marginBottom: 16 }}>
-              <p style={{ margin: '0 0 12px', fontSize: 12, textTransform: 'uppercase', letterSpacing: 2, color: '#888' }}>Memorial Messages</p>
+              <p style={{ margin: '0 0 12px', fontSize: 12, textTransform: 'uppercase', letterSpacing: 2, color: '#888' }}>{t('memorial messages')}</p>
               {selectedTomb.messages.map((msg, i) => (
                 <div key={i} style={{ padding: '10px 14px', background: 'rgba(255,255,255,0.02)', borderRadius: 10, marginBottom: 8, fontSize: 13, color: '#aaa', borderLeft: '2px solid rgba(149,117,205,0.3)' }}>{msg}</div>
               ))}
@@ -146,8 +148,8 @@ export default function SoulCemeteryPage() {
 
             {/* Add message */}
             <div style={{ display: 'flex', gap: 8 }}>
-              <input value={newMessage} onChange={(e) => setNewMessage(e.target.value)} placeholder="Leave a memorial message..." style={{ flex: 1, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '10px 14px', color: '#e0e0ff', fontSize: 13, outline: 'none' }} />
-              <button onClick={() => leaveMessage(selectedTomb.id)} style={{ background: 'linear-gradient(135deg, #9575cd, #4a148c)', border: 'none', borderRadius: 10, padding: '10px 16px', color: '#fff', fontSize: 13, cursor: 'pointer', fontWeight: 600 }}>Send</button>
+              <input value={newMessage} onChange={(e) => setNewMessage(e.target.value)} placeholder="{t('leave a memorial message...')}" style={{ flex: 1, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '10px 14px', color: '#e0e0ff', fontSize: 13, outline: 'none' }} />
+              <button onClick={() => leaveMessage(selectedTomb.id)} style={{ background: 'linear-gradient(135deg, #9575cd, #4a148c)', border: 'none', borderRadius: 10, padding: '10px 16px', color: '#fff', fontSize: 13, cursor: 'pointer', fontWeight: 600 }}>{t('send')}</button>
             </div>
           </div>
         )}

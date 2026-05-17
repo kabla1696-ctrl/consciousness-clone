@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface SmellMemory {
   id: string;
@@ -32,6 +33,7 @@ const defaultMemories: SmellMemory[] = [
 ];
 
 export default function MemorySmellPage() {
+  const t = useT();
   const [memories, setMemories] = useState<SmellMemory[]>([]);
   const [selectedSmell, setSelectedSmell] = useState<string | null>(null);
   const [intensity, setIntensity] = useState(50);
@@ -85,7 +87,7 @@ export default function MemorySmellPage() {
         padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 12,
       }}>
         <Link href="/dashboard" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: 20 }}>←</Link>
-        <h1 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>👃 Memory Smell</h1>
+        <h1 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>👃 {t('memory smell')}</h1>
       </header>
 
       <main style={{ position: 'relative', zIndex: 1, maxWidth: 480, margin: '0 auto', padding: '24px 16px' }}>
@@ -139,7 +141,7 @@ export default function MemorySmellPage() {
           border: '1px solid rgba(255,255,255,0.06)', marginBottom: 24,
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
-            <span style={{ fontSize: 13, color: '#94a3b8' }}>Smell Intensity</span>
+            <span style={{ fontSize: 13, color: '#94a3b8' }}>{t('scent')}</span>
             <span style={{ fontSize: 13, color: '#a78bfa' }}>{intensity}%</span>
           </div>
           <input type="range" min={0} max={100} value={intensity}
@@ -151,8 +153,8 @@ export default function MemorySmellPage() {
             }}
           />
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
-            <span style={{ fontSize: 11, color: '#475569' }}>Faint</span>
-            <span style={{ fontSize: 11, color: '#475569' }}>Overpowering</span>
+            <span style={{ fontSize: 11, color: '#475569' }}>{t('fragrance')}</span>
+            <span style={{ fontSize: 11, color: '#475569' }}>{t('aroma')}</span>
           </div>
         </div>
 

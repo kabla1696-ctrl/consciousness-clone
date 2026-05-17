@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface MemoryLocation {
   id: string
@@ -22,6 +23,7 @@ interface GroupedMemories {
 }
 
 export default function MemoryMap() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [locations, setLocations] = useState<MemoryLocation[]>([])
   const [groupedLocations, setGroupedLocations] = useState<GroupedMemories>({})
@@ -203,8 +205,8 @@ export default function MemoryMap() {
             <span className="text-sm">🗺️</span>
           </div>
           <div className="flex-1">
-            <h1 className="text-sm font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">Memory Map</h1>
-            <p className="text-[10px] text-white/30">Memories tied to places</p>
+            <h1 className="text-sm font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">{t('memory map')}</h1>
+            <p className="text-[10px] text-white/30">{t('where memories')}</p>
           </div>
           <button
             onClick={() => setShowAdd(!showAdd)}
@@ -373,7 +375,7 @@ export default function MemoryMap() {
 
         {/* Place Cards */}
         <div>
-          <h2 className="text-base font-bold mb-4 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Your Places</h2>
+          <h2 className="text-base font-bold mb-4 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">{t('locations')}</h2>
 
           {placeNames.length === 0 ? (
             <div className="text-center py-16">
@@ -382,7 +384,7 @@ export default function MemoryMap() {
                 <div className="relative text-5xl">🗺️</div>
               </div>
               <p className="text-white/40 text-sm font-medium">No places yet</p>
-              <p className="text-white/15 text-xs mt-1.5">Add your first memory location!</p>
+              <p className="text-white/15 text-xs mt-1.5">{t('explore')}</p>
             </div>
           ) : (
             <div className="space-y-3">

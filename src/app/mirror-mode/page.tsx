@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Message {
   id: string
@@ -25,6 +26,7 @@ function saveHistory(msgs: Message[]) {
 }
 
 export default function MirrorMode() {
+  const t = useT();
   const [user, setUser] = useState<any>(null)
   const [messages, setMessages] = useState<Message[]>([])
   const [answer, setAnswer] = useState('')
@@ -179,7 +181,7 @@ export default function MirrorMode() {
               <span className="text-xl">🪞</span>
               <div className="absolute -inset-1 bg-violet-500/20 rounded-full blur-md" />
             </div>
-            <h1 className="text-base font-bold bg-gradient-to-r from-white via-violet-200 to-white bg-clip-text text-transparent">Mirror Mode</h1>
+            <h1 className="text-base font-bold bg-gradient-to-r from-white via-violet-200 to-white bg-clip-text text-transparent">{t('mirror mode')}</h1>
           </div>
           <button onClick={clearHistory} className="text-white/30 text-xs tap-feedback px-3 py-1.5 rounded-lg border border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.06] hover:text-white/50 transition-all duration-300">
             Reset
@@ -191,11 +193,11 @@ export default function MirrorMode() {
       <div className="px-4 py-3 bg-white/[0.01] border-b border-white/[0.04] flex gap-6">
         <div className="flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-violet-400 shadow-[0_0_8px_rgba(139,92,246,0.6)]" />
-          <span className="text-[11px] text-white/40">Questions answered: <span className="text-violet-400 font-bold">{userMsgCount}</span></span>
+          <span className="text-[11px] text-white/40">{t('questions')} <span className="text-violet-400 font-bold">{userMsgCount}</span></span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-fuchsia-400 shadow-[0_0_8px_rgba(217,70,239,0.6)]" />
-          <span className="text-[11px] text-white/40">Clone learning: <span className="text-fuchsia-400 font-bold">{Math.min(userMsgCount * 5, 100)}%</span></span>
+          <span className="text-[11px] text-white/40">{t('clone asks')} <span className="text-fuchsia-400 font-bold">{Math.min(userMsgCount * 5, 100)}%</span></span>
         </div>
       </div>
 
@@ -207,8 +209,8 @@ export default function MirrorMode() {
               <div className="text-6xl">🪞</div>
               <div className="absolute inset-0 bg-violet-500/20 rounded-full blur-2xl scale-150" />
             </div>
-            <p className="text-white/50 text-lg font-medium">Your clone wants to learn about you</p>
-            <p className="text-white/20 text-sm mt-2">Answer honestly — this helps build your consciousness</p>
+            <p className="text-white/50 text-lg font-medium">{t('reflect')}</p>
+            <p className="text-white/20 text-sm mt-2">{t('clone asks')}</p>
           </div>
         )}
 

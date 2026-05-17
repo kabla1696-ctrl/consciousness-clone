@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface Memory {
   id: string;
@@ -40,6 +41,7 @@ const emotionColors: Record<string, string> = {
 };
 
 export default function MemoryTimeMachine() {
+  const t = useT();
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [isTraveling, setIsTraveling] = useState(false);
   const [foundMemories, setFoundMemories] = useState<Memory[]>([]);
@@ -108,7 +110,7 @@ export default function MemoryTimeMachine() {
       }}>
         <Link href="/dashboard" style={{ color: '#a78bfa', textDecoration: 'none', fontSize: 20 }}>←</Link>
         <h1 style={{ fontSize: 18, fontWeight: 700, background: 'linear-gradient(135deg, #a78bfa, #60a5fa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-          ⏳ Memory Time Machine
+          ⏳ {t('time machine')}
         </h1>
       </header>
 
@@ -119,7 +121,7 @@ export default function MemoryTimeMachine() {
           borderRadius: 16, padding: 24, marginBottom: 24,
           backdropFilter: 'blur(12px)',
         }}>
-          <h2 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16, color: '#c4b5fd' }}>Select Destination</h2>
+          <h2 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16, color: '#c4b5fd' }}>{t('travel back')}</h2>
           <input
             type="date"
             value={selectedDate}
@@ -152,7 +154,7 @@ export default function MemoryTimeMachine() {
               cursor: isTraveling ? 'wait' : 'pointer', transition: 'all 0.3s',
             }}
           >
-            {isTraveling ? '🌀 Traveling through time...' : '⚡ Travel to Date'}
+            {isTraveling ? `🌀 ${t('relive')}` : `⚡ ${t('travel back')}`}
           </button>
         </div>
 
@@ -184,7 +186,7 @@ export default function MemoryTimeMachine() {
           borderRadius: 16, padding: 20, marginBottom: 24,
           backdropFilter: 'blur(12px)',
         }}>
-          <h2 style={{ fontSize: 16, fontWeight: 600, marginBottom: 12, color: '#93c5fd' }}>📅 Timeline</h2>
+          <h2 style={{ fontSize: 16, fontWeight: 600, marginBottom: 12, color: '#93c5fd' }}>📅 {t('year')}</h2>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 12 }}>
             {years.map((y) => (
               <button key={y} onClick={() => jumpToYear(y)} style={{

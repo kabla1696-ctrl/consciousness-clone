@@ -1,8 +1,10 @@
 'use client'
 
 import Link from 'next/link'
+import { useT } from '../../lib/language-context'
 
 export default function Privacy() {
+  const t = useT()
   return (
     <main className="min-h-screen bg-[#050510]">
       <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(5, 5, 16, 0.8)', backdropFilter: 'blur(40px)', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
@@ -15,12 +17,12 @@ export default function Privacy() {
       </nav>
 
       <div className="pt-24 px-6 max-w-4xl mx-auto pb-20">
-        <h1 className="text-4xl font-bold mb-2">Privacy Policy</h1>
+        <h1 className="text-4xl font-bold mb-2">{t('privacy policy')}</h1>
         <p className="text-white/30 mb-10">Last updated: May 2026</p>
 
         <div className="space-y-8 text-white/60 text-sm leading-relaxed">
           <section>
-            <h2 className="text-xl font-bold text-white mb-3">1. Information We Collect</h2>
+            <h2 className="text-xl font-bold text-white mb-3">1. {t('data collection')}</h2>
             <p><strong className="text-white">Account Information:</strong> Email address, display name, and authentication credentials.</p>
             <p className="mt-2"><strong className="text-white">Your Content:</strong> Memories, chat messages, personality quiz responses, and any voice recordings you upload.</p>
             <p className="mt-2"><strong className="text-white">Usage Data:</strong> How you interact with the Service, including pages visited, features used, and session duration.</p>
@@ -52,12 +54,12 @@ export default function Privacy() {
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-3">7. Your Rights</h2>
+            <h2 className="text-xl font-bold text-white mb-3">7. {t('your rights')}</h2>
             <p>You have the right to: access all your personal data; export your data at any time; delete your account and all associated data; opt out of non-essential communications; and request correction of inaccurate data.</p>
           </section>
 
           <section>
-            <h2 className="text-xl font-bold text-white mb-3">8. Cookies</h2>
+            <h2 className="text-xl font-bold text-white mb-3">8. {t('cookies')}</h2>
             <p>We use essential cookies for authentication and session management. We do not use tracking cookies or advertising cookies.</p>
           </section>
 

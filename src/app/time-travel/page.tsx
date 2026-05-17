@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Message { role: 'user' | 'assistant'; content: string }
 
@@ -23,6 +24,7 @@ const AGE_PROMPTS: Record<number, string> = {
 }
 
 export default function TimeTravelPage() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [selectedAge, setSelectedAge] = useState(20)
@@ -107,7 +109,7 @@ export default function TimeTravelPage() {
           <Link href="/dashboard" className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
             <svg className="w-5 h-5 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </Link>
-          <h1 className="text-lg font-semibold text-white">⏰ Time Travel</h1>
+          <h1 className="text-lg font-semibold text-white">⏰ {t('time travel')}</h1>
         </div>
       </header>
 
@@ -116,8 +118,8 @@ export default function TimeTravelPage() {
         <div className="flex items-center gap-3 mb-2">
           <span className="text-2xl">{getAgeEmoji(selectedAge)}</span>
           <div>
-            <div className="text-white font-semibold">Age {selectedAge}</div>
-            <div className="text-xs text-white/30">{getAgeLabel(selectedAge)}</div>
+            <div className="text-white font-semibold">{t('age')} {selectedAge}</div>
+            <div className="text-xs text-white/30">{t(getAgeLabel(selectedAge).toLowerCase())}</div>
           </div>
         </div>
         <input type="range" min={5} max={80} step={5} value={selectedAge} onChange={e => { setSelectedAge(parseInt(e.target.value)); setMessages([]) }} className="w-full h-2 rounded-full appearance-none cursor-pointer" style={{ background: `linear-gradient(to right, #8b5cf6 ${((selectedAge - 5) / 75) * 100}%, rgba(255,255,255,0.1) ${((selectedAge - 5) / 75) * 100}%)`, accentColor: '#8b5cf6' }} />
@@ -129,8 +131,8 @@ export default function TimeTravelPage() {
         {messages.length === 0 && (
           <div className="text-center py-12 text-white/20">
             <div className="text-5xl mb-3">{getAgeEmoji(selectedAge)}</div>
-            <p className="text-sm">Talk to yourself at age {selectedAge}</p>
-            <p className="text-xs mt-1">{getAgeLabel(selectedAge)} perspective</p>
+            <p className="text-sm">{t('talk to yourself at age')} {selectedAge}</p>
+            <p className="text-xs mt-1">{t(getAgeLabel(selectedAge).toLowerCase())} {t('perspective')}</p>
           </div>
         )}
         {messages.map((msg, i) => (
@@ -156,7 +158,7 @@ export default function TimeTravelPage() {
       {/* Input */}
       <div className="px-4 py-3 border-t border-white/5">
         <div className="flex gap-2">
-          <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && sendMessage()} placeholder={`Ask your ${selectedAge}-year-old self...`} className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm" />
+          <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && sendMessage()} placeholder={`${t('ask your')} ${selectedAge}-${t('year-old self...')}`} className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm" />
           <button onClick={sendMessage} disabled={!input.trim() || sending} className="px-4 py-2.5 rounded-xl bg-violet-600 text-white text-sm disabled:opacity-30">→</button>
         </div>
       </div>

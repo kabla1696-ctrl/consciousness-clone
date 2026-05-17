@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Memory {
   id: string
@@ -28,6 +29,7 @@ const STYLES = [
 ]
 
 export default function MemoryStories() {
+  const t = useT();
   const [user, setUser] = useState<any>(null)
   const [memories, setMemories] = useState<Memory[]>([])
   const [selectedMemory, setSelectedMemory] = useState<Memory | null>(null)
@@ -164,10 +166,10 @@ export default function MemoryStories() {
           </Link>
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-rose-500 to-amber-500 flex items-center justify-center text-sm shadow-lg shadow-rose-500/25">📖</div>
           <div className="flex-1">
-            <h1 className="text-sm font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Memory Stories</h1>
+            <h1 className="text-sm font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">{t('memory stories')}</h1>
             <p className="text-[10px] text-rose-400 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 bg-rose-400 rounded-full animate-pulse" />
-              Memories turned into art
+              {t('ai writes')}
             </p>
           </div>
           <button
@@ -186,12 +188,12 @@ export default function MemoryStories() {
         {showStories && (
           <div className="mb-6 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl overflow-hidden shadow-2xl shadow-rose-500/[0.03]">
             <div className="px-4 py-3 border-b border-white/[0.06] flex items-center justify-between bg-gradient-to-r from-rose-500/[0.06] to-transparent">
-              <h3 className="text-sm font-semibold text-white/90">Story Collection</h3>
+              <h3 className="text-sm font-semibold text-white/90">{t('narrative')}</h3>
               <span className="text-xs text-rose-400/70 bg-rose-500/10 px-2 py-0.5 rounded-full">{stories.length} stories</span>
             </div>
             <div className="max-h-64 overflow-y-auto">
               {stories.length === 0 ? (
-                <p className="text-white/30 text-sm p-6 text-center">No stories yet</p>
+                <p className="text-white/30 text-sm p-6 text-center">{t('chapters')}</p>
               ) : (
                 stories.map(s => (
                   <div key={s.id} className="px-4 py-3 border-b border-white/[0.04] flex items-center gap-3 hover:bg-white/[0.04] transition-all duration-200 group">

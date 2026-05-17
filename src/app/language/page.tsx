@@ -2,11 +2,13 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { LANGUAGES, TRANSLATIONS, type Language } from '../../lib/languages'
+import { useT } from '../../lib/language-context'
 
 export default function LanguagePage() {
   const [current, setCurrent] = useState('en')
   const [search, setSearch] = useState('')
   const [saved, setSaved] = useState(false)
+  const t = useT()
 
   useEffect(() => {
     const lang = localStorage.getItem('cc_language') || 'en'
@@ -45,7 +47,7 @@ export default function LanguagePage() {
         <div className="px-4 py-3 flex items-center gap-3">
           <Link href="/dashboard" className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/[0.05] border border-white/[0.06] tap-feedback">←</Link>
           <span className="text-xl">🌍</span>
-          <span className="font-bold text-base bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400">Language</span>
+          <span className="font-bold text-base bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400">{t('language')}</span>
         </div>
       </header>
 
@@ -56,29 +58,29 @@ export default function LanguagePage() {
             <span className="text-4xl">{currentLang?.flag || '🌍'}</span>
             <div>
               <h2 className="text-lg font-bold">{currentLang?.native || 'English'}</h2>
-              <p className="text-white/30 text-xs">{currentLang?.name} • {translationCoverage(current)}% translated</p>
+              <p className="text-white/30 text-xs">{currentLang?.name} • {translationCoverage(current)}% {t('translated')}</p>
             </div>
           </div>
           {saved && (
             <div className="mt-3 flex items-center gap-2 text-emerald-400 text-xs">
               <div className="w-2 h-2 rounded-full bg-emerald-400" />
-              Language saved! App will use {currentLang?.native}
+              {t('language saved')} {currentLang?.native}
             </div>
           )}
         </div>
 
         {/* Search */}
         <div className="relative mb-4">
-          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search languages..." className="w-full p-3 pl-10 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm focus:outline-none focus:border-blue-500/40" />
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder={t('search languages')} className="w-full p-3 pl-10 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm focus:outline-none focus:border-blue-500/40" />
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20">🔍</span>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-3 mb-6">
           {[
-            { label: 'Total', value: LANGUAGES.length, color: 'text-blue-400' },
-            { label: 'Full UI', value: Object.keys(TRANSLATIONS).length, color: 'text-emerald-400' },
-            { label: 'Basic', value: LANGUAGES.length - Object.keys(TRANSLATIONS).length, color: 'text-amber-400' },
+            { label: t('total'), value: LANGUAGES.length, color: 'text-blue-400' },
+            { label: t('full ui'), value: Object.keys(TRANSLATIONS).length, color: 'text-emerald-400' },
+            { label: t('basic'), value: LANGUAGES.length - Object.keys(TRANSLATIONS).length, color: 'text-amber-400' },
           ].map(s => (
             <div key={s.label} className="rounded-xl border border-white/[0.06] p-3 text-center backdrop-blur-xl" style={{ background: 'rgba(255,255,255,0.02)' }}>
               <div className={`text-xl font-bold ${s.color}`}>{s.value}</div>
@@ -119,7 +121,7 @@ export default function LanguagePage() {
         {filtered.length === 0 && (
           <div className="text-center py-12">
             <div className="text-4xl mb-2">🔍</div>
-            <p className="text-white/30 text-sm">No languages found</p>
+            <p className="text-white/30 text-sm">{t('no languages found')}</p>
           </div>
         )}
       </div>

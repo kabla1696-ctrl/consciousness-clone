@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useT } from '../../lib/language-context';
 
 interface GhostMemory {
   id: number;
@@ -29,6 +30,7 @@ const emotionColors: Record<string, string> = {
 };
 
 export default function MemoryGhostPage() {
+  const t = useT();
   const [ghosts, setGhosts] = useState<GhostMemory[]>([]);
   const [frequency, setFrequency] = useState(30);
   const [history, setHistory] = useState<string[]>([]);
@@ -88,13 +90,13 @@ export default function MemoryGhostPage() {
 
       <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, backdropFilter: 'blur(20px)', background: 'rgba(5,5,16,0.8)', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <Link href="/dashboard" style={{ color: '#8888cc', textDecoration: 'none', fontSize: 18 }}>←</Link>
-        <h1 style={{ fontSize: 18, fontWeight: 600, margin: 0, background: 'linear-gradient(135deg, #b39ddb, #7c4dff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Memory Ghost</h1>
+        <h1 style={{ fontSize: 18, fontWeight: 600, margin: 0, background: 'linear-gradient(135deg, #b39ddb, #7c4dff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{t('memory ghost')}</h1>
       </div>
 
       <div style={{ position: 'relative', zIndex: 1, paddingTop: 60, padding: '60px 16px 16px', maxWidth: 600, margin: '0 auto' }}>
         {/* Ghost frequency */}
         <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: 20, backdropFilter: 'blur(20px)', marginBottom: 16 }}>
-          <p style={{ margin: '0 0 12px', fontSize: 12, textTransform: 'uppercase', letterSpacing: 2, color: '#888' }}>Ghost Frequency</p>
+          <p style={{ margin: '0 0 12px', fontSize: 12, textTransform: 'uppercase', letterSpacing: 2, color: '#888' }}>{t('haunted')}</p>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <input type="range" min={5} max={120} value={frequency} onChange={(e) => updateFrequency(parseInt(e.target.value))} style={{ flex: 1, accentColor: '#b39ddb' }} />
             <span style={{ fontSize: 13, color: '#b39ddb', minWidth: 50, textAlign: 'right' }}>{frequency}s</span>
@@ -104,7 +106,7 @@ export default function MemoryGhostPage() {
 
         {/* Active ghosts */}
         <div style={{ marginBottom: 16 }}>
-          <p style={{ margin: '0 0 12px', fontSize: 12, textTransform: 'uppercase', letterSpacing: 2, color: '#888' }}>Active Ghosts</p>
+          <p style={{ margin: '0 0 12px', fontSize: 12, textTransform: 'uppercase', letterSpacing: 2, color: '#888' }}>{t('forgotten')}</p>
           {ghosts.length === 0 ? (
             <div style={{ textAlign: 'center', padding: 40, color: '#444', fontSize: 14 }}>
               <p style={{ fontSize: 32, margin: '0 0 8px' }}>👻</p>
@@ -133,7 +135,7 @@ export default function MemoryGhostPage() {
 
         {/* Haunting history */}
         <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: 20, backdropFilter: 'blur(20px)' }}>
-          <p style={{ margin: '0 0 12px', fontSize: 12, textTransform: 'uppercase', letterSpacing: 2, color: '#888' }}>Haunting History</p>
+          <p style={{ margin: '0 0 12px', fontSize: 12, textTransform: 'uppercase', letterSpacing: 2, color: '#888' }}>{t('resurface')}</p>
           {history.length === 0 ? (
             <p style={{ margin: 0, fontSize: 13, color: '#444', textAlign: 'center', padding: 16 }}>No hauntings recorded yet</p>
           ) : (
