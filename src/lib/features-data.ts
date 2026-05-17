@@ -71,6 +71,7 @@ export const FEATURES: Feature[] = [
   { href: '/soul-transfer', icon: '🧬', title: 'Soul Transfer', desc: 'Share memories between clones', color: 'from-violet-500 to-fuchsia-500', glow: 'rgba(139,92,246,0.15)', category: 'Social' },
   { href: '/time-travel', icon: '⏰', title: 'Time Travel', desc: 'Talk to younger/future you', color: 'from-indigo-500 to-blue-500', glow: 'rgba(99,102,241,0.15)', category: 'Fun' },
   { href: '/death-simulation', icon: '💀', title: 'Death Simulation', desc: 'What they would say', color: 'from-red-500 to-rose-500', glow: 'rgba(239,68,68,0.15)', category: 'Legacy' },
+  { href: '/death-detection', icon: '⚰️', title: 'Death Detection', desc: 'How clone knows you died', color: 'from-orange-500 to-amber-500', glow: 'rgba(249,115,22,0.15)', category: 'Legacy' },
   { href: '/ghost-mode', icon: '👻', title: 'Ghost Mode', desc: 'Messages from beyond', color: 'from-violet-500 to-purple-500', glow: 'rgba(139,92,246,0.15)', category: 'Fun' },
   { href: '/clone-therapy', icon: '🧘', title: 'Clone Therapy', desc: 'AI therapy sessions', color: 'from-teal-500 to-cyan-500', glow: 'rgba(20,184,166,0.15)', category: 'Wellness' },
   { href: '/memory-milestones', icon: '🏅', title: 'Milestones', desc: 'Unlock badges & XP', color: 'from-amber-500 to-yellow-500', glow: 'rgba(245,158,11,0.15)', category: 'Fun' },

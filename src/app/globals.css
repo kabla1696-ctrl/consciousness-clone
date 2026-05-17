@@ -29,6 +29,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  overflow-y: scroll !important;
+  -webkit-overflow-scrolling: touch !important;
+  min-height: 100vh;
+  height: auto !important;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y !important;
 }
 
 /* Selection */
@@ -153,25 +159,11 @@ body {
   }
 }
 
-/* Capacitor/Android WebView scrolling fix */
-html {
-  overflow: auto !important;
-  -webkit-overflow-scrolling: touch !important;
-}
-
-body {
-  overflow: auto !important;
-  -webkit-overflow-scrolling: touch !important;
-  min-height: 100vh;
-  height: auto !important;
-}
-
 /* Mobile App Styles */
-html, body {
+html {
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch !important;
   width: 100%;
-  touch-action: pan-y !important;
-  -webkit-touch-callout: none;
 }
 
 main {
@@ -199,10 +191,6 @@ input:focus, textarea:focus {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Prevent pull-to-refresh */
-body {
-  overscroll-behavior-y: contain;
-}
 
 /* Smooth transitions */
 .page-transition {
