@@ -46,12 +46,10 @@ export default function LastWords() {
   const [lastActive, setLastActive] = useState<string>(() => loadJSON(LS_LAST_ACTIVE, new Date().toISOString()))
   const [tab, setTab] = useState<'messages' | 'contacts' | 'settings'>('messages')
 
-  // Add message form
   const [showAddMsg, setShowAddMsg] = useState(false)
   const [msgRecipient, setMsgRecipient] = useState('')
   const [msgContent, setMsgContent] = useState('')
 
-  // Add contact form
   const [showAddContact, setShowAddContact] = useState(false)
   const [contactName, setContactName] = useState('')
   const [contactEmail, setContactEmail] = useState('')
@@ -64,7 +62,6 @@ export default function LastWords() {
       setUser(user)
       setMessages(loadJSON(LS_MESSAGES, []))
       setContacts(loadJSON(LS_CONTACTS, []))
-      // Update last active
       const now = new Date().toISOString()
       setLastActive(now)
       saveJSON(LS_LAST_ACTIVE, now)
@@ -132,48 +129,69 @@ export default function LastWords() {
   if (!user) {
     return (
       <main className="min-h-screen bg-[#050510] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+        <div className="relative">
+          <div className="w-12 h-12 border-2 border-rose-500/30 border-t-rose-500 rounded-full animate-spin" />
+          <div className="absolute inset-0 w-12 h-12 border-2 border-violet-500/20 border-b-violet-500 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }} />
+        </div>
       </main>
     )
   }
 
   return (
-    <main className="min-h-screen bg-[#050510] page-transition">
+    <main className="min-h-screen bg-[#050510] page-transition relative overflow-hidden">
+      {/* Ambient orbs */}
+      <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-rose-600/[0.03] blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-violet-600/[0.04] blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 w-64 h-64 rounded-full bg-amber-600/[0.02] blur-[80px] pointer-events-none" />
+
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#050510]/95 backdrop-blur-xl border-b border-white/[0.04] safe-top">
+      <header className="sticky top-0 z-50 bg-[#050510]/70 backdrop-blur-2xl border-b border-white/[0.04] safe-top">
         <div className="px-4 py-3 flex items-center gap-3">
-          <Link href="/dashboard" className="tap-feedback p-1">
-            <svg className="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <Link href="/dashboard" className="tap-feedback p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] transition-all duration-300">
+            <svg className="w-5 h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </Link>
           <div className="flex items-center gap-2">
-            <span className="text-xl">🕊️</span>
-            <h1 className="text-base font-bold">Last Words</h1>
+            <div className="relative">
+              <span className="text-xl">🕊️</span>
+              <div className="absolute -inset-1 bg-rose-500/20 rounded-full blur-md" />
+            </div>
+            <h1 className="text-base font-bold bg-gradient-to-r from-white via-rose-200 to-white bg-clip-text text-transparent">Last Words</h1>
           </div>
         </div>
       </header>
 
-      <div className="px-4 py-4 pb-24">
+      <div className="px-4 py-6 pb-24 relative z-10">
         {/* Timer Status */}
-        <div className="rounded-xl border border-white/[0.06] p-5 bg-white/[0.02] mb-6">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-semibold text-white/60">Dead Man's Switch</h3>
-            <span className={`px-2 py-0.5 rounded text-[10px] font-semibold ${remaining > 7 ? 'bg-emerald-500/20 text-emerald-400' : remaining > 0 ? 'bg-amber-500/20 text-amber-400' : 'bg-red-500/20 text-red-400'}`}>
-              {remaining > 0 ? 'ACTIVE' : 'TRIGGERED'}
-            </span>
+        <div className="rounded-2xl border border-white/[0.08] p-6 bg-white/[0.02] backdrop-blur-sm mb-6 shadow-lg shadow-black/10 relative overflow-hidden group">
+          <div className="absolute inset-0 bg-gradient-to-br from-rose-500/[0.04] to-violet-500/[0.04] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-sm font-semibold text-white/60 uppercase tracking-wider">Dead Man&apos;s Switch</h3>
+              <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
+                remaining > 7 ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 shadow-[0_0_12px_rgba(16,185,129,0.15)]' :
+                remaining > 0 ? 'bg-amber-500/10 text-amber-400 border-amber-500/20 shadow-[0_0_12px_rgba(245,158,11,0.15)]' :
+                'bg-red-500/10 text-red-400 border-red-500/20 shadow-[0_0_12px_rgba(239,68,68,0.15)]'
+              }`}>
+                {remaining > 0 ? 'ACTIVE' : 'TRIGGERED'}
+              </span>
+            </div>
+            <div className="text-center py-4">
+              <div className="relative inline-block">
+                <div className="text-6xl font-black bg-gradient-to-b from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">{remaining}</div>
+                <div className="absolute inset-0 bg-violet-500/10 rounded-full blur-2xl scale-150" />
+              </div>
+              <div className="text-white/30 text-xs mt-2 uppercase tracking-wider">days until messages are delivered</div>
+            </div>
+            <div className="w-full bg-white/[0.06] rounded-full h-2.5 mt-3 overflow-hidden">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-violet-500 via-fuchsia-500 to-rose-500 transition-all duration-1000 shadow-[0_0_12px_rgba(139,92,246,0.4)]"
+                style={{ width: `${Math.max(5, (remaining / timerDays) * 100)}%` }}
+              />
+            </div>
+            <p className="text-[10px] text-white/20 mt-3 text-center uppercase tracking-wider">Log in regularly to reset the timer</p>
           </div>
-          <div className="text-center py-3">
-            <div className="text-4xl font-bold text-violet-400 mb-1">{remaining}</div>
-            <div className="text-white/30 text-xs">days until messages are delivered</div>
-          </div>
-          <div className="w-full bg-white/[0.04] rounded-full h-2 mt-2">
-            <div
-              className="h-2 rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition-all"
-              style={{ width: `${Math.max(5, (remaining / timerDays) * 100)}%` }}
-            />
-          </div>
-          <p className="text-[10px] text-white/20 mt-2 text-center">Log in regularly to reset the timer</p>
         </div>
 
         {/* Tabs */}
@@ -182,7 +200,11 @@ export default function LastWords() {
             <button
               key={t}
               onClick={() => setTab(t)}
-              className={`flex-1 px-3 py-2.5 rounded-xl text-sm font-medium transition ${tab === t ? 'bg-gradient-to-r from-violet-500 to-purple-600' : 'border border-white/[0.06] text-white/40 hover:bg-white/[0.02]'}`}
+              className={`flex-1 px-3 py-3 rounded-xl text-sm font-medium transition-all duration-300 ${
+                tab === t
+                  ? 'bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 text-violet-300 border border-violet-500/30 shadow-lg shadow-violet-500/10'
+                  : 'border border-white/[0.06] text-white/40 hover:bg-white/[0.04] hover:text-white/60'
+              }`}
             >
               {t === 'messages' ? '💌 Messages' : t === 'contacts' ? '👥 Contacts' : '⚙️ Settings'}
             </button>
@@ -194,31 +216,31 @@ export default function LastWords() {
           <>
             <button
               onClick={() => setShowAddMsg(!showAddMsg)}
-              className="w-full mb-4 px-4 py-3 bg-gradient-to-r from-violet-500 to-purple-600 rounded-xl font-semibold text-sm hover:opacity-90 transition tap-feedback"
+              className="w-full mb-5 px-4 py-3.5 bg-gradient-to-r from-violet-500 to-purple-600 rounded-xl font-semibold text-sm hover:opacity-90 transition-all duration-300 tap-feedback shadow-lg shadow-violet-500/20 hover:shadow-violet-500/30"
             >
               {showAddMsg ? '✕ Cancel' : '💌 Write New Message'}
             </button>
 
             {showAddMsg && (
-              <div className="rounded-xl border border-white/[0.06] p-4 bg-white/[0.02] mb-4 space-y-3">
+              <div className="rounded-2xl border border-white/[0.08] p-5 bg-white/[0.02] backdrop-blur-sm mb-5 space-y-4 shadow-lg shadow-black/10" style={{ animation: 'fadeInDown 0.3s ease both' }}>
                 <input
                   type="text"
                   value={msgRecipient}
                   onChange={e => setMsgRecipient(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/50 transition text-white placeholder:text-white/20 text-sm"
+                  className="w-full px-4 py-3.5 bg-white/[0.04] border border-white/[0.08] rounded-xl focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all duration-300 text-white placeholder:text-white/20 text-sm backdrop-blur-sm"
                   placeholder="Recipient name..."
                 />
                 <textarea
                   value={msgContent}
                   onChange={e => setMsgContent(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/50 transition resize-none text-white placeholder:text-white/20 text-sm"
+                  className="w-full px-4 py-3.5 bg-white/[0.04] border border-white/[0.08] rounded-xl focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all duration-300 resize-none text-white placeholder:text-white/20 text-sm backdrop-blur-sm"
                   rows={4}
                   placeholder="Write your final message..."
                 />
                 <button
                   onClick={addMessage}
                   disabled={!msgRecipient.trim() || !msgContent.trim()}
-                  className="w-full px-4 py-3 bg-gradient-to-r from-violet-500 to-purple-600 rounded-xl font-semibold text-sm hover:opacity-90 transition disabled:opacity-30"
+                  className="w-full px-4 py-3.5 bg-gradient-to-r from-violet-500 to-purple-600 rounded-xl font-semibold text-sm hover:opacity-90 transition-all duration-300 disabled:opacity-30 shadow-lg shadow-violet-500/20"
                 >
                   Save Message
                 </button>
@@ -226,31 +248,38 @@ export default function LastWords() {
             )}
 
             {messages.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="text-5xl mb-3">💌</div>
-                <p className="text-white/30">No messages yet</p>
+              <div className="text-center py-16">
+                <div className="relative inline-block mb-4">
+                  <div className="text-6xl">💌</div>
+                  <div className="absolute inset-0 bg-violet-500/20 rounded-full blur-2xl scale-150" />
+                </div>
+                <p className="text-white/40 text-lg font-medium">No messages yet</p>
                 <p className="text-white/20 text-sm mt-1">Write messages for your loved ones</p>
               </div>
             ) : (
               <div className="space-y-3">
-                {messages.map(msg => (
-                  <div key={msg.id} className="rounded-xl border border-white/[0.06] p-4 bg-white/[0.02] group">
-                    <div className="flex items-start justify-between mb-2">
+                {messages.map((msg, i) => (
+                  <div key={msg.id} className="rounded-2xl border border-white/[0.08] p-5 bg-white/[0.02] backdrop-blur-sm group hover:bg-white/[0.04] transition-all duration-300 shadow-lg shadow-black/10" style={{ animation: `fadeInUp 0.4s ease ${i * 0.08}s both` }}>
+                    <div className="flex items-start justify-between mb-3">
                       <div>
-                        <h3 className="font-semibold text-sm">To: {msg.recipient}</h3>
-                        <span className={`text-[10px] px-2 py-0.5 rounded ${msg.status === 'active' ? 'bg-emerald-500/20 text-emerald-400' : msg.status === 'delivered' ? 'bg-blue-500/20 text-blue-400' : 'bg-red-500/20 text-red-400'}`}>
+                        <h3 className="font-semibold text-sm text-white/90">To: {msg.recipient}</h3>
+                        <span className={`text-[10px] px-2.5 py-1 rounded-full mt-1 inline-block font-semibold uppercase tracking-wider border ${
+                          msg.status === 'active' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
+                          msg.status === 'delivered' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' :
+                          'bg-red-500/10 text-red-400 border-red-500/20'
+                        }`}>
                           {msg.status}
                         </span>
                       </div>
                       <button
                         onClick={() => deleteMessage(msg.id)}
-                        className="opacity-0 group-hover:opacity-100 text-white/20 hover:text-red-400 transition text-xs"
+                        className="opacity-0 group-hover:opacity-100 text-white/20 hover:text-red-400 transition-all duration-300 p-1"
                       >
                         ✕
                       </button>
                     </div>
                     <p className="text-white/50 text-sm leading-relaxed">{msg.content}</p>
-                    <p className="text-[10px] text-white/20 mt-2">{new Date(msg.createdAt).toLocaleDateString()}</p>
+                    <p className="text-[10px] text-white/20 mt-3 uppercase tracking-wider">{new Date(msg.createdAt).toLocaleDateString()}</p>
                   </div>
                 ))}
               </div>
@@ -263,38 +292,38 @@ export default function LastWords() {
           <>
             <button
               onClick={() => setShowAddContact(!showAddContact)}
-              className="w-full mb-4 px-4 py-3 bg-gradient-to-r from-violet-500 to-purple-600 rounded-xl font-semibold text-sm hover:opacity-90 transition tap-feedback"
+              className="w-full mb-5 px-4 py-3.5 bg-gradient-to-r from-violet-500 to-purple-600 rounded-xl font-semibold text-sm hover:opacity-90 transition-all duration-300 tap-feedback shadow-lg shadow-violet-500/20"
             >
               {showAddContact ? '✕ Cancel' : '👤 Add Emergency Contact'}
             </button>
 
             {showAddContact && (
-              <div className="rounded-xl border border-white/[0.06] p-4 bg-white/[0.02] mb-4 space-y-3">
+              <div className="rounded-2xl border border-white/[0.08] p-5 bg-white/[0.02] backdrop-blur-sm mb-5 space-y-4 shadow-lg shadow-black/10" style={{ animation: 'fadeInDown 0.3s ease both' }}>
                 <input
                   type="text"
                   value={contactName}
                   onChange={e => setContactName(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/50 transition text-white placeholder:text-white/20 text-sm"
+                  className="w-full px-4 py-3.5 bg-white/[0.04] border border-white/[0.08] rounded-xl focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all duration-300 text-white placeholder:text-white/20 text-sm backdrop-blur-sm"
                   placeholder="Name..."
                 />
                 <input
                   type="email"
                   value={contactEmail}
                   onChange={e => setContactEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/50 transition text-white placeholder:text-white/20 text-sm"
+                  className="w-full px-4 py-3.5 bg-white/[0.04] border border-white/[0.08] rounded-xl focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all duration-300 text-white placeholder:text-white/20 text-sm backdrop-blur-sm"
                   placeholder="Email..."
                 />
                 <input
                   type="text"
                   value={contactRelation}
                   onChange={e => setContactRelation(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/50 transition text-white placeholder:text-white/20 text-sm"
+                  className="w-full px-4 py-3.5 bg-white/[0.04] border border-white/[0.08] rounded-xl focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all duration-300 text-white placeholder:text-white/20 text-sm backdrop-blur-sm"
                   placeholder="Relation (e.g. Spouse, Friend)..."
                 />
                 <button
                   onClick={addContact}
                   disabled={!contactName.trim() || !contactEmail.trim()}
-                  className="w-full px-4 py-3 bg-gradient-to-r from-violet-500 to-purple-600 rounded-xl font-semibold text-sm hover:opacity-90 transition disabled:opacity-30"
+                  className="w-full px-4 py-3.5 bg-gradient-to-r from-violet-500 to-purple-600 rounded-xl font-semibold text-sm hover:opacity-90 transition-all duration-300 disabled:opacity-30 shadow-lg shadow-violet-500/20"
                 >
                   Add Contact
                 </button>
@@ -302,23 +331,26 @@ export default function LastWords() {
             )}
 
             {contacts.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="text-5xl mb-3">👥</div>
-                <p className="text-white/30">No emergency contacts</p>
+              <div className="text-center py-16">
+                <div className="relative inline-block mb-4">
+                  <div className="text-6xl">👥</div>
+                  <div className="absolute inset-0 bg-violet-500/20 rounded-full blur-2xl scale-150" />
+                </div>
+                <p className="text-white/40 text-lg font-medium">No emergency contacts</p>
                 <p className="text-white/20 text-sm mt-1">Add people who should receive your messages</p>
               </div>
             ) : (
               <div className="space-y-3">
-                {contacts.map(c => (
-                  <div key={c.id} className="rounded-xl border border-white/[0.06] p-4 bg-white/[0.02] flex items-center justify-between group">
+                {contacts.map((c, i) => (
+                  <div key={c.id} className="rounded-2xl border border-white/[0.08] p-5 bg-white/[0.02] backdrop-blur-sm flex items-center justify-between group hover:bg-white/[0.04] transition-all duration-300 shadow-lg shadow-black/10" style={{ animation: `fadeInUp 0.4s ease ${i * 0.08}s both` }}>
                     <div>
-                      <h3 className="font-semibold text-sm">{c.name}</h3>
-                      <p className="text-white/30 text-xs">{c.email}</p>
-                      <span className="text-[10px] px-2 py-0.5 rounded bg-white/[0.04] text-white/40 mt-1 inline-block">{c.relation}</span>
+                      <h3 className="font-semibold text-sm text-white/90">{c.name}</h3>
+                      <p className="text-white/30 text-xs mt-0.5">{c.email}</p>
+                      <span className="text-[10px] px-2.5 py-1 rounded-full bg-white/[0.06] text-white/40 mt-2 inline-block border border-white/[0.06]">{c.relation}</span>
                     </div>
                     <button
                       onClick={() => deleteContact(c.id)}
-                      className="opacity-0 group-hover:opacity-100 text-white/20 hover:text-red-400 transition text-xs"
+                      className="opacity-0 group-hover:opacity-100 text-white/20 hover:text-red-400 transition-all duration-300 p-1"
                     >
                       ✕
                     </button>
@@ -331,16 +363,20 @@ export default function LastWords() {
 
         {/* Settings Tab */}
         {tab === 'settings' && (
-          <div className="space-y-4">
-            <div className="rounded-xl border border-white/[0.06] p-4 bg-white/[0.02]">
-              <h3 className="text-sm font-semibold mb-3">Inactivity Timer</h3>
-              <p className="text-white/30 text-xs mb-4">How many days of inactivity before messages are delivered</p>
-              <div className="grid grid-cols-3 gap-2">
+          <div className="space-y-5">
+            <div className="rounded-2xl border border-white/[0.08] p-5 bg-white/[0.02] backdrop-blur-sm shadow-lg shadow-black/10">
+              <h3 className="text-sm font-semibold text-white/80 mb-2 uppercase tracking-wider">Inactivity Timer</h3>
+              <p className="text-white/30 text-xs mb-5">How many days of inactivity before messages are delivered</p>
+              <div className="grid grid-cols-3 gap-3">
                 {TIMER_OPTIONS.map(opt => (
                   <button
                     key={opt.days}
                     onClick={() => setTimerDays(opt.days)}
-                    className={`px-4 py-3 rounded-xl text-sm font-medium transition ${timerDays === opt.days ? 'bg-gradient-to-r from-violet-500 to-purple-600' : 'border border-white/[0.06] text-white/40 hover:bg-white/[0.02]'}`}
+                    className={`px-4 py-3.5 rounded-xl text-sm font-medium transition-all duration-300 ${
+                      timerDays === opt.days
+                        ? 'bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 text-violet-300 border border-violet-500/30 shadow-lg shadow-violet-500/10'
+                        : 'border border-white/[0.06] text-white/40 hover:bg-white/[0.04] hover:text-white/60'
+                    }`}
                   >
                     {opt.label}
                   </button>
@@ -348,24 +384,42 @@ export default function LastWords() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-white/[0.06] p-4 bg-white/[0.02]">
-              <h3 className="text-sm font-semibold mb-2">How It Works</h3>
-              <ul className="text-white/30 text-xs space-y-2">
-                <li className="flex items-start gap-2"><span className="text-violet-400">1.</span> Write messages for your loved ones</li>
-                <li className="flex items-start gap-2"><span className="text-violet-400">2.</span> Add emergency contacts with emails</li>
-                <li className="flex items-start gap-2"><span className="text-violet-400">3.</span> Set your inactivity timer</li>
-                <li className="flex items-start gap-2"><span className="text-violet-400">4.</span> Log in regularly to keep the timer reset</li>
-                <li className="flex items-start gap-2"><span className="text-violet-400">5.</span> If you don't log in for {timerDays} days, messages are delivered</li>
+            <div className="rounded-2xl border border-white/[0.08] p-5 bg-white/[0.02] backdrop-blur-sm shadow-lg shadow-black/10">
+              <h3 className="text-sm font-semibold text-white/80 mb-3 uppercase tracking-wider">How It Works</h3>
+              <ul className="text-white/40 text-xs space-y-3">
+                {[
+                  'Write messages for your loved ones',
+                  'Add emergency contacts with emails',
+                  'Set your inactivity timer',
+                  'Log in regularly to keep the timer reset',
+                  `If you don't log in for ${timerDays} days, messages are delivered`,
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <span className="w-5 h-5 rounded-full bg-violet-500/20 text-violet-400 text-[10px] flex items-center justify-center flex-shrink-0 font-bold">{i + 1}</span>
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
 
-            <div className="rounded-xl border border-amber-500/20 p-4 bg-amber-500/5">
-              <p className="text-amber-400 text-xs font-semibold mb-1">⚠️ Important</p>
-              <p className="text-white/30 text-xs">This is a local demo. In production, a server-side cron would monitor inactivity and trigger email delivery. Currently, the timer is client-side only.</p>
+            <div className="rounded-2xl border border-amber-500/20 p-5 bg-amber-500/[0.03] backdrop-blur-sm">
+              <p className="text-amber-400 text-xs font-bold mb-2 uppercase tracking-wider">⚠️ Important</p>
+              <p className="text-white/30 text-xs leading-relaxed">This is a local demo. In production, a server-side cron would monitor inactivity and trigger email delivery. Currently, the timer is client-side only.</p>
             </div>
           </div>
         )}
       </div>
+
+      <style jsx global>{`
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(12px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+          from { opacity: 0; transform: translateY(-12px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </main>
   )
 }

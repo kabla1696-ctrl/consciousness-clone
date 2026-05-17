@@ -21,10 +21,10 @@ interface Story {
 }
 
 const STYLES = [
-  { id: 'novel', label: 'Novel', icon: '📖', desc: 'Literary narrative' },
-  { id: 'poem', label: 'Poem', icon: '🪶', desc: 'Verse & rhythm' },
-  { id: 'letter', label: 'Letter', icon: '✉️', desc: 'Personal epistolary' },
-  { id: 'news', label: 'News', icon: '📰', desc: 'Journalistic piece' },
+  { id: 'novel', label: 'Novel', icon: '📖', desc: 'Literary narrative', gradient: 'from-amber-500/20 to-orange-500/20', border: 'border-amber-500/30', glow: 'shadow-amber-500/20' },
+  { id: 'poem', label: 'Poem', icon: '🪶', desc: 'Verse & rhythm', gradient: 'from-violet-500/20 to-purple-500/20', border: 'border-violet-500/30', glow: 'shadow-violet-500/20' },
+  { id: 'letter', label: 'Letter', icon: '✉️', desc: 'Personal epistolary', gradient: 'from-rose-500/20 to-pink-500/20', border: 'border-rose-500/30', glow: 'shadow-rose-500/20' },
+  { id: 'news', label: 'News', icon: '📰', desc: 'Journalistic piece', gradient: 'from-cyan-500/20 to-blue-500/20', border: 'border-cyan-500/30', glow: 'shadow-cyan-500/20' },
 ]
 
 export default function MemoryStories() {
@@ -137,32 +137,42 @@ export default function MemoryStories() {
   if (!user) {
     return (
       <main className="min-h-screen bg-[#050510] flex items-center justify-center">
-        <div className="text-white/40">Loading...</div>
+        <div className="relative">
+          <div className="w-12 h-12 rounded-full border-2 border-rose-500/30 border-t-rose-400 animate-spin" />
+          <div className="absolute inset-0 w-12 h-12 rounded-full border-2 border-amber-500/20 border-b-amber-400 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }} />
+        </div>
       </main>
     )
   }
 
   return (
-    <main className="min-h-screen flex flex-col bg-[#050510] page-transition">
+    <main className="min-h-screen flex flex-col bg-[#050510] page-transition relative overflow-hidden">
+      {/* Animated background orbs */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-rose-600/[0.06] blur-[120px] animate-pulse" />
+        <div className="absolute top-1/2 -left-24 w-80 h-80 rounded-full bg-amber-600/[0.05] blur-[100px] animate-pulse" style={{ animationDelay: '1.5s' }} />
+        <div className="absolute -bottom-20 right-1/4 w-72 h-72 rounded-full bg-violet-600/[0.05] blur-[100px] animate-pulse" style={{ animationDelay: '2.5s' }} />
+      </div>
+
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#050510]/95 backdrop-blur-xl border-b border-white/[0.04] safe-top">
+      <header className="sticky top-0 z-50 bg-[#050510]/80 backdrop-blur-2xl border-b border-white/[0.06] safe-top">
         <div className="px-4 py-3 flex items-center gap-3">
-          <Link href="/dashboard" className="tap-feedback p-1">
-            <svg className="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <Link href="/dashboard" className="tap-feedback p-1 group">
+            <svg className="w-6 h-6 text-white/50 group-hover:text-rose-400 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </Link>
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-sm">📖</div>
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-rose-500 to-amber-500 flex items-center justify-center text-sm shadow-lg shadow-rose-500/25">📖</div>
           <div className="flex-1">
-            <h1 className="text-sm font-bold">Memory Stories</h1>
-            <p className="text-[10px] text-violet-400 flex items-center gap-1">
-              <span className="w-1.5 h-1.5 bg-violet-400 rounded-full" />
+            <h1 className="text-sm font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Memory Stories</h1>
+            <p className="text-[10px] text-rose-400 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 bg-rose-400 rounded-full animate-pulse" />
               Memories turned into art
             </p>
           </div>
           <button
             onClick={() => setShowStories(!showStories)}
-            className="text-white/40 hover:text-violet-400 transition p-1"
+            className="text-white/40 hover:text-rose-400 transition-all duration-300 p-2 rounded-xl hover:bg-rose-500/10"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
@@ -171,28 +181,28 @@ export default function MemoryStories() {
         </div>
       </header>
 
-      <div className="flex-1 px-4 py-6 max-w-3xl mx-auto w-full">
+      <div className="flex-1 px-4 py-6 max-w-3xl mx-auto w-full relative z-10">
         {/* Story Collection */}
         {showStories && (
-          <div className="mb-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden">
-            <div className="px-4 py-3 border-b border-white/[0.04] flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-white/80">Story Collection</h3>
-              <span className="text-xs text-white/30">{stories.length} stories</span>
+          <div className="mb-6 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl overflow-hidden shadow-2xl shadow-rose-500/[0.03]">
+            <div className="px-4 py-3 border-b border-white/[0.06] flex items-center justify-between bg-gradient-to-r from-rose-500/[0.06] to-transparent">
+              <h3 className="text-sm font-semibold text-white/90">Story Collection</h3>
+              <span className="text-xs text-rose-400/70 bg-rose-500/10 px-2 py-0.5 rounded-full">{stories.length} stories</span>
             </div>
             <div className="max-h-64 overflow-y-auto">
               {stories.length === 0 ? (
-                <p className="text-white/30 text-sm p-4 text-center">No stories yet</p>
+                <p className="text-white/30 text-sm p-6 text-center">No stories yet</p>
               ) : (
                 stories.map(s => (
-                  <div key={s.id} className="px-4 py-3 border-b border-white/[0.03] flex items-center gap-3 hover:bg-white/[0.02] transition">
+                  <div key={s.id} className="px-4 py-3 border-b border-white/[0.04] flex items-center gap-3 hover:bg-white/[0.04] transition-all duration-200 group">
                     <button
                       onClick={() => { setCurrentStory(s.story); setSelectedStyle(s.style); setShowStories(false) }}
                       className="flex-1 text-left"
                     >
-                      <p className="text-sm text-white/70 font-medium truncate">{s.memoryContent.slice(0, 60)}...</p>
+                      <p className="text-sm text-white/70 font-medium truncate group-hover:text-rose-300 transition-colors">{s.memoryContent.slice(0, 60)}...</p>
                       <p className="text-xs text-white/30 capitalize">{s.style} · {new Date(s.created_at).toLocaleDateString()}</p>
                     </button>
-                    <button onClick={() => deleteStory(s.id)} className="text-white/20 hover:text-red-400 transition p-1">
+                    <button onClick={() => deleteStory(s.id)} className="text-white/20 hover:text-red-400 transition-colors p-1.5 rounded-lg hover:bg-red-500/10">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                       </svg>
@@ -206,23 +216,23 @@ export default function MemoryStories() {
 
         {/* Memory Selector */}
         <div className="mb-4">
-          <label className="text-xs text-white/40 mb-2 block uppercase tracking-wider">Select a Memory</label>
+          <label className="text-xs text-white/40 mb-2 block uppercase tracking-wider font-medium">Select a Memory</label>
           <button
             onClick={() => setShowPicker(!showPicker)}
-            className="w-full px-4 py-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-left hover:border-violet-500/30 transition"
+            className="w-full px-4 py-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-left hover:border-rose-500/30 transition-all duration-300 backdrop-blur-xl group"
           >
             {selectedMemory ? (
               <div>
                 <p className="text-sm text-white/80 truncate">{selectedMemory.content}</p>
-                <p className="text-xs text-violet-400 capitalize mt-0.5">{selectedMemory.category}</p>
+                <p className="text-xs text-rose-400 capitalize mt-0.5">{selectedMemory.category}</p>
               </div>
             ) : (
-              <p className="text-white/30 text-sm">Choose a memory to transform...</p>
+              <p className="text-white/30 text-sm group-hover:text-white/40 transition-colors">Choose a memory to transform...</p>
             )}
           </button>
 
           {showPicker && (
-            <div className="mt-2 rounded-xl border border-white/[0.06] bg-[#0a0a1a] max-h-48 overflow-y-auto">
+            <div className="mt-2 rounded-xl border border-white/[0.08] bg-[#0a0a1a]/90 backdrop-blur-2xl max-h-48 overflow-y-auto shadow-2xl shadow-black/50">
               {memories.length === 0 ? (
                 <p className="text-white/30 text-sm p-4 text-center">No memories found</p>
               ) : (
@@ -230,9 +240,9 @@ export default function MemoryStories() {
                   <button
                     key={m.id}
                     onClick={() => { setSelectedMemory(m); setShowPicker(false) }}
-                    className="w-full px-4 py-3 text-left border-b border-white/[0.03] hover:bg-white/[0.03] transition"
+                    className="w-full px-4 py-3 text-left border-b border-white/[0.04] hover:bg-white/[0.05] transition-all duration-200 group"
                   >
-                    <p className="text-sm text-white/70 truncate">{m.content}</p>
+                    <p className="text-sm text-white/70 truncate group-hover:text-white/90 transition-colors">{m.content}</p>
                     <p className="text-xs text-white/30 capitalize">{m.category}</p>
                   </button>
                 ))
@@ -243,21 +253,24 @@ export default function MemoryStories() {
 
         {/* Style Selector */}
         <div className="mb-6">
-          <label className="text-xs text-white/40 mb-2 block uppercase tracking-wider">Story Style</label>
+          <label className="text-xs text-white/40 mb-2 block uppercase tracking-wider font-medium">Story Style</label>
           <div className="grid grid-cols-2 gap-2">
             {STYLES.map(style => (
               <button
                 key={style.id}
                 onClick={() => setSelectedStyle(style.id)}
-                className={`p-3 rounded-xl text-left transition ${
+                className={`p-3.5 rounded-xl text-left transition-all duration-300 relative overflow-hidden ${
                   selectedStyle === style.id
-                    ? 'bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 border border-violet-500/40'
-                    : 'bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.1]'
+                    ? `bg-gradient-to-r ${style.gradient} border ${style.border} shadow-lg ${style.glow}`
+                    : 'bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.05]'
                 }`}
               >
-                <span className="text-lg">{style.icon}</span>
-                <p className="text-sm font-medium text-white/80 mt-1">{style.label}</p>
-                <p className="text-xs text-white/30">{style.desc}</p>
+                {selectedStyle === style.id && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/[0.03] to-transparent" />
+                )}
+                <span className="text-lg relative z-10">{style.icon}</span>
+                <p className="text-sm font-medium text-white/80 mt-1 relative z-10">{style.label}</p>
+                <p className="text-xs text-white/30 relative z-10">{style.desc}</p>
               </button>
             ))}
           </div>
@@ -267,30 +280,31 @@ export default function MemoryStories() {
         <button
           onClick={generateStory}
           disabled={generating || !selectedMemory}
-          className="w-full py-4 rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-500 font-semibold text-white hover:opacity-90 transition disabled:opacity-30 flex items-center justify-center gap-2 mb-6"
+          className="w-full py-4 rounded-2xl bg-gradient-to-r from-rose-500 to-amber-500 font-semibold text-white transition-all duration-300 disabled:opacity-30 flex items-center justify-center gap-2 mb-6 shadow-lg shadow-rose-500/25 hover:shadow-xl hover:shadow-rose-500/30 hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden group"
         >
+          <div className="absolute inset-0 bg-gradient-to-r from-rose-400 to-amber-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           {generating ? (
             <>
-              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              Writing Story...
+              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin relative z-10" />
+              <span className="relative z-10">Writing Story...</span>
             </>
           ) : (
             <>
-              <span>✨</span> Transform into Story
+              <span className="relative z-10">✨</span> <span className="relative z-10">Transform into Story</span>
             </>
           )}
         </button>
 
         {/* Story Display */}
         {currentStory && (
-          <div className="rounded-2xl border border-white/[0.06] bg-gradient-to-b from-violet-500/5 to-transparent overflow-hidden">
-            <div className="px-4 py-3 border-b border-white/[0.04] flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-white/80 capitalize">
+          <div className="rounded-2xl border border-white/[0.08] bg-gradient-to-b from-rose-500/[0.06] via-white/[0.02] to-transparent backdrop-blur-xl overflow-hidden shadow-2xl shadow-rose-500/[0.03]">
+            <div className="px-4 py-3 border-b border-white/[0.06] flex items-center justify-between bg-gradient-to-r from-rose-500/[0.06] to-transparent">
+              <h3 className="text-sm font-semibold text-white/90 capitalize">
                 {STYLES.find(s => s.id === selectedStyle)?.icon} {STYLES.find(s => s.id === selectedStyle)?.label}
               </h3>
               <button
                 onClick={downloadStory}
-                className="flex items-center gap-1.5 text-xs text-violet-400 hover:text-violet-300 transition"
+                className="flex items-center gap-1.5 text-xs text-rose-400 hover:text-rose-300 transition-all duration-200 px-2.5 py-1 rounded-lg hover:bg-rose-500/10"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -308,10 +322,10 @@ export default function MemoryStories() {
 
         {/* Empty State */}
         {!currentStory && !generating && (
-          <div className="text-center py-12">
-            <div className="text-4xl mb-3">📝</div>
-            <p className="text-white/30 text-sm">Select a memory and style to create a story</p>
-            <p className="text-white/20 text-xs mt-1">Your memories, reimagined as literature</p>
+          <div className="text-center py-16">
+            <div className="text-5xl mb-4 animate-bounce">📝</div>
+            <p className="text-white/40 text-sm font-medium">Select a memory and style to create a story</p>
+            <p className="text-white/20 text-xs mt-1.5">Your memories, reimagined as literature</p>
           </div>
         )}
       </div>

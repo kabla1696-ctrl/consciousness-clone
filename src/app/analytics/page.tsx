@@ -7,24 +7,41 @@ import { supabase } from '../../lib/supabase-browser'
 function Particles() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-      {Array.from({ length: 15 }).map((_, i) => (
+      {Array.from({ length: 20 }).map((_, i) => (
         <div
           key={i}
-          className="particle"
+          className="absolute rounded-full"
           style={{
-            width: `${Math.random() * 2.5 + 1}px`,
-            height: `${Math.random() * 2.5 + 1}px`,
+            width: `${Math.random() * 3 + 1}px`,
+            height: `${Math.random() * 3 + 1}px`,
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
-            background: i % 3 === 0 ? '#8b5cf6' : i % 3 === 1 ? '#d946ef' : '#06b6d4',
-            '--duration': `${Math.random() * 12 + 8}s`,
-            '--delay': `${Math.random() * 6}s`,
-          } as React.CSSProperties}
+            background: i % 4 === 0 ? '#8b5cf6' : i % 4 === 1 ? '#d946ef' : i % 4 === 2 ? '#06b6d4' : '#f59e0b',
+            opacity: 0.4 + Math.random() * 0.3,
+            animation: `particleFloat ${8 + Math.random() * 14}s ease-in-out infinite`,
+            animationDelay: `${Math.random() * 8}s`,
+          }}
         />
       ))}
-      <div className="ambient-orb ambient-orb-violet" style={{ width: 400, height: 400, top: '-5%', right: '-10%' }} />
-      <div className="ambient-orb ambient-orb-fuchsia" style={{ width: 300, height: 300, bottom: '20%', left: '-5%' }} />
-      <div className="ambient-orb ambient-orb-cyan" style={{ width: 200, height: 200, top: '50%', right: '20%' }} />
+      {/* Ambient orbs */}
+      <div className="absolute w-[500px] h-[500px] rounded-full opacity-[0.07] blur-[120px] animate-pulse" style={{ background: 'radial-gradient(circle, #8b5cf6, transparent)', top: '-10%', right: '-10%' }} />
+      <div className="absolute w-[400px] h-[400px] rounded-full opacity-[0.05] blur-[100px] animate-pulse" style={{ background: 'radial-gradient(circle, #d946ef, transparent)', bottom: '10%', left: '-5%', animationDelay: '3s' }} />
+      <div className="absolute w-[300px] h-[300px] rounded-full opacity-[0.04] blur-[80px] animate-pulse" style={{ background: 'radial-gradient(circle, #06b6d4, transparent)', top: '40%', right: '15%', animationDelay: '6s' }} />
+    </div>
+  )
+}
+
+function GlowCard({ children, className = '', glowColor = 'violet' }: { children: React.ReactNode; className?: string; glowColor?: string }) {
+  const colors: Record<string, string> = {
+    violet: 'hover:shadow-[0_0_40px_rgba(139,92,246,0.15)]',
+    fuchsia: 'hover:shadow-[0_0_40px_rgba(217,70,239,0.15)]',
+    cyan: 'hover:shadow-[0_0_40px_rgba(6,182,212,0.15)]',
+    amber: 'hover:shadow-[0_0_40px_rgba(245,158,11,0.15)]',
+  }
+  return (
+    <div className={`relative group rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl transition-all duration-500 ${colors[glowColor] || colors.violet} ${className}`}>
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="relative">{children}</div>
     </div>
   )
 }
@@ -87,8 +104,11 @@ export default function Analytics() {
 
   if (!user) {
     return (
-      <main className="min-h-screen animated-gradient-bg flex items-center justify-center">
-        <div className="w-10 h-10 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+      <main className="min-h-screen flex items-center justify-center" style={{ background: '#050510' }}>
+        <div className="relative">
+          <div className="w-12 h-12 border-2 border-violet-500/30 border-t-violet-400 rounded-full animate-spin" />
+          <div className="absolute inset-0 w-12 h-12 rounded-full bg-violet-500/10 blur-xl animate-pulse" />
+        </div>
       </main>
     )
   }
@@ -96,22 +116,27 @@ export default function Analytics() {
   const maxCategoryCount = Math.max(...Object.values(stats.categoryBreakdown), 1)
 
   const statCards = [
-    { label: 'Total Memories', value: stats.totalMemories, color: 'text-violet-400', icon: '📝' },
-    { label: 'Chat Messages', value: stats.totalChats, color: 'text-fuchsia-400', icon: '💬' },
-    { label: 'Categories Used', value: Object.keys(stats.categoryBreakdown).length, color: 'text-cyan-400', icon: '📂' },
-    { label: 'Moods Tracked', value: Object.keys(stats.moodBreakdown).length, color: 'text-amber-400', icon: '🎭' },
+    { label: 'Total Memories', value: stats.totalMemories, gradient: 'from-violet-500 to-violet-400', icon: '📝', glow: 'violet' },
+    { label: 'Chat Messages', value: stats.totalChats, gradient: 'from-fuchsia-500 to-pink-400', icon: '💬', glow: 'fuchsia' },
+    { label: 'Categories Used', value: Object.keys(stats.categoryBreakdown).length, gradient: 'from-cyan-500 to-teal-400', icon: '📂', glow: 'cyan' },
+    { label: 'Moods Tracked', value: Object.keys(stats.moodBreakdown).length, gradient: 'from-amber-500 to-yellow-400', icon: '🎭', glow: 'amber' },
   ]
 
   return (
-    <main className="min-h-screen animated-gradient-bg noise-overlay">
+    <main className="min-h-screen relative" style={{ background: '#050510' }}>
       <Particles />
 
+      {/* Animated gradient lines */}
+      <div className="fixed top-0 left-0 right-0 h-px z-50">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-violet-500/50 to-transparent animate-[shimmer_3s_ease-in-out_infinite]" />
+      </div>
+
       {/* Navbar */}
-      <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(5, 5, 16, 0.8)', backdropFilter: 'blur(40px)', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+      <nav className="fixed top-0 w-full z-50 bg-[#050510]/70 backdrop-blur-2xl border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <Link href="/dashboard" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/20 group-hover:shadow-violet-500/40 transition-shadow">🧠</div>
-            <span className="text-lg font-bold gradient-text">Consciousness Clone</span>
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/25 group-hover:shadow-violet-500/40 group-hover:scale-105 transition-all duration-300">🧠</div>
+            <span className="text-lg font-bold bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">Consciousness Clone</span>
           </Link>
           <div className="flex gap-6 items-center">
             {[
@@ -119,80 +144,93 @@ export default function Analytics() {
               { href: '/chat', label: 'Chat' },
               { href: '/memories', label: 'Memories' },
             ].map(link => (
-              <Link key={link.href} href={link.href} className="text-sm text-white/30 hover:text-white transition-all duration-300 hover:glow-text">
+              <Link key={link.href} href={link.href} className="text-sm text-white/30 hover:text-white transition-all duration-300 relative group">
                 {link.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-gradient-to-r from-violet-500 to-fuchsia-500 group-hover:w-full transition-all duration-300" />
               </Link>
             ))}
           </div>
         </div>
       </nav>
 
-      <div className="pt-24 px-6 max-w-6xl mx-auto relative z-10 pb-12">
+      <div className="pt-24 px-6 max-w-6xl mx-auto relative z-10 pb-16">
         {/* Header */}
-        <div className="mb-10 animate-slide-up">
-          <h1 className="text-5xl font-black gradient-text mb-2">Clone Analytics</h1>
+        <div className="mb-12 animate-[fadeInUp_0.6s_ease-out]">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 mb-4">
+            <div className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
+            <span className="text-xs text-violet-300/80">Live Analytics</span>
+          </div>
+          <h1 className="text-5xl md:text-6xl font-black mb-3">
+            <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">Clone Analytics</span>
+          </h1>
           <p className="text-white/25 text-lg">Understand your digital consciousness</p>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 stagger-children">
-          {statCards.map((stat) => (
-            <div key={stat.label} className="glass-card p-6 text-center hover-lift group">
-              <div className="text-2xl mb-2 group-hover:scale-110 transition-transform">{stat.icon}</div>
-              <div className={`text-4xl font-black ${stat.color} mb-1`}>{stat.value}</div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+          {statCards.map((stat, i) => (
+            <GlowCard key={stat.label} glowColor={stat.glow} className="p-6 text-center">
+              <div className="absolute -top-8 -right-8 w-24 h-24 rounded-full bg-gradient-to-br opacity-[0.08] blur-2xl" style={{ background: `radial-gradient(circle, ${stat.glow === 'violet' ? '#8b5cf6' : stat.glow === 'fuchsia' ? '#d946ef' : stat.glow === 'cyan' ? '#06b6d4' : '#f59e0b'}, transparent)` }} />
+              <div className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">{stat.icon}</div>
+              <div className={`text-4xl md:text-5xl font-black bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent mb-2`}>{stat.value}</div>
               <div className="text-white/25 text-xs font-medium uppercase tracking-wider">{stat.label}</div>
-            </div>
+            </GlowCard>
           ))}
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 mb-10">
+        <div className="grid md:grid-cols-2 gap-6 mb-12">
           {/* Category Breakdown */}
-          <div className="glass-card p-8 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-violet-500/5 rounded-full blur-3xl" />
-            <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-              <span className="text-lg">📝</span> Memory Categories
+          <GlowCard glowColor="violet" className="p-8">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/5 rounded-full blur-3xl" />
+            <h2 className="text-xl font-bold mb-8 flex items-center gap-3">
+              <span className="w-8 h-8 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-sm">📝</span>
+              <span className="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Memory Categories</span>
             </h2>
             {stats.topCategories.length === 0 ? (
               <p className="text-white/20 text-center py-12 text-sm">No memories yet. Start adding some!</p>
             ) : (
-              <div className="space-y-5 stagger-children">
-                {stats.topCategories.map(([category, count]) => (
+              <div className="space-y-6">
+                {stats.topCategories.map(([category, count], i) => (
                   <div key={category} className="group">
-                    <div className="flex justify-between text-sm mb-2">
+                    <div className="flex justify-between text-sm mb-2.5">
                       <span className="text-white/60 capitalize font-medium">{category.replace('_', ' ')}</span>
-                      <span className="text-white/30 font-mono">{count}</span>
+                      <span className="text-white/30 font-mono text-xs">{count}</span>
                     </div>
-                    <div className="w-full h-2.5 bg-white/[0.04] rounded-full overflow-hidden">
+                    <div className="w-full h-3 bg-white/[0.03] rounded-full overflow-hidden border border-white/[0.04]">
                       <div
-                        className="h-full rounded-full transition-all duration-1000 ease-out premium-progress"
+                        className="h-full rounded-full transition-all duration-1000 ease-out relative overflow-hidden"
                         style={{
                           width: `${(count / maxCategoryCount) * 100}%`,
-                          background: 'linear-gradient(90deg, #8b5cf6, #d946ef)',
+                          background: 'linear-gradient(90deg, #8b5cf6, #d946ef, #06b6d4)',
+                          animationDelay: `${i * 0.15}s`,
                         }}
-                      />
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-[shimmer_2s_ease-in-out_infinite]" />
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
             )}
-          </div>
+          </GlowCard>
 
           {/* Mood Distribution */}
-          <div className="glass-card p-8 relative overflow-hidden">
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-fuchsia-500/5 rounded-full blur-3xl" />
-            <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-              <span className="text-lg">😊</span> Mood Distribution
+          <GlowCard glowColor="fuchsia" className="p-8">
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-fuchsia-500/5 rounded-full blur-3xl" />
+            <h2 className="text-xl font-bold mb-8 flex items-center gap-3">
+              <span className="w-8 h-8 rounded-lg bg-fuchsia-500/10 border border-fuchsia-500/20 flex items-center justify-center text-sm">😊</span>
+              <span className="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Mood Distribution</span>
             </h2>
             {Object.keys(stats.moodBreakdown).length === 0 ? (
               <p className="text-white/20 text-center py-12 text-sm">No mood data yet</p>
             ) : (
-              <div className="flex flex-wrap gap-3 stagger-children">
+              <div className="flex flex-wrap gap-3">
                 {Object.entries(stats.moodBreakdown)
                   .sort(([, a], [, b]) => b - a)
                   .map(([mood, count]) => (
                     <div
                       key={mood}
-                      className="flex items-center gap-2 px-4 py-2.5 rounded-xl glass-card hover:border-violet-500/20 transition-all duration-300 hover:scale-105 cursor-default"
+                      className="flex items-center gap-2.5 px-4 py-3 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:border-fuchsia-500/30 hover:bg-fuchsia-500/5 hover:shadow-[0_0_20px_rgba(217,70,239,0.1)] transition-all duration-300 hover:scale-105 cursor-default"
                     >
                       <span className="text-2xl">{mood}</span>
                       <span className="text-white/40 text-sm font-mono">×{count}</span>
@@ -200,87 +238,107 @@ export default function Analytics() {
                   ))}
               </div>
             )}
-          </div>
+          </GlowCard>
         </div>
 
         {/* Recent Activity */}
-        <div className="glass-card p-8 mb-6 relative overflow-hidden">
-          <div className="absolute top-0 left-1/2 w-32 h-32 bg-cyan-500/5 rounded-full blur-3xl -translate-x-1/2" />
-          <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-            <span className="text-lg">🕐</span> Recent Activity
+        <GlowCard glowColor="cyan" className="p-8 mb-12">
+          <div className="absolute top-0 left-1/2 w-40 h-40 bg-cyan-500/5 rounded-full blur-3xl -translate-x-1/2" />
+          <h2 className="text-xl font-bold mb-8 flex items-center gap-3">
+            <span className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-sm">🕐</span>
+            <span className="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Recent Activity</span>
           </h2>
           {stats.recentActivity.length === 0 ? (
             <p className="text-white/20 text-center py-12 text-sm">No activity yet</p>
           ) : (
-            <div className="space-y-2 stagger-children">
+            <div className="space-y-2">
               {stats.recentActivity.map((item: any, i: number) => (
                 <div
                   key={i}
-                  className="flex items-center gap-4 py-3 px-4 rounded-xl hover:bg-white/[0.02] transition-all duration-300 group"
+                  className="flex items-center gap-4 py-3.5 px-4 rounded-xl hover:bg-white/[0.02] border border-transparent hover:border-white/[0.04] transition-all duration-300 group"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500/10 to-fuchsia-500/10 border border-violet-500/10 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-violet-500/10 to-fuchsia-500/10 border border-violet-500/10 flex items-center justify-center text-xl group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(139,92,246,0.15)] transition-all duration-300">
                     {item.role ? '💬' : item.mood || '📝'}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-white/50 text-sm truncate">
+                    <p className="text-white/50 text-sm truncate group-hover:text-white/70 transition-colors">
                       {item.role ? `Chat: ${item.content}` : `Memory: ${item.content}`}
                     </p>
                     <p className="text-white/15 text-xs mt-1">
                       {item.category && `${item.category} • `}{new Date(item.created_at).toLocaleDateString()}
                     </p>
                   </div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-violet-400/0 group-hover:bg-violet-400/60 transition-all duration-300" />
                 </div>
               ))}
             </div>
           )}
-        </div>
+        </GlowCard>
 
         {/* Insights */}
-        <div className="gradient-border-card p-8 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/5 rounded-full blur-3xl" />
-          <h2 className="text-xl font-bold mb-5 flex items-center gap-2">
-            <span className="text-lg">💡</span> Clone Insights
+        <GlowCard glowColor="violet" className="p-8">
+          <div className="absolute top-0 right-0 w-40 h-40 bg-violet-500/5 rounded-full blur-3xl" />
+          <h2 className="text-xl font-bold mb-6 flex items-center gap-3">
+            <span className="w-8 h-8 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-sm">💡</span>
+            <span className="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Clone Insights</span>
           </h2>
-          <div className="space-y-3 text-white/40 text-sm stagger-children">
+          <div className="space-y-3 text-white/40 text-sm">
             {stats.totalMemories < 5 && (
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.01]">
-                <span>📝</span>
+              <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.01] border border-white/[0.04] hover:border-violet-500/20 transition-all duration-300">
+                <span className="text-lg">📝</span>
                 <p>Add more memories to help your clone understand you better!</p>
               </div>
             )}
             {stats.totalMemories >= 5 && stats.totalMemories < 20 && (
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.01]">
-                <span>🧬</span>
+              <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.01] border border-white/[0.04] hover:border-violet-500/20 transition-all duration-300">
+                <span className="text-lg">🧬</span>
                 <p>Your clone is learning! Keep adding memories to deepen its understanding.</p>
               </div>
             )}
             {stats.totalMemories >= 20 && (
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.01]">
-                <span>✨</span>
+              <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.01] border border-white/[0.04] hover:border-violet-500/20 transition-all duration-300">
+                <span className="text-lg">✨</span>
                 <p>Your clone has a solid foundation of memories. It can now respond more authentically!</p>
               </div>
             )}
             {stats.totalChats > 10 && (
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.01]">
-                <span>💬</span>
+              <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.01] border border-white/[0.04] hover:border-violet-500/20 transition-all duration-300">
+                <span className="text-lg">💬</span>
                 <p>Great conversation history! Your clone is getting better at matching your style.</p>
               </div>
             )}
             {Object.keys(stats.categoryBreakdown).length < 3 && (
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.01]">
-                <span>🌈</span>
+              <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.01] border border-white/[0.04] hover:border-violet-500/20 transition-all duration-300">
+                <span className="text-lg">🌈</span>
                 <p>Try adding memories from different categories for a more well-rounded clone.</p>
               </div>
             )}
             {stats.topCategories.length > 0 && (
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.01]">
-                <span>📊</span>
+              <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.01] border border-white/[0.04] hover:border-violet-500/20 transition-all duration-300">
+                <span className="text-lg">📊</span>
                 <p>Your most documented area is <strong className="text-white/60">{stats.topCategories[0][0].replace('_', ' ')}</strong> with {stats.topCategories[0][1]} memories.</p>
               </div>
             )}
           </div>
-        </div>
+        </GlowCard>
       </div>
+
+      <style jsx global>{`
+        @keyframes particleFloat {
+          0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+          25% { transform: translateY(-30px) translateX(15px); opacity: 0.6; }
+          50% { transform: translateY(-15px) translateX(-10px); opacity: 0.4; }
+          75% { transform: translateY(-40px) translateX(20px); opacity: 0.5; }
+        }
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(200%); }
+        }
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </main>
   )
 }
