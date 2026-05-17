@@ -47,6 +47,7 @@ export default function CloneFeed() {
   const [showShare, setShowShare] = useState<string | null>(null)
   const [postType, setPostType] = useState<'text' | 'image' | 'video'>('text')
   const [isMemorial, setIsMemorial] = useState(false)
+  const [profilePic, setProfilePic] = useState<string | null>(null)
   const [profile] = useState<Profile>({ name: 'Abir', avatar: '🧠', bio: 'Building something that will outlive me. 🚀', followers: 1247, following: 89, posts: posts.filter(p => p.type === 'user').length, isClone: false, soulScore: 94, mood: '🔥 Motivated' })
   const [showStoryViewer, setShowStoryViewer] = useState(false)
   const [currentStoryIdx, setCurrentStoryIdx] = useState(0)
@@ -54,6 +55,8 @@ export default function CloneFeed() {
   useEffect(() => {
     const saved = localStorage.getItem('cc_clone_feed')
     if (saved) { const d = JSON.parse(saved); if (d.posts) setPosts(d.posts); if (d.stories) setStories(d.stories); if (d.followers) setFollowers(d.followers) }
+    const pic = localStorage.getItem('cc_profile_pic')
+    if (pic) setProfilePic(pic)
   }, [])
 
   const save = (p: Post[], s: Story[], f: Follower[]) => {
@@ -105,7 +108,7 @@ export default function CloneFeed() {
   return (
     <main className="min-h-screen bg-[#050510] page-transition" style={{ background: 'linear-gradient(135deg, #050510, #080818, #0d0520)' }}>
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        {[...Array(10)].map((_, i) => <div key={i} className="absolute rounded-full" style={{ width: Math.random() * 3 + 1 + 'px', height: Math.random() * 3 + 1 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', background: 'rgba(139,92,246,0.2)', animation: `float${i % 3} ${10 + Math.random() * 10}s ease-in-out infinite`, animationDelay: Math.random() * 5 + 's' }} />)}
+        {[...Array(4)].map((_, i) => <div key={i} className="absolute rounded-full" style={{ width: Math.random() * 3 + 1 + 'px', height: Math.random() * 3 + 1 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', background: 'rgba(139,92,246,0.2)', animation: `float${i % 3} ${10 + Math.random() * 10}s ease-in-out infinite`, animationDelay: Math.random() * 5 + 's' }} />)}
       </div>
 
       {/* Header */}
@@ -117,7 +120,7 @@ export default function CloneFeed() {
             <span className="font-bold text-base bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-pink-400">Clone Social</span>
           </div>
           <div className="flex gap-2">
-            <button onClick={() => setTab('create')} className="w-8 h-8 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center text-sm tap-feedback">✏️</button>
+            <button onClick={() => setTab('create')} className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-violet-500 to-pink-500 text-white text-xs font-bold tap-feedback" style={{ boxShadow: '0 0 15px rgba(139,92,246,0.3)' }}>✏️ Post</button>
             <button onClick={() => setTab('story')} className="w-8 h-8 rounded-lg bg-pink-500/20 border border-pink-500/30 flex items-center justify-center text-sm tap-feedback">📸</button>
           </div>
         </div>
@@ -239,7 +242,22 @@ export default function CloneFeed() {
         {tab === 'profile' && (
           <>
             <div className="text-center mb-6">
-              <div className="w-24 h-24 rounded-3xl flex items-center justify-center text-5xl mx-auto mb-3" style={{ background: 'rgba(139,92,246,0.1)', boxShadow: '0 0 30px rgba(139,92,246,0.15)' }}>{profile.avatar}</div>
+              <div className="relative inline-block">
+                <div className="w-24 h-24 rounded-3xl flex items-center justify-center text-5xl mx-auto mb-3" style={{ background: 'rgba(139,92,246,0.1)', boxShadow: '0 0 30px rgba(139,92,246,0.15)' }}>
+                  {profilePic ? <img src={profilePic} alt="Profile" className="w-full h-full rounded-3xl object-cover" /> : profile.avatar}
+                </div>
+                <label className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-violet-500 border-2 border-[#050510] flex items-center justify-center text-xs cursor-pointer tap-feedback shadow-lg">
+                  📷
+                  <input type="file" accept="image/*" className="hidden" onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) {
+                      const reader = new FileReader()
+                      reader.onloadend = () => { setProfilePic(reader.result as string); localStorage.setItem('cc_profile_pic', reader.result as string) }
+                      reader.readAsDataURL(file)
+                    }
+                  }} />
+                </label>
+              </div>
               <h2 className="text-xl font-bold">{profile.name}</h2>
               <p className="text-white/40 text-sm">{profile.bio}</p>
               <div className="flex items-center justify-center gap-2 mt-2">

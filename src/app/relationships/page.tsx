@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { useT } from '../../lib/language-context'
 
 interface Person {
   id: string
@@ -27,6 +28,7 @@ const RELATIONS = ['Mother', 'Father', 'Brother', 'Sister', 'Spouse', 'Child', '
 const EMOJIS: Record<string, string> = { Mother: '👩', Father: '👨', Brother: '👦', Sister: '👧', Spouse: '💑', Child: '👶', 'Best Friend': '🫂', Friend: '👋', Colleague: '💼', Teacher: '📚', Uncle: '👴', Aunt: '👵', Cousin: '🧑', Neighbor: '🏠', Ex: '💔', Enemy: '😠', Other: '👤' }
 
 export default function Relationships() {
+  const t = useT()
   const [people, setPeople] = useState<Person[]>([])
   const [showForm, setShowForm] = useState(false)
   const [activeTab, setActiveTab] = useState<'people' | 'legacy' | 'behavior'>('people')
@@ -64,7 +66,7 @@ export default function Relationships() {
     <main className="min-h-screen bg-[#050510] page-transition" style={{ background: 'linear-gradient(135deg, #050510, #080818, #0d0520)' }}>
       {/* Floating Particles */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        {[...Array(20)].map((_, i) => <div key={i} className="absolute rounded-full" style={{ width: Math.random() * 4 + 1 + 'px', height: Math.random() * 4 + 1 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', background: ['rgba(139,92,246,0.4)', 'rgba(236,72,153,0.3)', 'rgba(59,130,246,0.3)'][i % 3], animation: `float${i % 3} ${8 + Math.random() * 12}s ease-in-out infinite`, animationDelay: Math.random() * 5 + 's' }} />)}
+        {[...Array(8)].map((_, i) => <div key={i} className="absolute rounded-full" style={{ width: Math.random() * 4 + 1 + 'px', height: Math.random() * 4 + 1 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', background: ['rgba(139,92,246,0.4)', 'rgba(236,72,153,0.3)', 'rgba(59,130,246,0.3)'][i % 3], animation: `float${i % 3} ${8 + Math.random() * 12}s ease-in-out infinite`, animationDelay: Math.random() * 5 + 's' }} />)}
       </div>
 
       {/* Header */}
@@ -73,7 +75,7 @@ export default function Relationships() {
           <Link href="/dashboard" className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/[0.05] border border-white/[0.06] tap-feedback">←</Link>
           <div className="flex items-center gap-2">
             <span className="text-xl">👨‍👩‍👧‍👦</span>
-            <span className="font-bold text-base bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400">Relationships & Legacy</span>
+            <span className="font-bold text-base bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400">{t('relationships & legacy')}</span>
           </div>
         </div>
       </header>
@@ -82,9 +84,9 @@ export default function Relationships() {
       <div className="sticky top-[56px] z-40 backdrop-blur-xl border-b border-white/[0.04]" style={{ background: 'rgba(5,5,16,0.9)' }}>
         <div className="flex px-2">
           {[
-            { id: 'people' as const, icon: '👥', label: 'My People' },
-            { id: 'legacy' as const, icon: '🔑', label: 'Legacy' },
-            { id: 'behavior' as const, icon: '🧠', label: 'Clone Behavior' },
+            { id: 'people' as const, icon: '👥', label: t('my people') },
+            { id: 'legacy' as const, icon: '🔑', label: t('legacy') },
+            { id: 'behavior' as const, icon: '🧠', label: t('clone behavior') },
           ].map(tab => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`flex-1 py-3 px-2 text-xs font-medium transition-all tap-feedback ${activeTab === tab.id ? 'text-violet-400 border-b-2 border-violet-400' : 'text-white/40'}`}>
               {tab.icon} {tab.label}
@@ -99,9 +101,9 @@ export default function Relationships() {
           {/* Stats */}
           <div className="grid grid-cols-3 gap-3 mb-6">
             {[
-              { label: 'Total', value: people.length, color: 'text-violet-400' },
-              { label: 'Close', value: people.filter(p => p.quality >= 7).length, color: 'text-emerald-400' },
-              { label: 'Heirs', value: people.filter(p => p.accessAfterDeath).length, color: 'text-amber-400' },
+              { label: t('total'), value: people.length, color: 'text-violet-400' },
+              { label: t('close'), value: people.filter(p => p.quality >= 7).length, color: 'text-emerald-400' },
+              { label: t('heirs'), value: people.filter(p => p.accessAfterDeath).length, color: 'text-amber-400' },
             ].map(s => (
               <div key={s.label} className="rounded-xl border border-white/[0.06] p-3 text-center backdrop-blur-xl" style={{ background: 'rgba(255,255,255,0.02)' }}>
                 <div className={`text-xl font-bold ${s.color}`}>{s.value}</div>
@@ -113,7 +115,7 @@ export default function Relationships() {
           {/* Quick Presets */}
           {people.length === 0 && (
             <div className="mb-6">
-              <p className="text-white/40 text-sm mb-3">Quick add the important people:</p>
+              <p className="text-white/40 text-sm mb-3">{t('quick add the important people')}</p>
               <div className="flex flex-wrap gap-2">
                 {['Mother', 'Father', 'Best Friend', 'Spouse'].map(r => (
                   <button key={r} onClick={() => { setForm({ ...form, relation: r }); setShowForm(true) }} className="px-3 py-2 rounded-xl border border-white/[0.06] text-sm backdrop-blur-xl tap-feedback hover:border-violet-500/30 transition" style={{ background: 'rgba(255,255,255,0.02)' }}>
@@ -160,7 +162,7 @@ export default function Relationships() {
 
           {/* Add Button */}
           <button onClick={() => { setForm({ relation: 'Friend', quality: 7, privacyLevel: 'MOST', accessAfterDeath: false, accessLevel: 'CHAT_ONLY', verificationMethod: 'SECRET_QUESTION' }); setEditingId(null); setShowForm(true) }} className="w-full py-3 rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-semibold text-sm tap-feedback" style={{ boxShadow: '0 0 20px rgba(139,92,246,0.3)' }}>
-            + Add Person
+            {t('add')} {t('person')}
           </button>
         </>}
 
@@ -169,13 +171,13 @@ export default function Relationships() {
           <div className="rounded-2xl border border-amber-500/20 p-5 mb-6 backdrop-blur-xl" style={{ background: 'linear-gradient(135deg, rgba(245,158,11,0.05), rgba(239,68,68,0.03))' }}>
             <div className="text-center mb-4">
               <div className="text-4xl mb-2">🔑</div>
-              <h2 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-orange-400">Legacy Access</h2>
-              <p className="text-white/30 text-xs mt-1">Configure who accesses your clone after you&apos;re gone</p>
+              <h2 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-orange-400">{t('legacy access')}</h2>
+              <p className="text-white/30 text-xs mt-1">{t('configure who accesses your clone')}</p>
             </div>
 
             {/* Inactivity Timer */}
             <div className="mb-4">
-              <label className="text-white/60 text-xs mb-2 block">Inactivity Timer (days)</label>
+              <label className="text-white/60 text-xs mb-2 block">{t('inactivity timer')}</label>
               <div className="grid grid-cols-5 gap-2">
                 {[30, 60, 90, 180, 365].map(d => (
                   <button key={d} onClick={() => setLegacySettings({ ...legacySettings, inactivity: d })} className={`py-2 rounded-lg text-xs font-medium tap-feedback transition ${legacySettings.inactivity === d ? 'bg-amber-500/20 border-amber-500/40 text-amber-400' : 'bg-white/[0.03] border-white/[0.06] text-white/40'} border`}>
@@ -187,15 +189,15 @@ export default function Relationships() {
 
             {/* Legacy Message */}
             <div className="mb-4">
-              <label className="text-white/60 text-xs mb-2 block">Final Message to All Heirs</label>
-              <textarea value={legacySettings.legacyMessage} onChange={e => setLegacySettings({ ...legacySettings, legacyMessage: e.target.value })} placeholder="When you read this, I&apos;ll be gone. But my clone remembers everything..." className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm resize-none h-24 focus:outline-none focus:border-amber-500/40" />
+              <label className="text-white/60 text-xs mb-2 block">{t('final message to all heirs')}</label>
+              <textarea value={legacySettings.legacyMessage} onChange={e => setLegacySettings({ ...legacySettings, legacyMessage: e.target.value })} placeholder={t('legacy message placeholder')} className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm resize-none h-24 focus:outline-none focus:border-amber-500/40" />
             </div>
 
             {/* Heirs List */}
             <div>
-              <label className="text-white/60 text-xs mb-2 block">Designated Heirs</label>
+              <label className="text-white/60 text-xs mb-2 block">{t('designated heirs')}</label>
               {people.filter(p => p.accessAfterDeath).length === 0 ? (
-                <p className="text-white/20 text-xs text-center py-4">No heirs set. Go to My People tab and enable legacy access for someone.</p>
+                <p className="text-white/20 text-xs text-center py-4">{t('no heirs set')}</p>
               ) : (
                 <div className="space-y-2">
                   {people.filter(p => p.accessAfterDeath).map(p => (
@@ -213,8 +215,8 @@ export default function Relationships() {
             </div>
           </div>
 
-          <button onClick={() => { localStorage.setItem('cc_legacy_settings', JSON.stringify(legacySettings)); alert('Legacy settings saved!') }} className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold text-sm tap-feedback" style={{ boxShadow: '0 0 20px rgba(245,158,11,0.3)' }}>
-            💾 Save Legacy Settings
+          <button onClick={() => { localStorage.setItem('cc_legacy_settings', JSON.stringify(legacySettings)); alert(t('legacy settings saved')) }} className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold text-sm tap-feedback" style={{ boxShadow: '0 0 20px rgba(245,158,11,0.3)' }}>
+            💾 {t('save legacy settings')}
           </button>
         </>}
 
@@ -223,7 +225,7 @@ export default function Relationships() {
           <div className="space-y-4 mb-6">
             {/* Language */}
             <div className="rounded-xl border border-white/[0.06] p-4 backdrop-blur-xl" style={{ background: 'rgba(255,255,255,0.02)' }}>
-              <h3 className="text-sm font-semibold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400">🗣️ Language Style</h3>
+              <h3 className="text-sm font-semibold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400">🗣️ {t('language style')}</h3>
               <div className="grid grid-cols-3 gap-2 mb-3">
                 {['banglish', 'english', 'bangla'].map(l => (
                   <button key={l} onClick={() => setCloneSettings({ ...cloneSettings, language: l })} className={`py-2 rounded-lg text-xs font-medium tap-feedback transition ${cloneSettings.language === l ? 'bg-violet-500/20 border-violet-500/40 text-violet-400' : 'bg-white/[0.03] border-white/[0.06] text-white/40'} border capitalize`}>
@@ -235,7 +237,7 @@ export default function Relationships() {
 
             {/* Personality Sliders */}
             <div className="rounded-xl border border-white/[0.06] p-4 backdrop-blur-xl" style={{ background: 'rgba(255,255,255,0.02)' }}>
-              <h3 className="text-sm font-semibold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400">🎭 Personality</h3>
+              <h3 className="text-sm font-semibold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400">🎭 {t('personality')}</h3>
               {[
                 { key: 'humor', label: 'Humor', left: 'Serious', right: 'Funny', icon: '😄' },
                 { key: 'warmth', label: 'Warmth', left: 'Cold', right: 'Loving', icon: '🤗' },
@@ -259,7 +261,7 @@ export default function Relationships() {
 
             {/* Catchphrases */}
             <div className="rounded-xl border border-white/[0.06] p-4 backdrop-blur-xl" style={{ background: 'rgba(255,255,255,0.02)' }}>
-              <h3 className="text-sm font-semibold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400">💬 Catchphrases</h3>
+              <h3 className="text-sm font-semibold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400">💬 {t('catchphrases')}</h3>
               <div className="space-y-2">
                 {cloneSettings.catchphrases.map((c, i) => (
                   <div key={i} className="flex items-center gap-2">
@@ -274,7 +276,7 @@ export default function Relationships() {
 
             {/* Quirks */}
             <div className="rounded-xl border border-white/[0.06] p-4 backdrop-blur-xl" style={{ background: 'rgba(255,255,255,0.02)' }}>
-              <h3 className="text-sm font-semibold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400">✨ Quirks & Habits</h3>
+              <h3 className="text-sm font-semibold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400">✨ {t('quirks & habits')}</h3>
               <div className="space-y-2">
                 {cloneSettings.quirks.map((q, i) => (
                   <div key={i} className="flex items-center gap-2">
@@ -287,8 +289,8 @@ export default function Relationships() {
             </div>
           </div>
 
-          <button onClick={() => { localStorage.setItem('cc_clone_behavior', JSON.stringify(cloneSettings)); alert('Clone behavior saved!') }} className="w-full py-3 rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-semibold text-sm tap-feedback" style={{ boxShadow: '0 0 20px rgba(139,92,246,0.3)' }}>
-            💾 Save Clone Behavior
+          <button onClick={() => { localStorage.setItem('cc_clone_behavior', JSON.stringify(cloneSettings)); alert(t('clone behavior saved')) }} className="w-full py-3 rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-semibold text-sm tap-feedback" style={{ boxShadow: '0 0 20px rgba(139,92,246,0.3)' }}>
+            💾 {t('save clone behavior')}
           </button>
         </>}
       </div>
@@ -298,48 +300,48 @@ export default function Relationships() {
         <div className="fixed inset-0 z-50 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.7)' }}>
           <div className="w-full max-w-lg max-h-[85vh] rounded-t-2xl border-t border-white/[0.06] overflow-y-auto" style={{ background: 'linear-gradient(135deg, #0a0a1e, #050510)' }}>
             <div className="p-4 border-b border-white/[0.04] flex justify-between items-center sticky top-0" style={{ background: 'rgba(10,10,30,0.95)' }}>
-              <h3 className="font-semibold">{editingId ? 'Edit' : 'Add'} Person</h3>
+              <h3 className="font-semibold">{editingId ? t('edit') : t('add')} {t('person')}</h3>
               <button onClick={() => setShowForm(false)} className="text-white/40 tap-feedback">✕</button>
             </div>
             <div className="p-4 space-y-4">
               <div>
-                <label className="text-white/60 text-xs mb-1 block">Name *</label>
-                <input value={form.name || ''} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Full name" className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm focus:outline-none focus:border-violet-500/40" />
+                <label className="text-white/60 text-xs mb-1 block">{t('name')} *</label>
+                <input value={form.name || ''} onChange={e => setForm({ ...form, name: e.target.value })} placeholder={t('full name')} className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm focus:outline-none focus:border-violet-500/40" />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-white/60 text-xs mb-1 block">Nickname</label>
+                  <label className="text-white/60 text-xs mb-1 block">{t('nickname')}</label>
                   <input value={form.nickname || ''} onChange={e => setForm({ ...form, nickname: e.target.value })} placeholder="What you call them" className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm focus:outline-none focus:border-violet-500/40" />
                 </div>
                 <div>
-                  <label className="text-white/60 text-xs mb-1 block">Relation *</label>
+                  <label className="text-white/60 text-xs mb-1 block">{t('relation')} *</label>
                   <select value={form.relation} onChange={e => setForm({ ...form, relation: e.target.value })} className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm focus:outline-none focus:border-violet-500/40">
                     {RELATIONS.map(r => <option key={r} value={r}>{r}</option>)}
                   </select>
                 </div>
               </div>
               <div>
-                <label className="text-white/60 text-xs mb-1 block">Relationship Quality: {form.quality}/10</label>
+                <label className="text-white/60 text-xs mb-1 block">{t('relationship quality')}: {form.quality}/10</label>
                 <input type="range" min="1" max="10" value={form.quality || 7} onChange={e => setForm({ ...form, quality: parseInt(e.target.value) })} className="w-full" />
               </div>
               <div>
-                <label className="text-white/60 text-xs mb-1 block">How you feel about them</label>
-                <textarea value={form.feelings || ''} onChange={e => setForm({ ...form, feelings: e.target.value })} placeholder="She&apos;s my everything. Raised me alone." className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm resize-none h-20 focus:outline-none focus:border-violet-500/40" />
+                <label className="text-white/60 text-xs mb-1 block">{t('how you feel about them')}</label>
+                <textarea value={form.feelings || ''} onChange={e => setForm({ ...form, feelings: e.target.value })} placeholder={t('feelings placeholder')} className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm resize-none h-20 focus:outline-none focus:border-violet-500/40" />
               </div>
               <div>
-                <label className="text-white/60 text-xs mb-1 block">What they mean to you</label>
-                <textarea value={form.meaning || ''} onChange={e => setForm({ ...form, meaning: e.target.value })} placeholder="My rock, my safe place" className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm resize-none h-16 focus:outline-none focus:border-violet-500/40" />
+                <label className="text-white/60 text-xs mb-1 block">{t('what they mean to you')}</label>
+                <textarea value={form.meaning || ''} onChange={e => setForm({ ...form, meaning: e.target.value })} placeholder={t('meaning placeholder')} className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm resize-none h-16 focus:outline-none focus:border-violet-500/40" />
               </div>
               <div>
-                <label className="text-white/60 text-xs mb-1 block">Inside jokes / memories</label>
-                <textarea value={form.insideJokes || ''} onChange={e => setForm({ ...form, insideJokes: e.target.value })} placeholder="We always joke about..." className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm resize-none h-16 focus:outline-none focus:border-violet-500/40" />
+                <label className="text-white/60 text-xs mb-1 block">{t('inside jokes / memories')}</label>
+                <textarea value={form.insideJokes || ''} onChange={e => setForm({ ...form, insideJokes: e.target.value })} placeholder={t('inside jokes placeholder')} className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm resize-none h-16 focus:outline-none focus:border-violet-500/40" />
               </div>
               <div>
-                <label className="text-white/60 text-xs mb-1 block">What you want clone to tell them</label>
-                <textarea value={form.whatToTell || ''} onChange={e => setForm({ ...form, whatToTell: e.target.value })} placeholder="Tell her I&apos;m sorry I didn&apos;t call more" className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm resize-none h-16 focus:outline-none focus:border-violet-500/40" />
+                <label className="text-white/60 text-xs mb-1 block">{t('what to tell them')}</label>
+                <textarea value={form.whatToTell || ''} onChange={e => setForm({ ...form, whatToTell: e.target.value })} placeholder={t('what to tell placeholder')} className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm resize-none h-16 focus:outline-none focus:border-violet-500/40" />
               </div>
               <div>
-                <label className="text-white/60 text-xs mb-2 block">Privacy Level</label>
+                <label className="text-white/60 text-xs mb-2 block">{t('privacy level')}</label>
                 <div className="grid grid-cols-4 gap-2">
                   {['EVERYTHING', 'MOST', 'SOME', 'MINIMAL'].map(l => (
                     <button key={l} onClick={() => setForm({ ...form, privacyLevel: l })} className={`py-2 rounded-lg text-[10px] font-medium tap-feedback ${form.privacyLevel === l ? 'bg-violet-500/20 border-violet-500/40 text-violet-400' : 'bg-white/[0.03] border-white/[0.06] text-white/40'} border`}>
@@ -349,7 +351,7 @@ export default function Relationships() {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <label className="text-white/60 text-xs">Legacy Access After Death</label>
+                <label className="text-white/60 text-xs">{t('legacy access after death')}</label>
                 <button onClick={() => setForm({ ...form, accessAfterDeath: !form.accessAfterDeath })} className={`w-12 h-6 rounded-full transition tap-feedback ${form.accessAfterDeath ? 'bg-amber-500' : 'bg-white/[0.1]'}`}>
                   <div className={`w-5 h-5 rounded-full bg-white transition ${form.accessAfterDeath ? 'translate-x-6' : 'translate-x-0.5'}`} />
                 </button>
@@ -357,7 +359,7 @@ export default function Relationships() {
               {form.accessAfterDeath && (
                 <div className="space-y-3 pl-4 border-l-2 border-amber-500/20">
                   <div>
-                    <label className="text-white/60 text-xs mb-1 block">Access Level</label>
+                    <label className="text-white/60 text-xs mb-1 block">{t('access level')}</label>
                     <div className="grid grid-cols-3 gap-2">
                       {['FULL', 'PARTIAL', 'CHAT_ONLY'].map(l => (
                         <button key={l} onClick={() => setForm({ ...form, accessLevel: l })} className={`py-2 rounded-lg text-[10px] font-medium tap-feedback ${form.accessLevel === l ? 'bg-amber-500/20 border-amber-500/40 text-amber-400' : 'bg-white/[0.03] border-white/[0.06] text-white/40'} border`}>
@@ -369,7 +371,7 @@ export default function Relationships() {
                 </div>
               )}
               <button onClick={addPerson} className="w-full py-3 rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-semibold text-sm tap-feedback" style={{ boxShadow: '0 0 20px rgba(139,92,246,0.3)' }}>
-                {editingId ? '💾 Save Changes' : '+ Add Person'}
+                {editingId ? `💾 ${t('save')}` : `+ ${t('add')} ${t('person')}`}
               </button>
             </div>
           </div>

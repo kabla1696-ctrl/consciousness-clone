@@ -25,7 +25,7 @@ const STORAGE_KEY = 'consciousness-personality-snapshots'
 function FloatingParticles() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-      {[...Array(12)].map((_, i) => (
+      {[...Array(5)].map((_, i) => (
         <div
           key={i}
           className="particle"

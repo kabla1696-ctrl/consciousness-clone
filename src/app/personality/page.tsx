@@ -3,99 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { supabase } from '../../lib/supabase-browser'
-
-const questions = [
-  {
-    id: 1,
-    question: "How do you recharge?",
-    options: [
-      { text: "Alone time 🧘", trait: "introvert", score: 2 },
-      { text: "With friends 🎉", trait: "extrovert", score: 2 },
-      { text: "Depends on my mood 🤷", trait: "ambivert", score: 2 },
-    ],
-  },
-  {
-    id: 2,
-    question: "When facing a problem, you...",
-    options: [
-      { text: "Analyze it logically 🧠", trait: "analytical", score: 2 },
-      { text: "Follow my gut feeling 💫", trait: "intuitive", score: 2 },
-      { text: "Ask others for advice 🤝", trait: "social", score: 2 },
-    ],
-  },
-  {
-    id: 3,
-    question: "Your humor style?",
-    options: [
-      { text: "Sarcastic & witty 😏", trait: "sarcastic", score: 2 },
-      { text: "Goofy & silly 🤪", trait: "playful", score: 2 },
-      { text: "Dry & deadpan 😐", trait: "dry", score: 2 },
-    ],
-  },
-  {
-    id: 4,
-    question: "What matters most to you?",
-    options: [
-      { text: "Family & loved ones 👨‍👩‍👧‍👦", trait: "family", score: 2 },
-      { text: "Career & success 💼", trait: "ambitious", score: 2 },
-      { text: "Freedom & adventure ✈️", trait: "free_spirit", score: 2 },
-    ],
-  },
-  {
-    id: 5,
-    question: "How do you handle stress?",
-    options: [
-      { text: "Music & solitude 🎧", trait: "introspective", score: 2 },
-      { text: "Exercise & movement 💪", trait: "active", score: 2 },
-      { text: "Talk it out with someone 💬", trait: "expressive", score: 2 },
-    ],
-  },
-  {
-    id: 6,
-    question: "Your communication style?",
-    options: [
-      { text: "Direct & honest 🎯", trait: "direct", score: 2 },
-      { text: "Diplomatic & careful 🕊️", trait: "diplomatic", score: 2 },
-      { text: "Emotional & expressive 🎭", trait: "emotional", score: 2 },
-    ],
-  },
-  {
-    id: 7,
-    question: "Pick a weekend activity:",
-    options: [
-      { text: "Reading & learning 📚", trait: "intellectual", score: 2 },
-      { text: "Partying & socializing 🎊", trait: "social", score: 2 },
-      { text: "Creating something new 🎨", trait: "creative", score: 2 },
-    ],
-  },
-  {
-    id: 8,
-    question: "Your biggest fear?",
-    options: [
-      { text: "Being forgotten 😰", trait: "legacy", score: 2 },
-      { text: "Losing loved ones 💔", trait: "attachment", score: 2 },
-      { text: "Not reaching my potential 😤", trait: "ambitious", score: 2 },
-    ],
-  },
-  {
-    id: 9,
-    question: "How do you make decisions?",
-    options: [
-      { text: "Pros and cons list 📝", trait: "analytical", score: 2 },
-      { text: "Go with the flow 🌊", trait: "spontaneous", score: 2 },
-      { text: "Think about long-term impact 🔮", trait: "strategic", score: 2 },
-    ],
-  },
-  {
-    id: 10,
-    question: "What describes you best?",
-    options: [
-      { text: "Dreamer 💭", trait: "imaginative", score: 2 },
-      { text: "Doer ⚡", trait: "action_oriented", score: 2 },
-      { text: "Thinker 🧠", trait: "philosophical", score: 2 },
-    ],
-  },
-]
+import { useT } from '../../lib/language-context'
 
 function Particles() {
   return (
@@ -122,6 +30,101 @@ function Particles() {
 }
 
 export default function PersonalityQuiz() {
+  const t = useT()
+
+  const questions = [
+    {
+      id: 1,
+      question: t('how are you'),
+      options: [
+        { text: `🧘 ${t('mindfulness')}`, trait: "introvert", score: 2 },
+        { text: `🎉 ${t('clone network')}`, trait: "extrovert", score: 2 },
+        { text: `🤷 ${t('mood')}`, trait: "ambivert", score: 2 },
+      ],
+    },
+    {
+      id: 2,
+      question: t('clone quiz'),
+      options: [
+        { text: `🧠 ${t('life score')}`, trait: "analytical", score: 2 },
+        { text: `💫 ${t('dream mode')}`, trait: "intuitive", score: 2 },
+        { text: `🤝 ${t('clone network')}`, trait: "social", score: 2 },
+      ],
+    },
+    {
+      id: 3,
+      question: t('personality'),
+      options: [
+        { text: `😏 ${t('confessions')}`, trait: "sarcastic", score: 2 },
+        { text: `🤪 ${t('dream lab')}`, trait: "playful", score: 2 },
+        { text: `😐 ${t('mirror mode')}`, trait: "dry", score: 2 },
+      ],
+    },
+    {
+      id: 4,
+      question: t('life goals'),
+      options: [
+        { text: `👨‍👩‍👧‍👦 ${t('family tree')}`, trait: "family", score: 2 },
+        { text: `💼 ${t('achievements')}`, trait: "ambitious", score: 2 },
+        { text: `✈️ ${t('astronaut mode')}`, trait: "free_spirit", score: 2 },
+      ],
+    },
+    {
+      id: 5,
+      question: t('mood tracker'),
+      options: [
+        { text: `🎧 ${t('soul playlist')}`, trait: "introspective", score: 2 },
+        { text: `💪 ${t('heartbeat')}`, trait: "active", score: 2 },
+        { text: `💬 ${t('talk to clone')}`, trait: "expressive", score: 2 },
+      ],
+    },
+    {
+      id: 6,
+      question: t('heartbeat'),
+      options: [
+        { text: `🎯 ${t('confessions')}`, trait: "direct", score: 2 },
+        { text: `🕊️ ${t('clone therapy')}`, trait: "diplomatic", score: 2 },
+        { text: `🎭 ${t('emotion engine')}`, trait: "emotional", score: 2 },
+      ],
+    },
+    {
+      id: 7,
+      question: t('dream lab'),
+      options: [
+        { text: `📚 ${t('memory stories')}`, trait: "intellectual", score: 2 },
+        { text: `🎊 ${t('clone network')}`, trait: "social", score: 2 },
+        { text: `🎨 ${t('idea generator')}`, trait: "creative", score: 2 },
+      ],
+    },
+    {
+      id: 8,
+      question: t('death simulation'),
+      options: [
+        { text: `😰 ${t('ghost mode')}`, trait: "legacy", score: 2 },
+        { text: `💔 ${t('legacy letters')}`, trait: "attachment", score: 2 },
+        { text: `😤 ${t('future self')}`, trait: "ambitious", score: 2 },
+      ],
+    },
+    {
+      id: 9,
+      question: t('clone quiz'),
+      options: [
+        { text: `📝 ${t('life score')}`, trait: "analytical", score: 2 },
+        { text: `🌊 ${t('dream mode')}`, trait: "spontaneous", score: 2 },
+        { text: `🔮 ${t('predictions')}`, trait: "strategic", score: 2 },
+      ],
+    },
+    {
+      id: 10,
+      question: t('clone identity'),
+      options: [
+        { text: `💭 ${t('dream lab')}`, trait: "imaginative", score: 2 },
+        { text: `⚡ ${t('milestones')}`, trait: "action_oriented", score: 2 },
+        { text: `🧠 ${t('life score')}`, trait: "philosophical", score: 2 },
+      ],
+    },
+  ]
+
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState<Record<string, number>>({})
   const [completed, setCompleted] = useState(false)
@@ -182,8 +185,8 @@ export default function PersonalityQuiz() {
               <div className="text-7xl">🧬</div>
               <div className="absolute inset-0 bg-violet-500/20 rounded-full blur-3xl" />
             </div>
-            <h1 className="text-5xl font-black gradient-text mb-3">Your Personality Profile</h1>
-            <p className="text-white/30 text-lg">Based on your answers, here&apos;s who you are</p>
+            <h1 className="text-5xl font-black gradient-text mb-3">{t('personality')}</h1>
+            <p className="text-white/30 text-lg">{t('your clone awaits')}</p>
           </div>
 
           {/* Profile Card */}
@@ -191,7 +194,7 @@ export default function PersonalityQuiz() {
             <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/10 rounded-full blur-3xl" />
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-fuchsia-500/10 rounded-full blur-3xl" />
 
-            <h2 className="text-xl font-bold mb-6 text-white/90">Your Top Traits</h2>
+            <h2 className="text-xl font-bold mb-6 text-white/90">{t('achievements')}</h2>
             <div className="flex flex-wrap gap-3 mb-8">
               {topTraits.map((trait, i) => (
                 <span
@@ -209,10 +212,10 @@ export default function PersonalityQuiz() {
 
             <div className="space-y-4">
               {[
-                { label: 'Energy', value: answers.introvert ? '🧘 Introvert' : answers.extrovert ? '🎉 Extrovert' : '🤷 Ambivert' },
-                { label: 'Thinking', value: answers.analytical ? '🧠 Analytical' : answers.intuitive ? '💫 Intuitive' : '🤝 Social' },
-                { label: 'Humor', value: answers.sarcastic ? '😏 Sarcastic' : answers.playful ? '🤪 Playful' : '😐 Dry' },
-                { label: 'Communication', value: answers.direct ? '🎯 Direct' : answers.diplomatic ? '🕊️ Diplomatic' : '🎭 Emotional' },
+                { label: t('emotion engine'), value: answers.introvert ? '🧘 Introvert' : answers.extrovert ? '🎉 Extrovert' : '🤷 Ambivert' },
+                { label: t('life score'), value: answers.analytical ? '🧠 Analytical' : answers.intuitive ? '💫 Intuitive' : '🤝 Social' },
+                { label: t('personality'), value: answers.sarcastic ? '😏 Sarcastic' : answers.playful ? '🤪 Playful' : '😐 Dry' },
+                { label: t('heartbeat'), value: answers.direct ? '🎯 Direct' : answers.diplomatic ? '🕊️ Diplomatic' : '🎭 Emotional' },
               ].map((item, i) => (
                 <div
                   key={item.label}
@@ -236,15 +239,15 @@ export default function PersonalityQuiz() {
               {saving ? (
                 <span className="flex items-center justify-center gap-2">
                   <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Saving...
+                  {t('loading')}
                 </span>
-              ) : 'Save & Go to Dashboard'}
+              ) : `${t('save')} & ${t('dashboard')}`}
             </button>
             <Link
               href="/dashboard"
               className="px-8 py-4 glass-card rounded-2xl hover:border-violet-500/30 hover:bg-white/[0.04] transition-all font-medium flex items-center"
             >
-              Skip
+              {t('cancel')}
             </Link>
           </div>
         </div>
@@ -261,7 +264,7 @@ export default function PersonalityQuiz() {
         {/* Progress */}
         <div className="mb-10">
           <div className="flex justify-between text-sm text-white/30 mb-3">
-            <span className="font-medium">Question {currentQuestion + 1} of {questions.length}</span>
+            <span className="font-medium">{t('clone quiz')} {currentQuestion + 1}/{questions.length}</span>
             <span className="gradient-text font-bold">{Math.round(progress)}%</span>
           </div>
           <div className="w-full h-2 bg-white/[0.04] rounded-full overflow-hidden premium-progress">
@@ -279,7 +282,7 @@ export default function PersonalityQuiz() {
             <div className="absolute inset-0 bg-fuchsia-500/10 rounded-full blur-2xl animate-pulse" />
           </div>
           <h1 className="text-3xl md:text-4xl font-black text-white/95 mb-3 leading-tight">{q.question}</h1>
-          <p className="text-white/25 text-base">Choose the one that resonates most with you</p>
+          <p className="text-white/25 text-base">{t('select mood')}</p>
         </div>
 
         {/* Options */}
@@ -311,7 +314,7 @@ export default function PersonalityQuiz() {
             className="mt-8 text-white/25 hover:text-white/60 transition-all text-sm flex items-center gap-2 group"
           >
             <span className="group-hover:-translate-x-1 transition-transform">←</span>
-            Previous question
+            {t('back')}
           </button>
         )}
       </div>

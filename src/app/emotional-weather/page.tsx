@@ -25,7 +25,7 @@ const MOODS: Mood[] = ['sunny', 'rainy', 'stormy', 'cloudy', 'rainbow']
 function FloatingParticles() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-      {[...Array(12)].map((_, i) => (
+      {[...Array(5)].map((_, i) => (
         <div key={i} className="particle" style={{
           width: `${2 + Math.random() * 3}px`, height: `${2 + Math.random() * 3}px`,
           left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%`,

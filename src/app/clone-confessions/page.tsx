@@ -74,7 +74,7 @@ export default function CloneConfessions() {
   return (
     <main className="min-h-screen bg-[#050510] page-transition" style={{ background: 'linear-gradient(135deg, #050510, #080818, #0d0520)' }}>
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        {[...Array(15)].map((_, i) => <div key={i} className="absolute rounded-full" style={{ width: Math.random() * 3 + 1 + 'px', height: Math.random() * 3 + 1 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', background: 'rgba(139,92,246,0.2)', animation: `float${i % 3} ${10 + Math.random() * 10}s ease-in-out infinite`, animationDelay: Math.random() * 5 + 's' }} />)}
+        {[...Array(6)].map((_, i) => <div key={i} className="absolute rounded-full" style={{ width: Math.random() * 3 + 1 + 'px', height: Math.random() * 3 + 1 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', background: 'rgba(139,92,246,0.2)', animation: `float${i % 3} ${10 + Math.random() * 10}s ease-in-out infinite`, animationDelay: Math.random() * 5 + 's' }} />)}
       </div>
 
       <header className="sticky top-0 z-50 backdrop-blur-xl border-b border-white/[0.06] safe-top" style={{ background: 'rgba(5,5,16,0.85)' }}>

@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Memory {
   id: string
@@ -69,6 +70,7 @@ const CATEGORY_BORDERS: Record<string, string> = {
 }
 
 export default function MemoriesPage() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [memories, setMemories] = useState<Memory[]>([])
   const [loading, setLoading] = useState(true)
@@ -180,7 +182,7 @@ export default function MemoriesPage() {
           <Link href="/dashboard" className="p-2 -ml-2 rounded-xl hover:bg-white/5 transition-colors">
             <svg className="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </Link>
-          <h1 className="text-lg font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">Memories</h1>
+          <h1 className="text-lg font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">{t('memories')}</h1>
           <span className="ml-auto text-xs text-white/20 font-mono">{memories.length} total</span>
         </div>
       </header>
@@ -193,14 +195,14 @@ export default function MemoriesPage() {
             <input type="text" value={search} onChange={e => setSearch(e.target.value)} className="w-full pl-11 pr-4 py-3 bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition" placeholder="Search memories..." />
           </div>
           <button onClick={() => setShowForm(!showForm)} className="px-4 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-xl text-sm font-semibold hover:shadow-lg hover:shadow-violet-500/20 transition-all active:scale-95 whitespace-nowrap">
-            {showForm ? '✕ Close' : '+ Add'}
+            {showForm ? '✕ Close' : `+ ${t('add')}`}
           </button>
         </div>
 
         {/* Add Form */}
         {showForm && (
           <div className="mb-6 p-5 rounded-2xl bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] animate-slide-up">
-            <h3 className="text-sm font-bold text-violet-400 mb-4 uppercase tracking-wider">New Memory</h3>
+            <h3 className="text-sm font-bold text-violet-400 mb-4 uppercase tracking-wider">{t('new memory')}</h3>
             <input value={title} onChange={e => setTitle(e.target.value)} className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition mb-3" placeholder="Memory title..." />
             <textarea value={content} onChange={e => setContent(e.target.value)} rows={3} className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition resize-none mb-3" placeholder="Describe this memory..." />
             <div className="mb-4">
@@ -211,9 +213,9 @@ export default function MemoriesPage() {
             </div>
             <div className="flex gap-3">
               <button onClick={addMemory} disabled={saving || !title.trim() || !content.trim()} className="px-5 py-2.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-xl text-sm font-semibold disabled:opacity-40 hover:shadow-lg hover:shadow-violet-500/20 transition-all active:scale-95">
-                {saving ? 'Saving...' : 'Save Memory'}
+                {saving ? 'Saving...' : t('save')}
               </button>
-              <button onClick={() => setShowForm(false)} className="px-5 py-2.5 rounded-xl text-sm text-white/30 hover:text-white/50 transition">Cancel</button>
+              <button onClick={() => setShowForm(false)} className="px-5 py-2.5 rounded-xl text-sm text-white/30 hover:text-white/50 transition">{t('cancel')}</button>
             </div>
           </div>
         )}
@@ -284,12 +286,12 @@ export default function MemoriesPage() {
           <div className="w-full max-w-sm p-6 rounded-2xl bg-[#0a0a1a] border border-white/[0.08] shadow-2xl" onClick={e => e.stopPropagation()}>
             <div className="text-center mb-6">
               <div className="text-4xl mb-3">🗑️</div>
-              <h3 className="text-white font-bold text-lg mb-1">Delete Memory?</h3>
+              <h3 className="text-white font-bold text-lg mb-1">{t('are you sure')}</h3>
               <p className="text-white/30 text-sm">This action cannot be undone.</p>
             </div>
             <div className="flex gap-3">
-              <button onClick={() => setDeleteId(null)} className="flex-1 py-3 rounded-xl bg-white/[0.05] border border-white/[0.08] text-sm text-white/50 hover:text-white/70 transition">Cancel</button>
-              <button onClick={confirmDelete} className="flex-1 py-3 rounded-xl bg-red-500/20 border border-red-500/30 text-sm text-red-400 font-semibold hover:bg-red-500/30 transition">Delete</button>
+              <button onClick={() => setDeleteId(null)} className="flex-1 py-3 rounded-xl bg-white/[0.05] border border-white/[0.08] text-sm text-white/50 hover:text-white/70 transition">{t('cancel')}</button>
+              <button onClick={confirmDelete} className="flex-1 py-3 rounded-xl bg-red-500/20 border border-red-500/30 text-sm text-red-400 font-semibold hover:bg-red-500/30 transition">{t('delete')}</button>
             </div>
           </div>
         </div>
@@ -299,15 +301,15 @@ export default function MemoriesPage() {
       {editMemory && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setEditMemory(null)}>
           <div className="w-full max-w-md p-6 rounded-2xl bg-[#0a0a1a] border border-white/[0.08] shadow-2xl max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-            <h3 className="text-sm font-bold text-violet-400 mb-4 uppercase tracking-wider">Edit Memory</h3>
+            <h3 className="text-sm font-bold text-violet-400 mb-4 uppercase tracking-wider">{t('edit')}</h3>
             <input value={editTitle} onChange={e => setEditTitle(e.target.value)} className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition mb-3" placeholder="Title" />
             <textarea value={editContent} onChange={e => setEditContent(e.target.value)} rows={4} className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition resize-none mb-3" placeholder="Content" />
             <select value={editCategory} onChange={e => setEditCategory(e.target.value)} className="w-full px-4 py-3 mb-5 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white focus:outline-none focus:border-violet-500/30 transition appearance-none cursor-pointer" style={{ backgroundImage: 'url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 20 20\'%3e%3cpath stroke=\'%236b7280\' stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1.5\' d=\'M6 8l4 4 4-4\'/%3e%3c/svg%3e")', backgroundPosition: 'right 0.75rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.25em' }}>
               {CATEGORIES.map(c => <option key={c} value={c} className="bg-[#0a0a1a]">{CATEGORY_ICONS[c]} {c.charAt(0).toUpperCase() + c.slice(1)}</option>)}
             </select>
             <div className="flex gap-3">
-              <button onClick={saveEdit} disabled={saving} className="flex-1 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-xl text-sm font-semibold disabled:opacity-40 hover:shadow-lg hover:shadow-violet-500/20 transition-all active:scale-95">{saving ? 'Saving...' : 'Save Changes'}</button>
-              <button onClick={() => setEditMemory(null)} className="px-5 py-3 rounded-xl text-sm text-white/30 hover:text-white/50 transition">Cancel</button>
+              <button onClick={saveEdit} disabled={saving} className="flex-1 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-xl text-sm font-semibold disabled:opacity-40 hover:shadow-lg hover:shadow-violet-500/20 transition-all active:scale-95">{saving ? 'Saving...' : t('save')}</button>
+              <button onClick={() => setEditMemory(null)} className="px-5 py-3 rounded-xl text-sm text-white/30 hover:text-white/50 transition">{t('cancel')}</button>
             </div>
           </div>
         </div>

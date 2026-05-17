@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Message {
   id: string
@@ -14,6 +15,7 @@ interface Message {
 const STORAGE_KEY = 'cc_chat_messages'
 
 export default function Chat() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [authLoading, setAuthLoading] = useState(true)
   const [messages, setMessages] = useState<Message[]>([])
@@ -128,7 +130,7 @@ export default function Chat() {
           </Link>
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-base shadow-lg shadow-violet-500/20">🧠</div>
           <div className="flex-1 min-w-0">
-            <h1 className="text-sm font-bold text-white">Talk to Clone</h1>
+            <h1 className="text-sm font-bold text-white">{t('talk to clone')}</h1>
             <p className="text-[10px] text-emerald-400 flex items-center gap-1.5">
               <span className="relative flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" /><span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" /></span>
               Online
@@ -144,7 +146,7 @@ export default function Chat() {
           {messages.length === 0 && !loading && (
             <div className="flex flex-col items-center justify-center py-20 text-center animate-fade-in">
               <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 flex items-center justify-center text-4xl mb-6 border border-white/[0.06]">🧠</div>
-              <h2 className="text-xl font-bold text-white mb-2">Welcome to your Clone</h2>
+              <h2 className="text-xl font-bold text-white mb-2">{t('welcome')}</h2>
               <p className="text-white/40 text-sm max-w-xs leading-relaxed">Start a conversation — your clone responds based on your memories and personality.</p>
             </div>
           )}
@@ -193,7 +195,7 @@ export default function Chat() {
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#050510]/90 backdrop-blur-2xl border-t border-white/[0.03]">
         <div className="max-w-3xl mx-auto px-4 py-3">
           <div className={`flex items-center gap-2 rounded-2xl bg-white/[0.04] border px-2 transition-all duration-200 ${focused ? 'border-violet-500/30 shadow-lg shadow-violet-500/5' : 'border-white/[0.06]'}`}>
-            <input ref={inputRef} type="text" value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage()} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)} className="flex-1 px-3 py-3 bg-transparent border-none focus:outline-none text-white text-[15px] placeholder:text-white/20" placeholder="Type a message..." disabled={loading} />
+            <input ref={inputRef} type="text" value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage()} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)} className="flex-1 px-3 py-3 bg-transparent border-none focus:outline-none text-white text-[15px] placeholder:text-white/20" placeholder={t('type message')} disabled={loading} />
             <button onClick={sendMessage} disabled={loading || !input.trim()} className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center transition-all disabled:opacity-20 active:scale-90 hover:shadow-lg hover:shadow-violet-500/20">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
             </button>

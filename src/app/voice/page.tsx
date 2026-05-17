@@ -29,14 +29,11 @@ export default function VoiceClone() {
           <p className="text-white/30 text-lg">Make your clone sound exactly like you</p>
         </div>
 
-        {/* Pro Badge */}
-        <div className="rounded-2xl border border-amber-500/30 p-6 mb-10 text-center" style={{ background: 'rgba(245, 158, 11, 0.05)' }}>
-          <div className="text-2xl mb-2">⚡</div>
-          <h3 className="text-lg font-bold text-amber-400">Pro Feature</h3>
-          <p className="text-white/40 text-sm mt-1">Upgrade to Pro to unlock voice cloning</p>
-          <Link href="/pricing" className="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-lg text-sm font-semibold hover:opacity-90 transition">
-            Upgrade to Pro
-          </Link>
+        {/* Free Feature Banner */}
+        <div className="rounded-2xl border border-emerald-500/30 p-6 mb-10 text-center" style={{ background: 'rgba(16, 185, 129, 0.05)' }}>
+          <div className="text-2xl mb-2">✨</div>
+          <h3 className="text-lg font-bold text-emerald-400">Free Feature</h3>
+          <p className="text-white/40 text-sm mt-1">Voice cloning is free for everyone — no limits</p>
         </div>
 
         {/* Steps */}

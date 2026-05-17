@@ -46,7 +46,7 @@ export default function Terms() {
 
           <section>
             <h2 className="text-xl font-bold text-white mb-3">6. Subscription & Payments</h2>
-            <p>Free plans have feature limitations. Pro and Immortal plans are billed monthly or yearly. You may cancel at any time. Refunds are handled on a case-by-case basis within 14 days of purchase.</p>
+            <p>Consciousness Clone is completely free. All features are available to all users at no cost. There are no paid plans, subscriptions, or hidden fees.</p>
           </section>
 
           <section>

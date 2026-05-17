@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface VoiceEntry {
   id: string
@@ -49,6 +50,7 @@ function Particles() {
 }
 
 export default function VoiceJournal() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [entries, setEntries] = useState<VoiceEntry[]>([])
   const [isRecording, setIsRecording] = useState(false)
@@ -171,7 +173,7 @@ export default function VoiceJournal() {
       setTimeout(() => drawWaveform(), 100)
     } catch (err) {
       console.error('Microphone error:', err)
-      alert('Could not access microphone. Please allow microphone access.')
+      alert(t('microphone error'))
     }
   }
 
@@ -214,7 +216,7 @@ export default function VoiceJournal() {
       discardRecording()
     } catch (err) {
       console.error('Save error:', err)
-      alert('Failed to save entry. Try again!')
+      alert(t('error'))
     }
 
     setSaving(false)
@@ -244,8 +246,8 @@ export default function VoiceJournal() {
     const diff = now.getTime() - date.getTime()
     const days = Math.floor(diff / 86400000)
 
-    if (days === 0) return 'Today'
-    if (days === 1) return 'Yesterday'
+    if (days === 0) return t('today')
+    if (days === 1) return t('yesterday')
     if (days < 7) return `${days} days ago`
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
   }
@@ -287,7 +289,7 @@ export default function VoiceJournal() {
           }}>🎙️</div>
           <div className="flex-1">
             <h1 className="text-sm font-bold bg-gradient-to-r from-violet-300 to-fuchsia-300 bg-clip-text text-transparent">Voice Journal</h1>
-            <p className="text-[10px] text-white/40">Record your thoughts</p>
+            <p className="text-[10px] text-white/40">{t('record your thoughts')}</p>
           </div>
         </div>
       </header>
@@ -344,7 +346,7 @@ export default function VoiceJournal() {
 
                 {/* Mood Selection */}
                 <div>
-                  <p className="text-white/40 text-xs mb-2">How are you feeling?</p>
+                  <p className="text-white/40 text-xs mb-2">{t('how are you')}</p>
                   <div className="grid grid-cols-4 gap-2">
                     {MOODS.map(mood => (
                       <button
@@ -379,7 +381,7 @@ export default function VoiceJournal() {
                       backdropFilter: 'blur(10px)',
                     }}
                   >
-                    Discard
+                    {t('discard')}
                   </button>
                   <button
                     onClick={saveEntry}
@@ -393,7 +395,7 @@ export default function VoiceJournal() {
                     {saving ? (
                       <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                     ) : (
-                      <>💾 Save</>
+                      <>💾 {t('save')}</>
                     )}
                   </button>
                 </div>
@@ -418,19 +420,19 @@ export default function VoiceJournal() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-14 0m14 0a7 7 0 00-14 0m14 0v1a7 7 0 01-14 0v-1m7-4V3m0 0L8 6m4-3l4 3" />
               </svg>
             </button>
-            <p className="text-white/50 text-sm mt-4 font-medium">Tap to record</p>
-            <p className="text-white/20 text-xs mt-1">Your voice, your thoughts</p>
+            <p className="text-white/50 text-sm mt-4 font-medium">{t('tap to record')}</p>
+            <p className="text-white/20 text-xs mt-1">{t('your voice your thoughts')}</p>
           </div>
         )}
 
         {/* Journal Entries */}
         <div>
-          <h2 className="text-lg font-bold mb-4 bg-gradient-to-r from-violet-300 to-fuchsia-300 bg-clip-text text-transparent">Journal Entries</h2>
+          <h2 className="text-lg font-bold mb-4 bg-gradient-to-r from-violet-300 to-fuchsia-300 bg-clip-text text-transparent">{t('journal entries')}</h2>
 
           {entries.length === 0 ? (
             <div className="text-center py-12">
               <div className="text-4xl mb-3">🎙️</div>
-              <p className="text-white/40 text-sm">No entries yet</p>
+              <p className="text-white/40 text-sm">{t('no data')}</p>
               <p className="text-white/20 text-xs mt-1">Record your first voice journal!</p>
             </div>
           ) : (

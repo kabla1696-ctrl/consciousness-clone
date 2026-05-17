@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import CapacitorInit from '../components/CapacitorInit'
+import Providers from '../components/Providers'
 
 export const metadata: Metadata = {
   title: 'Consciousness Clone',
@@ -39,8 +40,10 @@ export default function RootLayout({
         <meta name="msapplication-tap-highlight" content="no" />
       </head>
       <body className="bg-[#050510] text-white antialiased overscroll-none">
-        <CapacitorInit />
-        {children}
+        <Providers>
+          <CapacitorInit />
+          {children}
+        </Providers>
       </body>
     </html>
   )

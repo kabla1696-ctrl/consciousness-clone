@@ -126,7 +126,7 @@ export default function CloneAchievements() {
         .unlocking{animation:unlockPop .8s ease forwards}
       `}</style>
 
-      {[...Array(20)].map((_, i) => (
+      {[...Array(3)].map((_, i) => (
         <div key={i} style={{ position: 'fixed', width: 4, height: 4, borderRadius: '50%', background: ['#8b5cf6','#6366f1','#a78bfa','#c4b5fd'][i%4], left: `${Math.random()*100}%`, top: `${Math.random()*100}%`, animation: `particleFloat ${3+Math.random()*4}s ease-in-out infinite`, animationDelay: `${Math.random()*3}s`, pointerEvents: 'none', zIndex: 0 }} />
       ))}
 

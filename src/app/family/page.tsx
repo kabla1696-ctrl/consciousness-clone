@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface FamilyMember {
   id: string
@@ -50,6 +51,7 @@ function getRelInfo(relation: string) {
 }
 
 export default function FamilyTreePage() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [members, setMembers] = useState<FamilyMember[]>([])
   const [loading, setLoading] = useState(true)
@@ -213,7 +215,7 @@ export default function FamilyTreePage() {
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500/25 to-fuchsia-500/20 backdrop-blur-sm border border-violet-400/15 flex items-center justify-center shadow-lg shadow-violet-500/10">
               <span className="text-sm">🧬</span>
             </div>
-            <h1 className="text-sm font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">Family Tree</h1>
+            <h1 className="text-sm font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">{t('family tree')}</h1>
           </div>
           <div className="flex-1" />
           <button
@@ -221,7 +223,7 @@ export default function FamilyTreePage() {
             className="relative px-3.5 py-1.5 rounded-xl text-sm font-medium tap-feedback overflow-hidden"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-violet-500/15 to-fuchsia-500/10 border border-violet-400/20 rounded-xl backdrop-blur-sm" />
-            <span className="relative text-violet-300">{showForm ? 'Cancel' : '+ Add'}</span>
+            <span className="relative text-violet-300">{showForm ? t('cancel') : '+ Add'}</span>
           </button>
         </div>
       </header>
@@ -231,8 +233,8 @@ export default function FamilyTreePage() {
         {members.length > 0 && (
           <div className="flex gap-3 mb-5">
             {[
-              { value: members.length, label: 'Members', color: 'violet' },
-              { value: totalMemories, label: 'Memories', color: 'fuchsia' },
+              { value: members.length, label: t('memories'), color: 'violet' },
+              { value: totalMemories, label: t('memories'), color: 'fuchsia' },
               { value: new Set(members.map(m => m.relation)).size, label: 'Relations', color: 'cyan' },
             ].map((stat) => (
               <div key={stat.label} className="group flex-1 relative">
@@ -291,7 +293,7 @@ export default function FamilyTreePage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                     </svg>
                   )}
-                  {mode === 'tree' ? 'Tree' : 'List'}
+                  {mode === 'tree' ? t('family tree') : t('features')}
                 </span>
               </button>
             ))}
@@ -306,11 +308,11 @@ export default function FamilyTreePage() {
               <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-violet-400/30 to-transparent" />
               <h2 className="text-sm font-semibold text-violet-300 flex items-center gap-2">
                 <span className="w-5 h-5 rounded-md bg-violet-500/20 flex items-center justify-center text-[10px]">✏️</span>
-                {editingId ? 'Edit Family Member' : 'Add Family Member'}
+                {editingId ? t('edit') : t('add')}
               </h2>
 
               <div>
-                <label className="text-[11px] text-white/30 mb-1.5 block font-medium uppercase tracking-wider">Name</label>
+                <label className="text-[11px] text-white/30 mb-1.5 block font-medium uppercase tracking-wider">{t('name')}</label>
                 <input
                   type="text"
                   value={formName}
@@ -321,7 +323,7 @@ export default function FamilyTreePage() {
               </div>
 
               <div>
-                <label className="text-[11px] text-white/30 mb-2 block font-medium uppercase tracking-wider">Relation</label>
+                <label className="text-[11px] text-white/30 mb-2 block font-medium uppercase tracking-wider">{t('relation')}</label>
                 <div className="grid grid-cols-4 gap-2">
                   {RELATIONS.map(rel => (
                     <button
@@ -375,7 +377,7 @@ export default function FamilyTreePage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600" />
                 <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-fuchsia-500 opacity-0 hover:opacity-100 transition-opacity" />
                 <span className="relative text-white">
-                  {saving ? 'Saving...' : editingId ? '✏️ Update' : '🧬 Add to Tree'}
+                  {saving ? t('loading') : editingId ? t('edit') : t('add')}
                 </span>
               </button>
             </div>
@@ -389,7 +391,7 @@ export default function FamilyTreePage() {
               <div className="absolute inset-0 bg-violet-500/10 rounded-full blur-2xl scale-150" />
               <div className="relative text-7xl">🧬</div>
             </div>
-            <h2 className="text-lg font-bold mb-2 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Build Your Family Tree</h2>
+            <h2 className="text-lg font-bold mb-2 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">{t('family tree')}</h2>
             <p className="text-white/25 text-sm mb-8 max-w-sm mx-auto leading-relaxed">
               Map your roots. Add family members, link memories, and preserve your family&apos;s story for generations.
             </p>
@@ -399,7 +401,7 @@ export default function FamilyTreePage() {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 shadow-lg shadow-violet-500/20" />
               <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-fuchsia-500 opacity-0 hover:opacity-100 transition-opacity" />
-              <span className="relative text-white">Add First Member</span>
+              <span className="relative text-white">{t('add')}</span>
             </button>
           </div>
         )}
@@ -434,6 +436,7 @@ export default function FamilyTreePage() {
                         setNewMemory={setNewMemory}
                         onSaveMemory={() => handleAddMemory(member.id)}
                         onCancelMemory={() => { setAddingMemoryTo(null); setNewMemory('') }}
+                        t={t}
                       />
                     ))}
                   </div>
@@ -461,6 +464,7 @@ export default function FamilyTreePage() {
                 setNewMemory={setNewMemory}
                 onSaveMemory={() => handleAddMemory(member.id)}
                 onCancelMemory={() => { setAddingMemoryTo(null); setNewMemory('') }}
+                t={t}
                 fullWidth
               />
             ))}
@@ -485,6 +489,7 @@ function MemberCard({
   onSaveMemory,
   onCancelMemory,
   fullWidth,
+  t,
 }: {
   member: FamilyMember
   isExpanded: boolean
@@ -499,6 +504,7 @@ function MemberCard({
   onSaveMemory: () => void
   onCancelMemory: () => void
   fullWidth?: boolean
+  t: (key: string) => string
 }) {
   const rel = getRelInfo(member.relation)
   const age = member.birth_year ? new Date().getFullYear() - member.birth_year : null
@@ -552,13 +558,13 @@ function MemberCard({
             {/* Memories */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <h4 className="text-[11px] font-semibold text-white/25 uppercase tracking-widest">Memories</h4>
+                <h4 className="text-[11px] font-semibold text-white/25 uppercase tracking-widest">{t('memories')}</h4>
                 <button
                   onClick={onAddMemory}
                   className="relative text-[11px] text-violet-300 px-2.5 py-0.5 rounded-lg tap-feedback overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-violet-500/[0.1] border border-violet-400/10 rounded-lg" />
-                  <span className="relative">+ Add</span>
+                  <span className="relative">+ {t('add')}</span>
                 </button>
               </div>
 
@@ -572,8 +578,8 @@ function MemberCard({
                     className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2 text-xs text-white placeholder-white/15 focus:outline-none focus:border-violet-500/40 transition-all backdrop-blur-sm"
                     onKeyDown={e => e.key === 'Enter' && onSaveMemory()}
                   />
-                  <button onClick={onSaveMemory} className="text-xs text-violet-300 px-2 tap-feedback">Save</button>
-                  <button onClick={onCancelMemory} className="text-xs text-white/25 px-2 tap-feedback">Cancel</button>
+                  <button onClick={onSaveMemory} className="text-xs text-violet-300 px-2 tap-feedback">{t('save')}</button>
+                  <button onClick={onCancelMemory} className="text-xs text-white/25 px-2 tap-feedback">{t('cancel')}</button>
                 </div>
               )}
 
@@ -596,7 +602,7 @@ function MemberCard({
                 </div>
               ) : (
                 !addingMemory && (
-                  <p className="text-xs text-white/15 italic">No memories yet. Add one!</p>
+                  <p className="text-xs text-white/15 italic">{t('no data')}</p>
                 )
               )}
             </div>
@@ -608,14 +614,14 @@ function MemberCard({
                 className="relative flex-1 text-xs text-violet-300 py-2 rounded-xl tap-feedback overflow-hidden"
               >
                 <div className="absolute inset-0 bg-violet-500/[0.08] border border-violet-400/10 rounded-xl" />
-                <span className="relative">✏️ Edit</span>
+                <span className="relative">✏️ {t('edit')}</span>
               </button>
               <button
                 onClick={onDelete}
                 className="relative flex-1 text-xs text-red-400/60 py-2 rounded-xl tap-feedback overflow-hidden"
               >
                 <div className="absolute inset-0 bg-red-500/[0.04] border border-red-400/10 rounded-xl" />
-                <span className="relative">🗑️ Remove</span>
+                <span className="relative">🗑️ {t('delete')}</span>
               </button>
             </div>
           </div>

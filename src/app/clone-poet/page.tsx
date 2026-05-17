@@ -115,7 +115,7 @@ export default function ClonePoet() {
         .poem-text{animation:poemReveal .6s ease forwards}
       `}</style>
 
-      {[...Array(10)].map((_, i) => (
+      {[...Array(4)].map((_, i) => (
         <div key={i} style={{ position: 'fixed', width: 3, height: 3, borderRadius: '50%', background: ['#f472b6','#a78bfa','#60a5fa','#34d399'][i%4], left: `${Math.random()*100}%`, top: `${Math.random()*100}%`, animation: `particleFloat ${4+Math.random()*5}s ease-in-out infinite`, animationDelay: `${Math.random()*4}s`, pointerEvents: 'none', zIndex: 0 }} />
       ))}
 

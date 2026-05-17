@@ -27,11 +27,11 @@ export default function Referral() {
   }
 
   const rewards = [
-    { referrals: 1, reward: '7-day Pro trial', icon: '🎁' },
-    { referrals: 3, reward: '1 month Pro free', icon: '⭐' },
-    { referrals: 5, reward: '3 months Pro free', icon: '💎' },
-    { referrals: 10, reward: '1 year Pro free', icon: '👑' },
-    { referrals: 25, reward: 'Lifetime Immortal', icon: '🚀' },
+    { referrals: 1, reward: 'Bronze Badge + 100 Points', icon: '🎁' },
+    { referrals: 3, reward: 'Silver Badge + 500 Points', icon: '⭐' },
+    { referrals: 5, reward: 'Gold Badge + 1000 Points', icon: '💎' },
+    { referrals: 10, reward: 'Diamond Badge + 2500 Points', icon: '👑' },
+    { referrals: 25, reward: 'Legend Badge + 5000 Points', icon: '🚀' },
   ]
 
   if (!user) {
@@ -60,8 +60,8 @@ export default function Referral() {
       <div className="pt-24 px-6 max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <div className="text-6xl mb-4">🎁</div>
-          <h1 className="text-4xl font-bold mb-4">Refer Friends, Get Rewarded</h1>
-          <p className="text-white/30 text-lg">Share Consciousness Clone and unlock premium features for free</p>
+          <h1 className="text-4xl font-bold mb-4">Refer Friends, Earn Rewards</h1>
+          <p className="text-white/30 text-lg">Share Consciousness Clone and earn points & badges</p>
         </div>
 
         {/* Referral Link */}
@@ -81,7 +81,7 @@ export default function Referral() {
               {copied ? '✓ Copied!' : 'Copy Link'}
             </button>
           </div>
-          <p className="text-white/20 text-sm mt-3">Share this link with friends. When they sign up, you both get rewarded!</p>
+          <p className="text-white/20 text-sm mt-3">Share this link with friends. When they sign up, you both earn rewards!</p>
         </div>
 
         {/* Stats */}
@@ -95,8 +95,8 @@ export default function Referral() {
             <div className="text-white/30 text-sm mt-1">Your Code</div>
           </div>
           <div className="rounded-xl border border-white/[0.04] p-6 text-center" style={{ background: 'rgba(255,255,255,0.01)' }}>
-            <div className="text-3xl font-bold text-amber-400">Free</div>
-            <div className="text-white/30 text-sm mt-1">Current Plan</div>
+            <div className="text-3xl font-bold text-amber-400">{referrals * 100}</div>
+            <div className="text-white/30 text-sm mt-1">Points Earned</div>
           </div>
         </div>
 

@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface MoodEntry {
   id: string
@@ -44,6 +45,7 @@ function getDayKey(dateStr: string) {
 }
 
 export default function MoodTrackerPage() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [entries, setEntries] = useState<MoodEntry[]>([])
   const [loading, setLoading] = useState(true)
@@ -225,7 +227,7 @@ export default function MoodTrackerPage() {
             </svg>
           </Link>
           <span className="text-xl">🎭</span>
-          <h1 className="text-lg font-bold">Mood Tracker</h1>
+          <h1 className="text-lg font-bold">{t('mood tracker')}</h1>
           {insights && insights.streak > 0 && (
             <div className="ml-auto flex items-center gap-1">
               <span className="text-lg fire-text">🔥</span>
@@ -241,7 +243,7 @@ export default function MoodTrackerPage() {
           <div className="rounded-2xl glass-strong p-5 mb-6 animate-slide-up" style={{ borderColor: 'rgba(34,197,94,0.15)' }}>
             <div className="text-xs text-emerald-400 font-medium mb-3 flex items-center gap-2">
               <span className="w-2 h-2 bg-emerald-400 rounded-full" />
-              Today&apos;s mood ✓
+              {t('today')}&apos;s mood ✓
             </div>
             <div className="flex items-center gap-4">
               <span className="text-5xl">{todayEntry.mood}</span>
@@ -269,7 +271,7 @@ export default function MoodTrackerPage() {
             <div className="flex items-center gap-3">
               <span className="text-4xl" style={{ animation: showCheckIn ? 'none' : 'float-subtle 3s ease-in-out infinite' }}>{showCheckIn ? '✏️' : '🎭'}</span>
               <div className="text-left">
-                <div className="text-sm font-bold">{showCheckIn ? 'How are you feeling?' : 'Check in your mood'}</div>
+                <div className="text-sm font-bold">{showCheckIn ? t('how are you') : 'Check in your mood'}</div>
                 <div className="text-xs text-white/25">Take a moment to reflect</div>
               </div>
             </div>
@@ -280,7 +282,7 @@ export default function MoodTrackerPage() {
         {showCheckIn && !todayEntry && (
           <div className="rounded-2xl glass-strong p-5 mb-6 space-y-5 animate-slide-up" style={{ borderColor: 'rgba(139,92,246,0.15)' }}>
             <div>
-              <label className="text-xs text-white/35 font-medium uppercase tracking-wider mb-3 block">How are you feeling?</label>
+              <label className="text-xs text-white/35 font-medium uppercase tracking-wider mb-3 block">{t('select mood')}</label>
               <div className="grid grid-cols-4 gap-2">
                 {MOODS.map(mood => (
                   <button
@@ -331,7 +333,7 @@ export default function MoodTrackerPage() {
             </div>
 
             <div>
-              <label className="text-xs text-white/35 font-medium uppercase tracking-wider mb-2 block">Note (optional)</label>
+              <label className="text-xs text-white/35 font-medium uppercase tracking-wider mb-2 block">Note</label>
               <textarea
                 value={note}
                 onChange={e => setNote(e.target.value)}

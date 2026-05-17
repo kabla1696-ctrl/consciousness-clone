@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface LegacyLetter {
   id: string
@@ -69,6 +70,7 @@ function QuillAnimation() {
 }
 
 export default function LegacyLettersPage() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [letters, setLetters] = useState<LegacyLetter[]>([])
   const [showForm, setShowForm] = useState(false)
@@ -160,6 +162,7 @@ export default function LegacyLettersPage() {
           <div className="absolute inset-0 w-16 h-16 border-2 border-fuchsia-500/20 border-b-fuchsia-500 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }} />
           <div className="absolute inset-0 flex items-center justify-center text-xl">✉️</div>
         </div>
+        <div className="mt-4 text-white/30 text-sm">{t('loading')}</div>
       </main>
     )
   }
@@ -193,14 +196,14 @@ export default function LegacyLettersPage() {
           </Link>
           <div className="flex items-center gap-2">
             <span className="text-xl">✉️</span>
-            <h1 className="text-lg font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">Legacy Letters</h1>
+            <h1 className="text-lg font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">{t('legacy letters')}</h1>
           </div>
           <div className="flex-1" />
           <button
             onClick={() => { setShowForm(!showForm); if (showForm) resetForm() }}
             className="relative overflow-hidden bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 text-violet-400 text-sm font-medium px-4 py-2 rounded-xl border border-violet-500/20 hover:border-violet-500/40 transition-all tap-feedback"
           >
-            {showForm ? 'Cancel' : '+ New'}
+            {showForm ? t('cancel') : '+ New'}
           </button>
         </div>
       </header>
@@ -213,9 +216,9 @@ export default function LegacyLettersPage() {
               <div className="text-7xl" style={{ animation: 'float 4s ease-in-out infinite' }}>✉️</div>
               <div className="absolute -inset-4 bg-violet-500/10 rounded-full blur-2xl" />
             </div>
-            <h2 className="text-2xl font-bold mb-3 bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">Your Words, Delivered When It Matters</h2>
+            <h2 className="text-2xl font-bold mb-3 bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">{t('legacy letters')}</h2>
             <p className="text-white/30 text-sm mb-8 max-w-sm mx-auto">
-              Write letters to the people you love. Deliver them now, on a special date, or leave them as a lasting legacy.
+              {t('legacy letters')}
             </p>
             <button
               onClick={() => setShowForm(true)}
@@ -242,12 +245,12 @@ export default function LegacyLettersPage() {
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-xs text-white/40 mb-1.5 block font-medium">Recipient Name</label>
+                <label className="text-xs text-white/40 mb-1.5 block font-medium">{t('name')}</label>
                 <input type="text" value={recipientName} onChange={e => setRecipientName(e.target.value)} placeholder="Their name"
                   className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all" />
               </div>
               <div>
-                <label className="text-xs text-white/40 mb-1.5 block font-medium">Email (optional)</label>
+                <label className="text-xs text-white/40 mb-1.5 block font-medium">{t('email')}</label>
                 <input type="email" value={recipientEmail} onChange={e => setRecipientEmail(e.target.value)} placeholder="email@example.com"
                   className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all" />
               </div>

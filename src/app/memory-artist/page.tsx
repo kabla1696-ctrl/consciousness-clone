@@ -103,7 +103,7 @@ export default function MemoryArtist() {
         .style-btn:hover{transform:scale(1.05)}
       `}</style>
 
-      {[...Array(12)].map((_, i) => (
+      {[...Array(5)].map((_, i) => (
         <div key={i} style={{ position: 'fixed', width: 4, height: 4, borderRadius: '50%', background: ['#f093fb','#667eea','#764ba2','#fed6e3'][i%4], left: `${Math.random()*100}%`, top: `${Math.random()*100}%`, animation: `particleFloat ${3+Math.random()*4}s ease-in-out infinite`, animationDelay: `${Math.random()*3}s`, pointerEvents: 'none', zIndex: 0 }} />
       ))}
 

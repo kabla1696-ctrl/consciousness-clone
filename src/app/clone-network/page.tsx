@@ -79,7 +79,7 @@ export default function CloneNetwork() {
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="ambient-orb ambient-orb-violet" style={{ width: 300, height: 300, top: '10%', right: '-5%' }} />
         <div className="ambient-orb ambient-orb-cyan" style={{ width: 200, height: 200, bottom: '20%', left: '-5%' }} />
-        {[...Array(10)].map((_, i) => (
+        {[...Array(4)].map((_, i) => (
           <div key={i} className="particle" style={{ width: `${2 + Math.random() * 3}px`, height: `${2 + Math.random() * 3}px`, left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%`, background: i % 2 === 0 ? 'rgba(139,92,246,0.4)' : 'rgba(6,182,212,0.3)', '--duration': `${6 + Math.random() * 8}s`, '--delay': `${Math.random() * 5}s` } as React.CSSProperties} />
         ))}
       </div>

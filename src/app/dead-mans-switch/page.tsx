@@ -97,7 +97,7 @@ export default function DeadMansSwitch() {
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="ambient-orb ambient-orb-violet" style={{ width: 280, height: 280, top: '10%', right: '-5%' }} />
         <div className="ambient-orb ambient-orb-fuchsia" style={{ width: 200, height: 200, bottom: '20%', left: '-8%' }} />
-        {[...Array(8)].map((_, i) => (
+        {[...Array(3)].map((_, i) => (
           <div key={i} className="particle" style={{ width: `${2 + Math.random() * 3}px`, height: `${2 + Math.random() * 3}px`, left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%`, background: i % 2 === 0 ? 'rgba(239,68,68,0.3)' : 'rgba(139,92,246,0.3)', '--duration': `${6 + Math.random() * 8}s`, '--delay': `${Math.random() * 5}s` } as React.CSSProperties} />
         ))}
       </div>

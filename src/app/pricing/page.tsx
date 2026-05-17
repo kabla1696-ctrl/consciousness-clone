@@ -1,67 +1,33 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
-
-const plans = [
-  {
-    name: 'Free',
-    price: '$0',
-    period: 'forever',
-    description: 'Start your digital immortality journey',
-    features: [
-      '50 memories',
-      'Basic chat with clone',
-      '5 personality traits',
-      'Text-only clone',
-      'Standard response speed',
-    ],
-    cta: 'Get Started Free',
-    popular: false,
-    gradient: 'from-white/10 to-white/5',
-  },
-  {
-    name: 'Pro',
-    price: '$9',
-    period: '/month',
-    description: 'Your clone, fully alive',
-    features: [
-      'Unlimited memories',
-      'Unlimited chat',
-      'Full personality profiling',
-      'Voice clone (beta)',
-      'Memory search & analytics',
-      'Priority AI response',
-      'Export all data',
-    ],
-    cta: 'Start Pro Trial',
-    popular: true,
-    gradient: 'from-violet-500/20 to-fuchsia-500/20',
-  },
-  {
-    name: 'Immortal',
-    price: '$29',
-    period: '/month',
-    description: 'Live forever, digitally',
-    features: [
-      'Everything in Pro',
-      'Premium voice clone',
-      'Video clone (coming soon)',
-      'Clone sharing with family',
-      'Multiple personality modes',
-      'Legacy mode (after-life)',
-      'Priority support',
-      'Custom clone personality',
-      'API access',
-    ],
-    cta: 'Go Immortal',
-    popular: false,
-    gradient: 'from-amber-500/20 to-orange-500/20',
-  },
-]
+import { useT } from '../../lib/language-context'
 
 export default function Pricing() {
-  const [billing, setBilling] = useState<'monthly' | 'yearly'>('monthly')
+  const t = useT()
+
+  const freeFeatures = [
+    { icon: '💬', title: 'Unlimited Clone Chat', desc: 'Talk to your consciousness clone anytime' },
+    { icon: '📝', title: 'Unlimited Memories', desc: 'Store every life experience — no limits' },
+    { icon: '🧬', title: 'Personality Quiz', desc: "Define your clone's traits fully" },
+    { icon: '🎤', title: 'Voice Clone', desc: 'Make your clone sound exactly like you' },
+    { icon: '📞', title: 'Voice Calls', desc: 'Call your clone and have real conversations' },
+    { icon: '🎭', title: 'Mood Tracker', desc: 'Track how you feel every day' },
+    { icon: '🧘', title: 'Clone Therapy', desc: 'AI therapy sessions with your clone' },
+    { icon: '📖', title: 'Life Story Book', desc: 'AI-generated life story from memories' },
+    { icon: '🔮', title: 'Future Self', desc: 'Talk to future you' },
+    { icon: '🤝', title: 'Clone Network', desc: 'Meet and connect with other clones' },
+    { icon: '🌐', title: 'Public Profile', desc: 'Share your clone with the world' },
+    { icon: '🔐', title: 'Memory Vault', desc: 'Encrypted secret memories' },
+    { icon: '🧬', title: 'Memory DNA', desc: 'Your personality genome' },
+    { icon: '🎙️', title: 'Clone Podcast', desc: 'AI podcast from your memories' },
+    { icon: '💌', title: 'Legacy Letters', desc: 'Messages for your loved ones' },
+    { icon: '⏰', title: "Dead Man's Switch", desc: 'Auto-deliver when inactive' },
+    { icon: '📈', title: 'Analytics', desc: 'Deep insights about your clone' },
+    { icon: '🪞', title: 'Mirror Mode', desc: 'Clone asks YOU questions' },
+    { icon: '🧪', title: 'Dream Lab', desc: 'Record & analyze your dreams' },
+    { icon: '☁️', title: 'Cloud Backup', desc: 'Backup your consciousness' },
+  ]
 
   return (
     <main className="min-h-screen bg-[#050510]">
@@ -73,97 +39,91 @@ export default function Pricing() {
             <span className="text-lg font-bold">Consciousness Clone</span>
           </Link>
           <div className="flex gap-6 items-center">
-            <Link href="/login" className="text-sm text-white/40 hover:text-white transition">Login</Link>
-            <Link href="/signup" className="px-5 py-2 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-lg text-sm font-semibold hover:opacity-90 transition">Get Started</Link>
+            <Link href="/dashboard" className="px-5 py-2 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-lg text-sm font-semibold hover:opacity-90 transition">Dashboard</Link>
           </div>
         </div>
       </nav>
 
       <div className="pt-32 px-6 pb-20">
         <div className="max-w-6xl mx-auto">
-          {/* Header */}
+          {/* Hero */}
           <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              Choose Your{' '}
-              <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">Eternity</span>
+            <div className="text-8xl mb-6">🎉</div>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6">
+              Everything is{' '}
+              <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400 bg-clip-text text-transparent animate-pulse">FREE</span>
             </h1>
-            <p className="text-white/40 text-xl max-w-2xl mx-auto">
-              Your consciousness deserves to live forever. Pick the plan that matches your ambition.
+            <p className="text-white/50 text-xl md:text-2xl max-w-2xl mx-auto mb-4">
+              All features, no limits, no credit card needed.
+            </p>
+            <p className="text-white/30 text-lg max-w-xl mx-auto">
+              We believe everyone deserves digital immortality.
             </p>
 
-            {/* Billing Toggle */}
-            <div className="flex items-center justify-center gap-4 mt-8">
-              <span className={`text-sm ${billing === 'monthly' ? 'text-white' : 'text-white/30'}`}>Monthly</span>
-              <button
-                onClick={() => setBilling(billing === 'monthly' ? 'yearly' : 'monthly')}
-                className="relative w-14 h-7 rounded-full bg-white/10 transition"
-              >
-                <div className={`absolute top-1 w-5 h-5 rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 transition ${billing === 'yearly' ? 'left-8' : 'left-1'}`} />
-              </button>
-              <span className={`text-sm ${billing === 'yearly' ? 'text-white' : 'text-white/30'}`}>
-                Yearly <span className="text-emerald-400 text-xs font-semibold">Save 20%</span>
-              </span>
+            {/* Animated gradient bar */}
+            <div className="mt-8 h-1 max-w-md mx-auto rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
+              <div className="h-full w-full rounded-full" style={{
+                background: 'linear-gradient(90deg, #10b981, #06b6d4, #8b5cf6, #ec4899, #10b981)',
+                backgroundSize: '200% 100%',
+                animation: 'gradient-slide 3s linear infinite',
+              }} />
+            </div>
+            <style>{`
+              @keyframes gradient-slide {
+                0% { background-position: 0% 0%; }
+                100% { background-position: 200% 0%; }
+              }
+            `}</style>
+          </div>
+
+          {/* Big FREE card */}
+          <div className="relative rounded-3xl border border-emerald-500/30 p-10 mb-16 text-center" style={{ background: 'rgba(16, 185, 129, 0.03)', backdropFilter: 'blur(20px)' }}>
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-6 py-1.5 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full text-sm font-bold">
+              🎁 No catch — really
+            </div>
+            <div className="text-6xl font-bold text-white mb-2 mt-2">$0</div>
+            <div className="text-white/40 text-lg mb-6">forever</div>
+            <p className="text-white/50 max-w-lg mx-auto mb-8">
+              Every single feature. Unlimited usage. No hidden fees, no surprise charges, no &ldquo;upsell later.&rdquo;
+              Your consciousness clone is yours — completely free.
+            </p>
+            <Link
+              href="/dashboard"
+              className="inline-block px-10 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-xl text-lg font-bold hover:opacity-90 transition"
+            >
+              Start Building Your Clone →
+            </Link>
+          </div>
+
+          {/* Feature Grid */}
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold text-center mb-4">Everything Included</h2>
+            <p className="text-white/30 text-center mb-10">All of this — completely free, forever</p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {freeFeatures.map((feature) => (
+                <div
+                  key={feature.title}
+                  className="rounded-xl border border-white/[0.06] p-5 hover:border-emerald-500/30 transition group"
+                  style={{ background: 'rgba(255,255,255,0.01)' }}
+                >
+                  <div className="text-2xl mb-3">{feature.icon}</div>
+                  <h3 className="font-semibold text-sm mb-1 group-hover:text-emerald-400 transition">{feature.title}</h3>
+                  <p className="text-white/30 text-xs">{feature.desc}</p>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Pricing Cards */}
-          <div className="grid md:grid-cols-3 gap-6">
-            {plans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`relative rounded-2xl border ${plan.popular ? 'border-violet-500/50' : 'border-white/[0.06]'} p-8 transition hover:border-white/[0.12]`}
-                style={{ background: plan.popular ? 'rgba(139, 92, 246, 0.05)' : 'rgba(255,255,255,0.01)' }}
-              >
-                {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full text-xs font-semibold">
-                    Most Popular
-                  </div>
-                )}
-
-                <div className="mb-6">
-                  <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-bold">{billing === 'yearly' ? `$${Math.round(parseInt(plan.price.slice(1)) * 0.8)}` : plan.price}</span>
-                    <span className="text-white/30">{plan.period}</span>
-                  </div>
-                  <p className="text-white/40 text-sm mt-2">{plan.description}</p>
-                </div>
-
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-3 text-white/60 text-sm">
-                      <span className="text-emerald-400">✓</span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-
-                <Link
-                  href="/signup"
-                  className={`block w-full text-center py-3 rounded-xl font-semibold transition ${plan.popular ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:opacity-90' : 'border border-white/[0.06] hover:bg-white/[0.02]'}`}
-                >
-                  {plan.cta}
-                </Link>
-              </div>
-            ))}
-          </div>
-
-          {/* FAQ */}
-          <div className="mt-20 max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked</h2>
-            <div className="space-y-4">
-              {[
-                { q: 'What happens to my clone if I stop paying?', a: 'Your clone stays alive in read-only mode. You can still chat, but new memories won\'t be processed. Upgrade anytime to resume full functionality.' },
-                { q: 'Is my data safe?', a: 'Absolutely. Your memories are encrypted end-to-end. Only you can access your data. We never sell or share your personal information.' },
-                { q: 'Can I export my data?', a: 'Yes! Pro and Immortal plans include full data export. Your consciousness is yours — take it anywhere.' },
-                { q: 'How does voice cloning work?', a: 'Upload a 5-minute voice sample and our AI creates a digital copy of your voice. Your clone will speak just like you.' },
-                { q: 'What is Legacy Mode?', a: 'Legacy Mode is designed for digital immortality. Your clone continues to exist and interact with your loved ones even after you\'re gone.' },
-              ].map((faq) => (
-                <div key={faq.q} className="rounded-xl border border-white/[0.04] p-6" style={{ background: 'rgba(255,255,255,0.01)' }}>
-                  <h3 className="font-semibold mb-2">{faq.q}</h3>
-                  <p className="text-white/40 text-sm">{faq.a}</p>
-                </div>
-              ))}
+          {/* Manifesto */}
+          <div className="text-center max-w-2xl mx-auto">
+            <div className="rounded-2xl border border-white/[0.04] p-10" style={{ background: 'rgba(255,255,255,0.01)' }}>
+              <div className="text-4xl mb-4">💜</div>
+              <h3 className="text-2xl font-bold mb-4">Why Free?</h3>
+              <p className="text-white/40 leading-relaxed">
+                Consciousness is a human right, not a luxury. We built this because everyone deserves to preserve their mind,
+                their stories, their voice — for themselves and for the people they love. Paywalls create inequality.
+                We chose a different path.
+              </p>
             </div>
           </div>
         </div>

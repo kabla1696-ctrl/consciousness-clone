@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface VaultEntry {
   id: string
@@ -63,7 +64,7 @@ async function deriveKey(pin: string, salt: Uint8Array): Promise<CryptoKey> {
 
 async function encryptData(text: string, pin: string): Promise<{ encrypted: string; iv: string; salt: string }> {
   const salt = crypto.getRandomValues(new Uint8Array(16))
-  const iv = crypto.getRandomValues(new Uint8Array(12))
+  const iv = crypto.getRandomValues(new Uint8Array(5))
   const key = await deriveKey(pin, salt)
   const encoder = new TextEncoder()
   const encrypted = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, encoder.encode(text))
@@ -88,6 +89,7 @@ async function decryptData(encryptedStr: string, ivStr: string, saltStr: string,
 }
 
 export default function VaultPage() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [phase, setPhase] = useState<'locked' | 'setup' | 'unlocked' | 'denied'>('locked')
@@ -177,8 +179,8 @@ export default function VaultPage() {
   }, [countdown])
 
   const setupPin = async () => {
-    if (pin.length < 4 || pin.length > 6) return alert('PIN must be 4-6 digits')
-    if (pin !== confirmPin) return alert('PINs do not match')
+    if (pin.length < 4 || pin.length > 6) return alert(t('pin must be 4-6 digits'))
+    if (pin !== confirmPin) return alert(t('pins do not match'))
     const hash = await sha256(pin)
     localStorage.setItem(VAULT_PIN_HASH, hash)
     localStorage.setItem(VAULT_ATTEMPTS, '0')
@@ -277,8 +279,8 @@ export default function VaultPage() {
   }
 
   const nuclearWipe = () => {
-    if (!confirm('⚠️ This will permanently destroy ALL vault data. Continue?')) return
-    if (!confirm('Last chance. This is IRREVERSIBLE.')) return
+    if (!confirm(`⚠️ ${t('are you sure')}`)) return
+    if (!confirm(t('last chance irreversible'))) return
     localStorage.removeItem(VAULT_STORAGE)
     localStorage.removeItem(VAULT_PIN_HASH)
     localStorage.removeItem(VAULT_ATTEMPTS)
@@ -335,13 +337,13 @@ export default function VaultPage() {
             <div className="text-7xl mb-4 relative drop-shadow-[0_0_30px_rgba(239,68,68,0.3)]">🔐</div>
           </div>
           <h1 className="text-2xl font-bold bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">Create Vault PIN</h1>
-          <p className="text-white/40 text-sm">Choose a 4-6 digit PIN to protect your vault. This cannot be recovered.</p>
+          <p className="text-white/40 text-sm">{t('choose a pin')}</p>
           <div className="space-y-3">
-            <input type="password" inputMode="numeric" maxLength={6} value={pin} onChange={e => setPin(e.target.value.replace(/\D/g, ''))} placeholder="Enter PIN" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-center text-2xl tracking-[0.5em] focus:border-red-500/40 focus:outline-none transition backdrop-blur-sm" />
-            <input type="password" inputMode="numeric" maxLength={6} value={confirmPin} onChange={e => setConfirmPin(e.target.value.replace(/\D/g, ''))} placeholder="Confirm PIN" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-center text-2xl tracking-[0.5em] focus:border-red-500/40 focus:outline-none transition backdrop-blur-sm" />
-            <button onClick={setupPin} disabled={pin.length < 4 || pin !== confirmPin} className="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium disabled:opacity-30 shadow-xl shadow-red-500/20 hover:shadow-red-500/30 transition-all active:scale-[0.98]">🔒 Create Vault</button>
+            <input type="password" inputMode="numeric" maxLength={6} value={pin} onChange={e => setPin(e.target.value.replace(/\D/g, ''))} placeholder={t('enter pin')} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-center text-2xl tracking-[0.5em] focus:border-red-500/40 focus:outline-none transition backdrop-blur-sm" />
+            <input type="password" inputMode="numeric" maxLength={6} value={confirmPin} onChange={e => setConfirmPin(e.target.value.replace(/\D/g, ''))} placeholder={t('confirm pin')} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-center text-2xl tracking-[0.5em] focus:border-red-500/40 focus:outline-none transition backdrop-blur-sm" />
+            <button onClick={setupPin} disabled={pin.length < 4 || pin !== confirmPin} className="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium disabled:opacity-30 shadow-xl shadow-red-500/20 hover:shadow-red-500/30 transition-all active:scale-[0.98]">🔒 {t('create vault')}</button>
           </div>
-          <Link href="/dashboard" className="text-sm text-white/30 hover:text-white/50 transition inline-block">← Back to Dashboard</Link>
+          <Link href="/dashboard" className="text-sm text-white/30 hover:text-white/50 transition inline-block">← {t('back to dashboard')}</Link>
         </div>
       </main>
     )
@@ -402,18 +404,18 @@ export default function VaultPage() {
           {animState === 'idle' && (
             <>
               <h1 className="text-2xl font-bold bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">Memory Vault</h1>
-              <p className="text-white/40 text-sm">Enter your PIN to unlock</p>
+              <p className="text-white/40 text-sm">{t('enter pin to unlock')}</p>
               <input type="password" inputMode="numeric" maxLength={6} value={pinInput} onChange={e => setPinInput(e.target.value.replace(/\D/g, ''))} onKeyDown={e => e.key === 'Enter' && attemptUnlock()} placeholder="••••" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-center text-2xl tracking-[0.5em] focus:border-red-500/40 focus:outline-none transition backdrop-blur-sm" />
-              <button onClick={attemptUnlock} disabled={pinInput.length < 4} className="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium disabled:opacity-30 shadow-xl shadow-red-500/20 hover:shadow-red-500/30 transition-all active:scale-[0.98]">🔓 Unlock</button>
+              <button onClick={attemptUnlock} disabled={pinInput.length < 4} className="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium disabled:opacity-30 shadow-xl shadow-red-500/20 hover:shadow-red-500/30 transition-all active:scale-[0.98]">🔓 {t('unlock')}</button>
               {attempts > 0 && (
                 <div className="flex items-center justify-center gap-2 animate-pulse">
                   <span className="w-2 h-2 bg-amber-400 rounded-full" />
-                  <p className="text-amber-400 text-xs font-medium">⚠️ {MAX_ATTEMPTS - attempts} attempts remaining before self-destruct</p>
+                  <p className="text-amber-400 text-xs font-medium">⚠️ {MAX_ATTEMPTS - attempts} {t('attempts remaining before self-destruct')}</p>
                 </div>
               )}
             </>
           )}
-          {animState === 'scanning' && <p className="text-white/50 animate-pulse font-medium tracking-wider">VERIFYING IDENTITY...</p>}
+          {animState === 'scanning' && <p className="text-white/50 animate-pulse font-medium tracking-wider">{t('verifying identity')}</p>}
           {(animState === 'granted' || animState === 'denied') && (
             <div className={`text-3xl font-black tracking-wider ${animState === 'granted' ? 'text-emerald-400' : 'text-red-400'} animate-[glitch_0.3s_ease-in-out]`} style={{
               textShadow: animState === 'denied' ? '0 0 20px rgba(239,68,68,0.5), 2px 0 #00ffff, -2px 0 #ff00ff' : '0 0 20px rgba(52,211,153,0.5)',
@@ -421,7 +423,7 @@ export default function VaultPage() {
               {accessMsg}
             </div>
           )}
-          <Link href="/dashboard" className="text-sm text-white/30 hover:text-white/50 transition inline-block">← Back</Link>
+          <Link href="/dashboard" className="text-sm text-white/30 hover:text-white/50 transition inline-block">← {t('back')}</Link>
         </div>
       </main>
     )
@@ -458,15 +460,15 @@ export default function VaultPage() {
         <div className="grid grid-cols-3 gap-3">
           <div className="bg-white/[0.03] rounded-xl border border-white/[0.06] p-3 text-center backdrop-blur-sm">
             <div className="text-xl font-bold text-red-400 drop-shadow-[0_0_10px_rgba(239,68,68,0.3)]">{stats.total}</div>
-            <div className="text-[10px] text-white/30">Entries</div>
+            <div className="text-[10px] text-white/30">{t('entries')}</div>
           </div>
           <div className="bg-white/[0.03] rounded-xl border border-white/[0.06] p-3 text-center backdrop-blur-sm">
             <div className="text-xl font-bold text-amber-400">{stats.topCategory || '—'}</div>
-            <div className="text-[10px] text-white/30">Top Category</div>
+            <div className="text-[10px] text-white/30">{t('top category')}</div>
           </div>
           <div className="bg-white/[0.03] rounded-xl border border-white/[0.06] p-3 text-center backdrop-blur-sm relative">
             <div className="text-xl font-bold text-white/40">{attempts}</div>
-            <div className="text-[10px] text-white/30">Failed Attempts</div>
+            <div className="text-[10px] text-white/30">{t('failed attempts')}</div>
             {attempts > 0 && (
               <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse shadow-lg shadow-red-500/50" />
             )}
@@ -476,13 +478,13 @@ export default function VaultPage() {
         {/* Add Button */}
         <button onClick={() => setShowAdd(!showAdd)} className="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium hover:shadow-lg hover:shadow-red-500/20 transition-all active:scale-[0.98] relative overflow-hidden group">
           <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-          <span className="relative">{showAdd ? '✕ Cancel' : '＋ Add Vault Memory'}</span>
+          <span className="relative">{showAdd ? `✕ ${t('cancel')}` : `＋ ${t('add vault memory')}`}</span>
         </button>
 
         {/* Add Form */}
         {showAdd && (
           <div className="bg-white/[0.03] rounded-xl border border-red-500/10 p-4 space-y-3 backdrop-blur-xl shadow-2xl shadow-red-500/5">
-            <textarea value={newContent} onChange={e => setNewContent(e.target.value)} placeholder="Your secret is safe here..." className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm resize-none h-24 focus:border-red-500/40 focus:outline-none transition" />
+            <textarea value={newContent} onChange={e => setNewContent(e.target.value)} placeholder={t('secret placeholder')} className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm resize-none h-24 focus:border-red-500/40 focus:outline-none transition" />
             <div className="flex gap-2 overflow-x-auto pb-1">
               {CATEGORIES.map(cat => (
                 <button key={cat.key} onClick={() => setNewCategory(cat.key)} className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs whitespace-nowrap transition ${newCategory === cat.key ? 'bg-red-500/20 text-red-400 border border-red-500/30 shadow-lg shadow-red-500/10' : 'bg-white/5 text-white/30 border border-white/5 hover:bg-white/10'}`}>
@@ -491,13 +493,13 @@ export default function VaultPage() {
               ))}
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-white/30">Importance:</span>
+              <span className="text-xs text-white/30">{t('importance')}:</span>
               {[1,2,3,4,5].map(n => (
                 <button key={n} onClick={() => setNewImportance(n)} className={`text-lg transition hover:scale-110 ${n <= newImportance ? 'opacity-100' : 'opacity-20'}`}>⭐</button>
               ))}
             </div>
-            <input value={newMood} onChange={e => setNewMood(e.target.value)} placeholder="Mood (optional)" className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm focus:border-red-500/40 focus:outline-none transition" />
-            <button onClick={addEntry} disabled={!newContent.trim()} className="w-full py-2.5 rounded-xl bg-red-600 text-white text-sm font-medium disabled:opacity-30 shadow-lg shadow-red-500/20 hover:bg-red-500 transition active:scale-[0.98]">🔐 Encrypt & Save</button>
+            <input value={newMood} onChange={e => setNewMood(e.target.value)} placeholder={t('mood optional')} className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm focus:border-red-500/40 focus:outline-none transition" />
+            <button onClick={addEntry} disabled={!newContent.trim()} className="w-full py-2.5 rounded-xl bg-red-600 text-white text-sm font-medium disabled:opacity-30 shadow-lg shadow-red-500/20 hover:bg-red-500 transition active:scale-[0.98]">🔐 {t('encrypt & save')}</button>
           </div>
         )}
 
@@ -505,8 +507,8 @@ export default function VaultPage() {
         {entries.length === 0 ? (
           <div className="text-center py-12 text-white/20">
             <div className="text-5xl mb-3 drop-shadow-[0_0_30px_rgba(239,68,68,0.2)]">🔒</div>
-            <p>Your vault is empty</p>
-            <p className="text-xs mt-1">Add your first secret</p>
+            <p>{t('vault empty')}</p>
+            <p className="text-xs mt-1">{t('add your first secret')}</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -542,10 +544,10 @@ export default function VaultPage() {
                 <span className="text-lg font-black text-red-500 animate-pulse">{countdown}</span>
               )}
             </h3>
-            <p className="text-xs text-white/30 mb-3">Permanently destroy all vault data. This cannot be undone.</p>
+            <p className="text-xs text-white/30 mb-3">{t('permanently destroy all vault data')}</p>
             <button onClick={nuclearWipe} className="w-full py-2.5 rounded-xl bg-red-900/50 text-red-300 text-sm font-medium border border-red-500/20 hover:bg-red-900/80 transition-all active:scale-[0.98] relative overflow-hidden group">
               <div className="absolute inset-0 bg-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <span className="relative">💀 Destroy Everything</span>
+              <span className="relative">💀 {t('destroy everything')}</span>
             </button>
           </div>
         </div>
@@ -553,7 +555,7 @@ export default function VaultPage() {
         {/* Info */}
         <div className="text-[10px] text-white/15 space-y-1 text-center">
           <p>AES-256-GCM encryption • PBKDF2 key derivation</p>
-          <p>{MAX_ATTEMPTS - attempts} attempts remaining • Auto-locks after 30s inactivity</p>
+          <p>{MAX_ATTEMPTS - attempts} {t('attempts remaining')}</p>
         </div>
       </div>
 

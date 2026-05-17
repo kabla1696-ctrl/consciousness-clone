@@ -77,7 +77,7 @@ export default function SoulTattooPage() {
       `}</style>
 
       {/* Particles */}
-      {[...Array(15)].map((_, i) => (
+      {[...Array(6)].map((_, i) => (
         <div key={i} style={{
           position: 'fixed', width: `${2 + Math.random() * 3}px`, height: `${2 + Math.random() * 3}px`,
           borderRadius: '50%', background: `rgba(139,92,246,${0.12 + Math.random() * 0.2})`,

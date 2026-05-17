@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 export default function Signup() {
   const [name, setName] = useState('')
@@ -10,6 +11,8 @@ export default function Signup() {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  const t = useT()
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -50,7 +53,7 @@ export default function Signup() {
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
-          Back
+          {t('back')}
         </Link>
       </div>
 
@@ -63,8 +66,8 @@ export default function Signup() {
               🧬
             </div>
           </div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent">Create Your Clone</h1>
-          <p className="text-white/25 text-sm mt-2 tracking-wide">Start your digital immortality journey</p>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent">{t('create your clone')}</h1>
+          <p className="text-white/25 text-sm mt-2 tracking-wide">{t('start your digital immortality journey')}</p>
         </div>
 
         {/* Glassmorphism form card */}
@@ -72,7 +75,7 @@ export default function Signup() {
           <div className="absolute -inset-1 bg-gradient-to-r from-fuchsia-500/20 via-violet-500/10 to-pink-500/20 rounded-3xl blur-xl opacity-60" />
           <form onSubmit={handleSignup} className="relative space-y-4 bg-white/[0.03] backdrop-blur-2xl border border-white/[0.06] rounded-2xl p-6 shadow-2xl shadow-black/40">
             <div className="space-y-1">
-              <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium pl-1">Name</label>
+              <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium pl-1">{t('name')}</label>
               <input
                 type="text"
                 value={name}
@@ -84,7 +87,7 @@ export default function Signup() {
               />
             </div>
             <div className="space-y-1">
-              <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium pl-1">Email</label>
+              <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium pl-1">{t('email')}</label>
               <input
                 type="email"
                 value={email}
@@ -97,7 +100,7 @@ export default function Signup() {
               />
             </div>
             <div className="space-y-1">
-              <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium pl-1">Password</label>
+              <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium pl-1">{t('password')}</label>
               <input
                 type="password"
                 value={password}
@@ -123,16 +126,16 @@ export default function Signup() {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-fuchsia-600 via-violet-600 to-fuchsia-600 bg-[length:200%_100%] group-hover:animate-[shimmer_2s_ease-in-out_infinite] transition-all" />
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-fuchsia-400/20 to-violet-400/20 blur-xl" />
-              <span className="relative z-10">{loading ? 'Creating...' : 'Create Account'}</span>
+              <span className="relative z-10">{loading ? t('creating') : t('create account')}</span>
             </button>
           </form>
         </div>
 
         <div className="text-center mt-8">
           <p className="text-white/20 text-sm">
-            Already have an account?{' '}
+            {t('already have an account')}{' '}
             <Link href="/login" className="text-fuchsia-400 font-medium hover:text-fuchsia-300 transition-colors duration-300 hover:drop-shadow-[0_0_8px_rgba(232,121,249,0.4)]">
-              Sign In
+              {t('login')}
             </Link>
           </p>
         </div>

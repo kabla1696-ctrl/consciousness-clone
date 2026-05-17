@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 function Particles() {
   return (
@@ -47,6 +48,7 @@ function GlowCard({ children, className = '', glowColor = 'violet' }: { children
 }
 
 export default function Analytics() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [stats, setStats] = useState({
     totalMemories: 0,
@@ -116,10 +118,10 @@ export default function Analytics() {
   const maxCategoryCount = Math.max(...Object.values(stats.categoryBreakdown), 1)
 
   const statCards = [
-    { label: 'Total Memories', value: stats.totalMemories, gradient: 'from-violet-500 to-violet-400', icon: '📝', glow: 'violet' },
-    { label: 'Chat Messages', value: stats.totalChats, gradient: 'from-fuchsia-500 to-pink-400', icon: '💬', glow: 'fuchsia' },
-    { label: 'Categories Used', value: Object.keys(stats.categoryBreakdown).length, gradient: 'from-cyan-500 to-teal-400', icon: '📂', glow: 'cyan' },
-    { label: 'Moods Tracked', value: Object.keys(stats.moodBreakdown).length, gradient: 'from-amber-500 to-yellow-400', icon: '🎭', glow: 'amber' },
+    { label: t('memories'), value: stats.totalMemories, gradient: 'from-violet-500 to-violet-400', icon: '📝', glow: 'violet' },
+    { label: t('chat'), value: stats.totalChats, gradient: 'from-fuchsia-500 to-pink-400', icon: '💬', glow: 'fuchsia' },
+    { label: t('features count'), value: Object.keys(stats.categoryBreakdown).length, gradient: 'from-cyan-500 to-teal-400', icon: '📂', glow: 'cyan' },
+    { label: t('mood'), value: Object.keys(stats.moodBreakdown).length, gradient: 'from-amber-500 to-yellow-400', icon: '🎭', glow: 'amber' },
   ]
 
   return (
@@ -140,9 +142,9 @@ export default function Analytics() {
           </Link>
           <div className="flex gap-6 items-center">
             {[
-              { href: '/dashboard', label: 'Dashboard' },
-              { href: '/chat', label: 'Chat' },
-              { href: '/memories', label: 'Memories' },
+              { href: '/dashboard', label: t('dashboard') },
+              { href: '/chat', label: t('chat') },
+              { href: '/memories', label: t('memories') },
             ].map(link => (
               <Link key={link.href} href={link.href} className="text-sm text-white/30 hover:text-white transition-all duration-300 relative group">
                 {link.label}
@@ -158,12 +160,12 @@ export default function Analytics() {
         <div className="mb-12 animate-[fadeInUp_0.6s_ease-out]">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 mb-4">
             <div className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
-            <span className="text-xs text-violet-300/80">Live Analytics</span>
+            <span className="text-xs text-violet-300/80">{t('analytics')}</span>
           </div>
           <h1 className="text-5xl md:text-6xl font-black mb-3">
-            <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">Clone Analytics</span>
+            <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">{t('analytics')}</span>
           </h1>
-          <p className="text-white/25 text-lg">Understand your digital consciousness</p>
+          <p className="text-white/25 text-lg">{t('soul sync')}</p>
         </div>
 
         {/* Stats Cards */}
@@ -184,10 +186,10 @@ export default function Analytics() {
             <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/5 rounded-full blur-3xl" />
             <h2 className="text-xl font-bold mb-8 flex items-center gap-3">
               <span className="w-8 h-8 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-sm">📝</span>
-              <span className="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Memory Categories</span>
+              <span className="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">{t('memories')}</span>
             </h2>
             {stats.topCategories.length === 0 ? (
-              <p className="text-white/20 text-center py-12 text-sm">No memories yet. Start adding some!</p>
+              <p className="text-white/20 text-center py-12 text-sm">{t('no data')}</p>
             ) : (
               <div className="space-y-6">
                 {stats.topCategories.map(([category, count], i) => (
@@ -219,10 +221,10 @@ export default function Analytics() {
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-fuchsia-500/5 rounded-full blur-3xl" />
             <h2 className="text-xl font-bold mb-8 flex items-center gap-3">
               <span className="w-8 h-8 rounded-lg bg-fuchsia-500/10 border border-fuchsia-500/20 flex items-center justify-center text-sm">😊</span>
-              <span className="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Mood Distribution</span>
+              <span className="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">{t('mood')}</span>
             </h2>
             {Object.keys(stats.moodBreakdown).length === 0 ? (
-              <p className="text-white/20 text-center py-12 text-sm">No mood data yet</p>
+              <p className="text-white/20 text-center py-12 text-sm">{t('no data')}</p>
             ) : (
               <div className="flex flex-wrap gap-3">
                 {Object.entries(stats.moodBreakdown)
@@ -246,10 +248,10 @@ export default function Analytics() {
           <div className="absolute top-0 left-1/2 w-40 h-40 bg-cyan-500/5 rounded-full blur-3xl -translate-x-1/2" />
           <h2 className="text-xl font-bold mb-8 flex items-center gap-3">
             <span className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-sm">🕐</span>
-            <span className="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Recent Activity</span>
+            <span className="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">{t('heartbeat')}</span>
           </h2>
           {stats.recentActivity.length === 0 ? (
-            <p className="text-white/20 text-center py-12 text-sm">No activity yet</p>
+            <p className="text-white/20 text-center py-12 text-sm">{t('no data')}</p>
           ) : (
             <div className="space-y-2">
               {stats.recentActivity.map((item: any, i: number) => (
@@ -262,7 +264,7 @@ export default function Analytics() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-white/50 text-sm truncate group-hover:text-white/70 transition-colors">
-                      {item.role ? `Chat: ${item.content}` : `Memory: ${item.content}`}
+                      {item.role ? `${t('chat')}: ${item.content}` : `${t('memories')}: ${item.content}`}
                     </p>
                     <p className="text-white/15 text-xs mt-1">
                       {item.category && `${item.category} • `}{new Date(item.created_at).toLocaleDateString()}
@@ -280,43 +282,43 @@ export default function Analytics() {
           <div className="absolute top-0 right-0 w-40 h-40 bg-violet-500/5 rounded-full blur-3xl" />
           <h2 className="text-xl font-bold mb-6 flex items-center gap-3">
             <span className="w-8 h-8 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-sm">💡</span>
-            <span className="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Clone Insights</span>
+            <span className="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">{t('analytics')}</span>
           </h2>
           <div className="space-y-3 text-white/40 text-sm">
             {stats.totalMemories < 5 && (
               <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.01] border border-white/[0.04] hover:border-violet-500/20 transition-all duration-300">
                 <span className="text-lg">📝</span>
-                <p>Add more memories to help your clone understand you better!</p>
+                <p>{t('new memory')}</p>
               </div>
             )}
             {stats.totalMemories >= 5 && stats.totalMemories < 20 && (
               <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.01] border border-white/[0.04] hover:border-violet-500/20 transition-all duration-300">
                 <span className="text-lg">🧬</span>
-                <p>Your clone is learning! Keep adding memories to deepen its understanding.</p>
+                <p>{t('life score')}</p>
               </div>
             )}
             {stats.totalMemories >= 20 && (
               <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.01] border border-white/[0.04] hover:border-violet-500/20 transition-all duration-300">
                 <span className="text-lg">✨</span>
-                <p>Your clone has a solid foundation of memories. It can now respond more authentically!</p>
+                <p>{t('achievements')}</p>
               </div>
             )}
             {stats.totalChats > 10 && (
               <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.01] border border-white/[0.04] hover:border-violet-500/20 transition-all duration-300">
                 <span className="text-lg">💬</span>
-                <p>Great conversation history! Your clone is getting better at matching your style.</p>
+                <p>{t('clone quiz')}</p>
               </div>
             )}
             {Object.keys(stats.categoryBreakdown).length < 3 && (
               <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.01] border border-white/[0.04] hover:border-violet-500/20 transition-all duration-300">
                 <span className="text-lg">🌈</span>
-                <p>Try adding memories from different categories for a more well-rounded clone.</p>
+                <p>{t('idea generator')}</p>
               </div>
             )}
             {stats.topCategories.length > 0 && (
               <div className="flex items-start gap-3 p-4 rounded-xl bg-white/[0.01] border border-white/[0.04] hover:border-violet-500/20 transition-all duration-300">
                 <span className="text-lg">📊</span>
-                <p>Your most documented area is <strong className="text-white/60">{stats.topCategories[0][0].replace('_', ' ')}</strong> with {stats.topCategories[0][1]} memories.</p>
+                <p>{t('memory dna')} <strong className="text-white/60">{stats.topCategories[0][0].replace('_', ' ')}</strong> — {stats.topCategories[0][1]} {t('memories')}</p>
               </div>
             )}
           </div>

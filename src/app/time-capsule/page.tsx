@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface TimeCapsule {
   id: string
@@ -55,7 +56,7 @@ function FlipDigit({ value }: { value: number }) {
 function FloatingParticles() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(20)].map((_, i) => (
+      {[...Array(3)].map((_, i) => (
         <div
           key={i}
           className="absolute rounded-full animate-float"
@@ -85,7 +86,7 @@ function UnlockExplosion({ onComplete }: { onComplete: () => void }) {
       <div className="explosion-ring" />
       <div className="explosion-ring" style={{ animationDelay: '0.2s' }} />
       <div className="explosion-ring" style={{ animationDelay: '0.4s' }} />
-      {[...Array(12)].map((_, i) => (
+      {[...Array(5)].map((_, i) => (
         <div
           key={i}
           className="absolute w-2 h-2 rounded-full bg-gradient-to-r from-violet-400 to-fuchsia-400 animate-particle"
@@ -101,6 +102,7 @@ function UnlockExplosion({ onComplete }: { onComplete: () => void }) {
 }
 
 export default function TimeCapsulePage() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [capsules, setCapsules] = useState<TimeCapsule[]>([])
   const [showForm, setShowForm] = useState(false)
@@ -199,6 +201,7 @@ export default function TimeCapsulePage() {
           <div className="absolute inset-0 w-16 h-16 border-2 border-fuchsia-500/20 border-b-fuchsia-500 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }} />
           <div className="absolute inset-0 flex items-center justify-center text-xl">⏳</div>
         </div>
+        <div className="mt-4 text-white/30 text-sm">{t('loading')}</div>
       </main>
     )
   }
@@ -242,14 +245,14 @@ export default function TimeCapsulePage() {
               <span className="text-xl">⏳</span>
               <div className="absolute -inset-1 bg-violet-500/20 rounded-full blur-md" />
             </div>
-            <h1 className="text-lg font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">Time Capsule</h1>
+            <h1 className="text-lg font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">{t('time capsule')}</h1>
           </div>
           <div className="flex-1" />
           <button
             onClick={() => setShowForm(!showForm)}
             className="relative overflow-hidden bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 text-violet-400 text-sm font-medium px-4 py-2 rounded-xl border border-violet-500/20 hover:border-violet-500/40 transition-all tap-feedback group"
           >
-            <span className="relative z-10">{showForm ? 'Cancel' : '+ New'}</span>
+            <span className="relative z-10">{showForm ? t('cancel') : '+ New'}</span>
             <div className="absolute inset-0 bg-gradient-to-r from-violet-500/0 to-fuchsia-500/0 group-hover:from-violet-500/10 group-hover:to-fuchsia-500/10 transition-all" />
           </button>
         </div>
@@ -264,13 +267,13 @@ export default function TimeCapsulePage() {
                 <span className="text-lg">🔒</span>
               </div>
               <div>
-                <h2 className="text-sm font-semibold text-violet-400">Create a New Time Capsule</h2>
+                <h2 className="text-sm font-semibold text-violet-400">{t('add')}</h2>
                 <p className="text-[10px] text-white/30">Seal your words for the future</p>
               </div>
             </div>
 
             <div>
-              <label className="text-xs text-white/40 mb-1.5 block font-medium">Recipient Name</label>
+              <label className="text-xs text-white/40 mb-1.5 block font-medium">{t('name')}</label>
               <input
                 type="text"
                 value={recipientName}
@@ -281,7 +284,7 @@ export default function TimeCapsulePage() {
             </div>
 
             <div>
-              <label className="text-xs text-white/40 mb-1.5 block font-medium">Recipient Email (optional)</label>
+              <label className="text-xs text-white/40 mb-1.5 block font-medium">{t('email')}</label>
               <input
                 type="email"
                 value={recipientEmail}
@@ -351,13 +354,13 @@ export default function TimeCapsulePage() {
               <div className="text-7xl animate-float">⏳</div>
               <div className="absolute -inset-4 bg-violet-500/10 rounded-full blur-2xl" />
             </div>
-            <h2 className="text-2xl font-bold mb-3 bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">No Time Capsules Yet</h2>
-            <p className="text-white/30 text-sm mb-8 max-w-sm mx-auto">Send a message to the future — to yourself or someone you love.</p>
+            <h2 className="text-2xl font-bold mb-3 bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">{t('no data')}</h2>
+            <p className="text-white/30 text-sm mb-8 max-w-sm mx-auto">{t('no data')}</p>
             <button
               onClick={() => setShowForm(true)}
               className="relative overflow-hidden bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 text-violet-400 font-medium px-8 py-4 rounded-2xl border border-violet-500/20 hover:border-violet-500/40 hover:shadow-[0_0_30px_rgba(139,92,246,0.2)] transition-all tap-feedback"
             >
-              Create Your First Capsule
+              {t('add')}
             </button>
           </div>
         )}

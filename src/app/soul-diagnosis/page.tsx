@@ -159,7 +159,7 @@ export default function SoulDiagnosis() {
         .rec-card:hover{transform:translateX(4px)}
       `}</style>
 
-      {[...Array(12)].map((_, i) => (
+      {[...Array(5)].map((_, i) => (
         <div key={i} style={{ position: 'fixed', width: 3, height: 3, borderRadius: '50%', background: ['#a78bfa','#818cf8','#6366f1','#c4b5fd'][i%4], left: `${Math.random()*100}%`, top: `${Math.random()*100}%`, animation: `particleFloat ${4+Math.random()*4}s ease-in-out infinite`, animationDelay: `${Math.random()*3}s`, pointerEvents: 'none', zIndex: 0 }} />
       ))}
 

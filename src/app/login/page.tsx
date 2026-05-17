@@ -3,12 +3,15 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  const t = useT()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -45,7 +48,7 @@ export default function Login() {
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
-          Back
+          {t('back')}
         </Link>
       </div>
 
@@ -58,8 +61,8 @@ export default function Login() {
               🧠
             </div>
           </div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent">Welcome Back</h1>
-          <p className="text-white/25 text-sm mt-2 tracking-wide">Sign in to your consciousness</p>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent">{t('welcome back')}</h1>
+          <p className="text-white/25 text-sm mt-2 tracking-wide">{t('sign in to your consciousness')}</p>
         </div>
 
         {/* Glassmorphism form card */}
@@ -67,7 +70,7 @@ export default function Login() {
           <div className="absolute -inset-1 bg-gradient-to-r from-violet-500/20 via-fuchsia-500/10 to-indigo-500/20 rounded-3xl blur-xl opacity-60" />
           <form onSubmit={handleLogin} className="relative space-y-4 bg-white/[0.03] backdrop-blur-2xl border border-white/[0.06] rounded-2xl p-6 shadow-2xl shadow-black/40">
             <div className="space-y-1">
-              <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium pl-1">Email</label>
+              <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium pl-1">{t('email')}</label>
               <input
                 type="email"
                 value={email}
@@ -80,7 +83,7 @@ export default function Login() {
               />
             </div>
             <div className="space-y-1">
-              <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium pl-1">Password</label>
+              <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium pl-1">{t('password')}</label>
               <input
                 type="password"
                 value={password}
@@ -105,16 +108,16 @@ export default function Login() {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-violet-600 via-fuchsia-600 to-violet-600 bg-[length:200%_100%] group-hover:animate-[shimmer_2s_ease-in-out_infinite] transition-all" />
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-violet-400/20 to-fuchsia-400/20 blur-xl" />
-              <span className="relative z-10">{loading ? 'Signing in...' : 'Sign In'}</span>
+              <span className="relative z-10">{loading ? t('signing in') : t('sign in')}</span>
             </button>
           </form>
         </div>
 
         <div className="text-center mt-8">
           <p className="text-white/20 text-sm">
-            Don&apos;t have an account?{' '}
+            {t('don\'t have an account')}{' '}
             <Link href="/signup" className="text-violet-400 font-medium hover:text-violet-300 transition-colors duration-300 hover:drop-shadow-[0_0_8px_rgba(167,139,250,0.4)]">
-              Sign Up
+              {t('signup')}
             </Link>
           </p>
         </div>

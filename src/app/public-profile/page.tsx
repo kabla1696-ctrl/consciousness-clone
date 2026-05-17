@@ -26,6 +26,7 @@ export default function PublicProfile() {
   const [displayName, setDisplayName] = useState('')
   const [bio, setBio] = useState('')
   const [isPublic, setIsPublic] = useState(false)
+  const [profilePic, setProfilePic] = useState<string | null>(null)
 
   useEffect(() => {
     const init = async () => {
@@ -33,6 +34,8 @@ export default function PublicProfile() {
       if (!user) { window.location.href = '/login'; return }
       setUser(user)
       loadProfile(user.id)
+      const pic = localStorage.getItem('cc_profile_pic')
+      if (pic) setProfilePic(pic)
     }
     init()
   }, [])
@@ -138,12 +141,23 @@ export default function PublicProfile() {
           <div className="absolute inset-0 bg-gradient-to-br from-violet-500/[0.03] to-fuchsia-500/[0.02] pointer-events-none" />
 
           <div className="relative flex items-center gap-5 mb-6">
-            {/* Avatar with glow */}
+            {/* Avatar with glow + upload */}
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-2xl blur-lg opacity-40 group-hover:opacity-60 transition-opacity" />
-              <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-3xl font-bold shadow-xl shadow-violet-500/20 border border-white/[0.1]">
-                {displayName ? displayName[0].toUpperCase() : '🧠'}
+              <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-3xl font-bold shadow-xl shadow-violet-500/20 border border-white/[0.1] overflow-hidden">
+                {profilePic ? <img src={profilePic} alt="Profile" className="w-full h-full object-cover" /> : (displayName ? displayName[0].toUpperCase() : '🧠')}
               </div>
+              <label className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-violet-500 border-2 border-[#050510] flex items-center justify-center text-[10px] cursor-pointer tap-feedback shadow-lg z-10">
+                📷
+                <input type="file" accept="image/*" className="hidden" onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (file) {
+                    const reader = new FileReader()
+                    reader.onloadend = () => { setProfilePic(reader.result as string); localStorage.setItem('cc_profile_pic', reader.result as string) }
+                    reader.readAsDataURL(file)
+                  }
+                }} />
+              </label>
             </div>
             <div>
               <h2 className="text-2xl font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">{displayName || 'Your Clone'}</h2>

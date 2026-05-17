@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface QuizQuestion {
   question: string
@@ -38,6 +39,7 @@ function Particles() {
 }
 
 export default function CloneQuiz() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [state, setState] = useState<QuizState>('loading')
   const [questions, setQuestions] = useState<QuizQuestion[]>([])
@@ -199,7 +201,7 @@ ${memoryContext}`,
       } catch {}
     } else {
       await navigator.clipboard.writeText(text)
-      alert('Results copied to clipboard! 📋')
+      alert(t('results copied'))
     }
   }
 
@@ -252,7 +254,7 @@ ${memoryContext}`,
           }}>🧩</div>
           <div className="flex-1">
             <h1 className="text-sm font-bold bg-gradient-to-r from-violet-300 to-fuchsia-300 bg-clip-text text-transparent">Clone Quiz</h1>
-            <p className="text-[10px] text-white/40">How well does your clone know you?</p>
+            <p className="text-[10px] text-white/40">{t('how well does your clone know you')}</p>
           </div>
         </div>
       </header>
@@ -265,7 +267,7 @@ ${memoryContext}`,
               <div className="w-14 h-14 border-2 border-violet-500/50 border-t-violet-400 rounded-full animate-spin" />
               <div className="absolute inset-0 w-14 h-14 border border-fuchsia-500/20 rounded-full animate-ping" />
             </div>
-            <p className="text-white/40 text-sm mt-4">Loading...</p>
+            <p className="text-white/40 text-sm mt-4">{t('loading')}</p>
           </div>
         )}
 
@@ -280,9 +282,9 @@ ${memoryContext}`,
             }}>
               🧩
             </div>
-            <h2 className="text-2xl font-bold mb-2 bg-gradient-to-r from-violet-300 to-fuchsia-300 bg-clip-text text-transparent">Clone Quiz</h2>
+            <h2 className="text-2xl font-bold mb-2 bg-gradient-to-r from-violet-300 to-fuchsia-300 bg-clip-text text-transparent">{t('clone quiz')}</h2>
             <p className="text-white/40 text-sm mb-2 max-w-xs">
-              Test how well your AI clone knows you! 10 questions generated from your memories.
+              {t('test how well your clone knows you')}
             </p>
             <p className="text-white/25 text-xs mb-8">
               ⚡ Requires at least 3 stored memories
@@ -311,14 +313,14 @@ ${memoryContext}`,
               {generating ? (
                 <>
                   <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Generating Questions...
+                  {t('generating questions')}
                 </>
               ) : (
-                <>🎮 Start Quiz</>
+                <>🎮 {t('start quiz')}</>
               )}
             </button>
 
-            <p className="text-white/15 text-xs mt-4">Questions are AI-generated from your memories</p>
+            <p className="text-white/15 text-xs mt-4">{t('questions are ai generated')}</p>
           </div>
         )}
 
@@ -329,10 +331,10 @@ ${memoryContext}`,
             <div className="mb-6">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-white/40 text-xs">
-                  Question {currentIndex + 1} of {questions.length}
+                  {t('question')} {currentIndex + 1} {t('of')} {questions.length}
                 </span>
                 <span className="text-xs font-medium" style={{ color: '#a78bfa' }}>
-                  Score: {score}
+                  {t('score')}: {score}
                 </span>
               </div>
               <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.04)' }}>
@@ -436,7 +438,7 @@ ${memoryContext}`,
             {showResult && (
               <div className="mt-4 text-center">
                 <span className={`text-sm font-medium ${selectedAnswer === questions[currentIndex].correctIndex ? 'text-emerald-400' : 'text-red-400'}`}>
-                  {selectedAnswer === questions[currentIndex].correctIndex ? '✅ Correct!' : '❌ Wrong!'}
+                  {selectedAnswer === questions[currentIndex].correctIndex ? `✅ ${t('correct')}` : `❌ ${t('wrong')}`}
                 </span>
               </div>
             )}

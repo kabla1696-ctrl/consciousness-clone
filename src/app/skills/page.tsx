@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import { useT } from '../../lib/language-context'
 
 interface Skill {
   id: string
@@ -29,6 +30,7 @@ const LEVELS = [
 ]
 
 export default function Skills() {
+  const t = useT()
   const [user, setUser] = useState<any>(null)
   const [skills, setSkills] = useState<Skill[]>([])
   const [loading, setLoading] = useState(true)
@@ -158,7 +160,7 @@ export default function Skills() {
       <main className="min-h-screen bg-[#050510] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="w-8 h-8 border-2 border-violet-500/30 border-t-violet-500 rounded-full animate-spin" />
-          <div className="text-white/30 text-sm">Loading...</div>
+          <div className="text-white/30 text-sm">{t('loading')}</div>
         </div>
       </main>
     )
@@ -181,7 +183,7 @@ export default function Skills() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </Link>
-          <h1 className="text-base font-semibold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Skill Transfer</h1>
+          <h1 className="text-base font-semibold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">{t('skills')}</h1>
         </div>
       </header>
 
@@ -189,7 +191,7 @@ export default function Skills() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div>
-            <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-white via-white/90 to-white/50 bg-clip-text text-transparent">Your Skills 🎯</h1>
+            <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-white via-white/90 to-white/50 bg-clip-text text-transparent">{t('skills')} 🎯</h1>
             <p className="text-white/25 text-sm">{skills.length} skills • {completedLessons}/{totalLessons} lessons completed</p>
           </div>
           <button
@@ -198,7 +200,7 @@ export default function Skills() {
           >
             <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 opacity-90 group-hover:opacity-100 transition-opacity" />
             <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 blur-xl opacity-40 group-hover:opacity-60 transition-opacity" />
-            <span className="relative z-10 flex items-center gap-2">+ Add Skill</span>
+            <span className="relative z-10 flex items-center gap-2">+ {t('add')}</span>
           </button>
         </div>
 
@@ -206,10 +208,10 @@ export default function Skills() {
         {skills.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
             {[
-              { value: skills.length, label: 'Skills', color: 'text-violet-400', glow: 'shadow-violet-500/10' },
-              { value: totalLessons, label: 'Total Lessons', color: 'text-fuchsia-400', glow: 'shadow-fuchsia-500/10' },
-              { value: completedLessons, label: 'Completed', color: 'text-emerald-400', glow: 'shadow-emerald-500/10' },
-              { value: skills.filter(s => s.lessons?.length > 0).length, label: 'With Lessons', color: 'text-amber-400', glow: 'shadow-amber-500/10' },
+              { value: skills.length, label: t('skills'), color: 'text-violet-400', glow: 'shadow-violet-500/10' },
+              { value: totalLessons, label: t('features'), color: 'text-fuchsia-400', glow: 'shadow-fuchsia-500/10' },
+              { value: completedLessons, label: t('success'), color: 'text-emerald-400', glow: 'shadow-emerald-500/10' },
+              { value: skills.filter(s => s.lessons?.length > 0).length, label: t('memories'), color: 'text-amber-400', glow: 'shadow-amber-500/10' },
             ].map((stat, i) => (
               <div key={i} className={`relative rounded-2xl border border-white/[0.06] p-5 text-center backdrop-blur-xl bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.1] transition-all duration-300 shadow-lg ${stat.glow}`}>
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/[0.04] to-transparent pointer-events-none" />
@@ -226,11 +228,11 @@ export default function Skills() {
             <div className="absolute inset-0 bg-gradient-to-br from-violet-500/[0.03] to-fuchsia-500/[0.03] pointer-events-none" />
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent" />
 
-            <h3 className="relative text-lg font-semibold mb-5 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Add New Skill</h3>
+            <h3 className="relative text-lg font-semibold mb-5 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">{t('add')}</h3>
 
             <div className="relative space-y-4">
               <div>
-                <label className="text-white/35 text-xs mb-1.5 block font-medium uppercase tracking-wider">Skill Name</label>
+                <label className="text-white/35 text-xs mb-1.5 block font-medium uppercase tracking-wider">{t('name')}</label>
                 <input
                   type="text"
                   value={skillName}
@@ -241,7 +243,7 @@ export default function Skills() {
               </div>
 
               <div>
-                <label className="text-white/35 text-xs mb-1.5 block font-medium uppercase tracking-wider">Description</label>
+                <label className="text-white/35 text-xs mb-1.5 block font-medium uppercase tracking-wider">{t('features')}</label>
                 <textarea
                   value={skillDesc}
                   onChange={(e) => setSkillDesc(e.target.value)}
@@ -252,7 +254,7 @@ export default function Skills() {
               </div>
 
               <div>
-                <label className="text-white/35 text-xs mb-2 block font-medium uppercase tracking-wider">Your Level</label>
+                <label className="text-white/35 text-xs mb-2 block font-medium uppercase tracking-wider">{t('mood')}</label>
                 <div className="flex flex-wrap gap-2">
                   {LEVELS.map((level) => (
                     <button
@@ -275,10 +277,10 @@ export default function Skills() {
               <button onClick={addSkill} className="group relative px-6 py-2.5 rounded-xl overflow-hidden transition-all duration-300">
                 <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 opacity-90 group-hover:opacity-100 transition-opacity" />
                 <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 blur-lg opacity-30" />
-                <span className="relative z-10 font-medium">Save Skill</span>
+                <span className="relative z-10 font-medium">{t('save')}</span>
               </button>
               <button onClick={() => setShowAdd(false)} className="px-6 py-2.5 border border-white/[0.06] rounded-xl hover:bg-white/[0.03] hover:border-white/[0.1] transition-all backdrop-blur-sm">
-                Cancel
+                {t('cancel')}
               </button>
             </div>
           </div>
@@ -288,12 +290,12 @@ export default function Skills() {
         {loading ? (
           <div className="text-center py-20">
             <div className="w-8 h-8 border-2 border-violet-500/30 border-t-violet-500 rounded-full animate-spin mx-auto mb-3" />
-            <div className="text-white/25 text-sm">Loading skills...</div>
+            <div className="text-white/25 text-sm">{t('loading')}</div>
           </div>
         ) : skills.length === 0 ? (
           <div className="text-center py-20">
             <div className="text-6xl mb-4 drop-shadow-lg">🎯</div>
-            <p className="text-white/30 text-lg font-medium">No skills yet</p>
+            <p className="text-white/30 text-lg font-medium">{t('no data')}</p>
             <p className="text-white/15 text-sm mt-2">Add your skills and let AI create personalized lessons</p>
           </div>
         ) : (
@@ -368,7 +370,7 @@ export default function Skills() {
                           {generatingLessons === skill.id ? (
                             <span className="relative z-10 flex items-center justify-center gap-2 text-white/70">
                               <div className="w-4 h-4 border-2 border-violet-400/30 border-t-violet-400 rounded-full animate-spin" />
-                              Generating lessons...
+                              {t('loading')}
                             </span>
                           ) : (
                             <span className="relative z-10 text-white/70 group-hover:text-white/90 transition-colors">✨ Generate AI Lessons</span>
@@ -413,7 +415,7 @@ export default function Skills() {
                             disabled={generatingLessons === skill.id}
                             className="w-full py-2.5 text-sm text-white/20 hover:text-violet-400 transition-all duration-300 mt-2"
                           >
-                            {generatingLessons === skill.id ? 'Regenerating...' : '🔄 Regenerate Lessons'}
+                            {generatingLessons === skill.id ? t('loading') : '🔄 Regenerate Lessons'}
                           </button>
                         </div>
                       )}
