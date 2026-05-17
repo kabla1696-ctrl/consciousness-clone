@@ -44,25 +44,51 @@ export default function Dashboard() {
   const userName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User'
 
   const features = [
+    // Core
     { href: '/chat', icon: '💬', title: 'Talk to Clone', desc: 'Chat with your consciousness', color: 'from-violet-500 to-purple-500' },
     { href: '/memories', icon: '📝', title: 'Memories', desc: 'Store your life experiences', color: 'from-blue-500 to-cyan-500' },
     { href: '/personality', icon: '🧬', title: 'Personality Quiz', desc: 'Define your clone\'s traits', color: 'from-pink-500 to-rose-500' },
     { href: '/mood', icon: '🎭', title: 'Mood Tracker', desc: 'Track how you feel daily', color: 'from-yellow-500 to-orange-500' },
+    // Future
     { href: '/time-capsule', icon: '🕐', title: 'Time Capsule', desc: 'Lock memories for the future', color: 'from-amber-500 to-yellow-500' },
     { href: '/legacy', icon: '💌', title: 'Legacy Letters', desc: 'Messages for loved ones', color: 'from-rose-500 to-pink-500' },
+    { href: '/last-words', icon: '📜', title: 'Last Words', desc: 'Final messages for the world', color: 'from-red-500 to-rose-500' },
+    { href: '/dead-mans-switch', icon: '⏰', title: 'Dead Man\'s Switch', desc: 'Auto-deliver when inactive', color: 'from-orange-500 to-red-500' },
+    // AI Features
     { href: '/life-story', icon: '📖', title: 'Life Story Book', desc: 'AI-generated life story', color: 'from-emerald-500 to-teal-500' },
     { href: '/future-self', icon: '🔮', title: 'Future Self', desc: 'Talk to future you', color: 'from-indigo-500 to-blue-500' },
+    { href: '/predictions', icon: '🌟', title: 'Predictions', desc: 'AI predicts your future', color: 'from-amber-500 to-orange-500' },
+    { href: '/memory-stories', icon: '✨', title: 'Memory Stories', desc: 'AI writes your stories', color: 'from-pink-500 to-fuchsia-500' },
+    { href: '/clone-podcast', icon: '🎙️', title: 'Clone Podcast', desc: 'AI podcast from memories', color: 'from-purple-500 to-violet-500' },
+    // Self Discovery
+    { href: '/mirror-mode', icon: '🪞', title: 'Mirror Mode', desc: 'Clone asks YOU questions', color: 'from-sky-500 to-blue-500' },
+    { href: '/dream-lab', icon: '🧪', title: 'Dream Lab', desc: 'Record & analyze dreams', color: 'from-indigo-500 to-purple-500' },
+    { href: '/emotion-engine', icon: '💜', title: 'Emotion Engine', desc: 'Detect emotions in text', color: 'from-fuchsia-500 to-pink-500' },
+    { href: '/personality-snapshots', icon: '📸', title: 'Personality Snapshots', desc: 'Daily personality tracking', color: 'from-teal-500 to-cyan-500' },
+    // Growth
+    { href: '/goals', icon: '🎯', title: 'Life Goals', desc: 'Track & achieve your goals', color: 'from-green-500 to-emerald-500' },
+    { href: '/life-score', icon: '📊', title: 'Life Score', desc: 'Rate your life balance', color: 'from-violet-500 to-indigo-500' },
+    { href: '/mindfulness', icon: '🧘', title: 'Mindfulness', desc: 'Meditation & breathing', color: 'from-cyan-500 to-teal-500' },
+    { href: '/achievements', icon: '🏆', title: 'Achievements', desc: 'Unlock badges & rewards', color: 'from-yellow-500 to-amber-500' },
+    // Creative
+    { href: '/idea-generator', icon: '💡', title: 'Idea Generator', desc: 'AI creative ideas', color: 'from-orange-500 to-yellow-500' },
+    { href: '/soul-playlist', icon: '🎵', title: 'Soul Playlist', desc: 'Music for your soul', color: 'from-pink-500 to-rose-500' },
+    { href: '/photo-memories', icon: '📸', title: 'Photo Memories', desc: 'Visual memory gallery', color: 'from-blue-500 to-indigo-500' },
+    { href: '/voice-journal', icon: '🎤', title: 'Voice Journal', desc: 'Record voice memories', color: 'from-teal-500 to-green-500' },
+    // Social
     { href: '/clone-quiz', icon: '🎮', title: 'Clone Quiz', desc: 'How well does clone know you?', color: 'from-fuchsia-500 to-purple-500' },
-    { href: '/voice-journal', icon: '🎙️', title: 'Voice Journal', desc: 'Record voice memories', color: 'from-teal-500 to-green-500' },
+    { href: '/clone-network', icon: '🤝', title: 'Clone Network', desc: 'Meet other clones', color: 'from-blue-500 to-purple-500' },
+    { href: '/public-profile', icon: '🌐', title: 'Public Profile', desc: 'Share your clone with world', color: 'from-cyan-500 to-blue-500' },
+    { href: '/dream-mode', icon: '🌙', title: 'Dream Mode', desc: 'Background processing', color: 'from-indigo-500 to-purple-500' },
+    // Tools
+    { href: '/analytics', icon: '📈', title: 'Analytics', desc: 'Insights about your clone', color: 'from-violet-500 to-indigo-500' },
     { href: '/memory-map', icon: '🗺️', title: 'Memory Map', desc: 'Where your memories live', color: 'from-sky-500 to-blue-500' },
     { href: '/family', icon: '👨‍👩‍👧‍👦', title: 'Family Tree', desc: 'Your family legacy', color: 'from-lime-500 to-green-500' },
     { href: '/skills', icon: '🎯', title: 'Skill Transfer', desc: 'Teach your skills to clone', color: 'from-orange-500 to-red-500' },
-    { href: '/analytics', icon: '📊', title: 'Analytics', desc: 'Insights about your clone', color: 'from-violet-500 to-indigo-500' },
     { href: '/voice', icon: '🎤', title: 'Voice Clone', desc: 'Make clone sound like you', color: 'from-purple-500 to-violet-500' },
-    { href: '/referral', icon: '🎁', title: 'Refer & Earn', desc: 'Get free Pro', color: 'from-pink-500 to-fuchsia-500' },
-    { href: '/public-profile', icon: '🌐', title: 'Public Profile', desc: 'Share your clone with world', color: 'from-cyan-500 to-blue-500' },
-    { href: '/share', icon: '🔗', title: 'Share Clone', desc: 'Let others meet your clone', color: 'from-violet-500 to-purple-500' },
     { href: '/clone-settings', icon: '⚙️', title: 'Clone Settings', desc: 'Customize your clone', color: 'from-gray-500 to-slate-500' },
+    { href: '/referral', icon: '🎁', title: 'Refer & Earn', desc: 'Get free Pro', color: 'from-pink-500 to-fuchsia-500' },
+    { href: '/share', icon: '🔗', title: 'Share Clone', desc: 'Let others meet your clone', color: 'from-violet-500 to-purple-500' },
   ]
 
   return (
@@ -84,7 +110,7 @@ export default function Dashboard() {
         {/* Welcome */}
         <div className="mb-6">
           <h1 className="text-2xl font-bold">Hey, {userName} 👋</h1>
-          <p className="text-white/30 text-sm">Your digital consciousness dashboard</p>
+          <p className="text-white/30 text-sm">Your digital consciousness dashboard — 37 features</p>
         </div>
 
         {/* Stats */}
