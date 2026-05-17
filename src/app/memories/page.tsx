@@ -81,10 +81,6 @@ export default function MemoriesPage() {
   const [saving, setSaving] = useState(false)
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
-  const [editMemory, setEditMemory] = useState<Memory | null>(null)
-  const [editTitle, setEditTitle] = useState('')
-  const [editContent, setEditContent] = useState('')
-  const [editCategory, setEditCategory] = useState('other')
   const [vaultUnlocked, setVaultUnlocked] = useState(false)
   const [vaultPin, setVaultPin] = useState('')
   const [vaultError, setVaultError] = useState('')
@@ -166,22 +162,6 @@ export default function MemoriesPage() {
   }
 
 
-  const openEdit = (m: Memory) => {
-    setEditMemory(m); setEditTitle(m.title); setEditContent(m.content); setEditCategory(m.category)
-  }
-
-  const saveEdit = async () => {
-    if (!editMemory || !editTitle.trim() || !editContent.trim()) return
-    setSaving(true)
-    const { data } = await supabase
-      .from('memories')
-      .update({ title: editTitle.trim(), content: editContent.trim(), category: editCategory })
-      .eq('id', editMemory.id)
-      .select()
-      .single()
-    if (data) setMemories(memories.map(m => m.id === editMemory.id ? data : m))
-    setEditMemory(null); setSaving(false)
-  }
 
   const filtered = memories.filter(m => {
     const matchCat = !activeCategory || m.category === activeCategory
@@ -300,11 +280,6 @@ export default function MemoriesPage() {
               >
                 <div className="flex items-start justify-between mb-3">
                   <span className="text-2xl">{CATEGORY_ICONS[memory.category] || '📎'}</span>
-                  <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button onClick={() => openEdit(memory)} className="p-1.5 rounded-lg hover:bg-white/10 text-white/30 hover:text-violet-400 transition">
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-                    </button>
-                  </div>
                 </div>
                 <h3 className="text-white/90 font-semibold text-sm mb-2 line-clamp-1">{memory.title}</h3>
                 <p className="text-white/40 text-xs leading-relaxed line-clamp-3 mb-4">{memory.content}</p>
@@ -320,23 +295,6 @@ export default function MemoriesPage() {
 
 
 
-      {/* Edit Modal */}
-      {editMemory && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setEditMemory(null)}>
-          <div className="w-full max-w-md p-6 rounded-2xl bg-[#0a0a1a] border border-white/[0.08] shadow-2xl max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-            <h3 className="text-sm font-bold text-violet-400 mb-4 uppercase tracking-wider">{t('edit')}</h3>
-            <input value={editTitle} onChange={e => setEditTitle(e.target.value)} className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition mb-3" placeholder="Title" />
-            <textarea value={editContent} onChange={e => setEditContent(e.target.value)} rows={4} className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition resize-none mb-3" placeholder="Content" />
-            <select value={editCategory} onChange={e => setEditCategory(e.target.value)} className="w-full px-4 py-3 mb-5 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white focus:outline-none focus:border-violet-500/30 transition appearance-none cursor-pointer" style={{ backgroundImage: 'url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 20 20\'%3e%3cpath stroke=\'%236b7280\' stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1.5\' d=\'M6 8l4 4 4-4\'/%3e%3c/svg%3e")', backgroundPosition: 'right 0.75rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.25em' }}>
-              {CATEGORIES.map(c => <option key={c} value={c} className="bg-[#0a0a1a]">{CATEGORY_ICONS[c]} {c.charAt(0).toUpperCase() + c.slice(1)}</option>)}
-            </select>
-            <div className="flex gap-3">
-              <button onClick={saveEdit} disabled={saving} className="flex-1 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-xl text-sm font-semibold disabled:opacity-40 hover:shadow-lg hover:shadow-violet-500/20 transition-all active:scale-95">{saving ? 'Saving...' : t('save')}</button>
-              <button onClick={() => setEditMemory(null)} className="px-5 py-3 rounded-xl text-sm text-white/30 hover:text-white/50 transition">{t('cancel')}</button>
-            </div>
-          </div>
-        </div>
-      )}
 
       <style jsx global>{`
         @keyframes floatParticle { 0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; } 25% { transform: translateY(-30px) translateX(15px); opacity: 0.6; } 50% { transform: translateY(-10px) translateX(-10px); opacity: 0.4; } 75% { transform: translateY(-40px) translateX(5px); opacity: 0.5; } }
