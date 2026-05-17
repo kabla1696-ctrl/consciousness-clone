@@ -1,9 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { supabase } from '@/lib/supabase-browser'
 
 export default function Memories() {
+  const [user, setUser] = useState<any>(null)
   const [activeTab, setActiveTab] = useState('all')
   const [showAdd, setShowAdd] = useState(false)
   const [newMemory, setNewMemory] = useState('')
@@ -14,6 +16,18 @@ export default function Memories() {
     { id: 4, text: 'When I decided to quit my job and start building something of my own.', category: 'decision', mood: '💪', date: '2025-01-05' },
     { id: 5, text: 'The night sky in Cox\'s Bazar — I had never seen so many stars.', category: 'travel', mood: '✨', date: '2022-12-25' },
   ])
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        setUser(user)
+      } else {
+        window.location.href = '/login'
+      }
+    }
+    getUser()
+  }, [])
 
   const addMemory = () => {
     if (!newMemory.trim()) return
@@ -31,15 +45,26 @@ export default function Memories() {
 
   const filtered = activeTab === 'all' ? memories : memories.filter(m => m.category === activeTab)
 
+  if (!user) {
+    return (
+      <main className="min-h-screen bg-[#050510] flex items-center justify-center">
+        <div className="text-white/40">Loading...</div>
+      </main>
+    )
+  }
+
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-[#050510]">
       {/* Navbar */}
-      <nav className="fixed top-0 w-full z-50 glass">
+      <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(5, 5, 16, 0.8)', backdropFilter: 'blur(40px)', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <Link href="/dashboard" className="text-2xl font-bold gradient-text">Consciousness Clone</Link>
-          <div className="flex gap-4 items-center">
-            <Link href="/dashboard" className="text-white/60 hover:text-white transition">Dashboard</Link>
-            <Link href="/chat" className="text-white/60 hover:text-white transition">Chat</Link>
+          <Link href="/dashboard" className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">🧠</div>
+            <span className="text-lg font-bold">Consciousness Clone</span>
+          </Link>
+          <div className="flex gap-6 items-center">
+            <Link href="/dashboard" className="text-sm text-white/40 hover:text-white transition">Dashboard</Link>
+            <Link href="/chat" className="text-sm text-white/40 hover:text-white transition">Chat</Link>
           </div>
         </div>
       </nav>
@@ -49,11 +74,11 @@ export default function Memories() {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-4xl font-bold mb-2">Your Memories 📝</h1>
-            <p className="text-white/60">{memories.length} memories stored</p>
+            <p className="text-white/30">{memories.length} memories stored</p>
           </div>
           <button
             onClick={() => setShowAdd(!showAdd)}
-            className="px-6 py-3 bg-primary rounded-full font-semibold hover:bg-primary/80 transition"
+            className="px-6 py-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-semibold hover:opacity-90 transition"
           >
             + Add Memory
           </button>
@@ -61,20 +86,20 @@ export default function Memories() {
 
         {/* Add Memory Form */}
         {showAdd && (
-          <div className="glass rounded-2xl p-6 mb-8">
+          <div className="rounded-2xl border border-white/[0.06] p-6 mb-8" style={{ background: 'rgba(255,255,255,0.02)' }}>
             <h3 className="text-lg font-semibold mb-4">New Memory</h3>
             <textarea
               value={newMemory}
               onChange={(e) => setNewMemory(e.target.value)}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-primary transition resize-none"
+              className="w-full px-4 py-3.5 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/50 transition resize-none text-white placeholder:text-white/20"
               rows={4}
               placeholder="Write your memory here... What happened? How did you feel?"
             />
             <div className="flex gap-3 mt-4">
-              <button onClick={addMemory} className="px-6 py-2 bg-primary rounded-lg hover:bg-primary/80 transition">
+              <button onClick={addMemory} className="px-6 py-2.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-lg hover:opacity-90 transition">
                 Save Memory
               </button>
-              <button onClick={() => setShowAdd(false)} className="px-6 py-2 glass rounded-lg hover:bg-white/10 transition">
+              <button onClick={() => setShowAdd(false)} className="px-6 py-2.5 border border-white/[0.06] rounded-lg hover:bg-white/[0.02] transition">
                 Cancel
               </button>
             </div>
@@ -82,12 +107,12 @@ export default function Memories() {
         )}
 
         {/* Tabs */}
-        <div className="flex gap-3 mb-8 flex-wrap">
+        <div className="flex gap-2 mb-8 flex-wrap">
           {['all', 'childhood', 'family', 'milestone', 'travel', 'decision'].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition ${activeTab === tab ? 'bg-primary' : 'glass hover:bg-white/10'}`}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition ${activeTab === tab ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500' : 'border border-white/[0.06] hover:bg-white/[0.02] text-white/50'}`}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
             </button>
@@ -95,16 +120,16 @@ export default function Memories() {
         </div>
 
         {/* Memory List */}
-        <div className="space-y-4">
+        <div className="space-y-3">
           {filtered.map((memory) => (
-            <div key={memory.id} className="glass rounded-2xl p-6 hover:bg-white/10 transition">
+            <div key={memory.id} className="rounded-xl border border-white/[0.04] hover:border-white/[0.08] p-6 transition" style={{ background: 'rgba(255,255,255,0.01)' }}>
               <div className="flex items-start gap-4">
                 <div className="text-3xl">{memory.mood}</div>
                 <div className="flex-1">
-                  <p className="text-white/80 text-lg leading-relaxed">{memory.text}</p>
-                  <div className="flex gap-4 mt-3 text-sm text-white/40">
+                  <p className="text-white/70 text-lg leading-relaxed">{memory.text}</p>
+                  <div className="flex gap-4 mt-3 text-sm text-white/20">
                     <span>{memory.date}</span>
-                    <span className="bg-white/10 px-2 py-0.5 rounded">{memory.category}</span>
+                    <span className="bg-white/[0.04] px-2 py-0.5 rounded">{memory.category}</span>
                   </div>
                 </div>
               </div>

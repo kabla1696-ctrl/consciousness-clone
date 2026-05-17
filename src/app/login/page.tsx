@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { supabase } from '@/lib/supabase-browser'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -13,53 +14,66 @@ export default function Login() {
     e.preventDefault()
     setLoading(true)
     setError('')
-    
-    // TODO: Connect Supabase auth
-    // For now, redirect to dashboard
-    setTimeout(() => {
-      window.location.href = '/dashboard'
-    }, 1000)
+
+    const { error: authError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+
+    if (authError) {
+      setError(authError.message)
+      setLoading(false)
+      return
+    }
+
+    window.location.href = '/dashboard'
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-6">
-      <div className="absolute inset-0">
-        <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/3 right-1/3 w-80 h-80 bg-secondary/10 rounded-full blur-3xl" />
+    <main className="min-h-screen flex items-center justify-center px-6 bg-[#050510]">
+      {/* Background */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050510] via-[#0a0a2e] to-[#050510]" />
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full opacity-20" style={{ background: 'radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, transparent 70%)' }} />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full opacity-15" style={{ background: 'radial-gradient(circle, rgba(236, 72, 153, 0.4) 0%, transparent 70%)' }} />
       </div>
 
       <div className="relative z-10 w-full max-w-md">
-        <div className="text-center mb-8">
-          <Link href="/" className="text-3xl font-bold gradient-text">Consciousness Clone</Link>
-          <p className="text-white/60 mt-2">Welcome back to your digital self</p>
+        <div className="text-center mb-10">
+          <Link href="/" className="inline-flex items-center gap-3 mb-6">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-xl shadow-lg shadow-violet-500/30">🧠</div>
+            <span className="text-2xl font-bold">Consciousness Clone</span>
+          </Link>
+          <h1 className="text-3xl font-bold mb-2">Welcome Back</h1>
+          <p className="text-white/40">Sign in to your digital self</p>
         </div>
 
-        <form onSubmit={handleLogin} className="glass rounded-2xl p-8 space-y-6">
+        <form onSubmit={handleLogin} className="rounded-2xl border border-white/[0.06] p-8 space-y-5" style={{ background: 'rgba(255,255,255,0.02)' }}>
           {error && (
-            <div className="bg-red-500/20 border border-red-500/50 rounded-lg p-3 text-red-300 text-sm">
+            <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-red-300 text-sm">
               {error}
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-medium mb-2">Email</label>
+            <label className="block text-sm font-medium mb-2 text-white/60">Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-primary transition"
+              className="w-full px-4 py-3.5 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/50 transition text-white placeholder:text-white/20"
               placeholder="your@email.com"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Password</label>
+            <label className="block text-sm font-medium mb-2 text-white/60">Password</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-primary transition"
+              className="w-full px-4 py-3.5 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/50 transition text-white placeholder:text-white/20"
               placeholder="••••••••"
               required
             />
@@ -68,14 +82,14 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-primary rounded-lg font-semibold hover:bg-primary/80 transition disabled:opacity-50"
+            className="w-full py-4 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-semibold hover:opacity-90 transition disabled:opacity-50 text-lg"
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
 
-          <p className="text-center text-white/60">
+          <p className="text-center text-white/40 text-sm">
             Don&apos;t have an account?{' '}
-            <Link href="/signup" className="text-primary hover:underline">Sign up free</Link>
+            <Link href="/signup" className="text-violet-400 hover:underline">Sign up free</Link>
           </p>
         </form>
       </div>
