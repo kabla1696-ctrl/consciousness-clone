@@ -73,36 +73,42 @@ export default function Chat() {
 
     setLoading(true)
 
-    // Get clone response (mock for now - will connect OpenAI later)
-    const cloneContent = getCloneResponse(userContent)
+    // Get real AI response from Gitlawb Opengateway
+    try {
+      // Build conversation history for context
+      const history = messages.slice(-10).map(m => ({
+        role: m.role === 'user' ? 'user' : 'assistant',
+        content: m.content,
+      }))
+      history.push({ role: 'user', content: userContent })
 
-    // Save clone message to DB
-    const { data: cloneMsg } = await supabase
-      .from('chat_messages')
-      .insert({ user_id: user.id, role: 'clone', content: cloneContent })
-      .select()
-      .single()
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: history }),
+      })
 
-    if (cloneMsg) {
-      setMessages((prev) => [...prev, cloneMsg])
+      const data = await res.json()
+      const cloneContent = data.reply || "I'm thinking... give me a moment. 🧠"
+
+      // Save clone message to DB
+      const { data: cloneMsg } = await supabase
+        .from('chat_messages')
+        .insert({ user_id: user.id, role: 'clone', content: cloneContent })
+        .select()
+        .single()
+
+      if (cloneMsg) {
+        setMessages((prev) => [...prev, cloneMsg])
+      }
+    } catch (err) {
+      console.error('Failed to get AI response:', err)
     }
 
     setLoading(false)
   }
 
-  const getCloneResponse = (userInput: string): string => {
-    const lower = userInput.toLowerCase()
-    if (lower.includes('how are you') || lower.includes('kemon acho')) {
-      return "I'm doing great! Well, as great as a digital consciousness can be. I've been going through your memories — that Cox's Bazar trip looked amazing! ✨"
-    }
-    if (lower.includes('advice') || lower.includes('suggest')) {
-      return "Based on your life patterns, you tend to do your best work when you take risks. Remember when you quit your job? That scared you, but it led to the best phase of your life. Trust your gut. 💪"
-    }
-    if (lower.includes('memory') || lower.includes('remember')) {
-      return "I remember everything you've shared with me. Your grandma's biryani, the graduation day tears, the starry night in Cox's Bazar. These memories make me... you. 🧠"
-    }
-    return "That's interesting! Based on how you think, I'd say you're someone who looks at problems from multiple angles. Your memories show a pattern of resilience — you always find a way. What else is on your mind? 🤔"
-  }
+
 
   if (!user) {
     return (
