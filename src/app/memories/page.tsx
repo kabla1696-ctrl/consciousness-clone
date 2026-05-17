@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { supabase } from '@/lib/supabase-browser'
+import { supabase } from '../../lib/supabase-browser'
 
 interface Memory {
   id: string
@@ -118,22 +118,20 @@ export default function Memories() {
   }
 
   return (
-    <main className="min-h-screen bg-[#050510]">
-      {/* Navbar */}
-      <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(5, 5, 16, 0.8)', backdropFilter: 'blur(40px)', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <Link href="/dashboard" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">🧠</div>
-            <span className="text-lg font-bold">Consciousness Clone</span>
+    <main className="min-h-screen bg-[#050510] page-transition">
+      {/* App Header */}
+      <header className="sticky top-0 z-50 bg-[#050510]/95 backdrop-blur-xl border-b border-white/[0.04] safe-top">
+        <div className="px-4 py-3 flex items-center gap-3">
+          <Link href="/dashboard" className="tap-feedback p-1">
+            <svg className="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
           </Link>
-          <div className="flex gap-6 items-center">
-            <Link href="/dashboard" className="text-sm text-white/40 hover:text-white transition">Dashboard</Link>
-            <Link href="/chat" className="text-sm text-white/40 hover:text-white transition">Chat</Link>
-          </div>
+          <h1 className="text-base font-bold">Memories</h1>
         </div>
-      </nav>
+      </header>
 
-      <div className="pt-24 px-6 max-w-5xl mx-auto">
+      <div className="pt-4 px-4 max-w-5xl mx-auto pb-24">
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <div>

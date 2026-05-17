@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
-import { supabase } from '@/lib/supabase-browser'
+import { useState } from 'react'
+import { supabase } from '../../lib/supabase-browser'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -15,83 +15,85 @@ export default function Login() {
     setLoading(true)
     setError('')
 
-    const { error: authError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
 
-    if (authError) {
-      setError(authError.message)
+    if (error) {
+      setError(error.message)
       setLoading(false)
-      return
+    } else {
+      window.location.href = '/dashboard'
     }
-
-    window.location.href = '/dashboard'
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-6 bg-[#050510]">
-      {/* Background */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050510] via-[#0a0a2e] to-[#050510]" />
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full opacity-20" style={{ background: 'radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, transparent 70%)' }} />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full opacity-15" style={{ background: 'radial-gradient(circle, rgba(236, 72, 153, 0.4) 0%, transparent 70%)' }} />
+    <main className="min-h-screen bg-[#050510] flex flex-col page-transition">
+      {/* Back button */}
+      <div className="pt-4 px-4 safe-top">
+        <Link href="/" className="inline-flex items-center gap-2 text-white/40 text-sm tap-feedback">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Back
+        </Link>
       </div>
 
-      <div className="relative z-10 w-full max-w-md">
+      <div className="flex-1 flex flex-col justify-center px-6 pb-20">
         <div className="text-center mb-10">
-          <Link href="/" className="inline-flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-xl shadow-lg shadow-violet-500/30">🧠</div>
-            <span className="text-2xl font-bold">Consciousness Clone</span>
-          </Link>
-          <h1 className="text-3xl font-bold mb-2">Welcome Back</h1>
-          <p className="text-white/40">Sign in to your digital self</p>
+          <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-3xl mb-4">
+            🧠
+          </div>
+          <h1 className="text-2xl font-bold">Welcome Back</h1>
+          <p className="text-white/30 text-sm mt-1">Sign in to your consciousness</p>
         </div>
 
-        <form onSubmit={handleLogin} className="rounded-2xl border border-white/[0.06] p-8 space-y-5" style={{ background: 'rgba(255,255,255,0.02)' }}>
-          {error && (
-            <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-red-300 text-sm">
-              {error}
-            </div>
-          )}
-
+        <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-2 text-white/60">Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3.5 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/50 transition text-white placeholder:text-white/20"
-              placeholder="your@email.com"
+              className="w-full px-4 py-3.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white placeholder:text-white/25 text-base"
+              placeholder="Email"
               required
+              autoComplete="email"
+              autoCapitalize="none"
             />
           </div>
-
           <div>
-            <label className="block text-sm font-medium mb-2 text-white/60">Password</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3.5 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/50 transition text-white placeholder:text-white/20"
-              placeholder="••••••••"
+              className="w-full px-4 py-3.5 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white placeholder:text-white/25 text-base"
+              placeholder="Password"
               required
+              autoComplete="current-password"
             />
           </div>
+
+          {error && (
+            <div className="text-red-400 text-sm text-center bg-red-400/10 py-2 rounded-lg">
+              {error}
+            </div>
+          )}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-semibold hover:opacity-90 transition disabled:opacity-50 text-lg"
+            className="w-full py-3.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-semibold text-base tap-feedback disabled:opacity-50"
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
-
-          <p className="text-center text-white/40 text-sm">
-            Don&apos;t have an account?{' '}
-            <Link href="/signup" className="text-violet-400 hover:underline">Sign up free</Link>
-          </p>
         </form>
+
+        <div className="text-center mt-6">
+          <p className="text-white/30 text-sm">
+            Don&apos;t have an account?{' '}
+            <Link href="/signup" className="text-violet-400 font-medium">
+              Sign Up
+            </Link>
+          </p>
+        </div>
       </div>
     </main>
   )

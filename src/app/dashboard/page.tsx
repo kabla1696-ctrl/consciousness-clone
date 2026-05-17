@@ -2,13 +2,12 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { supabase } from '@/lib/supabase-browser'
+import { supabase } from '../../lib/supabase-browser'
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null)
   const [memoryCount, setMemoryCount] = useState(0)
   const [chatCount, setChatCount] = useState(0)
-  const [clonePersonality, setClonePersonality] = useState<any>(null)
 
   useEffect(() => {
     const init = async () => {
@@ -37,7 +36,7 @@ export default function Dashboard() {
   if (!user) {
     return (
       <main className="min-h-screen bg-[#050510] flex items-center justify-center">
-        <div className="text-white/40">Loading...</div>
+        <div className="w-8 h-8 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
       </main>
     )
   }
@@ -45,161 +44,160 @@ export default function Dashboard() {
   const userName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User'
 
   return (
-    <main className="min-h-screen bg-[#050510]">
-      {/* Navbar */}
-      <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(5, 5, 16, 0.8)', backdropFilter: 'blur(40px)', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">🧠</div>
-            <span className="text-lg font-bold">Consciousness Clone</span>
-          </Link>
-          <div className="flex gap-6 items-center">
-            <Link href="/memories" className="text-sm text-white/40 hover:text-white transition">Memories</Link>
-            <Link href="/analytics" className="text-sm text-white/40 hover:text-white transition">Analytics</Link>
-            <Link href="/share" className="text-sm text-white/40 hover:text-white transition">Share</Link>
-            <Link href="/referral" className="text-sm text-white/40 hover:text-white transition">Refer</Link>
-            <button onClick={logout} className="text-sm text-white/40 hover:text-white transition">Logout</button>
+    <main className="min-h-screen bg-[#050510] page-transition">
+      {/* App Header */}
+      <header className="sticky top-0 z-50 bg-[#050510]/95 backdrop-blur-xl border-b border-white/[0.04] safe-top">
+        <div className="px-4 py-3 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-sm">🧠</div>
+            <span className="text-base font-bold">Consciousness Clone</span>
           </div>
+          <button onClick={logout} className="text-white/40 text-sm tap-feedback px-3 py-1.5 rounded-lg border border-white/[0.06]">
+            Logout
+          </button>
         </div>
-      </nav>
+      </header>
 
-      <div className="pt-24 px-6 max-w-6xl mx-auto">
-        {/* Welcome Header */}
-        <div className="mb-10">
-          <h1 className="text-4xl font-bold mb-2">Welcome back, {userName} 👋</h1>
-          <p className="text-white/30">Your digital consciousness awaits</p>
+      <div className="px-4 py-4 pb-24">
+        {/* Welcome */}
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold">Hey, {userName} 👋</h1>
+          <p className="text-white/30 text-sm">Your digital consciousness</p>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-          <div className="rounded-2xl border border-white/[0.04] p-6" style={{ background: 'rgba(255,255,255,0.01)' }}>
-            <div className="text-3xl mb-2">📝</div>
+        {/* Stats */}
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          <div className="rounded-xl border border-white/[0.06] p-4 bg-white/[0.02]">
             <div className="text-2xl font-bold text-violet-400">{memoryCount}</div>
-            <div className="text-white/30 text-sm">Memories</div>
+            <div className="text-white/30 text-xs">Memories</div>
           </div>
-          <div className="rounded-2xl border border-white/[0.04] p-6" style={{ background: 'rgba(255,255,255,0.01)' }}>
-            <div className="text-3xl mb-2">💬</div>
+          <div className="rounded-xl border border-white/[0.06] p-4 bg-white/[0.02]">
             <div className="text-2xl font-bold text-fuchsia-400">{chatCount}</div>
-            <div className="text-white/30 text-sm">Chat Messages</div>
-          </div>
-          <div className="rounded-2xl border border-white/[0.04] p-6" style={{ background: 'rgba(255,255,255,0.01)' }}>
-            <div className="text-3xl mb-2">🧬</div>
-            <div className="text-2xl font-bold text-cyan-400">Active</div>
-            <div className="text-white/30 text-sm">Clone Status</div>
-          </div>
-          <div className="rounded-2xl border border-white/[0.04] p-6" style={{ background: 'rgba(255,255,255,0.01)' }}>
-            <div className="text-3xl mb-2">⭐</div>
-            <div className="text-2xl font-bold text-amber-400">Free</div>
-            <div className="text-white/30 text-sm">Current Plan</div>
+            <div className="text-white/30 text-xs">Messages</div>
           </div>
         </div>
 
         {/* Quick Actions */}
-        <div className="grid md:grid-cols-3 gap-6 mb-10">
-          <Link href="/chat" className="group rounded-2xl border border-white/[0.04] hover:border-violet-500/30 p-8 transition" style={{ background: 'rgba(255,255,255,0.01)' }}>
-            <div className="text-4xl mb-4">💬</div>
-            <h3 className="text-xl font-bold mb-2 group-hover:text-violet-400 transition">Talk to Clone</h3>
-            <p className="text-white/30 text-sm">Have a conversation with your digital consciousness</p>
+        <div className="space-y-3 mb-6">
+          <Link href="/chat" className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] tap-feedback">
+            <div className="text-2xl">💬</div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-sm">Talk to Clone</h3>
+              <p className="text-white/30 text-xs">Chat with your consciousness</p>
+            </div>
+            <svg className="w-5 h-5 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </Link>
-          <Link href="/memories" className="group rounded-2xl border border-white/[0.04] hover:border-fuchsia-500/30 p-8 transition" style={{ background: 'rgba(255,255,255,0.01)' }}>
-            <div className="text-4xl mb-4">📝</div>
-            <h3 className="text-xl font-bold mb-2 group-hover:text-fuchsia-400 transition">Add Memories</h3>
-            <p className="text-white/30 text-sm">Store your experiences, thoughts, and feelings</p>
+
+          <Link href="/memories" className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] tap-feedback">
+            <div className="text-2xl">📝</div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-sm">Memories</h3>
+              <p className="text-white/30 text-xs">Store your life experiences</p>
+            </div>
+            <svg className="w-5 h-5 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </Link>
-          <Link href="/personality" className="group rounded-2xl border border-white/[0.04] hover:border-cyan-500/30 p-8 transition" style={{ background: 'rgba(255,255,255,0.01)' }}>
-            <div className="text-4xl mb-4">🧬</div>
-            <h3 className="text-xl font-bold mb-2 group-hover:text-cyan-400 transition">Personality Quiz</h3>
-            <p className="text-white/30 text-sm">Define your clone&apos;s personality traits</p>
+
+          <Link href="/personality" className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] tap-feedback">
+            <div className="text-2xl">🧬</div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-sm">Personality Quiz</h3>
+              <p className="text-white/30 text-xs">Define your clone&apos;s traits</p>
+            </div>
+            <svg className="w-5 h-5 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </Link>
-          <Link href="/voice" className="group rounded-2xl border border-white/[0.04] hover:border-emerald-500/30 p-8 transition" style={{ background: 'rgba(255,255,255,0.01)' }}>
-            <div className="text-4xl mb-4">🎤</div>
-            <h3 className="text-xl font-bold mb-2 group-hover:text-emerald-400 transition">Voice Clone</h3>
-            <p className="text-white/30 text-sm">Make your clone sound like you</p>
+
+          <Link href="/analytics" className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] tap-feedback">
+            <div className="text-2xl">📊</div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-sm">Analytics</h3>
+              <p className="text-white/30 text-xs">Insights about your clone</p>
+            </div>
+            <svg className="w-5 h-5 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </Link>
-          <Link href="/referral" className="group rounded-2xl border border-white/[0.04] hover:border-amber-500/30 p-8 transition" style={{ background: 'rgba(255,255,255,0.01)' }}>
-            <div className="text-4xl mb-4">🎁</div>
-            <h3 className="text-xl font-bold mb-2 group-hover:text-amber-400 transition">Refer & Earn</h3>
-            <p className="text-white/30 text-sm">Get free Pro by inviting friends</p>
+
+          <Link href="/voice" className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] tap-feedback">
+            <div className="text-2xl">🎤</div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-sm">Voice Clone</h3>
+              <p className="text-white/30 text-xs">Make your clone sound like you</p>
+            </div>
+            <svg className="w-5 h-5 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+
+          <Link href="/referral" className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] tap-feedback">
+            <div className="text-2xl">🎁</div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-sm">Refer & Earn</h3>
+              <p className="text-white/30 text-xs">Get free Pro by inviting friends</p>
+            </div>
+            <svg className="w-5 h-5 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+
+          <Link href="/share" className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] tap-feedback">
+            <div className="text-2xl">🔗</div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-sm">Share Clone</h3>
+              <p className="text-white/30 text-xs">Let others meet your consciousness</p>
+            </div>
+            <svg className="w-5 h-5 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </Link>
         </div>
 
-        {/* Clone Personality Preview */}
-        <div className="rounded-2xl border border-white/[0.04] p-8 mb-10" style={{ background: 'rgba(255,255,255,0.01)' }}>
-          <h2 className="text-xl font-bold mb-6">Your Clone&apos;s Personality 🧬</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-white/50 text-sm font-semibold mb-3">PERSONALITY TRAITS</h3>
-              <div className="space-y-3">
-                {[
-                  { trait: 'Empathy', value: 85 },
-                  { trait: 'Humor', value: 72 },
-                  { trait: 'Curiosity', value: 91 },
-                  { trait: 'Resilience', value: 88 },
-                  { trait: 'Creativity', value: 76 },
-                ].map((item) => (
-                  <div key={item.trait}>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span className="text-white/60">{item.trait}</span>
-                      <span className="text-white/30">{item.value}%</span>
-                    </div>
-                    <div className="w-full h-1.5 bg-white/[0.04] rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full transition-all duration-1000"
-                        style={{ width: `${item.value}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div>
-              <h3 className="text-white/50 text-sm font-semibold mb-3">CLONE INFO</h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center py-2 border-b border-white/[0.03]">
-                  <span className="text-white/40 text-sm">Model</span>
-                  <span className="text-white/60 text-sm">mimo-v2.5-pro</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/[0.03]">
-                  <span className="text-white/40 text-sm">Status</span>
-                  <span className="text-emerald-400 text-sm flex items-center gap-1">
-                    <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-                    Active
-                  </span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/[0.03]">
-                  <span className="text-white/40 text-sm">Voice Clone</span>
-                  <span className="text-amber-400 text-sm">Pro Plan Required</span>
-                </div>
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-white/40 text-sm">Created</span>
-                  <span className="text-white/60 text-sm">{new Date(user.created_at).toLocaleDateString()}</span>
-                </div>
-              </div>
+        {/* Upgrade Banner */}
+        <Link href="/pricing" className="block rounded-xl border border-violet-500/30 p-4 bg-violet-500/5 tap-feedback">
+          <div className="flex items-center gap-3">
+            <div className="text-2xl">⚡</div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-sm text-violet-400">Upgrade to Pro</h3>
+              <p className="text-white/30 text-xs">Unlimited memories, voice clone & more</p>
             </div>
           </div>
-        </div>
-
-        {/* Recent Activity */}
-        <div className="rounded-2xl border border-white/[0.04] p-8" style={{ background: 'rgba(255,255,255,0.01)' }}>
-          <h2 className="text-xl font-bold mb-6">Recent Activity 📊</h2>
-          <div className="space-y-4">
-            {[
-              { icon: '🧠', text: 'Clone created', time: 'Today', color: 'text-violet-400' },
-              { icon: '📝', text: `${memoryCount} memories stored`, time: 'Ongoing', color: 'text-fuchsia-400' },
-              { icon: '💬', text: `${chatCount} chat messages`, time: 'Ongoing', color: 'text-cyan-400' },
-              { icon: '⚡', text: 'Free plan active', time: 'Current', color: 'text-amber-400' },
-            ].map((item, i) => (
-              <div key={i} className="flex items-center gap-4 py-3 border-b border-white/[0.02] last:border-0">
-                <div className="text-2xl">{item.icon}</div>
-                <div className="flex-1">
-                  <p className="text-white/60 text-sm">{item.text}</p>
-                </div>
-                <span className="text-white/20 text-xs">{item.time}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        </Link>
       </div>
+
+      {/* Bottom Tab Bar */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-[#050510]/95 backdrop-blur-xl border-t border-white/[0.04] safe-bottom">
+        <div className="flex justify-around py-2">
+          <Link href="/dashboard" className="flex flex-col items-center py-2 px-4 tap-feedback">
+            <svg className="w-6 h-6 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            <span className="text-[10px] text-violet-400 mt-1">Home</span>
+          </Link>
+          <Link href="/chat" className="flex flex-col items-center py-2 px-4 tap-feedback">
+            <svg className="w-6 h-6 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            <span className="text-[10px] text-white/40 mt-1">Chat</span>
+          </Link>
+          <Link href="/memories" className="flex flex-col items-center py-2 px-4 tap-feedback">
+            <svg className="w-6 h-6 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+            <span className="text-[10px] text-white/40 mt-1">Memories</span>
+          </Link>
+          <Link href="/analytics" className="flex flex-col items-center py-2 px-4 tap-feedback">
+            <svg className="w-6 h-6 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+            <span className="text-[10px] text-white/40 mt-1">Stats</span>
+          </Link>
+        </div>
+      </nav>
     </main>
   )
 }

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { supabase } from '@/lib/supabase-browser'
+import { supabase } from '../../lib/supabase-browser'
 
 const questions = [
   {

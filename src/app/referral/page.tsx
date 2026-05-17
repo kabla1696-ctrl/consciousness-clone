@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { supabase } from '@/lib/supabase-browser'
+import { supabase } from '../../lib/supabase-browser'
 
 export default function Referral() {
   const [user, setUser] = useState<any>(null)

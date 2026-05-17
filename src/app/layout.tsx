@@ -1,31 +1,15 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
+import CapacitorInit from '../components/CapacitorInit'
 
 export const metadata: Metadata = {
-  title: 'Consciousness Clone — Live Forever Digitally',
-  description: 'Preserve your personality, memories, and voice forever. Create a digital version of yourself that lives on forever. Free to start.',
-  keywords: ['consciousness clone', 'digital immortality', 'AI clone', 'personality preservation', 'digital twin', 'voice clone', 'memory preservation', 'live forever'],
+  title: 'Consciousness Clone',
+  description: 'Your digital consciousness, living forever',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
     title: 'Consciousness Clone',
-  },
-  openGraph: {
-    title: 'Consciousness Clone — Live Forever Digitally',
-    description: 'Preserve your personality, memories, and voice forever.',
-    url: 'https://consciousness-clone.vercel.app',
-    siteName: 'Consciousness Clone',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Consciousness Clone — Live Forever Digitally',
-    description: 'Preserve your personality, memories, and voice forever.',
-  },
-  robots: {
-    index: true,
-    follow: true,
   },
 }
 
@@ -35,6 +19,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  viewportFit: 'cover',
 }
 
 export default function RootLayout({
@@ -50,24 +35,12 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
       </head>
-      <body className="bg-[#050510] text-white antialiased">
+      <body className="bg-[#050510] text-white antialiased overscroll-none">
+        <CapacitorInit />
         {children}
-        <script dangerouslySetInnerHTML={{
-          __html: `
-            if ('serviceWorker' in navigator) {
-              window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js')
-                  .then(function(registration) {
-                    console.log('SW registered:', registration.scope);
-                  })
-                  .catch(function(error) {
-                    console.log('SW registration failed:', error);
-                  });
-              });
-            }
-          `
-        }} />
       </body>
     </html>
   )

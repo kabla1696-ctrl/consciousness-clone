@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import Testimonials from '@/components/Testimonials'
+import Testimonials from '../components/Testimonials'
 
 export default function Home() {
   return (

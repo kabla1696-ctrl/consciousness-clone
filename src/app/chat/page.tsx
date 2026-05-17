@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useRef, useEffect } from 'react'
-import { supabase } from '@/lib/supabase-browser'
+import { supabase } from '../../lib/supabase-browser'
 
 interface Message {
   id: string
@@ -150,23 +150,28 @@ export default function Chat() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col bg-[#050510]">
-      {/* Navbar */}
-      <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(5, 5, 16, 0.8)', backdropFilter: 'blur(40px)', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <Link href="/dashboard" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">🧠</div>
-            <span className="text-lg font-bold">Consciousness Clone</span>
+    <main className="min-h-screen flex flex-col bg-[#050510] page-transition">
+      {/* App Header */}
+      <header className="sticky top-0 z-50 bg-[#050510]/95 backdrop-blur-xl border-b border-white/[0.04] safe-top">
+        <div className="px-4 py-3 flex items-center gap-3">
+          <Link href="/dashboard" className="tap-feedback p-1">
+            <svg className="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
           </Link>
-          <div className="flex gap-6 items-center">
-            <Link href="/dashboard" className="text-sm text-white/40 hover:text-white transition">Dashboard</Link>
-            <Link href="/memories" className="text-sm text-white/40 hover:text-white transition">Memories</Link>
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-sm">🧠</div>
+          <div className="flex-1">
+            <h1 className="text-sm font-bold">Your Clone</h1>
+            <p className="text-[10px] text-emerald-400 flex items-center gap-1">
+              <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full" />
+              Online
+            </p>
           </div>
         </div>
-      </nav>
+      </header>
 
       {/* Chat Area */}
-      <div className="flex-1 pt-20 pb-24 px-4 max-w-3xl mx-auto w-full">
+      <div className="flex-1 pt-4 pb-24 px-4 max-w-3xl mx-auto w-full">
         <div className="space-y-6">
           {messages.map((msg) => (
             <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
