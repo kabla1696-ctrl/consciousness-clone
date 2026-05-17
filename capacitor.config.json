@@ -21,9 +21,8 @@
       "overlaysWebView": false
     },
     "Keyboard": {
-      "resize": "body",
-      "style": "DARK",
-      "resizeOnFullScreen": true
+      "resize": "none",
+      "style": "DARK"
     },
     "LocalNotifications": {
       "smallIcon": "ic_stat_icon",
