@@ -40,7 +40,7 @@ export default function RootLayout({
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-tap-highlight" content="no" />
       </head>
-      <body className="bg-[#050510] text-white antialiased overscroll-none">
+      <body className="bg-[#050510] text-white antialiased">
         <Providers>
           <CapacitorInit />
           <AppShell>
