@@ -97,22 +97,51 @@ const questions = [
   },
 ]
 
+function Particles() {
+  return (
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+      {Array.from({ length: 20 }).map((_, i) => (
+        <div
+          key={i}
+          className="particle"
+          style={{
+            width: `${Math.random() * 3 + 1}px`,
+            height: `${Math.random() * 3 + 1}px`,
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            background: i % 3 === 0 ? '#8b5cf6' : i % 3 === 1 ? '#d946ef' : '#06b6d4',
+            '--duration': `${Math.random() * 10 + 6}s`,
+            '--delay': `${Math.random() * 5}s`,
+          } as React.CSSProperties}
+        />
+      ))}
+      <div className="ambient-orb ambient-orb-violet" style={{ width: 300, height: 300, top: '10%', left: '-5%' }} />
+      <div className="ambient-orb ambient-orb-fuchsia" style={{ width: 250, height: 250, bottom: '10%', right: '-5%' }} />
+    </div>
+  )
+}
+
 export default function PersonalityQuiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState<Record<string, number>>({})
   const [completed, setCompleted] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [selectedOption, setSelectedOption] = useState<string | null>(null)
 
   const handleAnswer = (trait: string) => {
+    setSelectedOption(trait)
     const newAnswers = { ...answers }
     newAnswers[trait] = (newAnswers[trait] || 0) + 1
     setAnswers(newAnswers)
 
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1)
-    } else {
-      setCompleted(true)
-    }
+    setTimeout(() => {
+      setSelectedOption(null)
+      if (currentQuestion < questions.length - 1) {
+        setCurrentQuestion(currentQuestion + 1)
+      } else {
+        setCompleted(true)
+      }
+    }, 400)
   }
 
   const getTopTraits = () => {
@@ -144,55 +173,76 @@ export default function PersonalityQuiz() {
   if (completed) {
     const topTraits = getTopTraits()
     return (
-      <main className="min-h-screen bg-[#050510] flex items-center justify-center px-6">
-        <div className="max-w-2xl w-full">
-          <div className="text-center mb-10">
-            <div className="text-6xl mb-4">🧬</div>
-            <h1 className="text-4xl font-bold mb-2">Your Personality Profile</h1>
-            <p className="text-white/30">Based on your answers, here&apos;s who you are</p>
+      <main className="min-h-screen animated-gradient-bg noise-overlay flex items-center justify-center px-6">
+        <Particles />
+        <div className="max-w-2xl w-full relative z-10">
+          {/* Hero */}
+          <div className="text-center mb-10 animate-slide-up">
+            <div className="relative inline-block mb-6">
+              <div className="text-7xl">🧬</div>
+              <div className="absolute inset-0 bg-violet-500/20 rounded-full blur-3xl" />
+            </div>
+            <h1 className="text-5xl font-black gradient-text mb-3">Your Personality Profile</h1>
+            <p className="text-white/30 text-lg">Based on your answers, here&apos;s who you are</p>
           </div>
 
-          <div className="rounded-2xl border border-white/[0.06] p-8 mb-8" style={{ background: 'rgba(255,255,255,0.02)' }}>
-            <h2 className="text-xl font-bold mb-6">Your Top Traits</h2>
+          {/* Profile Card */}
+          <div className="glass-card p-8 mb-8 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-fuchsia-500/10 rounded-full blur-3xl" />
+
+            <h2 className="text-xl font-bold mb-6 text-white/90">Your Top Traits</h2>
             <div className="flex flex-wrap gap-3 mb-8">
               {topTraits.map((trait, i) => (
-                <span key={trait} className={`px-4 py-2 rounded-full text-sm font-semibold ${i === 0 ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500' : 'bg-white/[0.04] border border-white/[0.06]'}`}>
+                <span
+                  key={trait}
+                  className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 ${
+                    i === 0
+                      ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500 shadow-lg shadow-violet-500/25'
+                      : 'glass-card hover:border-violet-500/30'
+                  }`}
+                >
                   {i === 0 && '👑 '}{trait.replace('_', ' ')}
                 </span>
               ))}
             </div>
 
             <div className="space-y-4">
-              <div className="flex justify-between items-center py-3 border-b border-white/[0.03]">
-                <span className="text-white/40">Energy</span>
-                <span className="text-white/70">{answers.introvert ? '🧘 Introvert' : answers.extrovert ? '🎉 Extrovert' : '🤷 Ambivert'}</span>
-              </div>
-              <div className="flex justify-between items-center py-3 border-b border-white/[0.03]">
-                <span className="text-white/40">Thinking</span>
-                <span className="text-white/70">{answers.analytical ? '🧠 Analytical' : answers.intuitive ? '💫 Intuitive' : '🤝 Social'}</span>
-              </div>
-              <div className="flex justify-between items-center py-3 border-b border-white/[0.03]">
-                <span className="text-white/40">Humor</span>
-                <span className="text-white/70">{answers.sarcastic ? '😏 Sarcastic' : answers.playful ? '🤪 Playful' : '😐 Dry'}</span>
-              </div>
-              <div className="flex justify-between items-center py-3">
-                <span className="text-white/40">Communication</span>
-                <span className="text-white/70">{answers.direct ? '🎯 Direct' : answers.diplomatic ? '🕊️ Diplomatic' : '🎭 Emotional'}</span>
-              </div>
+              {[
+                { label: 'Energy', value: answers.introvert ? '🧘 Introvert' : answers.extrovert ? '🎉 Extrovert' : '🤷 Ambivert' },
+                { label: 'Thinking', value: answers.analytical ? '🧠 Analytical' : answers.intuitive ? '💫 Intuitive' : '🤝 Social' },
+                { label: 'Humor', value: answers.sarcastic ? '😏 Sarcastic' : answers.playful ? '🤪 Playful' : '😐 Dry' },
+                { label: 'Communication', value: answers.direct ? '🎯 Direct' : answers.diplomatic ? '🕊️ Diplomatic' : '🎭 Emotional' },
+              ].map((item, i) => (
+                <div
+                  key={item.label}
+                  className="flex justify-between items-center py-3 px-4 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-violet-500/20 transition-all duration-300"
+                  style={{ animationDelay: `${i * 0.1}s` }}
+                >
+                  <span className="text-white/40 text-sm">{item.label}</span>
+                  <span className="text-white/80 font-medium">{item.value}</span>
+                </div>
+              ))}
             </div>
           </div>
 
+          {/* Actions */}
           <div className="flex gap-4">
             <button
               onClick={savePersonality}
               disabled={saving}
-              className="flex-1 py-4 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-semibold hover:opacity-90 transition disabled:opacity-50"
+              className="flex-1 py-4 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-2xl font-bold text-lg glow-btn disabled:opacity-50 transition-all"
             >
-              {saving ? 'Saving...' : 'Save & Go to Dashboard'}
+              {saving ? (
+                <span className="flex items-center justify-center gap-2">
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Saving...
+                </span>
+              ) : 'Save & Go to Dashboard'}
             </button>
             <Link
               href="/dashboard"
-              className="px-6 py-4 border border-white/[0.06] rounded-xl hover:bg-white/[0.02] transition"
+              className="px-8 py-4 glass-card rounded-2xl hover:border-violet-500/30 hover:bg-white/[0.04] transition-all font-medium flex items-center"
             >
               Skip
             </Link>
@@ -205,38 +255,51 @@ export default function PersonalityQuiz() {
   const q = questions[currentQuestion]
 
   return (
-    <main className="min-h-screen bg-[#050510] flex items-center justify-center px-6">
-      <div className="max-w-xl w-full">
+    <main className="min-h-screen animated-gradient-bg noise-overlay flex items-center justify-center px-6">
+      <Particles />
+      <div className="max-w-xl w-full relative z-10">
         {/* Progress */}
-        <div className="mb-8">
-          <div className="flex justify-between text-sm text-white/30 mb-2">
-            <span>Question {currentQuestion + 1} of {questions.length}</span>
-            <span>{Math.round(progress)}%</span>
+        <div className="mb-10">
+          <div className="flex justify-between text-sm text-white/30 mb-3">
+            <span className="font-medium">Question {currentQuestion + 1} of {questions.length}</span>
+            <span className="gradient-text font-bold">{Math.round(progress)}%</span>
           </div>
-          <div className="w-full h-1.5 bg-white/[0.04] rounded-full overflow-hidden">
+          <div className="w-full h-2 bg-white/[0.04] rounded-full overflow-hidden premium-progress">
             <div
-              className="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full transition-all duration-500"
-              style={{ width: `${progress}%` }}
+              className="h-full bg-gradient-to-r from-violet-500 via-fuchsia-500 to-violet-500 rounded-full transition-all duration-700 ease-out"
+              style={{ width: `${progress}%`, backgroundSize: '200% 100%', animation: 'gradient-shift 3s ease infinite' }}
             />
           </div>
         </div>
 
         {/* Question */}
-        <div className="text-center mb-10">
-          <div className="text-5xl mb-4">🤔</div>
-          <h1 className="text-3xl font-bold mb-2">{q.question}</h1>
-          <p className="text-white/30">Choose the one that resonates most with you</p>
+        <div className="text-center mb-10 animate-slide-up" key={currentQuestion}>
+          <div className="relative inline-block mb-5">
+            <div className="text-6xl">🤔</div>
+            <div className="absolute inset-0 bg-fuchsia-500/10 rounded-full blur-2xl animate-pulse" />
+          </div>
+          <h1 className="text-3xl md:text-4xl font-black text-white/95 mb-3 leading-tight">{q.question}</h1>
+          <p className="text-white/25 text-base">Choose the one that resonates most with you</p>
         </div>
 
         {/* Options */}
-        <div className="space-y-3">
+        <div className="space-y-3 stagger-children" key={`opts-${currentQuestion}`}>
           {q.options.map((option) => (
             <button
               key={option.trait}
               onClick={() => handleAnswer(option.trait)}
-              className="w-full p-5 rounded-xl border border-white/[0.06] hover:border-violet-500/50 hover:bg-violet-500/5 transition text-left text-lg"
+              className={`w-full p-5 rounded-2xl text-left text-lg font-medium transition-all duration-300 group ${
+                selectedOption === option.trait
+                  ? 'bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 border-2 border-violet-500/50 shadow-lg shadow-violet-500/20 scale-[1.02]'
+                  : 'glass-card hover:border-violet-500/30 hover:bg-white/[0.04] hover:scale-[1.01] active:scale-[0.99]'
+              }`}
             >
-              {option.text}
+              <span className="flex items-center gap-3">
+                <span className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  selectedOption === option.trait ? 'bg-violet-400 scale-150' : 'bg-white/10 group-hover:bg-violet-400/50'
+                }`} />
+                <span className="text-white/90 group-hover:text-white transition-colors">{option.text}</span>
+              </span>
             </button>
           ))}
         </div>
@@ -244,10 +307,11 @@ export default function PersonalityQuiz() {
         {/* Back button */}
         {currentQuestion > 0 && (
           <button
-            onClick={() => setCurrentQuestion(currentQuestion - 1)}
-            className="mt-6 text-white/30 hover:text-white/60 transition text-sm"
+            onClick={() => { setCurrentQuestion(currentQuestion - 1); setSelectedOption(null) }}
+            className="mt-8 text-white/25 hover:text-white/60 transition-all text-sm flex items-center gap-2 group"
           >
-            ← Previous question
+            <span className="group-hover:-translate-x-1 transition-transform">←</span>
+            Previous question
           </button>
         )}
       </div>

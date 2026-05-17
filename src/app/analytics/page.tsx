@@ -4,6 +4,31 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 
+function Particles() {
+  return (
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+      {Array.from({ length: 15 }).map((_, i) => (
+        <div
+          key={i}
+          className="particle"
+          style={{
+            width: `${Math.random() * 2.5 + 1}px`,
+            height: `${Math.random() * 2.5 + 1}px`,
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            background: i % 3 === 0 ? '#8b5cf6' : i % 3 === 1 ? '#d946ef' : '#06b6d4',
+            '--duration': `${Math.random() * 12 + 8}s`,
+            '--delay': `${Math.random() * 6}s`,
+          } as React.CSSProperties}
+        />
+      ))}
+      <div className="ambient-orb ambient-orb-violet" style={{ width: 400, height: 400, top: '-5%', right: '-10%' }} />
+      <div className="ambient-orb ambient-orb-fuchsia" style={{ width: 300, height: 300, bottom: '20%', left: '-5%' }} />
+      <div className="ambient-orb ambient-orb-cyan" style={{ width: 200, height: 200, top: '50%', right: '20%' }} />
+    </div>
+  )
+}
+
 export default function Analytics() {
   const [user, setUser] = useState<any>(null)
   const [stats, setStats] = useState({
@@ -62,73 +87,88 @@ export default function Analytics() {
 
   if (!user) {
     return (
-      <main className="min-h-screen bg-[#050510] flex items-center justify-center">
-        <div className="text-white/40">Loading...</div>
+      <main className="min-h-screen animated-gradient-bg flex items-center justify-center">
+        <div className="w-10 h-10 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
       </main>
     )
   }
 
   const maxCategoryCount = Math.max(...Object.values(stats.categoryBreakdown), 1)
 
+  const statCards = [
+    { label: 'Total Memories', value: stats.totalMemories, color: 'text-violet-400', icon: '📝' },
+    { label: 'Chat Messages', value: stats.totalChats, color: 'text-fuchsia-400', icon: '💬' },
+    { label: 'Categories Used', value: Object.keys(stats.categoryBreakdown).length, color: 'text-cyan-400', icon: '📂' },
+    { label: 'Moods Tracked', value: Object.keys(stats.moodBreakdown).length, color: 'text-amber-400', icon: '🎭' },
+  ]
+
   return (
-    <main className="min-h-screen bg-[#050510]">
+    <main className="min-h-screen animated-gradient-bg noise-overlay">
+      <Particles />
+
       {/* Navbar */}
-      <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(5, 5, 16, 0.8)', backdropFilter: 'blur(40px)', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
+      <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(5, 5, 16, 0.8)', backdropFilter: 'blur(40px)', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <Link href="/dashboard" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">🧠</div>
-            <span className="text-lg font-bold">Consciousness Clone</span>
+          <Link href="/dashboard" className="flex items-center gap-3 group">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/20 group-hover:shadow-violet-500/40 transition-shadow">🧠</div>
+            <span className="text-lg font-bold gradient-text">Consciousness Clone</span>
           </Link>
           <div className="flex gap-6 items-center">
-            <Link href="/dashboard" className="text-sm text-white/40 hover:text-white transition">Dashboard</Link>
-            <Link href="/chat" className="text-sm text-white/40 hover:text-white transition">Chat</Link>
-            <Link href="/memories" className="text-sm text-white/40 hover:text-white transition">Memories</Link>
+            {[
+              { href: '/dashboard', label: 'Dashboard' },
+              { href: '/chat', label: 'Chat' },
+              { href: '/memories', label: 'Memories' },
+            ].map(link => (
+              <Link key={link.href} href={link.href} className="text-sm text-white/30 hover:text-white transition-all duration-300 hover:glow-text">
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
       </nav>
 
-      <div className="pt-24 px-6 max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold mb-2">Clone Analytics 📊</h1>
-        <p className="text-white/30 mb-10">Understand your digital consciousness</p>
+      <div className="pt-24 px-6 max-w-6xl mx-auto relative z-10 pb-12">
+        {/* Header */}
+        <div className="mb-10 animate-slide-up">
+          <h1 className="text-5xl font-black gradient-text mb-2">Clone Analytics</h1>
+          <p className="text-white/25 text-lg">Understand your digital consciousness</p>
+        </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-          <div className="rounded-2xl border border-white/[0.04] p-6 text-center" style={{ background: 'rgba(255,255,255,0.01)' }}>
-            <div className="text-3xl font-bold text-violet-400">{stats.totalMemories}</div>
-            <div className="text-white/30 text-sm mt-1">Total Memories</div>
-          </div>
-          <div className="rounded-2xl border border-white/[0.04] p-6 text-center" style={{ background: 'rgba(255,255,255,0.01)' }}>
-            <div className="text-3xl font-bold text-fuchsia-400">{stats.totalChats}</div>
-            <div className="text-white/30 text-sm mt-1">Chat Messages</div>
-          </div>
-          <div className="rounded-2xl border border-white/[0.04] p-6 text-center" style={{ background: 'rgba(255,255,255,0.01)' }}>
-            <div className="text-3xl font-bold text-cyan-400">{Object.keys(stats.categoryBreakdown).length}</div>
-            <div className="text-white/30 text-sm mt-1">Categories Used</div>
-          </div>
-          <div className="rounded-2xl border border-white/[0.04] p-6 text-center" style={{ background: 'rgba(255,255,255,0.01)' }}>
-            <div className="text-3xl font-bold text-amber-400">{Object.keys(stats.moodBreakdown).length}</div>
-            <div className="text-white/30 text-sm mt-1">Moods Tracked</div>
-          </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 stagger-children">
+          {statCards.map((stat) => (
+            <div key={stat.label} className="glass-card p-6 text-center hover-lift group">
+              <div className="text-2xl mb-2 group-hover:scale-110 transition-transform">{stat.icon}</div>
+              <div className={`text-4xl font-black ${stat.color} mb-1`}>{stat.value}</div>
+              <div className="text-white/25 text-xs font-medium uppercase tracking-wider">{stat.label}</div>
+            </div>
+          ))}
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 mb-10">
           {/* Category Breakdown */}
-          <div className="rounded-2xl border border-white/[0.04] p-8" style={{ background: 'rgba(255,255,255,0.01)' }}>
-            <h2 className="text-xl font-bold mb-6">Memory Categories 📝</h2>
+          <div className="glass-card p-8 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-violet-500/5 rounded-full blur-3xl" />
+            <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+              <span className="text-lg">📝</span> Memory Categories
+            </h2>
             {stats.topCategories.length === 0 ? (
-              <p className="text-white/30 text-center py-8">No memories yet. Start adding some!</p>
+              <p className="text-white/20 text-center py-12 text-sm">No memories yet. Start adding some!</p>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-5 stagger-children">
                 {stats.topCategories.map(([category, count]) => (
-                  <div key={category}>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span className="text-white/60 capitalize">{category.replace('_', ' ')}</span>
-                      <span className="text-white/30">{count}</span>
+                  <div key={category} className="group">
+                    <div className="flex justify-between text-sm mb-2">
+                      <span className="text-white/60 capitalize font-medium">{category.replace('_', ' ')}</span>
+                      <span className="text-white/30 font-mono">{count}</span>
                     </div>
-                    <div className="w-full h-2 bg-white/[0.04] rounded-full overflow-hidden">
+                    <div className="w-full h-2.5 bg-white/[0.04] rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full transition-all duration-1000"
-                        style={{ width: `${(count / maxCategoryCount) * 100}%` }}
+                        className="h-full rounded-full transition-all duration-1000 ease-out premium-progress"
+                        style={{
+                          width: `${(count / maxCategoryCount) * 100}%`,
+                          background: 'linear-gradient(90deg, #8b5cf6, #d946ef)',
+                        }}
                       />
                     </div>
                   </div>
@@ -138,18 +178,24 @@ export default function Analytics() {
           </div>
 
           {/* Mood Distribution */}
-          <div className="rounded-2xl border border-white/[0.04] p-8" style={{ background: 'rgba(255,255,255,0.01)' }}>
-            <h2 className="text-xl font-bold mb-6">Mood Distribution 😊</h2>
+          <div className="glass-card p-8 relative overflow-hidden">
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-fuchsia-500/5 rounded-full blur-3xl" />
+            <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+              <span className="text-lg">😊</span> Mood Distribution
+            </h2>
             {Object.keys(stats.moodBreakdown).length === 0 ? (
-              <p className="text-white/30 text-center py-8">No mood data yet</p>
+              <p className="text-white/20 text-center py-12 text-sm">No mood data yet</p>
             ) : (
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3 stagger-children">
                 {Object.entries(stats.moodBreakdown)
                   .sort(([, a], [, b]) => b - a)
                   .map(([mood, count]) => (
-                    <div key={mood} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <div
+                      key={mood}
+                      className="flex items-center gap-2 px-4 py-2.5 rounded-xl glass-card hover:border-violet-500/20 transition-all duration-300 hover:scale-105 cursor-default"
+                    >
                       <span className="text-2xl">{mood}</span>
-                      <span className="text-white/50 text-sm">×{count}</span>
+                      <span className="text-white/40 text-sm font-mono">×{count}</span>
                     </div>
                   ))}
               </div>
@@ -158,20 +204,28 @@ export default function Analytics() {
         </div>
 
         {/* Recent Activity */}
-        <div className="rounded-2xl border border-white/[0.04] p-8" style={{ background: 'rgba(255,255,255,0.01)' }}>
-          <h2 className="text-xl font-bold mb-6">Recent Activity 🕐</h2>
+        <div className="glass-card p-8 mb-6 relative overflow-hidden">
+          <div className="absolute top-0 left-1/2 w-32 h-32 bg-cyan-500/5 rounded-full blur-3xl -translate-x-1/2" />
+          <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+            <span className="text-lg">🕐</span> Recent Activity
+          </h2>
           {stats.recentActivity.length === 0 ? (
-            <p className="text-white/30 text-center py-8">No activity yet</p>
+            <p className="text-white/20 text-center py-12 text-sm">No activity yet</p>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-2 stagger-children">
               {stats.recentActivity.map((item: any, i: number) => (
-                <div key={i} className="flex items-center gap-4 py-3 border-b border-white/[0.02] last:border-0">
-                  <div className="text-2xl">{item.role ? '💬' : item.mood || '📝'}</div>
-                  <div className="flex-1">
-                    <p className="text-white/60 text-sm truncate max-w-md">
+                <div
+                  key={i}
+                  className="flex items-center gap-4 py-3 px-4 rounded-xl hover:bg-white/[0.02] transition-all duration-300 group"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500/10 to-fuchsia-500/10 border border-violet-500/10 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                    {item.role ? '💬' : item.mood || '📝'}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-white/50 text-sm truncate">
                       {item.role ? `Chat: ${item.content}` : `Memory: ${item.content}`}
                     </p>
-                    <p className="text-white/20 text-xs mt-1">
+                    <p className="text-white/15 text-xs mt-1">
                       {item.category && `${item.category} • `}{new Date(item.created_at).toLocaleDateString()}
                     </p>
                   </div>
@@ -182,26 +236,47 @@ export default function Analytics() {
         </div>
 
         {/* Insights */}
-        <div className="rounded-2xl border border-violet-500/20 p-8 mt-6" style={{ background: 'rgba(139, 92, 246, 0.03)' }}>
-          <h2 className="text-xl font-bold mb-4">Clone Insights 💡</h2>
-          <div className="space-y-3 text-white/50 text-sm">
+        <div className="gradient-border-card p-8 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/5 rounded-full blur-3xl" />
+          <h2 className="text-xl font-bold mb-5 flex items-center gap-2">
+            <span className="text-lg">💡</span> Clone Insights
+          </h2>
+          <div className="space-y-3 text-white/40 text-sm stagger-children">
             {stats.totalMemories < 5 && (
-              <p>📝 Add more memories to help your clone understand you better!</p>
+              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.01]">
+                <span>📝</span>
+                <p>Add more memories to help your clone understand you better!</p>
+              </div>
             )}
             {stats.totalMemories >= 5 && stats.totalMemories < 20 && (
-              <p>🧬 Your clone is learning! Keep adding memories to deepen its understanding.</p>
+              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.01]">
+                <span>🧬</span>
+                <p>Your clone is learning! Keep adding memories to deepen its understanding.</p>
+              </div>
             )}
             {stats.totalMemories >= 20 && (
-              <p>✨ Your clone has a solid foundation of memories. It can now respond more authentically!</p>
+              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.01]">
+                <span>✨</span>
+                <p>Your clone has a solid foundation of memories. It can now respond more authentically!</p>
+              </div>
             )}
             {stats.totalChats > 10 && (
-              <p>💬 Great conversation history! Your clone is getting better at matching your style.</p>
+              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.01]">
+                <span>💬</span>
+                <p>Great conversation history! Your clone is getting better at matching your style.</p>
+              </div>
             )}
             {Object.keys(stats.categoryBreakdown).length < 3 && (
-              <p>🌈 Try adding memories from different categories for a more well-rounded clone.</p>
+              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.01]">
+                <span>🌈</span>
+                <p>Try adding memories from different categories for a more well-rounded clone.</p>
+              </div>
             )}
             {stats.topCategories.length > 0 && (
-              <p>📊 Your most documented area is <strong className="text-white/70">{stats.topCategories[0][0].replace('_', ' ')}</strong> with {stats.topCategories[0][1]} memories.</p>
+              <div className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.01]">
+                <span>📊</span>
+                <p>Your most documented area is <strong className="text-white/60">{stats.topCategories[0][0].replace('_', ' ')}</strong> with {stats.topCategories[0][1]} memories.</p>
+              </div>
             )}
           </div>
         </div>
