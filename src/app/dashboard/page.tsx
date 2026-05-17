@@ -104,6 +104,16 @@ export default function Dashboard() {
             <h3 className="text-xl font-bold mb-2 group-hover:text-fuchsia-400 transition">Add Memories</h3>
             <p className="text-white/30 text-sm">Store your experiences, thoughts, and feelings</p>
           </Link>
+          <Link href="/personality" className="group rounded-2xl border border-white/[0.04] hover:border-cyan-500/30 p-8 transition" style={{ background: 'rgba(255,255,255,0.01)' }}>
+            <div className="text-4xl mb-4">🧬</div>
+            <h3 className="text-xl font-bold mb-2 group-hover:text-cyan-400 transition">Personality Quiz</h3>
+            <p className="text-white/30 text-sm">Define your clone&apos;s personality traits</p>
+          </Link>
+          <Link href="/analytics" className="group rounded-2xl border border-white/[0.04] hover:border-emerald-500/30 p-8 transition" style={{ background: 'rgba(255,255,255,0.01)' }}>
+            <div className="text-4xl mb-4">📊</div>
+            <h3 className="text-xl font-bold mb-2 group-hover:text-emerald-400 transition">Analytics</h3>
+            <p className="text-white/30 text-sm">Insights about your digital consciousness</p>
+          </Link>
           <Link href="/pricing" className="group rounded-2xl border border-white/[0.04] hover:border-amber-500/30 p-8 transition" style={{ background: 'rgba(255,255,255,0.01)' }}>
             <div className="text-4xl mb-4">⚡</div>
             <h3 className="text-xl font-bold mb-2 group-hover:text-amber-400 transition">Upgrade Plan</h3>
