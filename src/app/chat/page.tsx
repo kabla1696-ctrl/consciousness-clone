@@ -69,7 +69,7 @@ export default function Chat() {
       .select('content')
       .eq('user_id', user.id)
       .order('created_at', { ascending: false })
-      .limit(20)
+      .limit(50)
 
     const memoryContext = memories?.map(m => m.content).join('\n') || ''
 
