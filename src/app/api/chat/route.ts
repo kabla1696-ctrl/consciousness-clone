@@ -4,7 +4,7 @@ export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json()
 
-    const response = await fetch('https://opengateway.gitlawb.com/v1/xiaomi-mimo', {
+    const response = await fetch('https://opengateway.gitlawb.com/v1/xiaomi-mimo/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
