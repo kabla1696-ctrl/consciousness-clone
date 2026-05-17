@@ -16,7 +16,7 @@ export default function Memories() {
   const [user, setUser] = useState<any>(null)
   const [activeTab, setActiveTab] = useState('all')
   const [showAdd, setShowAdd] = useState(false)
-  const [newMemory, setNewMemory] = useState(newMemory)
+  const [newMemory, setNewMemory] = useState('')
   const [memories, setMemories] = useState<Memory[]>([])
   const [loading, setLoading] = useState(true)
 
