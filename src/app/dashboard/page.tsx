@@ -43,6 +43,28 @@ export default function Dashboard() {
 
   const userName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'User'
 
+  const features = [
+    { href: '/chat', icon: '💬', title: 'Talk to Clone', desc: 'Chat with your consciousness', color: 'from-violet-500 to-purple-500' },
+    { href: '/memories', icon: '📝', title: 'Memories', desc: 'Store your life experiences', color: 'from-blue-500 to-cyan-500' },
+    { href: '/personality', icon: '🧬', title: 'Personality Quiz', desc: 'Define your clone\'s traits', color: 'from-pink-500 to-rose-500' },
+    { href: '/mood', icon: '🎭', title: 'Mood Tracker', desc: 'Track how you feel daily', color: 'from-yellow-500 to-orange-500' },
+    { href: '/time-capsule', icon: '🕐', title: 'Time Capsule', desc: 'Lock memories for the future', color: 'from-amber-500 to-yellow-500' },
+    { href: '/legacy', icon: '💌', title: 'Legacy Letters', desc: 'Messages for loved ones', color: 'from-rose-500 to-pink-500' },
+    { href: '/life-story', icon: '📖', title: 'Life Story Book', desc: 'AI-generated life story', color: 'from-emerald-500 to-teal-500' },
+    { href: '/future-self', icon: '🔮', title: 'Future Self', desc: 'Talk to future you', color: 'from-indigo-500 to-blue-500' },
+    { href: '/clone-quiz', icon: '🎮', title: 'Clone Quiz', desc: 'How well does clone know you?', color: 'from-fuchsia-500 to-purple-500' },
+    { href: '/voice-journal', icon: '🎙️', title: 'Voice Journal', desc: 'Record voice memories', color: 'from-teal-500 to-green-500' },
+    { href: '/memory-map', icon: '🗺️', title: 'Memory Map', desc: 'Where your memories live', color: 'from-sky-500 to-blue-500' },
+    { href: '/family', icon: '👨‍👩‍👧‍👦', title: 'Family Tree', desc: 'Your family legacy', color: 'from-lime-500 to-green-500' },
+    { href: '/skills', icon: '🎯', title: 'Skill Transfer', desc: 'Teach your skills to clone', color: 'from-orange-500 to-red-500' },
+    { href: '/analytics', icon: '📊', title: 'Analytics', desc: 'Insights about your clone', color: 'from-violet-500 to-indigo-500' },
+    { href: '/voice', icon: '🎤', title: 'Voice Clone', desc: 'Make clone sound like you', color: 'from-purple-500 to-violet-500' },
+    { href: '/referral', icon: '🎁', title: 'Refer & Earn', desc: 'Get free Pro', color: 'from-pink-500 to-fuchsia-500' },
+    { href: '/public-profile', icon: '🌐', title: 'Public Profile', desc: 'Share your clone with world', color: 'from-cyan-500 to-blue-500' },
+    { href: '/share', icon: '🔗', title: 'Share Clone', desc: 'Let others meet your clone', color: 'from-violet-500 to-purple-500' },
+    { href: '/clone-settings', icon: '⚙️', title: 'Clone Settings', desc: 'Customize your clone', color: 'from-gray-500 to-slate-500' },
+  ]
+
   return (
     <main className="min-h-screen bg-[#050510] page-transition">
       {/* App Header */}
@@ -58,107 +80,44 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <div className="px-4 py-4 pb-24">
+      <div className="px-4 py-4 pb-24 scroll-container">
         {/* Welcome */}
         <div className="mb-6">
           <h1 className="text-2xl font-bold">Hey, {userName} 👋</h1>
-          <p className="text-white/30 text-sm">Your digital consciousness</p>
+          <p className="text-white/30 text-sm">Your digital consciousness dashboard</p>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 gap-3 mb-6">
-          <div className="rounded-xl border border-white/[0.06] p-4 bg-white/[0.02]">
-            <div className="text-2xl font-bold text-violet-400">{memoryCount}</div>
-            <div className="text-white/30 text-xs">Memories</div>
+        <div className="grid grid-cols-3 gap-3 mb-6">
+          <div className="rounded-xl border border-white/[0.06] p-3 bg-white/[0.02] text-center">
+            <div className="text-xl font-bold text-violet-400">{memoryCount}</div>
+            <div className="text-white/30 text-[10px]">Memories</div>
           </div>
-          <div className="rounded-xl border border-white/[0.06] p-4 bg-white/[0.02]">
-            <div className="text-2xl font-bold text-fuchsia-400">{chatCount}</div>
-            <div className="text-white/30 text-xs">Messages</div>
+          <div className="rounded-xl border border-white/[0.06] p-3 bg-white/[0.02] text-center">
+            <div className="text-xl font-bold text-fuchsia-400">{chatCount}</div>
+            <div className="text-white/30 text-[10px]">Messages</div>
+          </div>
+          <div className="rounded-xl border border-white/[0.06] p-3 bg-white/[0.02] text-center">
+            <div className="text-xl font-bold text-emerald-400">∞</div>
+            <div className="text-white/30 text-[10px]">Immortal</div>
           </div>
         </div>
 
-        {/* Quick Actions */}
-        <div className="space-y-3 mb-6">
-          <Link href="/chat" className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] tap-feedback">
-            <div className="text-2xl">💬</div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-sm">Talk to Clone</h3>
-              <p className="text-white/30 text-xs">Chat with your consciousness</p>
-            </div>
-            <svg className="w-5 h-5 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
-
-          <Link href="/memories" className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] tap-feedback">
-            <div className="text-2xl">📝</div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-sm">Memories</h3>
-              <p className="text-white/30 text-xs">Store your life experiences</p>
-            </div>
-            <svg className="w-5 h-5 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
-
-          <Link href="/personality" className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] tap-feedback">
-            <div className="text-2xl">🧬</div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-sm">Personality Quiz</h3>
-              <p className="text-white/30 text-xs">Define your clone&apos;s traits</p>
-            </div>
-            <svg className="w-5 h-5 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
-
-          <Link href="/analytics" className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] tap-feedback">
-            <div className="text-2xl">📊</div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-sm">Analytics</h3>
-              <p className="text-white/30 text-xs">Insights about your clone</p>
-            </div>
-            <svg className="w-5 h-5 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
-
-          <Link href="/voice" className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] tap-feedback">
-            <div className="text-2xl">🎤</div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-sm">Voice Clone</h3>
-              <p className="text-white/30 text-xs">Make your clone sound like you</p>
-            </div>
-            <svg className="w-5 h-5 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
-
-          <Link href="/referral" className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] tap-feedback">
-            <div className="text-2xl">🎁</div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-sm">Refer & Earn</h3>
-              <p className="text-white/30 text-xs">Get free Pro by inviting friends</p>
-            </div>
-            <svg className="w-5 h-5 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
-
-          <Link href="/share" className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] tap-feedback">
-            <div className="text-2xl">🔗</div>
-            <div className="flex-1">
-              <h3 className="font-semibold text-sm">Share Clone</h3>
-              <p className="text-white/30 text-xs">Let others meet your consciousness</p>
-            </div>
-            <svg className="w-5 h-5 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
+        {/* Features Grid */}
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          {features.map((f) => (
+            <Link key={f.href} href={f.href} className="tap-feedback">
+              <div className="rounded-xl border border-white/[0.06] p-4 bg-white/[0.02] hover:bg-white/[0.04] transition h-full">
+                <div className="text-2xl mb-2">{f.icon}</div>
+                <h3 className="font-semibold text-sm">{f.title}</h3>
+                <p className="text-white/30 text-[11px] mt-0.5">{f.desc}</p>
+              </div>
+            </Link>
+          ))}
         </div>
 
         {/* Upgrade Banner */}
-        <Link href="/pricing" className="block rounded-xl border border-violet-500/30 p-4 bg-violet-500/5 tap-feedback">
+        <Link href="/pricing" className="block rounded-xl border border-violet-500/30 p-4 bg-violet-500/5 tap-feedback mb-6">
           <div className="flex items-center gap-3">
             <div className="text-2xl">⚡</div>
             <div className="flex-1">
@@ -170,7 +129,7 @@ export default function Dashboard() {
       </div>
 
       {/* Bottom Tab Bar */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-[#050510]/95 backdrop-blur-xl border-t border-white/[0.04] safe-bottom">
+      <nav className="fixed bottom-0 left-0 right-0 bg-[#050510]/95 backdrop-blur-xl border-t border-white/[0.04] safe-bottom bottom-tab-bar">
         <div className="flex justify-around py-2">
           <Link href="/dashboard" className="flex flex-col items-center py-2 px-4 tap-feedback">
             <svg className="w-6 h-6 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -189,6 +148,12 @@ export default function Dashboard() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
             </svg>
             <span className="text-[10px] text-white/40 mt-1">Memories</span>
+          </Link>
+          <Link href="/mood" className="flex flex-col items-center py-2 px-4 tap-feedback">
+            <svg className="w-6 h-6 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span className="text-[10px] text-white/40 mt-1">Mood</span>
           </Link>
           <Link href="/analytics" className="flex flex-col items-center py-2 px-4 tap-feedback">
             <svg className="w-6 h-6 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
