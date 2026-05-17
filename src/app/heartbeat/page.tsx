@@ -37,6 +37,9 @@ export default function HeartbeatMemory() {
   const [recordBpm, setRecordBpm] = useState(true)
   const [showAdd, setShowAdd] = useState(false)
   const [pulseScale, setPulseScale] = useState(1)
+  const [particles, setParticles] = useState<Array<{ id: number; x: number; y: number; size: number; duration: number; delay: number }>>([])
+  const [displayBpm, setDisplayBpm] = useState(0)
+  const [wavePoints, setWavePoints] = useState<number[]>([])
 
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -45,6 +48,60 @@ export default function HeartbeatMemory() {
   const bpmIntervalRef = useRef<NodeJS.Timeout | null>(null)
   const valuesRef = useRef<number[]>([])
   const lastPeakTimeRef = useRef<number[]>([])
+
+  // Generate floating particles
+  useEffect(() => {
+    const p = Array.from({ length: 30 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: 1 + Math.random() * 3,
+      duration: 20 + Math.random() * 30,
+      delay: Math.random() * 10,
+    }))
+    setParticles(p)
+  }, [])
+
+  // Generate ECG wave points
+  useEffect(() => {
+    const generateWave = () => {
+      const points: number[] = []
+      for (let i = 0; i < 100; i++) {
+        const t = i / 100
+        // ECG-like waveform
+        let y = 50
+        const cycle = (t * 4) % 1
+        if (cycle > 0.3 && cycle < 0.35) y = 50 - 15 // P wave
+        else if (cycle > 0.4 && cycle < 0.42) y = 50 + 8 // Q
+        else if (cycle > 0.42 && cycle < 0.48) y = 50 - 60 // R peak
+        else if (cycle > 0.48 && cycle < 0.5) y = 50 + 12 // S
+        else if (cycle > 0.55 && cycle < 0.65) y = 50 - 10 // T wave
+        else y = 50 + (Math.random() - 0.5) * 2 // baseline noise
+        points.push(y)
+      }
+      setWavePoints(points)
+    }
+    generateWave()
+    const id = setInterval(generateWave, 2000)
+    return () => clearInterval(id)
+  }, [])
+
+  // Smooth BPM counter animation
+  useEffect(() => {
+    if (bpm > 0) {
+      const step = () => {
+        setDisplayBpm(prev => {
+          const diff = bpm - prev
+          if (Math.abs(diff) < 1) return bpm
+          return prev + diff * 0.1
+        })
+      }
+      const id = setInterval(step, 50)
+      return () => clearInterval(id)
+    } else {
+      setDisplayBpm(0)
+    }
+  }, [bpm])
 
   useEffect(() => {
     const stored = localStorage.getItem('heartbeat-memories')
@@ -113,7 +170,6 @@ export default function HeartbeatMemory() {
     valuesRef.current.push(avgRed)
     if (valuesRef.current.length > 300) valuesRef.current.shift()
 
-    // Simple peak detection
     const vals = valuesRef.current
     if (vals.length > 10) {
       const recent = vals.slice(-10)
@@ -131,7 +187,6 @@ export default function HeartbeatMemory() {
       }
     }
 
-    // Calculate BPM from peaks
     const pTimes = lastPeakTimeRef.current
     if (pTimes.length >= 2) {
       const intervals = []
@@ -208,16 +263,35 @@ export default function HeartbeatMemory() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col bg-[#050510] page-transition">
+    <main className="min-h-screen flex flex-col bg-[#050510] page-transition relative overflow-hidden">
+      {/* Floating particles background */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {particles.map(p => (
+          <div
+            key={p.id}
+            className="absolute rounded-full"
+            style={{
+              left: `${p.x}%`,
+              top: `${p.y}%`,
+              width: `${p.size}px`,
+              height: `${p.size}px`,
+              background: 'radial-gradient(circle, rgba(239,68,68,0.3), transparent)',
+              animation: `float-particle ${p.duration}s linear infinite`,
+              animationDelay: `${p.delay}s`,
+            }}
+          />
+        ))}
+      </div>
+
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#050510]/95 backdrop-blur-xl border-b border-white/[0.04] safe-top">
+      <header className="sticky top-0 z-50 bg-[#050510]/80 backdrop-blur-2xl border-b border-white/[0.04] safe-top">
         <div className="px-4 py-3 flex items-center gap-3">
           <Link href="/dashboard" className="tap-feedback p-1">
             <svg className="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </Link>
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-500 to-pink-500 flex items-center justify-center text-sm">🫀</div>
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-500 to-pink-500 flex items-center justify-center text-sm shadow-lg shadow-red-500/30">🫀</div>
           <div className="flex-1">
             <h1 className="text-sm font-bold">Heartbeat Memory</h1>
             <p className="text-[10px] text-red-400 flex items-center gap-1">
@@ -236,17 +310,17 @@ export default function HeartbeatMemory() {
         </div>
       </header>
 
-      <div className="flex-1 px-4 py-6 max-w-lg mx-auto w-full">
+      <div className="flex-1 px-4 py-6 max-w-lg mx-auto w-full relative z-10">
         {/* Tab Switcher */}
         <div className="flex gap-2 mb-6">
           {(['measure', 'history'] as const).map(tab => (
             <button
               key={tab}
               onClick={() => setView(tab)}
-              className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition ${
+              className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${
                 view === tab
-                  ? 'bg-gradient-to-r from-red-500/20 to-pink-500/20 text-red-300 border border-red-500/30'
-                  : 'bg-white/[0.03] text-white/40 border border-white/[0.06]'
+                  ? 'bg-gradient-to-r from-red-500/20 to-pink-500/20 text-red-300 border border-red-500/30 shadow-lg shadow-red-500/10'
+                  : 'bg-white/[0.03] text-white/40 border border-white/[0.06] hover:bg-white/[0.05]'
               }`}
             >
               {tab === 'measure' ? '🫀 Measure' : '📜 History'}
@@ -257,35 +331,62 @@ export default function HeartbeatMemory() {
         {/* Measure View */}
         {view === 'measure' && (
           <div className="space-y-6">
-            {/* Heart Visualization */}
+            {/* Heart Visualization with Gradient Glow */}
             <div className="flex flex-col items-center py-8">
-              <div
-                className="relative transition-transform duration-200"
-                style={{ transform: `scale(${pulseScale})` }}
-              >
-                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-red-500/20 to-pink-500/20 flex items-center justify-center relative">
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-red-500/10 to-pink-500/10 animate-ping" style={{ animationDuration: bpm > 0 ? `${60 / bpm}s` : '2s' }} />
-                  <span className="text-5xl relative z-10">🫀</span>
+              {/* Gradient glow behind heart */}
+              <div className="relative">
+                <div
+                  className="absolute inset-0 -m-8 rounded-full opacity-60 blur-3xl"
+                  style={{
+                    background: measuring && bpm > 0
+                      ? 'radial-gradient(circle, rgba(239,68,68,0.4), rgba(236,72,153,0.2), transparent)'
+                      : 'radial-gradient(circle, rgba(239,68,68,0.15), transparent)',
+                    animation: bpm > 0 ? `glow-pulse ${60 / Math.max(bpm, 60)}s ease-in-out infinite` : 'none',
+                  }}
+                />
+                <div
+                  className="relative transition-transform duration-200"
+                  style={{ transform: `scale(${pulseScale})` }}
+                >
+                  <div className="w-36 h-36 rounded-full bg-gradient-to-br from-red-500/20 to-pink-500/20 flex items-center justify-center relative backdrop-blur-sm border border-red-500/10">
+                    <div
+                      className="absolute inset-0 rounded-full bg-gradient-to-br from-red-500/10 to-pink-500/10"
+                      style={{ animation: bpm > 0 ? `ping ${60 / bpm}s cubic-bezier(0,0,0.2,1) infinite` : 'ping 2s cubic-bezier(0,0,0.2,1) infinite' }}
+                    />
+                    <div className="absolute inset-2 rounded-full bg-gradient-to-br from-red-500/5 to-pink-500/5" />
+                    <span className="text-5xl relative z-10 drop-shadow-[0_0_20px_rgba(239,68,68,0.5)]">🫀</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="mt-6 text-center">
+              {/* Smooth BPM Counter */}
+              <div className="mt-8 text-center">
                 {bpm > 0 ? (
                   <>
-                    <div className="text-5xl font-bold bg-gradient-to-r from-red-400 to-pink-400 bg-clip-text text-transparent">
-                      {bpm}
+                    <div className="relative">
+                      <div className="text-6xl font-black tabular-nums bg-gradient-to-r from-red-400 via-pink-400 to-red-400 bg-clip-text text-transparent bg-[length:200%_100%] animate-[shimmer_2s_ease-in-out_infinite]">
+                        {Math.round(displayBpm)}
+                      </div>
+                      <div className="absolute inset-0 text-6xl font-black tabular-nums text-red-500/10 blur-lg">
+                        {Math.round(displayBpm)}
+                      </div>
                     </div>
-                    <div className="text-xs text-white/40 mt-1 uppercase tracking-widest">BPM</div>
-                    <div className="mt-2 flex items-center gap-2 justify-center">
-                      <span className="text-lg">{getEmotion(bpm).icon}</span>
-                      <span className={`text-sm font-medium bg-gradient-to-r ${getEmotion(bpm).color} bg-clip-text text-transparent`}>
+                    <div className="text-xs text-white/40 mt-2 uppercase tracking-[0.3em] font-medium">BPM</div>
+                    <div className="mt-3 flex items-center gap-2 justify-center">
+                      <span className="text-xl drop-shadow-lg">{getEmotion(bpm).icon}</span>
+                      <span className={`text-sm font-semibold bg-gradient-to-r ${getEmotion(bpm).color} bg-clip-text text-transparent`}>
                         {getEmotion(bpm).label}
                       </span>
                     </div>
                   </>
                 ) : (
                   <div className="text-white/30 text-sm">
-                    {measuring ? 'Place finger on camera lens...' : 'Start measuring to see BPM'}
+                    {measuring ? (
+                      <span className="flex items-center gap-2">
+                        <span className="w-2 h-2 bg-red-400 rounded-full animate-pulse" />
+                        Place finger on camera lens...
+                      </span>
+                    ) : 'Start measuring to see BPM'}
                   </div>
                 )}
               </div>
@@ -298,7 +399,7 @@ export default function HeartbeatMemory() {
             </div>
 
             {cameraError && (
-              <div className="rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3 text-sm text-red-300">
+              <div className="rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3 text-sm text-red-300 backdrop-blur-sm">
                 {cameraError}
               </div>
             )}
@@ -308,18 +409,19 @@ export default function HeartbeatMemory() {
               {!measuring ? (
                 <button
                   onClick={startMeasuring}
-                  className="w-full py-4 rounded-2xl bg-gradient-to-r from-red-500 to-pink-500 text-white font-semibold text-sm shadow-lg shadow-red-500/20 active:scale-[0.98] transition"
+                  className="w-full py-4 rounded-2xl bg-gradient-to-r from-red-500 to-pink-500 text-white font-semibold text-sm shadow-xl shadow-red-500/30 active:scale-[0.98] transition-all hover:shadow-red-500/40 hover:scale-[1.01] relative overflow-hidden group"
                 >
-                  <span className="flex items-center justify-center gap-2">
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <span className="relative flex items-center justify-center gap-2">
                     <span className="text-lg">📸</span>
                     Start Heart Rate Measurement
                   </span>
-                  <span className="block text-xs text-white/60 mt-1">Place finger on camera lens</span>
+                  <span className="relative block text-xs text-white/60 mt-1">Place finger on camera lens</span>
                 </button>
               ) : (
                 <button
                   onClick={stopMeasuring}
-                  className="w-full py-4 rounded-2xl bg-white/[0.06] border border-white/[0.1] text-white font-semibold text-sm active:scale-[0.98] transition"
+                  className="w-full py-4 rounded-2xl bg-white/[0.06] border border-white/[0.1] text-white font-semibold text-sm active:scale-[0.98] transition backdrop-blur-sm hover:bg-white/[0.08]"
                 >
                   Stop Measuring
                 </button>
@@ -328,17 +430,76 @@ export default function HeartbeatMemory() {
               {bpm > 0 && !measuring && (
                 <button
                   onClick={() => setShowAdd(true)}
-                  className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-violet-500/20 to-purple-500/20 border border-violet-500/30 text-violet-300 font-medium text-sm active:scale-[0.98] transition"
+                  className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-violet-500/20 to-purple-500/20 border border-violet-500/30 text-violet-300 font-medium text-sm active:scale-[0.98] transition backdrop-blur-sm hover:from-violet-500/30 hover:to-purple-500/30"
                 >
                   💾 Save This Heartbeat with a Memory
                 </button>
               )}
             </div>
 
-            {/* Live Waveform */}
+            {/* Animated Pulse Wave (ECG-style) */}
+            {measuring && (
+              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 backdrop-blur-sm overflow-hidden">
+                <p className="text-xs text-white/30 mb-3 uppercase tracking-wider flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 bg-red-400 rounded-full animate-pulse" />
+                  Live Pulse Wave
+                </p>
+                <div className="h-24 relative">
+                  <svg viewBox="0 0 100 100" className="w-full h-full" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="rgba(239,68,68,0)" />
+                        <stop offset="30%" stopColor="rgba(239,68,68,0.8)" />
+                        <stop offset="70%" stopColor="rgba(236,72,153,0.8)" />
+                        <stop offset="100%" stopColor="rgba(236,72,153,0)" />
+                      </linearGradient>
+                      <linearGradient id="waveFill" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor="rgba(239,68,68,0.3)" />
+                        <stop offset="100%" stopColor="rgba(239,68,68,0)" />
+                      </linearGradient>
+                    </defs>
+                    {/* Fill area */}
+                    <path
+                      d={`M ${wavePoints.map((y, i) => `${i},${y}`).join(' L ')} L 100,100 L 0,100 Z`}
+                      fill="url(#waveFill)"
+                    />
+                    {/* Main line */}
+                    <path
+                      d={`M ${wavePoints.map((y, i) => `${i},${y}`).join(' L ')}`}
+                      fill="none"
+                      stroke="url(#waveGrad)"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <animate
+                        attributeName="stroke-dashoffset"
+                        from="200"
+                        to="0"
+                        dur={`${60 / Math.max(bpm, 60)}s`}
+                        repeatCount="indefinite"
+                      />
+                    </path>
+                    {/* Glow effect */}
+                    <path
+                      d={`M ${wavePoints.map((y, i) => `${i},${y}`).join(' L ')}`}
+                      fill="none"
+                      stroke="rgba(239,68,68,0.3)"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                      filter="blur(3px)"
+                    />
+                  </svg>
+                  {/* Scanning line */}
+                  <div className="absolute top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-red-400 to-transparent animate-[scan_2s_linear_infinite]" />
+                </div>
+              </div>
+            )}
+
+            {/* Live Signal Bars */}
             {measuring && rawValues.length > 5 && (
-              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4">
-                <p className="text-xs text-white/30 mb-3 uppercase tracking-wider">Live Signal</p>
+              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 backdrop-blur-sm">
+                <p className="text-xs text-white/30 mb-3 uppercase tracking-wider">Raw Signal</p>
                 <div className="h-20 flex items-end gap-px overflow-hidden">
                   {rawValues.slice(-80).map((v, i) => {
                     const min = Math.min(...rawValues.slice(-80))
@@ -348,8 +509,12 @@ export default function HeartbeatMemory() {
                     return (
                       <div
                         key={i}
-                        className="flex-1 bg-gradient-to-t from-red-500 to-pink-400 rounded-t-sm transition-all duration-75"
-                        style={{ height: `${Math.max(5, height)}%`, opacity: 0.4 + (i / 80) * 0.6 }}
+                        className="flex-1 rounded-t-sm transition-all duration-75"
+                        style={{
+                          height: `${Math.max(5, height)}%`,
+                          opacity: 0.4 + (i / 80) * 0.6,
+                          background: `linear-gradient(to top, rgba(239,68,68,${0.6 + (i / 80) * 0.4}), rgba(236,72,153,${0.4 + (i / 80) * 0.4}))`,
+                        }}
                       />
                     )
                   })}
@@ -359,7 +524,7 @@ export default function HeartbeatMemory() {
 
             {/* Add Memory Modal */}
             {showAdd && (
-              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-4">
+              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.03] p-5 space-y-4 backdrop-blur-xl shadow-2xl shadow-violet-500/5">
                 <h3 className="text-sm font-semibold text-white/80">Add a Memory</h3>
                 <textarea
                   value={newMemoryText}
@@ -379,14 +544,14 @@ export default function HeartbeatMemory() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setShowAdd(false)}
-                    className="flex-1 py-2.5 rounded-xl bg-white/[0.04] text-white/40 text-sm"
+                    className="flex-1 py-2.5 rounded-xl bg-white/[0.04] text-white/40 text-sm hover:bg-white/[0.06] transition"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={addMemory}
                     disabled={!newMemoryText.trim()}
-                    className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-red-500 to-pink-500 text-white text-sm font-medium disabled:opacity-30"
+                    className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-red-500 to-pink-500 text-white text-sm font-medium disabled:opacity-30 shadow-lg shadow-red-500/20"
                   >
                     Save
                   </button>
@@ -401,20 +566,24 @@ export default function HeartbeatMemory() {
           <div className="space-y-3">
             {memories.length === 0 ? (
               <div className="text-center py-16">
-                <div className="text-4xl mb-3">🫀</div>
+                <div className="text-5xl mb-4 drop-shadow-[0_0_30px_rgba(239,68,68,0.3)]">🫀</div>
                 <p className="text-white/30 text-sm">No heartbeat memories yet</p>
                 <button
                   onClick={() => setView('measure')}
-                  className="mt-4 px-6 py-2.5 rounded-xl bg-gradient-to-r from-red-500/20 to-pink-500/20 border border-red-500/30 text-red-300 text-sm"
+                  className="mt-4 px-6 py-2.5 rounded-xl bg-gradient-to-r from-red-500/20 to-pink-500/20 border border-red-500/30 text-red-300 text-sm hover:from-red-500/30 hover:to-pink-500/30 transition-all"
                 >
                   Measure Your First Heartbeat
                 </button>
               </div>
             ) : (
-              memories.map(m => {
+              memories.map((m, idx) => {
                 const ec = getEmotionColor(m.emotion)
                 return (
-                  <div key={m.id} className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 group">
+                  <div
+                    key={m.id}
+                    className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 group backdrop-blur-sm hover:bg-white/[0.04] transition-all duration-300 hover:border-white/[0.1] hover:shadow-lg hover:shadow-red-500/5"
+                    style={{ animationDelay: `${idx * 50}ms` }}
+                  >
                     <div className="flex items-start justify-between mb-2">
                       <div className="flex items-center gap-2">
                         <span className="text-xl">{m.emotionIcon}</span>
@@ -434,7 +603,7 @@ export default function HeartbeatMemory() {
                     <p className="text-sm text-white/70 leading-relaxed">{m.content}</p>
                     {m.bpm > 0 && (
                       <div className="mt-3 flex items-center gap-3">
-                        <div className="flex items-center gap-1.5">
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-500/10 border border-red-500/20">
                           <span className="text-red-400 text-xs">🫀</span>
                           <span className="text-sm font-bold text-red-300">{m.bpm}</span>
                           <span className="text-[10px] text-white/30">BPM</span>
@@ -456,7 +625,7 @@ export default function HeartbeatMemory() {
             {memories.length > 0 && (
               <button
                 onClick={() => { setNewMemoryText(''); setRecordBpm(false); setShowAdd(true); setView('measure') }}
-                className="w-full py-3 rounded-2xl bg-gradient-to-r from-red-500/10 to-pink-500/10 border border-red-500/20 text-red-300/60 text-sm hover:border-red-500/40 transition"
+                className="w-full py-3 rounded-2xl bg-gradient-to-r from-red-500/10 to-pink-500/10 border border-red-500/20 text-red-300/60 text-sm hover:border-red-500/40 hover:from-red-500/20 hover:to-pink-500/20 transition-all"
               >
                 + Add Manual Memory
               </button>
@@ -464,6 +633,31 @@ export default function HeartbeatMemory() {
           </div>
         )}
       </div>
+
+      <style jsx global>{`
+        @keyframes float-particle {
+          0% { transform: translateY(0) translateX(0); opacity: 0; }
+          10% { opacity: 0.5; }
+          90% { opacity: 0.5; }
+          100% { transform: translateY(-100vh) translateX(30px); opacity: 0; }
+        }
+        @keyframes glow-pulse {
+          0%, 100% { opacity: 0.4; transform: scale(1); }
+          50% { opacity: 0.8; transform: scale(1.1); }
+        }
+        @keyframes shimmer {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+        @keyframes scan {
+          0% { left: 0%; }
+          100% { left: 100%; }
+        }
+        @keyframes ping {
+          0% { transform: scale(1); opacity: 1; }
+          75%, 100% { transform: scale(2); opacity: 0; }
+        }
+      `}</style>
     </main>
   )
 }

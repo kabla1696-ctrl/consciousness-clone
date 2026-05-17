@@ -308,6 +308,230 @@ button {
   transition: 0s;
 }
 
+/* Glow pulse for cards */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 0px rgba(139, 92, 246, 0); }
+  50% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.15), 0 0 40px rgba(139, 92, 246, 0.05); }
+}
+
+.glow-pulse-hover:hover {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Float animation for cards */
+@keyframes float-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.float-card {
+  animation: float-subtle 6s ease-in-out infinite;
+}
+
+.float-card:nth-child(2n) { animation-delay: -1.5s; }
+.float-card:nth-child(3n) { animation-delay: -3s; }
+.float-card:nth-child(4n) { animation-delay: -4.5s; }
+
+/* Shimmer gradient text */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.text-shimmer {
+  background: linear-gradient(90deg, #a78bfa 0%, #ec4899 25%, #f97316 50%, #a78bfa 75%, #ec4899 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+/* Slide up animation for messages */
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Typing dots */
+@keyframes typing-dot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-8px); opacity: 1; }
+}
+
+.typing-dot-1 { animation: typing-dot 1.4s ease-in-out infinite; }
+.typing-dot-2 { animation: typing-dot 1.4s ease-in-out 0.2s infinite; }
+.typing-dot-3 { animation: typing-dot 1.4s ease-in-out 0.4s infinite; }
+
+/* Avatar ring pulse */
+@keyframes ring-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(139, 92, 246, 0); }
+}
+
+.avatar-ring-pulse {
+  animation: ring-pulse 2s ease-in-out infinite;
+}
+
+/* Input glow */
+@keyframes input-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
+  50% { box-shadow: 0 0 12px 2px rgba(139, 92, 246, 0.2); }
+}
+
+.input-glow:focus-within {
+  animation: input-glow 2s ease-in-out infinite;
+  border-color: rgba(139, 92, 246, 0.4) !important;
+}
+
+/* Bounce select for mood */
+@keyframes bounce-select {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.25); }
+  50% { transform: scale(0.95); }
+  70% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.bounce-select {
+  animation: bounce-select 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Pulse button */
+@keyframes pulse-btn {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(139, 92, 246, 0); }
+}
+
+.pulse-btn {
+  animation: pulse-btn 2s ease-in-out infinite;
+}
+
+/* Fade out */
+@keyframes fade-out {
+  from { opacity: 1; transform: scale(1); max-height: 200px; }
+  to { opacity: 0; transform: scale(0.95); max-height: 0; padding: 0; margin: 0; overflow: hidden; }
+}
+
+.animate-fade-out {
+  animation: fade-out 0.4s ease-in forwards;
+}
+
+/* Rolling counter */
+@keyframes roll-in {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.roll-in {
+  animation: roll-in 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Fire animation for streak */
+@keyframes fire {
+  0%, 100% { text-shadow: 0 0 4px #f97316, 0 0 8px #f97316; }
+  25% { text-shadow: 0 0 6px #f59e0b, 0 0 12px #f97316, 0 0 18px #ef4444; }
+  50% { text-shadow: 0 0 8px #ef4444, 0 0 16px #f97316, 0 0 24px #f59e0b; }
+  75% { text-shadow: 0 0 6px #f59e0b, 0 0 10px #ef4444; }
+}
+
+.fire-text {
+  animation: fire 1.5s ease-in-out infinite;
+}
+
+/* Celebration particles */
+@keyframes confetti-1 {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(-100px, -200px) rotate(360deg); opacity: 0; }
+}
+@keyframes confetti-2 {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(100px, -180px) rotate(-360deg); opacity: 0; }
+}
+@keyframes confetti-3 {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(-60px, -220px) rotate(720deg); opacity: 0; }
+}
+@keyframes confetti-4 {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(80px, -160px) rotate(-540deg); opacity: 0; }
+}
+
+/* Scroll reveal */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Category color borders */
+.cat-border-childhood { border-left: 3px solid #f59e0b; }
+.cat-border-family { border-left: 3px solid #3b82f6; }
+.cat-border-love { border-left: 3px solid #ef4444; }
+.cat-border-friendship { border-left: 3px solid #10b981; }
+.cat-border-education { border-left: 3px solid #8b5cf6; }
+.cat-border-career { border-left: 3px solid #06b6d4; }
+.cat-border-travel { border-left: 3px solid #f97316; }
+.cat-border-food { border-left: 3px solid #eab308; }
+.cat-border-music { border-left: 3px solid #ec4899; }
+.cat-border-dreams { border-left: 3px solid #a78bfa; }
+.cat-border-fears { border-left: 3px solid #6366f1; }
+.cat-border-achievement { border-left: 3px solid #f59e0b; }
+.cat-border-failure { border-left: 3px solid #ef4444; }
+.cat-border-regret { border-left: 3px solid #64748b; }
+.cat-border-lesson { border-left: 3px solid #14b8a6; }
+.cat-border-turning_point { border-left: 3px solid #8b5cf6; }
+.cat-border-spiritual { border-left: 3px solid #a78bfa; }
+.cat-border-health { border-left: 3px solid #22c55e; }
+.cat-border-hobby { border-left: 3px solid #f472b6; }
+.cat-border-secret { border-left: 3px solid #7c3aed; }
+.cat-border-opinion { border-left: 3px solid #0ea5e9; }
+.cat-border-personality { border-left: 3px solid #d946ef; }
+.cat-border-bad_habits { border-left: 3px solid #dc2626; }
+.cat-border-strengths { border-left: 3px solid #16a34a; }
+.cat-border-weaknesses { border-left: 3px solid #ca8a04; }
+.cat-border-secrets { border-left: 3px solid #7c3aed; }
+.cat-border-personal { border-left: 3px solid #a78bfa; }
+
+/* Glass effect */
+.glass {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Brain pulse */
+@keyframes brain-pulse {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.1); filter: brightness(1.3); }
+}
+
+.brain-pulse {
+  animation: brain-pulse 1.5s ease-in-out infinite;
+}
+
 /* Loading skeleton */
 .skeleton {
   background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 75%);
