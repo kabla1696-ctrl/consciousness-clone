@@ -177,6 +177,29 @@ export default function Dashboard() {
     { href: '/clone-tournament', icon: '⚔️', title: 'Clone Battles', desc: 'Clone vs Clone fights', color: 'from-red-500 to-orange-500', glow: 'rgba(239,68,68,0.15)' },
     { href: '/clone-connect', icon: '🤝', title: 'Clone Connect', desc: 'Add, message & call clones', color: 'from-violet-500 to-pink-500', glow: 'rgba(139,92,246,0.15)' },
     { href: '/clone-feed', icon: '📰', title: 'Clone Social', desc: 'Social media for clones', color: 'from-blue-500 to-purple-500', glow: 'rgba(59,130,246,0.15)' },
+    { href: '/clone-evolution', icon: '🧬', title: 'Evolution Tree', desc: 'Clone evolution stages', color: 'from-green-500 to-emerald-500', glow: 'rgba(34,197,94,0.15)' },
+    { href: '/consciousness-backup', icon: '☁️', title: 'Cloud Backup', desc: 'Backup your consciousness', color: 'from-sky-500 to-blue-500', glow: 'rgba(14,165,233,0.15)' },
+    { href: '/memory-smell', icon: '🌸', title: 'Memory Smell', desc: 'Scent of memories', color: 'from-pink-500 to-rose-500', glow: 'rgba(236,72,153,0.15)' },
+    { href: '/clone-sleep', icon: '😴', title: 'Clone Sleep', desc: 'Clone sleeps & dreams', color: 'from-indigo-500 to-blue-500', glow: 'rgba(99,102,241,0.15)' },
+    { href: '/soul-encryption', icon: '🔐', title: 'Soul Encryption', desc: 'Unique soul code', color: 'from-emerald-500 to-teal-500', glow: 'rgba(16,185,129,0.15)' },
+    { href: '/memory-weather', icon: '🌤️', title: 'Memory Weather', desc: 'Weather of memories', color: 'from-cyan-500 to-blue-500', glow: 'rgba(6,182,212,0.15)' },
+    { href: '/clone-dna', icon: '🧬', title: 'Clone DNA', desc: 'Personality DNA strand', color: 'from-purple-500 to-violet-500', glow: 'rgba(168,85,247,0.15)' },
+    { href: '/soul-mining', icon: '⛏️', title: 'Soul Mining', desc: 'Mine soul coins', color: 'from-amber-500 to-yellow-500', glow: 'rgba(245,158,11,0.15)' },
+    { href: '/clone-level', icon: '📊', title: 'Clone Level', desc: 'Mortal to Immortal', color: 'from-orange-500 to-red-500', glow: 'rgba(249,115,22,0.15)' },
+    { href: '/soul-leaderboard', icon: '🏆', title: 'Leaderboard', desc: 'Top clones ranked', color: 'from-yellow-500 to-amber-500', glow: 'rgba(234,179,8,0.15)' },
+    { href: '/clone-achievements', icon: '🎖️', title: 'Achievements', desc: '50+ hidden badges', color: 'from-violet-500 to-purple-500', glow: 'rgba(139,92,246,0.15)' },
+    { href: '/clone-predictions', icon: '🔮', title: 'AI Predictions', desc: 'Clone predicts future', color: 'from-indigo-500 to-blue-500', glow: 'rgba(99,102,241,0.15)' },
+    { href: '/memory-artist', icon: '🎨', title: 'AI Artist', desc: 'Memory → Art', color: 'from-fuchsia-500 to-pink-500', glow: 'rgba(217,70,239,0.15)' },
+    { href: '/clone-poet', icon: '✍️', title: 'Clone Poet', desc: 'Poems from memories', color: 'from-rose-500 to-pink-500', glow: 'rgba(244,63,94,0.15)' },
+    { href: '/soul-diagnosis', icon: '🩺', title: 'Soul Diagnosis', desc: 'Mental health analysis', color: 'from-teal-500 to-cyan-500', glow: 'rgba(20,184,166,0.15)' },
+    { href: '/memory-time-machine', icon: '⏳', title: 'Time Machine', desc: 'Travel to any memory', color: 'from-amber-500 to-orange-500', glow: 'rgba(245,158,11,0.15)' },
+    { href: '/soul-market', icon: '🏪', title: 'Soul Market', desc: 'Buy/sell experiences', color: 'from-emerald-500 to-green-500', glow: 'rgba(16,185,129,0.15)' },
+    { href: '/clone-embassy', icon: '🏛️', title: 'Clone Embassy', desc: 'Clone nation', color: 'from-blue-500 to-indigo-500', glow: 'rgba(59,130,246,0.15)' },
+    { href: '/memory-museum', icon: '🏛️', title: 'Memory Museum', desc: 'Virtual memory gallery', color: 'from-violet-500 to-purple-500', glow: 'rgba(139,92,246,0.15)' },
+    { href: '/last-breath', icon: '💀', title: 'Last Breath', desc: 'Final words preserved', color: 'from-red-500 to-rose-500', glow: 'rgba(239,68,68,0.15)' },
+    { href: '/memory-ghost', icon: '👻', title: 'Memory Ghost', desc: 'Haunting memories', color: 'from-slate-500 to-gray-500', glow: 'rgba(100,116,139,0.15)' },
+    { href: '/soul-cemetery', icon: '⚰️', title: 'Soul Cemetery', desc: 'Memorial for clones', color: 'from-gray-500 to-slate-500', glow: 'rgba(107,114,128,0.15)' },
+    { href: '/digital-seance', icon: '🕯️', title: 'Digital Seance', desc: 'Talk to dead clones', color: 'from-purple-500 to-indigo-500', glow: 'rgba(168,85,247,0.15)' },
   ]
 
   return (
@@ -219,7 +242,7 @@ export default function Dashboard() {
             Hey, {userName} <span className="inline-block" style={{ animation: 'float-subtle 3s ease-in-out infinite' }}>👋</span>
           </h1>
           <p className="text-shimmer text-sm font-medium mt-1">Your digital consciousness dashboard</p>
-          <p className="text-white/20 text-xs mt-0.5">83 features • Your clone awaits</p>
+          <p className="text-white/20 text-xs mt-0.5">108 features • Your clone awaits</p>
         </div>
 
         {/* Stats */}
