@@ -304,7 +304,7 @@ ${memoryContext}`,
             <button
               onClick={generateQuestions}
               disabled={generating}
-              className="relative w-full py-4 rounded-2xl font-semibold text-base tap-feedback disabled:opacity-50 flex items-center justify-center gap-2 overflow-hidden"
+              className="relative w-full py-4 rounded-2xl font-semibold text-base tap-feedback disabled:opacity-50 flex items-center justify-center gap-2"
               style={{
                 background: 'linear-gradient(135deg, #8b5cf6, #d946ef)',
                 boxShadow: '0 0 30px rgba(139, 92, 246, 0.3), 0 8px 25px rgba(0,0,0,0.3)',
@@ -337,7 +337,7 @@ ${memoryContext}`,
                   {t('score')}: {score}
                 </span>
               </div>
-              <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.04)' }}>
+              <div className="w-full h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.04)' }}>
                 <div
                   className="h-full rounded-full transition-all duration-500 ease-out"
                   style={{
@@ -524,7 +524,7 @@ ${memoryContext}`,
             <div className="w-full space-y-3">
               <button
                 onClick={shareResults}
-                className="relative w-full py-4 rounded-2xl font-semibold tap-feedback flex items-center justify-center gap-2 overflow-hidden"
+                className="relative w-full py-4 rounded-2xl font-semibold tap-feedback flex items-center justify-center gap-2"
                 style={{
                   background: 'linear-gradient(135deg, #8b5cf6, #d946ef)',
                   boxShadow: '0 0 30px rgba(139, 92, 246, 0.3), 0 8px 25px rgba(0,0,0,0.3)',

@@ -194,7 +194,7 @@ export default function CloneSocial() {
           100% { transform: scale(1); }
         }
       `}</style>
-      <div className="min-h-screen bg-[#050510] text-white relative overflow-hidden">
+      <div className="min-h-screen bg-[#050510] text-white relative">
         <Particles />
 
         {/* Header */}

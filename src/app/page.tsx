@@ -4,7 +4,7 @@ import AppRedirect from '../components/AppRedirect'
 
 export default function Home() {
   return (
-    <main className="min-h-screen overflow-hidden bg-[#050510]">
+    <main className="min-h-screen bg-[#050510]">
       <AppRedirect />
       {/* Ultra Premium Background */}
       <div className="fixed inset-0 z-0">
@@ -48,7 +48,7 @@ export default function Home() {
           </div>
           <div className="flex gap-3 items-center">
             <Link href="/login" className="px-5 py-2.5 text-sm text-white/50 hover:text-white transition">Sign In</Link>
-            <Link href="/signup" className="relative group px-6 py-2.5 text-sm font-semibold rounded-full overflow-hidden">
+            <Link href="/signup" className="relative group px-6 py-2.5 text-sm font-semibold rounded-full">
               <div className="absolute inset-0 bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500" />
               <div className="absolute inset-0 bg-gradient-to-r from-violet-400 via-purple-400 to-fuchsia-400 opacity-0 group-hover:opacity-100 transition-opacity" />
               <span className="relative z-10">Get Started Free</span>
@@ -237,7 +237,7 @@ export default function Home() {
           {/* Bento Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Large card */}
-            <div className="md:col-span-2 group relative rounded-2xl border border-white/[0.04] hover:border-white/[0.08] transition-all duration-500 overflow-hidden" style={{ background: 'rgba(255,255,255,0.01)' }}>
+            <div className="md:col-span-2 group relative rounded-2xl border border-white/[0.04] hover:border-white/[0.08] transition-all duration-500" style={{ background: 'rgba(255,255,255,0.01)' }}>
               <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-b from-violet-500/10 to-transparent" />
               <div className="relative p-10">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-2xl shadow-lg shadow-violet-500/20 mb-8">🧠</div>
@@ -250,7 +250,7 @@ export default function Home() {
             </div>
 
             {/* Tall card */}
-            <div className="md:row-span-2 group relative rounded-2xl border border-white/[0.04] hover:border-white/[0.08] transition-all duration-500 overflow-hidden" style={{ background: 'rgba(255,255,255,0.01)' }}>
+            <div className="md:row-span-2 group relative rounded-2xl border border-white/[0.04] hover:border-white/[0.08] transition-all duration-500" style={{ background: 'rgba(255,255,255,0.01)' }}>
               <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-fuchsia-500/10 to-transparent" />
               <div className="relative p-10 h-full flex flex-col">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-fuchsia-500 to-pink-600 flex items-center justify-center text-2xl shadow-lg shadow-fuchsia-500/20 mb-8">🎤</div>
@@ -259,7 +259,7 @@ export default function Home() {
                 <div className="mt-auto p-4 rounded-xl border border-white/[0.04]" style={{ background: 'rgba(255,255,255,0.02)' }}>
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-8 h-8 rounded-full bg-fuchsia-500/20 flex items-center justify-center">▶</div>
-                    <div className="flex-1 h-1 bg-white/10 rounded-full overflow-hidden">
+                    <div className="flex-1 h-1 bg-white/10 rounded-full">
                       <div className="h-full w-3/4 bg-gradient-to-r from-fuchsia-500 to-pink-500 rounded-full" />
                     </div>
                     <span className="text-xs text-white/30">1:24</span>
@@ -276,7 +276,7 @@ export default function Home() {
               { icon: '👨‍👩‍👧', title: 'Family Access', desc: 'Share your clone with loved ones. Set permissions. They can talk to "you" anytime.', gradient: 'from-blue-500 to-cyan-500' },
               { icon: '🌍', title: 'Multilingual', desc: 'Your clone speaks 50+ languages. Your grandchildren can chat in their native tongue.', gradient: 'from-amber-500 to-orange-500' },
             ].map((feature, i) => (
-              <div key={i} className="group relative rounded-2xl border border-white/[0.04] hover:border-white/[0.08] transition-all duration-500 overflow-hidden" style={{ background: 'rgba(255,255,255,0.01)' }}>
+              <div key={i} className="group relative rounded-2xl border border-white/[0.04] hover:border-white/[0.08] transition-all duration-500" style={{ background: 'rgba(255,255,255,0.01)' }}>
                 <div className="relative p-8">
                   <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center text-xl shadow-lg mb-6`}>
                     {feature.icon}
@@ -293,7 +293,7 @@ export default function Home() {
       {/* TESTIMONIAL */}
       <section className="relative py-32 px-6">
         <div className="max-w-5xl mx-auto">
-          <div className="relative rounded-3xl border border-white/[0.04] overflow-hidden" style={{ background: 'rgba(255,255,255,0.01)' }}>
+          <div className="relative rounded-3xl border border-white/[0.04]" style={{ background: 'rgba(255,255,255,0.01)' }}>
             <div className="absolute top-0 left-0 right-0 h-48 bg-gradient-to-b from-violet-500/5 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-fuchsia-500/5 to-transparent" />
             
@@ -387,7 +387,7 @@ export default function Home() {
       {/* FINAL CTA */}
       <section className="relative py-32 px-6">
         <div className="max-w-4xl mx-auto">
-          <div className="relative rounded-3xl border border-white/[0.04] overflow-hidden">
+          <div className="relative rounded-3xl border border-white/[0.04]">
             <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 via-transparent to-fuchsia-500/10" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-violet-500/10 rounded-full blur-[100px]" />
             

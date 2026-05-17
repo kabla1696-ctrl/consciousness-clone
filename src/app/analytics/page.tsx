@@ -200,7 +200,7 @@ export default function Analytics() {
                     </div>
                     <div className="w-full h-3 bg-white/[0.03] rounded-full overflow-hidden border border-white/[0.04]">
                       <div
-                        className="h-full rounded-full transition-all duration-1000 ease-out relative overflow-hidden"
+                        className="h-full rounded-full transition-all duration-1000 ease-out relative"
                         style={{
                           width: `${(count / maxCategoryCount) * 100}%`,
                           background: 'linear-gradient(90deg, #8b5cf6, #d946ef, #06b6d4)',

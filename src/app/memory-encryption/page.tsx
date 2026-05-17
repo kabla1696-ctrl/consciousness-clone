@@ -142,7 +142,7 @@ export default function MemoryEncryption() {
           to { opacity: 1; transform: translateY(0) scale(1); }
         }
       `}</style>
-      <div className="min-h-screen bg-[#050510] text-white relative overflow-hidden">
+      <div className="min-h-screen bg-[#050510] text-white relative">
         <Particles />
 
         {/* Header */}

@@ -137,7 +137,7 @@ export default function IdeaGeneratorPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-[#050510] flex items-center justify-center relative overflow-hidden">
+      <main className="min-h-screen bg-[#050510] flex items-center justify-center relative">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(139,92,246,0.08)_0%,transparent_70%)]" />
         <div className="w-10 h-10 rounded-full border-2 border-violet-500/60 border-t-transparent animate-spin shadow-[0_0_20px_rgba(139,92,246,0.3)]" />
       </main>
@@ -145,7 +145,7 @@ export default function IdeaGeneratorPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#050510] page-transition relative overflow-hidden">
+    <main className="min-h-screen bg-[#050510] page-transition relative">
       {/* Ambient background glow */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-violet-600/[0.04] rounded-full blur-[120px]" />

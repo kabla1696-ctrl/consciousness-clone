@@ -114,7 +114,7 @@ export default function PublicProfile() {
   }
 
   return (
-    <main className="min-h-screen bg-[#050510] page-transition relative overflow-hidden">
+    <main className="min-h-screen bg-[#050510] page-transition relative">
       {/* Ambient background glow */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-violet-600/[0.04] rounded-full blur-[128px]" />
@@ -136,7 +136,7 @@ export default function PublicProfile() {
 
       <div className="relative z-10 pt-6 px-4 max-w-2xl mx-auto pb-24 md:pb-8">
         {/* Profile Preview Card */}
-        <div className="relative rounded-2xl border border-white/[0.08] p-6 mb-6 backdrop-blur-2xl bg-white/[0.02] overflow-hidden">
+        <div className="relative rounded-2xl border border-white/[0.08] p-6 mb-6 backdrop-blur-2xl bg-white/[0.02]">
           {/* Top glow line */}
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent" />
           {/* Inner glow */}
@@ -146,7 +146,7 @@ export default function PublicProfile() {
             {/* Avatar with glow + upload */}
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-2xl blur-lg opacity-40 group-hover:opacity-60 transition-opacity" />
-              <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-3xl font-bold shadow-xl shadow-violet-500/20 border border-white/[0.1] overflow-hidden">
+              <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-3xl font-bold shadow-xl shadow-violet-500/20 border border-white/[0.1]">
                 {profilePic ? <img src={profilePic} alt="Profile" className="w-full h-full object-cover" /> : (displayName ? displayName[0].toUpperCase() : '🧠')}
               </div>
               <label className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-violet-500 border-2 border-[#050510] flex items-center justify-center text-[10px] cursor-pointer tap-feedback shadow-lg z-10">
@@ -183,7 +183,7 @@ export default function PublicProfile() {
         </div>
 
         {/* Edit Form */}
-        <div className="relative rounded-2xl border border-white/[0.06] p-6 mb-6 backdrop-blur-2xl bg-white/[0.015] overflow-hidden">
+        <div className="relative rounded-2xl border border-white/[0.06] p-6 mb-6 backdrop-blur-2xl bg-white/[0.015]">
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-fuchsia-500/20 to-transparent" />
 
           <h3 className="relative text-lg font-semibold mb-5 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Edit Profile</h3>
@@ -244,7 +244,7 @@ export default function PublicProfile() {
         </div>
 
         {/* Share Link */}
-        <div className="relative rounded-2xl border border-white/[0.06] p-6 backdrop-blur-2xl bg-white/[0.015] overflow-hidden">
+        <div className="relative rounded-2xl border border-white/[0.06] p-6 backdrop-blur-2xl bg-white/[0.015]">
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/[0.02] to-violet-500/[0.02] pointer-events-none" />
 

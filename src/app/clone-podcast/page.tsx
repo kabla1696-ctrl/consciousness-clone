@@ -115,9 +115,9 @@ export default function ClonePodcast() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col bg-[#050510] page-transition relative overflow-hidden">
+    <main className="min-h-screen flex flex-col bg-[#050510] page-transition relative">
       {/* Animated background orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none">
         <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-violet-600/[0.07] blur-[120px] animate-pulse" />
         <div className="absolute top-1/3 -right-24 w-80 h-80 rounded-full bg-fuchsia-600/[0.06] blur-[100px] animate-pulse" style={{ animationDelay: '1s' }} />
         <div className="absolute -bottom-20 left-1/3 w-72 h-72 rounded-full bg-indigo-600/[0.05] blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
@@ -189,7 +189,7 @@ export default function ClonePodcast() {
           <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-violet-500/20 via-fuchsia-500/20 to-violet-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-sm -z-10" />
 
           {/* Album Art */}
-          <div className="aspect-square max-h-64 bg-gradient-to-br from-violet-600/20 via-fuchsia-600/10 to-indigo-600/20 flex items-center justify-center relative overflow-hidden">
+          <div className="aspect-square max-h-64 bg-gradient-to-br from-violet-600/20 via-fuchsia-600/10 to-indigo-600/20 flex items-center justify-center relative">
             {/* Animated rings */}
             <div className="absolute inset-0">
               {[...Array(5)].map((_, i) => (
@@ -243,7 +243,7 @@ export default function ClonePodcast() {
               </button>
             </div>
             {/* Progress Bar */}
-            <div className="w-full bg-white/[0.06] rounded-full h-1.5 mb-1 overflow-hidden">
+            <div className="w-full bg-white/[0.06] rounded-full h-1.5 mb-1">
               <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 h-1.5 rounded-full shadow-sm shadow-violet-500/50" style={{ width: '0%' }} />
             </div>
             <div className="flex justify-between text-[10px] text-white/20">

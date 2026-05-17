@@ -180,9 +180,9 @@ export default function MemoryMap() {
   }
 
   return (
-    <main className="min-h-screen bg-[#06060f] page-transition relative overflow-hidden">
+    <main className="min-h-screen bg-[#06060f] page-transition relative">
       {/* Ambient background effects */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none">
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-violet-600/8 rounded-full blur-[120px]" />
         <div className="absolute top-1/3 -left-32 w-80 h-80 bg-fuchsia-600/6 rounded-full blur-[100px]" />
         <div className="absolute bottom-20 right-10 w-64 h-64 bg-indigo-600/5 rounded-full blur-[80px]" />
@@ -225,7 +225,7 @@ export default function MemoryMap() {
         {showAdd && (
           <div className="relative mb-6">
             <div className="absolute -inset-px rounded-2xl bg-gradient-to-br from-violet-500/30 via-fuchsia-500/20 to-violet-500/10 blur-sm" />
-            <div className="relative rounded-2xl border border-violet-400/15 bg-[#0d0d1f]/80 backdrop-blur-xl p-5 overflow-hidden">
+            <div className="relative rounded-2xl border border-violet-400/15 bg-[#0d0d1f]/80 backdrop-blur-xl p-5">
               <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-violet-400/30 to-transparent" />
               <h3 className="text-sm font-bold mb-4 flex items-center gap-2">
                 <span className="w-6 h-6 rounded-lg bg-violet-500/20 flex items-center justify-center text-xs">📍</span>
@@ -337,7 +337,7 @@ export default function MemoryMap() {
                 <button
                   onClick={saveMemoryLocation}
                   disabled={!selectedPlace || !memoryContent.trim() || saving}
-                  className="relative flex-1 py-3 rounded-xl font-medium tap-feedback disabled:opacity-30 flex items-center justify-center gap-2 overflow-hidden"
+                  className="relative flex-1 py-3 rounded-xl font-medium tap-feedback disabled:opacity-30 flex items-center justify-center gap-2"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600" />
                   <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-fuchsia-500 opacity-0 hover:opacity-100 transition-opacity" />
@@ -362,7 +362,7 @@ export default function MemoryMap() {
           ].map((stat) => (
             <div key={stat.label} className="group relative">
               <div className={`absolute -inset-px rounded-2xl bg-gradient-to-br ${stat.color === 'violet' ? 'from-violet-500/20 to-violet-500/5' : 'from-fuchsia-500/20 to-fuchsia-500/5'} opacity-0 group-hover:opacity-100 blur-sm transition-opacity`} />
-              <div className="relative rounded-2xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm p-4 overflow-hidden">
+              <div className="relative rounded-2xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm p-4">
                 <div className={`absolute top-0 left-0 w-full h-px bg-gradient-to-r ${stat.color === 'violet' ? 'from-transparent via-violet-400/20 to-transparent' : 'from-transparent via-fuchsia-400/20 to-transparent'}`} />
                 <div className={`text-2xl font-bold ${stat.color === 'violet' ? 'text-violet-400' : 'text-fuchsia-400'} drop-shadow-[0_0_10px_rgba(139,92,246,0.3)]`}>
                   {stat.value}
@@ -395,7 +395,7 @@ export default function MemoryMap() {
                 return (
                   <div key={place} className="group relative">
                     <div className={`absolute -inset-px rounded-2xl bg-gradient-to-br from-violet-500/10 to-fuchsia-500/5 ${isExpanded ? 'opacity-100' : 'opacity-0 group-hover:opacity-60'} blur-sm transition-opacity`} />
-                    <div className="relative rounded-2xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm overflow-hidden">
+                    <div className="relative rounded-2xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-sm">
                       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-violet-400/15 to-transparent" />
                       <button
                         onClick={() => setExpandedPlace(isExpanded ? null : place)}
@@ -465,7 +465,7 @@ export default function MemoryMap() {
         {/* Quick Add Existing Memory */}
         {!showAdd && memories.length > 0 && (
           <div className="mt-8">
-            <div className="relative rounded-xl border border-white/[0.04] bg-white/[0.015] backdrop-blur-sm p-4 overflow-hidden">
+            <div className="relative rounded-xl border border-white/[0.04] bg-white/[0.015] backdrop-blur-sm p-4">
               <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
               <h3 className="text-xs font-medium text-white/30 mb-2 flex items-center gap-1.5">💡 Tip</h3>
               <p className="text-white/20 text-xs leading-relaxed">

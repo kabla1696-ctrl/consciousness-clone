@@ -178,7 +178,7 @@ export default function MemoriesPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#050510] relative overflow-hidden">
+    <main className="min-h-screen bg-[#050510] relative">
       {/* Floating particles */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         {Array.from({ length: 20 }).map((_, i) => (

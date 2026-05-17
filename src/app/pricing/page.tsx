@@ -61,7 +61,7 @@ export default function Pricing() {
             </p>
 
             {/* Animated gradient bar */}
-            <div className="mt-8 h-1 max-w-md mx-auto rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
+            <div className="mt-8 h-1 max-w-md mx-auto rounded-full" style={{ background: 'rgba(255,255,255,0.05)' }}>
               <div className="h-full w-full rounded-full" style={{
                 background: 'linear-gradient(90deg, #10b981, #06b6d4, #8b5cf6, #ec4899, #10b981)',
                 backgroundSize: '200% 100%',

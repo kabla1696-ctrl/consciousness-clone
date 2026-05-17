@@ -167,7 +167,7 @@ export default function Mindfulness() {
   }
 
   return (
-    <main className="min-h-screen bg-[#050510] page-transition relative overflow-hidden">
+    <main className="min-h-screen bg-[#050510] page-transition relative">
       {/* Ambient orbs */}
       <div className="absolute top-0 left-0 w-96 h-96 rounded-full bg-emerald-600/[0.03] blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-violet-600/[0.04] blur-[100px] pointer-events-none" />

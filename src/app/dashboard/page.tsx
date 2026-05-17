@@ -62,7 +62,7 @@ export default function Dashboard() {
   return (
     <main className="min-h-screen bg-[#050510] page-transition">
       {/* Floating Orbs Background */}
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+      <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute top-[-150px] left-[-80px] w-[500px] h-[500px] rounded-full opacity-20" style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.4) 0%, transparent 70%)', animation: 'orb1 20s ease-in-out infinite' }} />
         <div className="absolute bottom-[-200px] right-[-150px] w-[600px] h-[600px] rounded-full opacity-15" style={{ background: 'radial-gradient(circle, rgba(236,72,153,0.4) 0%, transparent 70%)', animation: 'orb2 25s ease-in-out infinite' }} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full opacity-10" style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.3) 0%, transparent 70%)', animation: 'orb3 18s ease-in-out infinite' }} />
@@ -80,7 +80,7 @@ export default function Dashboard() {
         <div className="px-4 py-3 flex justify-between items-center">
           <div className="flex items-center gap-3">
             <div className="relative">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-sm shadow-lg shadow-violet-500/20 overflow-hidden">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-sm shadow-lg shadow-violet-500/20">
                 {typeof window !== 'undefined' && localStorage.getItem('cc_profile_pic') ? <img src={localStorage.getItem('cc_profile_pic')!} alt="" className="w-full h-full object-cover" /> : '🧠'}
               </div>
               <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl blur opacity-20" />
@@ -186,7 +186,7 @@ export default function Dashboard() {
         </div>
 
         {/* Upgrade Banner */}
-        <Link href="/pricing" className="block rounded-2xl p-4 tap-feedback mb-6 group relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.08), rgba(236,72,153,0.08))', border: '1px solid rgba(139,92,246,0.15)' }}>
+        <Link href="/pricing" className="block rounded-2xl p-4 tap-feedback mb-6 group relative" style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.08), rgba(236,72,153,0.08))', border: '1px solid rgba(139,92,246,0.15)' }}>
           <div className="absolute inset-0 bg-gradient-to-r from-violet-500/5 to-fuchsia-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
           <div className="relative flex items-center gap-3">
             <div className="text-2xl">⚡</div>

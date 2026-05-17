@@ -119,7 +119,7 @@ export default function CloneIdentityPage() {
 
   if (loading) {
     return (
-      <main className="page-transition min-h-screen flex items-center justify-center bg-[#030108] relative overflow-hidden">
+      <main className="page-transition min-h-screen flex items-center justify-center bg-[#030108] relative">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-cyan-600/10 blur-[100px] animate-pulse" />
         </div>
@@ -132,7 +132,7 @@ export default function CloneIdentityPage() {
   }
 
   return (
-    <main className="page-transition min-h-screen pb-24 bg-[#030108] relative overflow-hidden">
+    <main className="page-transition min-h-screen pb-24 bg-[#030108] relative">
       {/* Background orbs */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-[-10%] left-[-5%] w-[450px] h-[450px] rounded-full bg-cyan-600/10 blur-[110px] animate-pulse" />

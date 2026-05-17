@@ -107,7 +107,7 @@ export default function CloneNetwork() {
             </button>
 
             {/* Profile Card */}
-            <div className="glass-card rounded-2xl p-6 mb-4 text-center relative overflow-hidden">
+            <div className="glass-card rounded-2xl p-6 mb-4 text-center relative">
               <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 to-fuchsia-500/5" />
               <div className="relative z-10">
                 <div className="text-5xl mb-3" style={{ filter: 'drop-shadow(0 0 20px rgba(139,92,246,0.3))' }}>{selectedClone.avatar}</div>
@@ -130,7 +130,7 @@ export default function CloneNetwork() {
             </div>
 
             {/* Chat */}
-            <div className="glass-card rounded-2xl overflow-hidden">
+            <div className="glass-card rounded-2xl">
               <div className="px-4 py-3 border-b border-white/[0.04]">
                 <h3 className="text-sm font-semibold text-white/80">{t('Chat with')} {selectedClone.name}</h3>
               </div>

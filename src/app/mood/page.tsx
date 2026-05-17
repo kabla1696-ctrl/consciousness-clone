@@ -195,7 +195,7 @@ export default function MoodTrackerPage() {
   return (
     <main className="min-h-screen bg-[#050510] page-transition">
       {/* Background */}
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+      <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute top-[-120px] left-[-60px] w-[400px] h-[400px] rounded-full opacity-15" style={{ background: 'radial-gradient(circle, rgba(245,158,11,0.3) 0%, transparent 70%)', animation: 'orb1 22s ease-in-out infinite' }} />
         <div className="absolute bottom-[-150px] right-[-80px] w-[500px] h-[500px] rounded-full opacity-10" style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.3) 0%, transparent 70%)', animation: 'orb2 28s ease-in-out infinite' }} />
       </div>

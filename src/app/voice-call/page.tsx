@@ -321,7 +321,7 @@ export default function CloneVoiceCallPage() {
     try { logs = JSON.parse(localStorage.getItem('cc_call_logs') || '[]') } catch {}
 
     return (
-      <main className="min-h-screen bg-[#050510] relative overflow-hidden">
+      <main className="min-h-screen bg-[#050510] relative">
         <style>{`
           @keyframes pulse-ring { 0% { transform: scale(1); opacity: 0.6 } 100% { transform: scale(1.8); opacity: 0 } }
           @keyframes float-particle { 0% { transform: translateY(0); opacity: 0 } 20% { opacity: 0.6 } 80% { opacity: 0.6 } 100% { transform: translateY(-100vh); opacity: 0 } }
@@ -329,7 +329,7 @@ export default function CloneVoiceCallPage() {
         `}</style>
 
         {/* Floating particles */}
-        <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="fixed inset-0 pointer-events-none">
           {Array.from({ length: 8 }).map((_, i) => (
             <div
               key={i}
@@ -430,7 +430,7 @@ export default function CloneVoiceCallPage() {
   // ====== RINGING SCREEN ======
   if (callState === 'ringing') {
     return (
-      <main className="min-h-screen bg-[#050510] flex flex-col items-center justify-center relative overflow-hidden">
+      <main className="min-h-screen bg-[#050510] flex flex-col items-center justify-center relative">
         <style>{`
           @keyframes ring-pulse { 0%,100% { transform: scale(1) } 50% { transform: scale(1.15) } }
           @keyframes ring-glow { 0% { box-shadow: 0 0 20px rgba(16,185,129,0.3) } 50% { box-shadow: 0 0 60px rgba(16,185,129,0.6) } 100% { box-shadow: 0 0 20px rgba(16,185,129,0.3) } }
@@ -462,7 +462,7 @@ export default function CloneVoiceCallPage() {
 
   // ====== CONNECTED CALL SCREEN ======
   return (
-    <main className="min-h-screen bg-[#050510] flex flex-col relative overflow-hidden">
+    <main className="min-h-screen bg-[#050510] flex flex-col relative">
       <style>{`
         @keyframes wave-bar { 0%,100% { height: 4px } 50% { height: var(--h) } }
         @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: translateY(0) } }

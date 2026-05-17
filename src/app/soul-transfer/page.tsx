@@ -107,7 +107,7 @@ export default function SoulTransferPage() {
   const BOND_LABELS = ['Stranger', 'Acquaintance', 'Friend', 'Soulmate', 'Twin Soul']
 
   return (
-    <main className="min-h-screen bg-[#050510] relative overflow-hidden pb-24 md:pb-8">
+    <main className="min-h-screen bg-[#050510] relative pb-24 md:pb-8">
       {/* Animated background */}
       <div className="fixed inset-0 pointer-events-none">
         {particles.map(p => (

@@ -164,9 +164,9 @@ Choose 5 real, well-known songs. Pick songs that feel personal and meaningful.`,
   }
 
   return (
-    <main className="min-h-screen flex flex-col bg-[#050510] page-transition relative overflow-hidden">
+    <main className="min-h-screen flex flex-col bg-[#050510] page-transition relative">
       {/* Animated background orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none">
         <div className="absolute -top-40 -left-20 w-[500px] h-[500px] rounded-full bg-emerald-600/[0.06] blur-[140px] animate-pulse" />
         <div className="absolute top-1/3 -right-32 w-96 h-96 rounded-full bg-cyan-600/[0.05] blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
         <div className="absolute -bottom-24 left-1/4 w-80 h-80 rounded-full bg-violet-600/[0.05] blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />

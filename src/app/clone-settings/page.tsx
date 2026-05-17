@@ -107,9 +107,9 @@ export default function CloneSettings() {
   }
 
   return (
-    <main className="min-h-screen bg-[#050510] relative overflow-hidden">
+    <main className="min-h-screen bg-[#050510] relative">
       {/* Animated background */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none">
         <div className="absolute -top-40 -left-40 w-96 h-96 bg-violet-600/8 rounded-full blur-[140px] animate-pulse" />
         <div className="absolute top-1/3 -right-32 w-80 h-80 bg-fuchsia-600/6 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1.5s' }} />
         <div className="absolute bottom-0 left-1/3 w-64 h-64 bg-purple-500/5 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '3s' }} />

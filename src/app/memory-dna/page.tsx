@@ -109,7 +109,7 @@ export default function MemoryDNAPage() {
 
   if (loading) {
     return (
-      <main className="page-transition min-h-screen flex items-center justify-center bg-[#030108] relative overflow-hidden">
+      <main className="page-transition min-h-screen flex items-center justify-center bg-[#030108] relative">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-violet-600/10 blur-[100px] animate-pulse" />
         </div>
@@ -122,7 +122,7 @@ export default function MemoryDNAPage() {
   }
 
   return (
-    <main className="page-transition min-h-screen pb-24 bg-[#030108] relative overflow-hidden">
+    <main className="page-transition min-h-screen pb-24 bg-[#030108] relative">
       {/* Background orbs */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-violet-600/10 blur-[120px] animate-pulse" />

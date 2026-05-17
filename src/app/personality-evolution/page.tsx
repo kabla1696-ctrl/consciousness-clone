@@ -160,7 +160,7 @@ export default function PersonalityEvolution() {
           from { width: 0%; }
         }
       `}</style>
-      <div className="min-h-screen bg-[#050510] text-white relative overflow-hidden">
+      <div className="min-h-screen bg-[#050510] text-white relative">
         <Particles />
 
         {/* Header */}
@@ -220,7 +220,7 @@ export default function PersonalityEvolution() {
                 <span>XP: {xp}</span>
                 <span>{nextStage ? `${nextStage.xpRequired} to next` : 'MAX'}</span>
               </div>
-              <div className="h-2.5 bg-white/[0.05] rounded-full overflow-hidden">
+              <div className="h-2.5 bg-white/[0.05] rounded-full">
                 <div
                   className="h-full bg-gradient-to-r from-amber-500 to-violet-500 rounded-full transition-all duration-1000"
                   style={{ width: `${Math.min(100, xpProgress)}%` }}
@@ -251,7 +251,7 @@ export default function PersonalityEvolution() {
                       <span className="text-[10px] text-emerald-400">+{trait.change}</span>
                     )}
                   </div>
-                  <div className="h-2 bg-white/[0.05] rounded-full overflow-hidden">
+                  <div className="h-2 bg-white/[0.05] rounded-full">
                     <div
                       className="h-full rounded-full transition-all duration-1000"
                       style={{

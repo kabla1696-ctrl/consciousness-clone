@@ -190,7 +190,7 @@ export default function PersonalityQuiz() {
           </div>
 
           {/* Profile Card */}
-          <div className="glass-card p-8 mb-8 relative overflow-hidden">
+          <div className="glass-card p-8 mb-8 relative">
             <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/10 rounded-full blur-3xl" />
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-fuchsia-500/10 rounded-full blur-3xl" />
 

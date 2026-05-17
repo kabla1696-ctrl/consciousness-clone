@@ -256,7 +256,7 @@ export default function PersonalitySnapshotsPage() {
               {compareSnapshot && compareSnapshot.id !== latestSnapshot.id ? t('compare snapshots') : t('latest snapshot')}
               <span className="flex-1 h-px bg-gradient-to-r from-transparent to-white/5" />
             </h2>
-            <div className="glass-card rounded-2xl p-5 relative overflow-hidden">
+            <div className="glass-card rounded-2xl p-5 relative">
               {/* Subtle glow behind chart */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div className="w-48 h-48 bg-violet-500/10 rounded-full blur-3xl" />

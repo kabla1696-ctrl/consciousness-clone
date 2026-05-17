@@ -34,7 +34,7 @@ export default function Signup() {
   }
 
   return (
-    <main className="min-h-screen bg-[#030108] flex flex-col page-transition relative overflow-hidden">
+    <main className="min-h-screen bg-[#030108] flex flex-col page-transition relative">
       {/* Animated background orbs */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-[-15%] right-[-5%] w-[450px] h-[450px] rounded-full bg-fuchsia-600/12 blur-[110px] animate-pulse" />

@@ -261,8 +261,8 @@ Write in first person, as if the person is telling their own story. Be warm, ref
                 <span>Progress</span>
                 <span>{Math.round(((currentChapter) / CHAPTER_TITLES.length) * 100)}%</span>
               </div>
-              <div className="w-full h-3 bg-white/[0.04] rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full transition-all duration-1000 relative overflow-hidden"
+              <div className="w-full h-3 bg-white/[0.04] rounded-full">
+                <div className="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full transition-all duration-1000 relative"
                   style={{ width: `${(currentChapter / CHAPTER_TITLES.length) * 100}%` }}>
                   <div className="absolute inset-0 animate-shimmer" />
                 </div>

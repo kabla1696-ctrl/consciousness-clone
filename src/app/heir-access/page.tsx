@@ -96,8 +96,8 @@ export default function HeirAccessPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#050510] pb-24 relative overflow-hidden">
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+    <main className="min-h-screen bg-[#050510] pb-24 relative">
+      <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-10 -left-20 w-72 h-72 bg-amber-600/8 rounded-full blur-[120px] animate-pulse" />
         <div className="absolute bottom-20 -right-32 w-80 h-80 bg-orange-500/5 rounded-full blur-[140px] animate-pulse" style={{ animationDelay: '2s' }} />
       </div>

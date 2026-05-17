@@ -187,9 +187,9 @@ export default function GoalsPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#06060e] relative overflow-hidden">
+    <main className="min-h-screen bg-[#06060e] relative">
       {/* Ambient glow orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-[-15%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-violet-900/20 blur-[120px]" />
         <div className="absolute bottom-[-15%] left-[-10%] w-[45vw] h-[45vw] rounded-full bg-fuchsia-900/15 blur-[100px]" />
         <div className="absolute top-[50%] left-[30%] w-[25vw] h-[25vw] rounded-full bg-indigo-900/10 blur-[80px]" />
@@ -476,7 +476,7 @@ export default function GoalsPage() {
 
                   {/* AI Advice */}
                   {aiAdvice[goal.id] && (
-                    <div className="mt-3 relative rounded-xl overflow-hidden">
+                    <div className="mt-3 relative rounded-xl">
                       <div className="absolute inset-0 bg-amber-500/[0.04]" />
                       <div className="absolute inset-0 rounded-xl border border-amber-500/15" />
                       <div className="relative p-3.5">

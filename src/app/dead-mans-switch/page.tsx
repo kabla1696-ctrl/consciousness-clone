@@ -130,7 +130,7 @@ export default function DeadMansSwitch() {
             <h2 className={`text-2xl font-bold ${u.color} mb-1`}>{settings.enabled ? `${daysRemaining()} ${t('days')}` : t('inactive')}</h2>
             <p className="text-xs text-white/30">{settings.enabled ? `${t('countdown')} · ${u.label}` : t('inactive')}</p>
             {settings.enabled && (
-              <div className="mt-4 w-full bg-white/5 rounded-full h-2 overflow-hidden">
+              <div className="mt-4 w-full bg-white/5 rounded-full h-2">
                 <div className={`h-2 rounded-full transition-all duration-1000 ${daysRemaining() <= 3 ? 'bg-gradient-to-r from-red-500 to-rose-500' : daysRemaining() <= 7 ? 'bg-gradient-to-r from-amber-500 to-orange-500' : 'bg-gradient-to-r from-emerald-500 to-teal-500'}`}
                   style={{ width: `${Math.max(5, (daysRemaining() / settings.inactivityDays) * 100)}%` }} />
               </div>
@@ -231,7 +231,7 @@ export default function DeadMansSwitch() {
         {settings.checkInHistory.length > 0 && (
           <div>
             <h2 className="text-xs text-white/40 uppercase tracking-widest font-medium mb-3">Recent Check-ins</h2>
-            <div className="glass-card rounded-2xl overflow-hidden">
+            <div className="glass-card rounded-2xl">
               {settings.checkInHistory.slice(0, 7).map((ci, i) => (
                 <div key={i} className="px-4 py-2.5 border-b border-white/[0.03] last:border-0 flex items-center gap-3">
                   <span className="text-emerald-400 text-xs">✓</span>

@@ -114,7 +114,7 @@ export default function Chat() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col bg-[#050510] relative overflow-hidden">
+    <main className="min-h-screen flex flex-col bg-[#050510] relative">
       {/* Floating particles */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute w-[500px] h-[500px] rounded-full opacity-[0.08]" style={{ top: '-150px', right: '-120px', background: 'radial-gradient(circle,rgba(139,92,246,0.4),transparent 70%)', animation: 'orb1 20s ease-in-out infinite' }} />

@@ -216,7 +216,7 @@ export default function CloneTherapy() {
   // Mood Check-in Overlay
   if (showMoodCheckIn) {
     return (
-      <main className="min-h-screen bg-[#050510] flex items-center justify-center relative overflow-hidden">
+      <main className="min-h-screen bg-[#050510] flex items-center justify-center relative">
         <div className="fixed inset-0 pointer-events-none">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-blue-600/[0.06] blur-[140px] animate-pulse" />
           <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-purple-600/[0.05] blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
@@ -258,7 +258,7 @@ export default function CloneTherapy() {
   // Active therapy session
   if (activeType) {
     return (
-      <main className="min-h-screen flex flex-col bg-[#050510] relative overflow-hidden">
+      <main className="min-h-screen flex flex-col bg-[#050510] relative">
         <div className="fixed inset-0 pointer-events-none">
           <div className="absolute top-0 left-1/3 w-[500px] h-[500px] rounded-full bg-blue-600/[0.04] blur-[140px] animate-pulse" />
           <div className="absolute bottom-0 right-1/4 w-80 h-80 rounded-full bg-purple-600/[0.03] blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
@@ -380,7 +380,7 @@ export default function CloneTherapy() {
 
   // Main lobby
   return (
-    <main className="min-h-screen flex flex-col bg-[#050510] relative overflow-hidden">
+    <main className="min-h-screen flex flex-col bg-[#050510] relative">
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute -top-40 left-1/4 w-[500px] h-[500px] rounded-full bg-blue-600/[0.06] blur-[140px] animate-pulse" />
         <div className="absolute top-1/3 -right-32 w-96 h-96 rounded-full bg-purple-600/[0.04] blur-[120px] animate-pulse" style={{ animationDelay: '1.5s' }} />

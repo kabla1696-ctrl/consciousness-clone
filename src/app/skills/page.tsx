@@ -167,7 +167,7 @@ export default function Skills() {
   }
 
   return (
-    <main className="min-h-screen bg-[#050510] page-transition relative overflow-hidden">
+    <main className="min-h-screen bg-[#050510] page-transition relative">
       {/* Ambient background glow */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-violet-600/[0.04] rounded-full blur-[128px]" />
@@ -196,7 +196,7 @@ export default function Skills() {
           </div>
           <button
             onClick={() => setShowAdd(!showAdd)}
-            className="group relative px-6 py-3 rounded-xl font-semibold transition-all duration-300 overflow-hidden"
+            className="group relative px-6 py-3 rounded-xl font-semibold transition-all duration-300"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 opacity-90 group-hover:opacity-100 transition-opacity" />
             <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 blur-xl opacity-40 group-hover:opacity-60 transition-opacity" />
@@ -224,7 +224,7 @@ export default function Skills() {
 
         {/* Add Skill Form */}
         {showAdd && (
-          <div className="relative rounded-2xl border border-white/[0.08] p-6 mb-8 backdrop-blur-2xl bg-white/[0.02] overflow-hidden">
+          <div className="relative rounded-2xl border border-white/[0.08] p-6 mb-8 backdrop-blur-2xl bg-white/[0.02]">
             <div className="absolute inset-0 bg-gradient-to-br from-violet-500/[0.03] to-fuchsia-500/[0.03] pointer-events-none" />
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent" />
 
@@ -306,7 +306,7 @@ export default function Skills() {
               const levelInfo = LEVELS.find(l => l.id === skill.level) || LEVELS[0]
 
               return (
-                <div key={skill.id} className="group relative rounded-2xl border border-white/[0.06] hover:border-white/[0.1] transition-all duration-500 backdrop-blur-xl bg-white/[0.015] overflow-hidden">
+                <div key={skill.id} className="group relative rounded-2xl border border-white/[0.06] hover:border-white/[0.1] transition-all duration-500 backdrop-blur-xl bg-white/[0.015]">
                   {/* Top glow line */}
                   <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -346,7 +346,7 @@ export default function Skills() {
                           <span>{skill.lessons.filter(l => l.completed).length}/{skill.lessons.length} lessons</span>
                           <span>{progress}%</span>
                         </div>
-                        <div className="w-full h-1.5 bg-white/[0.04] rounded-full overflow-hidden">
+                        <div className="w-full h-1.5 bg-white/[0.04] rounded-full">
                           <div
                             className="h-full bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 rounded-full transition-all duration-700 shadow-lg shadow-violet-500/20"
                             style={{ width: `${progress}%` }}

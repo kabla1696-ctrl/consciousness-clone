@@ -194,9 +194,9 @@ export default function EmotionEngine() {
   const weeklyReport = getWeeklyReport()
 
   return (
-    <main className="min-h-screen bg-[#050510] pb-24 relative overflow-hidden">
+    <main className="min-h-screen bg-[#050510] pb-24 relative">
       {/* Animated background orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-20 -left-32 w-64 h-64 bg-violet-600/10 rounded-full blur-[100px] animate-pulse" />
         <div className="absolute top-1/2 -right-20 w-80 h-80 bg-fuchsia-600/8 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
         <div className="absolute bottom-20 left-1/4 w-48 h-48 bg-purple-500/6 rounded-full blur-[80px] animate-pulse" style={{ animationDelay: '2s' }} />
@@ -267,7 +267,7 @@ export default function EmotionEngine() {
 
         {/* Clone Response */}
         {cloneResponse && (
-          <div className="relative bg-gradient-to-br from-violet-500/10 to-fuchsia-500/5 rounded-2xl p-5 border border-violet-500/15 shadow-lg shadow-violet-500/5 overflow-hidden">
+          <div className="relative bg-gradient-to-br from-violet-500/10 to-fuchsia-500/5 rounded-2xl p-5 border border-violet-500/15 shadow-lg shadow-violet-500/5">
             <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/5 rounded-full blur-3xl" />
             <div className="flex items-center gap-2 mb-3 relative z-10">
               <span className="text-xl">🧠</span>
@@ -286,7 +286,7 @@ export default function EmotionEngine() {
                 <div key={emotion} className="flex items-center gap-3 group">
                   <span className="text-sm w-6 group-hover:scale-125 transition-transform">{EMOTION_EMOJIS[emotion]}</span>
                   <span className="text-gray-400 text-xs w-20 capitalize font-medium">{emotion}</span>
-                  <div className="flex-1 h-2.5 bg-white/[0.04] rounded-full overflow-hidden">
+                  <div className="flex-1 h-2.5 bg-white/[0.04] rounded-full">
                     <div className="h-full rounded-full transition-all duration-1000 ease-out" style={{ width: `${value}%`, backgroundColor: EMOTION_COLORS[emotion], boxShadow: `0 0 12px ${EMOTION_COLORS[emotion]}40` }} />
                   </div>
                   <span className="text-gray-400 text-xs w-10 text-right font-mono">{value}%</span>
@@ -316,7 +316,7 @@ export default function EmotionEngine() {
                 <div key={emotion} className="flex items-center gap-3">
                   <span className="text-sm w-6">{EMOTION_EMOJIS[emotion]}</span>
                   <span className="text-gray-400 text-xs w-20 capitalize">{emotion}</span>
-                  <div className="flex-1 h-2 bg-white/[0.04] rounded-full overflow-hidden">
+                  <div className="flex-1 h-2 bg-white/[0.04] rounded-full">
                     <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${value}%`, backgroundColor: EMOTION_COLORS[emotion] }} />
                   </div>
                   <span className="text-gray-400 text-xs w-10 text-right font-mono">{value}%</span>

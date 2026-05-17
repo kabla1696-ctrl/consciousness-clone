@@ -103,7 +103,7 @@ export default function LanguagePage() {
                     <span className="text-white/20 text-[10px]">{lang.name}</span>
                     {coverage > 0 && (
                       <div className="flex items-center gap-1">
-                        <div className="w-8 h-1 rounded-full bg-white/[0.05] overflow-hidden">
+                        <div className="w-8 h-1 rounded-full bg-white/[0.05]">
                           <div className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-500" style={{ width: `${coverage}%` }} />
                         </div>
                         <span className="text-white/10 text-[10px]">{coverage}%</span>

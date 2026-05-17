@@ -266,7 +266,7 @@ function CallUserContent() {
 
   // ── Call Screen ──
   return (
-    <main className="min-h-screen flex flex-col items-center relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #050510, #0a0a2e)' }}>
+    <main className="min-h-screen flex flex-col items-center relative" style={{ background: 'linear-gradient(135deg, #050510, #0a0a2e)' }}>
       {/* Animated background orbs */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute w-[500px] h-[500px] rounded-full opacity-20" style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.3), transparent 70%)', left: '-10%', top: '-10%', animation: 'orbFloat1 15s ease-in-out infinite' }} />

@@ -117,7 +117,7 @@ function VideoUserPageInner() {
     `${Math.floor(s / 60).toString().padStart(2, '0')}:${(s % 60).toString().padStart(2, '0')}`
 
   return (
-    <main className="min-h-screen bg-black flex flex-col relative overflow-hidden">
+    <main className="min-h-screen bg-black flex flex-col relative">
       {/* Ended state */}
       {callState === 'ended' && (
         <div className="absolute inset-0 z-50 flex flex-col items-center justify-center" style={{ background: 'linear-gradient(135deg, #050510, #080820)' }}>

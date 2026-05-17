@@ -185,7 +185,7 @@ export default function DreamModePage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-[#050510] flex items-center justify-center relative overflow-hidden">
+      <main className="min-h-screen bg-[#050510] flex items-center justify-center relative">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(139,92,246,0.08)_0%,transparent_70%)]" />
         <div className="w-10 h-10 rounded-full border-2 border-violet-500/60 border-t-transparent animate-spin shadow-[0_0_20px_rgba(139,92,246,0.3)]" />
       </main>
@@ -193,7 +193,7 @@ export default function DreamModePage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#050510] page-transition relative overflow-hidden">
+    <main className="min-h-screen bg-[#050510] page-transition relative">
       {/* Ambient background glow */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-violet-600/[0.04] rounded-full blur-[120px]" />
@@ -220,7 +220,7 @@ export default function DreamModePage() {
 
       <div className="relative z-10 px-4 py-5 pb-24 space-y-6">
         {/* Brain Visualization */}
-        <div className="relative rounded-2xl overflow-hidden" style={{ height: 280 }}>
+        <div className="relative rounded-2xl" style={{ height: 280 }}>
           {/* Glassmorphism card */}
           <div className="absolute inset-0 bg-gradient-to-b from-violet-500/[0.08] via-white/[0.02] to-fuchsia-500/[0.05] backdrop-blur-xl border border-white/[0.08] rounded-2xl" />
           <div className="absolute inset-0 bg-gradient-to-br from-violet-500/[0.04] to-transparent rounded-2xl" />

@@ -117,7 +117,7 @@ export default function DeathDetectionPage() {
   const RELATIONS = ['Family', 'Spouse', 'Sibling', 'Parent', 'Child', 'Best Friend', 'Partner', 'Other']
 
   return (
-    <main className="min-h-screen bg-[#050510] relative overflow-hidden pb-24 md:pb-8">
+    <main className="min-h-screen bg-[#050510] relative pb-24 md:pb-8">
       {/* Background */}
       <div className="fixed inset-0 pointer-events-none">
         {particles.map(p => (

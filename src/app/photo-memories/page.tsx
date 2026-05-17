@@ -145,7 +145,7 @@ export default function PhotoMemories() {
         {showUpload && preview && (
           <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
             <div className="glass-card rounded-2xl overflow-hidden max-w-md w-full animate-slide-up">
-              <div className="aspect-square bg-black/50 relative overflow-hidden">
+              <div className="aspect-square bg-black/50 relative">
                 <img src={preview} alt="Preview" className="w-full h-full object-cover" />
               </div>
               <div className="p-4 space-y-4">

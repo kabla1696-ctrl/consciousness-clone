@@ -145,7 +145,7 @@ function VoiceUserPageInner() {
     `${Math.floor(s / 60).toString().padStart(2, '0')}:${(s % 60).toString().padStart(2, '0')}`
 
   return (
-    <main className="min-h-screen bg-[#050510] flex flex-col items-center justify-center relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #050510, #080820, #050510)' }}>
+    <main className="min-h-screen bg-[#050510] flex flex-col items-center justify-center relative" style={{ background: 'linear-gradient(135deg, #050510, #080820, #050510)' }}>
       {/* Background orbs */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute w-96 h-96 rounded-full top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 opacity-30" style={{ background: 'radial-gradient(circle, rgba(16,185,129,0.15), transparent 70%)' }} />

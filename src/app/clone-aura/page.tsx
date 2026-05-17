@@ -127,7 +127,7 @@ export default function CloneAuraPage() {
           {scanning ? `Scanning... ${scanProgress}%` : '🔮 ' + t('your energy')}
         </button>
         {scanning && (
-          <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+          <div className="w-full h-2 bg-white/5 rounded-full">
             <div className="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full transition-all" style={{ width: `${scanProgress}%` }} />
           </div>
         )}

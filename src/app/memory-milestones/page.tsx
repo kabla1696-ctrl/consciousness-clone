@@ -109,7 +109,7 @@ export default function MemoryMilestones() {
             <span className="text-white/40 text-xs">{t('level')}</span>
             <span className="text-amber-400 text-xs font-medium">{unlockPct}%</span>
           </div>
-          <div className="h-2 rounded-full bg-white/[0.05] overflow-hidden">
+          <div className="h-2 rounded-full bg-white/[0.05]">
             <div className="h-full rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 transition-all duration-1000" style={{ width: `${unlockPct}%` }} />
           </div>
         </div>
@@ -136,7 +136,7 @@ export default function MemoryMilestones() {
                   </div>
                   <p className="text-white/30 text-xs">{m.desc}</p>
                   <div className="flex items-center gap-2 mt-2">
-                    <div className="flex-1 h-1.5 rounded-full bg-white/[0.05] overflow-hidden">
+                    <div className="flex-1 h-1.5 rounded-full bg-white/[0.05]">
                       <div className="h-full rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 transition-all" style={{ width: `${Math.min(100, (m.current / m.target) * 100)}%` }} />
                     </div>
                     <span className="text-white/20 text-[10px]">{m.current}/{m.target}</span>

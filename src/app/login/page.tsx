@@ -29,7 +29,7 @@ export default function Login() {
   }
 
   return (
-    <main className="min-h-screen bg-[#030108] flex flex-col page-transition relative overflow-hidden">
+    <main className="min-h-screen bg-[#030108] flex flex-col page-transition relative">
       {/* Animated background orbs */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-violet-600/15 blur-[120px] animate-pulse" />

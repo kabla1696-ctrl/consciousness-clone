@@ -139,7 +139,7 @@ export default function Relationships() {
                     </div>
                     <div className="text-white/40 text-xs">{p.relation}</div>
                     <div className="mt-2 flex items-center gap-2">
-                      <div className="flex-1 h-1.5 rounded-full bg-white/[0.05] overflow-hidden">
+                      <div className="flex-1 h-1.5 rounded-full bg-white/[0.05]">
                         <div className={`h-full rounded-full bg-gradient-to-r ${qualityColor(p.quality)}`} style={{ width: `${p.quality * 10}%` }} />
                       </div>
                       <span className="text-[10px] text-white/30">{qualityLabel(p.quality)}</span>

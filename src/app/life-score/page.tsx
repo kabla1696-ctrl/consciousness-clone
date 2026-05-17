@@ -160,9 +160,9 @@ export default function LifeScorePage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#06060e] pb-24 relative overflow-hidden">
+    <main className="min-h-screen bg-[#06060e] pb-24 relative">
       {/* Ambient glow orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-violet-900/20 blur-[120px]" />
         <div className="absolute bottom-[-20%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-fuchsia-900/15 blur-[100px]" />
         <div className="absolute top-[40%] left-[60%] w-[30vw] h-[30vw] rounded-full bg-indigo-900/10 blur-[80px]" />
@@ -180,7 +180,7 @@ export default function LifeScorePage() {
 
       <div className="relative z-10 px-5 py-6 space-y-6">
         {/* Score Display - Hero Card */}
-        <div className="relative rounded-3xl overflow-hidden">
+        <div className="relative rounded-3xl">
           <div className="absolute inset-0 bg-gradient-to-br from-violet-600/20 via-fuchsia-600/10 to-transparent" />
           <div className="absolute inset-0 backdrop-blur-3xl bg-white/[0.02]" />
           <div className="absolute inset-0 rounded-3xl border border-white/[0.08]" />
@@ -193,9 +193,9 @@ export default function LifeScorePage() {
             <div className={`text-xl font-semibold ${level.color} mb-5`} style={{ textShadow: `0 0 20px ${level.glow}` }}>
               {level.name}
             </div>
-            <div className="w-full bg-white/[0.04] rounded-full h-2.5 max-w-xs mx-auto backdrop-blur-sm border border-white/[0.06] overflow-hidden">
+            <div className="w-full bg-white/[0.04] rounded-full h-2.5 max-w-xs mx-auto backdrop-blur-sm border border-white/[0.06]">
               <div
-                className="h-full rounded-full transition-all duration-700 ease-out relative overflow-hidden"
+                className="h-full rounded-full transition-all duration-700 ease-out relative"
                 style={{ width: `${percentage}%` }}
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-violet-500" />
@@ -208,7 +208,7 @@ export default function LifeScorePage() {
 
         {/* Radar Chart */}
         {total > 0 && (
-          <div className="relative rounded-3xl overflow-hidden">
+          <div className="relative rounded-3xl">
             <div className="absolute inset-0 backdrop-blur-3xl bg-white/[0.02]" />
             <div className="absolute inset-0 rounded-3xl border border-white/[0.06]" />
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent" />
@@ -308,7 +308,7 @@ export default function LifeScorePage() {
 
         {/* AI Advice */}
         {aiAdvice && (
-          <div className="relative rounded-2xl overflow-hidden">
+          <div className="relative rounded-2xl">
             <div className="absolute inset-0 bg-gradient-to-br from-violet-600/15 via-violet-600/5 to-transparent" />
             <div className="absolute inset-0 backdrop-blur-3xl bg-white/[0.01]" />
             <div className="absolute inset-0 rounded-2xl border border-violet-500/20" />
@@ -325,7 +325,7 @@ export default function LifeScorePage() {
 
         {/* Weakest Area Highlight */}
         {total > 0 && weakest && (
-          <div className="relative rounded-2xl overflow-hidden">
+          <div className="relative rounded-2xl">
             <div className="absolute inset-0 bg-gradient-to-br from-amber-600/10 via-amber-600/5 to-transparent" />
             <div className="absolute inset-0 backdrop-blur-3xl bg-white/[0.01]" />
             <div className="absolute inset-0 rounded-2xl border border-amber-500/15" />

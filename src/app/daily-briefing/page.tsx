@@ -127,9 +127,9 @@ Be specific to this person's life based on their memories. Be genuine, not gener
   }
 
   return (
-    <main className="min-h-screen flex flex-col bg-[#050510] page-transition relative overflow-hidden">
+    <main className="min-h-screen flex flex-col bg-[#050510] page-transition relative">
       {/* Animated background orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none">
         <div className="absolute -top-40 left-1/4 w-[500px] h-[500px] rounded-full bg-amber-600/[0.07] blur-[140px] animate-pulse" />
         <div className="absolute top-1/3 -right-32 w-96 h-96 rounded-full bg-orange-600/[0.05] blur-[120px] animate-pulse" style={{ animationDelay: '1.5s' }} />
         <div className="absolute -bottom-20 right-1/3 w-72 h-72 rounded-full bg-rose-600/[0.04] blur-[100px] animate-pulse" style={{ animationDelay: '2.5s' }} />

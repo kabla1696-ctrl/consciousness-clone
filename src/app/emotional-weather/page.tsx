@@ -40,7 +40,7 @@ function FloatingParticles() {
 
 function RainAnimation() {
   return (
-    <div className="fixed inset-0 pointer-events-none z-[1] overflow-hidden">
+    <div className="fixed inset-0 pointer-events-none z-[1]">
       {[...Array(30)].map((_, i) => (
         <div key={i} className="absolute w-[1px] bg-blue-400/20" style={{
           left: `${Math.random() * 100}%`,
@@ -231,7 +231,7 @@ export default function EmotionalWeatherPage() {
                     </p>
                   </div>
                   <div className="text-right">
-                    <div className="w-16 bg-white/5 rounded-full h-1.5 overflow-hidden">
+                    <div className="w-16 bg-white/5 rounded-full h-1.5">
                       <div className={`h-1.5 rounded-full bg-gradient-to-r ${dc.gradient.replace('/20', '/60').replace('/10', '/40')}`}
                         style={{ width: `${day.intensity}%` }} />
                     </div>
@@ -254,7 +254,7 @@ export default function EmotionalWeatherPage() {
                 <div key={mood} className="flex items-center gap-3">
                   <span className="text-lg w-8 text-center">{mc.icon}</span>
                   <div className="flex-1">
-                    <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden">
+                    <div className="w-full bg-white/5 rounded-full h-2">
                       <div className={`h-2 rounded-full bg-gradient-to-r ${mc.gradient.replace('/20', '/50').replace('/10', '/30')} transition-all duration-1000`}
                         style={{ width: `${pct}%` }} />
                     </div>

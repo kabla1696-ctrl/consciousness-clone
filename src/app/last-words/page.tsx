@@ -140,7 +140,7 @@ export default function LastWords() {
   }
 
   return (
-    <main className="min-h-screen bg-[#050510] page-transition relative overflow-hidden">
+    <main className="min-h-screen bg-[#050510] page-transition relative">
       {/* Ambient orbs */}
       <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-rose-600/[0.03] blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-violet-600/[0.04] blur-[100px] pointer-events-none" />
@@ -186,7 +186,7 @@ export default function LastWords() {
               </div>
               <div className="text-white/30 text-xs mt-2 uppercase tracking-wider">days until messages are delivered</div>
             </div>
-            <div className="w-full bg-white/[0.06] rounded-full h-2.5 mt-3 overflow-hidden">
+            <div className="w-full bg-white/[0.06] rounded-full h-2.5 mt-3">
               <div
                 className="h-full rounded-full bg-gradient-to-r from-violet-500 via-fuchsia-500 to-rose-500 transition-all duration-1000 shadow-[0_0_12px_rgba(139,92,246,0.4)]"
                 style={{ width: `${Math.max(5, (remaining / timerDays) * 100)}%` }}

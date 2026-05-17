@@ -265,7 +265,7 @@ export default function HeartbeatMemory() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col bg-[#050510] page-transition relative overflow-hidden">
+    <main className="min-h-screen flex flex-col bg-[#050510] page-transition relative">
       {/* Floating particles background */}
       <div className="fixed inset-0 pointer-events-none z-0">
         {particles.map(p => (
@@ -441,7 +441,7 @@ export default function HeartbeatMemory() {
 
             {/* Animated Pulse Wave (ECG-style) */}
             {measuring && (
-              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 backdrop-blur-sm overflow-hidden">
+              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 backdrop-blur-sm">
                 <p className="text-xs text-white/30 mb-3 uppercase tracking-wider flex items-center gap-2">
                   <span className="w-1.5 h-1.5 bg-red-400 rounded-full animate-pulse" />
                   Live Pulse Wave
@@ -502,7 +502,7 @@ export default function HeartbeatMemory() {
             {measuring && rawValues.length > 5 && (
               <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 backdrop-blur-sm">
                 <p className="text-xs text-white/30 mb-3 uppercase tracking-wider">Raw Signal</p>
-                <div className="h-20 flex items-end gap-px overflow-hidden">
+                <div className="h-20 flex items-end gap-px">
                   {rawValues.slice(-80).map((v, i) => {
                     const min = Math.min(...rawValues.slice(-80))
                     const max = Math.max(...rawValues.slice(-80))

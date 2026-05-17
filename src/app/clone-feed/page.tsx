@@ -173,7 +173,7 @@ export default function CloneFeed() {
             {/* Posts */}
             <div className="space-y-4">
               {posts.map(post => (
-                <div key={post.id} className="rounded-xl border border-white/[0.06] backdrop-blur-xl overflow-hidden" style={{ background: 'rgba(255,255,255,0.02)' }}>
+                <div key={post.id} className="rounded-xl border border-white/[0.06] backdrop-blur-xl" style={{ background: 'rgba(255,255,255,0.02)' }}>
                   {/* Post Header */}
                   <div className="flex items-center gap-3 p-4 pb-2">
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg" style={{ background: post.type === 'memorial' ? 'rgba(245,158,11,0.1)' : 'rgba(139,92,246,0.1)' }}>{post.avatar}</div>
@@ -414,7 +414,7 @@ export default function CloneFeed() {
           {/* Progress */}
           <div className="flex gap-1 px-4 pt-4">
             {stories.map((_, i) => (
-              <div key={i} className="flex-1 h-0.5 rounded-full bg-white/10 overflow-hidden">
+              <div key={i} className="flex-1 h-0.5 rounded-full bg-white/10">
                 <div className={`h-full rounded-full ${i < currentStoryIdx ? 'bg-white' : i === currentStoryIdx ? 'bg-white animate-progress' : ''}`} style={{ width: i <= currentStoryIdx ? '100%' : '0%' }} />
               </div>
             ))}

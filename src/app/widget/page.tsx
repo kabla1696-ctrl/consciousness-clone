@@ -174,8 +174,8 @@ export default function WidgetDashboard() {
   const activeConfig = selectedWidget !== null ? getConfig(selectedWidget) : defaultConfig
 
   return (
-    <main className="min-h-screen bg-[#050510] relative overflow-hidden">
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+    <main className="min-h-screen bg-[#050510] relative">
+      <div className="fixed inset-0 pointer-events-none">
         <div className="absolute -top-20 -right-20 w-80 h-80 bg-amber-600/6 rounded-full blur-[120px] animate-pulse" />
         <div className="absolute bottom-1/3 -left-32 w-72 h-72 bg-violet-600/5 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '2s' }} />
       </div>

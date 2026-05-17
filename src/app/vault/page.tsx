@@ -318,7 +318,7 @@ export default function VaultPage() {
   // SETUP PHASE
   if (phase === 'setup') {
     return (
-      <main className="page-transition min-h-screen flex items-center justify-center px-4 bg-[#050510] relative overflow-hidden">
+      <main className="page-transition min-h-screen flex items-center justify-center px-4 bg-[#050510] relative">
         {/* Matrix rain background */}
         <div className="fixed inset-0 pointer-events-none z-0">
           {matrixChars.map(m => (
@@ -352,7 +352,7 @@ export default function VaultPage() {
   // LOCKED PHASE
   if (phase === 'locked') {
     return (
-      <main className="page-transition min-h-screen flex items-center justify-center px-4 bg-[#050510] relative overflow-hidden">
+      <main className="page-transition min-h-screen flex items-center justify-center px-4 bg-[#050510] relative">
         {/* Matrix rain background */}
         <div className="fixed inset-0 pointer-events-none z-0">
           {matrixChars.map(m => (
@@ -431,7 +431,7 @@ export default function VaultPage() {
 
   // UNLOCKED PHASE
   return (
-    <main className="page-transition min-h-screen pb-24 md:pb-8 relative overflow-hidden">
+    <main className="page-transition min-h-screen pb-24 md:pb-8 relative">
       {/* Matrix rain background (subtle) */}
       <div className="fixed inset-0 pointer-events-none z-0">
         {matrixChars.slice(0, 15).map(m => (
@@ -535,7 +535,7 @@ export default function VaultPage() {
         )}
 
         {/* Nuclear Option with dramatic countdown */}
-        <div className="border border-red-500/20 rounded-xl p-4 bg-red-500/[0.03] backdrop-blur-sm relative overflow-hidden">
+        <div className="border border-red-500/20 rounded-xl p-4 bg-red-500/[0.03] backdrop-blur-sm relative">
           <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 to-orange-500/5" />
           <div className="relative">
             <h3 className="text-sm font-medium text-red-400 mb-2 flex items-center gap-2">

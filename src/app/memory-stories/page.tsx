@@ -148,9 +148,9 @@ export default function MemoryStories() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col bg-[#050510] page-transition relative overflow-hidden">
+    <main className="min-h-screen flex flex-col bg-[#050510] page-transition relative">
       {/* Animated background orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none">
         <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-rose-600/[0.06] blur-[120px] animate-pulse" />
         <div className="absolute top-1/2 -left-24 w-80 h-80 rounded-full bg-amber-600/[0.05] blur-[100px] animate-pulse" style={{ animationDelay: '1.5s' }} />
         <div className="absolute -bottom-20 right-1/4 w-72 h-72 rounded-full bg-violet-600/[0.05] blur-[100px] animate-pulse" style={{ animationDelay: '2.5s' }} />

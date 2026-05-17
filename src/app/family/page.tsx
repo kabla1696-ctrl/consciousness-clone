@@ -190,9 +190,9 @@ export default function FamilyTreePage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#06060f] page-transition relative overflow-hidden">
+    <main className="min-h-screen bg-[#06060f] page-transition relative">
       {/* Ambient background effects */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none">
         <div className="absolute -top-32 -left-32 w-96 h-96 bg-violet-600/8 rounded-full blur-[120px]" />
         <div className="absolute top-1/2 -right-40 w-80 h-80 bg-fuchsia-600/5 rounded-full blur-[100px]" />
         <div className="absolute bottom-10 left-1/4 w-64 h-64 bg-cyan-600/4 rounded-full blur-[80px]" />
@@ -220,7 +220,7 @@ export default function FamilyTreePage() {
           <div className="flex-1" />
           <button
             onClick={() => { setShowForm(!showForm); if (showForm) resetForm() }}
-            className="relative px-3.5 py-1.5 rounded-xl text-sm font-medium tap-feedback overflow-hidden"
+            className="relative px-3.5 py-1.5 rounded-xl text-sm font-medium tap-feedback"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-violet-500/15 to-fuchsia-500/10 border border-violet-400/20 rounded-xl backdrop-blur-sm" />
             <span className="relative text-violet-300">{showForm ? t('cancel') : '+ Add'}</span>
@@ -243,7 +243,7 @@ export default function FamilyTreePage() {
                   stat.color === 'fuchsia' ? 'from-fuchsia-500/15 to-transparent' :
                   'from-cyan-500/15 to-transparent'
                 } opacity-0 group-hover:opacity-100 blur-sm transition-opacity`} />
-                <div className="relative rounded-2xl border border-white/[0.05] p-3 bg-white/[0.02] backdrop-blur-sm text-center overflow-hidden">
+                <div className="relative rounded-2xl border border-white/[0.05] p-3 bg-white/[0.02] backdrop-blur-sm text-center">
                   <div className={`absolute top-0 left-0 w-full h-px bg-gradient-to-r ${
                     stat.color === 'violet' ? 'from-transparent via-violet-400/20 to-transparent' :
                     stat.color === 'fuchsia' ? 'from-transparent via-fuchsia-400/20 to-transparent' :
@@ -304,7 +304,7 @@ export default function FamilyTreePage() {
         {showForm && (
           <div className="relative mb-6">
             <div className="absolute -inset-px rounded-2xl bg-gradient-to-br from-violet-500/20 via-fuchsia-500/15 to-violet-500/5 blur-sm" />
-            <div className="relative rounded-2xl border border-violet-400/15 bg-[#0d0d1f]/80 backdrop-blur-xl p-5 space-y-4 overflow-hidden">
+            <div className="relative rounded-2xl border border-violet-400/15 bg-[#0d0d1f]/80 backdrop-blur-xl p-5 space-y-4">
               <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-violet-400/30 to-transparent" />
               <h2 className="text-sm font-semibold text-violet-300 flex items-center gap-2">
                 <span className="w-5 h-5 rounded-md bg-violet-500/20 flex items-center justify-center text-[10px]">✏️</span>
@@ -372,7 +372,7 @@ export default function FamilyTreePage() {
               <button
                 onClick={handleCreate}
                 disabled={!formName.trim() || saving}
-                className="relative w-full py-3 rounded-xl font-semibold tap-feedback disabled:opacity-30 disabled:cursor-not-allowed overflow-hidden"
+                className="relative w-full py-3 rounded-xl font-semibold tap-feedback disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600" />
                 <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-fuchsia-500 opacity-0 hover:opacity-100 transition-opacity" />
@@ -397,7 +397,7 @@ export default function FamilyTreePage() {
             </p>
             <button
               onClick={() => setShowForm(true)}
-              className="relative px-7 py-3 rounded-xl font-semibold tap-feedback overflow-hidden"
+              className="relative px-7 py-3 rounded-xl font-semibold tap-feedback"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 shadow-lg shadow-violet-500/20" />
               <div className="absolute inset-0 bg-gradient-to-r from-violet-500 to-fuchsia-500 opacity-0 hover:opacity-100 transition-opacity" />
@@ -561,7 +561,7 @@ function MemberCard({
                 <h4 className="text-[11px] font-semibold text-white/25 uppercase tracking-widest">{t('memories')}</h4>
                 <button
                   onClick={onAddMemory}
-                  className="relative text-[11px] text-violet-300 px-2.5 py-0.5 rounded-lg tap-feedback overflow-hidden"
+                  className="relative text-[11px] text-violet-300 px-2.5 py-0.5 rounded-lg tap-feedback"
                 >
                   <div className="absolute inset-0 bg-violet-500/[0.1] border border-violet-400/10 rounded-lg" />
                   <span className="relative">+ {t('add')}</span>
@@ -611,14 +611,14 @@ function MemberCard({
             <div className="flex gap-2 pt-2 border-t border-white/[0.04]">
               <button
                 onClick={onEdit}
-                className="relative flex-1 text-xs text-violet-300 py-2 rounded-xl tap-feedback overflow-hidden"
+                className="relative flex-1 text-xs text-violet-300 py-2 rounded-xl tap-feedback"
               >
                 <div className="absolute inset-0 bg-violet-500/[0.08] border border-violet-400/10 rounded-xl" />
                 <span className="relative">✏️ {t('edit')}</span>
               </button>
               <button
                 onClick={onDelete}
-                className="relative flex-1 text-xs text-red-400/60 py-2 rounded-xl tap-feedback overflow-hidden"
+                className="relative flex-1 text-xs text-red-400/60 py-2 rounded-xl tap-feedback"
               >
                 <div className="absolute inset-0 bg-red-500/[0.04] border border-red-400/10 rounded-xl" />
                 <span className="relative">🗑️ {t('delete')}</span>

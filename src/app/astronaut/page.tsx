@@ -231,7 +231,7 @@ export default function AstronautMode() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col bg-[#050510] page-transition relative overflow-hidden">
+    <main className="min-h-screen flex flex-col bg-[#050510] page-transition relative">
       {/* Header */}
       <header className="sticky top-0 z-[60] bg-[#050510]/80 backdrop-blur-2xl border-b border-white/[0.04] safe-top">
         <div className="px-4 py-3 flex items-center gap-3">
@@ -261,7 +261,7 @@ export default function AstronautMode() {
 
       {/* Dream Overlay — Full Space Background */}
       {isDreaming && (
-        <div className="fixed inset-0 z-50 bg-[#020210] overflow-hidden">
+        <div className="fixed inset-0 z-50 bg-[#020210]">
           {/* Deep space gradient */}
           <div className="absolute inset-0" style={{
             background: 'radial-gradient(ellipse at 50% 50%, rgba(30,20,80,0.4) 0%, rgba(5,5,16,1) 70%)',
@@ -536,7 +536,7 @@ export default function AstronautMode() {
 
             {/* Recent Dream Preview with aurora gradient */}
             {dreamHistory.length > 0 && (
-              <div className="rounded-2xl border border-violet-500/20 p-4 relative overflow-hidden" style={{
+              <div className="rounded-2xl border border-violet-500/20 p-4 relative" style={{
                 background: 'linear-gradient(135deg, rgba(139,92,246,0.05), rgba(99,102,241,0.05), rgba(168,85,247,0.03))',
               }}>
                 <div className="absolute inset-0 opacity-30" style={{

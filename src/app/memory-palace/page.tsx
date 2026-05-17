@@ -105,7 +105,7 @@ export default function MemoryPalacePage() {
             {/* Room Grid */}
             <div className="grid grid-cols-2 gap-3">
               {rooms.map(room => (
-                <button key={room.id} onClick={() => { setSelectedRoom(room); setView('detail') }} className="relative rounded-xl p-4 text-left transition-all hover:scale-[1.02] border border-white/5 overflow-hidden" style={{ background: `${room.color}08` }}>
+                <button key={room.id} onClick={() => { setSelectedRoom(room); setView('detail') }} className="relative rounded-xl p-4 text-left transition-all hover:scale-[1.02] border border-white/5" style={{ background: `${room.color}08` }}>
                   <div className="absolute top-0 right-0 w-20 h-20 rounded-full blur-2xl opacity-20" style={{ background: room.color }} />
                   <div className="text-3xl mb-2">{room.emoji}</div>
                   <div className="text-sm font-semibold text-white">{room.name}</div>
@@ -179,7 +179,7 @@ export default function MemoryPalacePage() {
                     <div className="flex-1">
                       <div className="text-sm text-white font-medium">{m.title}</div>
                       <div className="text-[10px] text-white/30">{m.placement}</div>
-                      <div className="mt-1 w-full h-1 bg-white/5 rounded-full overflow-hidden">
+                      <div className="mt-1 w-full h-1 bg-white/5 rounded-full">
                         <div className="h-full rounded-full" style={{ width: `${m.vividness}%`, background: selectedRoom.color }} />
                       </div>
                     </div>

@@ -131,7 +131,7 @@ export default function MemoryReplayPage() {
                   <span className="text-xs text-white/20">{t('intensity')}: {current.intensity}%</span>
                 </div>
                 {/* Intensity bar */}
-                <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                <div className="w-full h-1.5 bg-white/5 rounded-full">
                   <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${current.intensity}%`, background: `linear-gradient(to right, ${moodObj.color}66, ${moodObj.color})` }} />
                 </div>
               </>

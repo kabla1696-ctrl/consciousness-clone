@@ -173,7 +173,7 @@ export default function AchievementsPage() {
             <span className="font-medium">{t('progress')}</span>
             <span className="font-mono text-violet-400">{Math.round((stats.unlocked / stats.total) * 100)}%</span>
           </div>
-          <div className="w-full bg-white/5 rounded-full h-3 overflow-hidden">
+          <div className="w-full bg-white/5 rounded-full h-3">
             <div className="premium-progress bg-gradient-to-r from-violet-500 via-fuchsia-500 to-amber-500 h-3 rounded-full transition-all duration-1000" style={{ width: `${(stats.unlocked / stats.total) * 100}%` }} />
           </div>
         </div>
@@ -220,7 +220,7 @@ export default function AchievementsPage() {
                     <p className={`text-xs mt-1 ${achievement.unlocked ? 'text-white/50' : 'text-white/25'}`}>{achievement.description}</p>
                     {!achievement.unlocked && (
                       <div className="mt-3">
-                        <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden">
+                        <div className="w-full bg-white/5 rounded-full h-2">
                           <div className="premium-progress bg-gradient-to-r from-violet-500 to-fuchsia-500 h-2 rounded-full transition-all" style={{ width: `${progressPct}%` }} />
                         </div>
                         <div className="text-[10px] text-white/20 mt-1 font-mono">{achievement.progress}/{achievement.requirement}</div>

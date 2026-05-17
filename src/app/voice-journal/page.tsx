@@ -305,7 +305,7 @@ export default function VoiceJournal() {
             boxShadow: '0 0 40px rgba(139, 92, 246, 0.08), 0 8px 30px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.03)',
           }}>
             {/* Waveform */}
-            <div className="mb-4 rounded-xl overflow-hidden" style={{
+            <div className="mb-4 rounded-xl" style={{
               background: 'rgba(5, 5, 16, 0.6)',
               border: '1px solid rgba(139, 92, 246, 0.08)',
               boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.3)',
@@ -386,7 +386,7 @@ export default function VoiceJournal() {
                   <button
                     onClick={saveEntry}
                     disabled={!selectedMood || saving}
-                    className="relative flex-1 py-3 rounded-xl font-medium tap-feedback disabled:opacity-40 flex items-center justify-center gap-2 overflow-hidden"
+                    className="relative flex-1 py-3 rounded-xl font-medium tap-feedback disabled:opacity-40 flex items-center justify-center gap-2"
                     style={{
                       background: 'linear-gradient(135deg, #8b5cf6, #d946ef)',
                       boxShadow: '0 0 20px rgba(139, 92, 246, 0.25), 0 4px 15px rgba(0,0,0,0.3)',

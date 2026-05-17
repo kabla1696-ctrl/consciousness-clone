@@ -43,7 +43,7 @@ function FlipDigit({ value }: { value: number }) {
   const str = String(value).padStart(2, '0')
   return (
     <div className="relative">
-      <div className="flip-digit bg-gradient-to-b from-white/[0.08] to-white/[0.02] rounded-lg border border-white/[0.06] overflow-hidden">
+      <div className="flip-digit bg-gradient-to-b from-white/[0.08] to-white/[0.02] rounded-lg border border-white/[0.06]">
         <div className="px-2 py-2 sm:px-3 sm:py-3">
           <span className="text-xl sm:text-2xl font-bold text-violet-400 tabular-nums font-mono">{str}</span>
         </div>

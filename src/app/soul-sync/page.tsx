@@ -130,7 +130,7 @@ export default function SoulSync() {
           <div>
             <div className="flex items-center justify-between mb-6">
               <span className="text-white/30 text-xs">{t('question')} {current + 1}/{QUESTIONS.length}</span>
-              <div className="flex-1 mx-3 h-1.5 rounded-full bg-white/[0.05] overflow-hidden">
+              <div className="flex-1 mx-3 h-1.5 rounded-full bg-white/[0.05]">
                 <div className="h-full rounded-full bg-gradient-to-r from-pink-500 to-rose-500 transition-all duration-500" style={{ width: `${((current + 1) / QUESTIONS.length) * 100}%` }} />
               </div>
             </div>
@@ -191,7 +191,7 @@ export default function SoulSync() {
                     return (
                       <div key={dim} className="flex items-center gap-3">
                         <span className="text-white/40 text-xs w-20">{dim}</span>
-                        <div className="flex-1 h-2 rounded-full bg-white/[0.05] overflow-hidden">
+                        <div className="flex-1 h-2 rounded-full bg-white/[0.05]">
                           <div className="h-full rounded-full bg-gradient-to-r from-pink-500 to-rose-500" style={{ width: `${score}%`, animation: `growWidth 1s ease-out ${i * 0.2}s both` }} />
                         </div>
                         <span className="text-pink-400 text-xs font-medium w-8">{score}%</span>
