@@ -25,6 +25,7 @@ export async function POST(req: Request) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept-Encoding': 'identity',
         },
         body: JSON.stringify({
           model: 'mimo-v2.5-pro',
