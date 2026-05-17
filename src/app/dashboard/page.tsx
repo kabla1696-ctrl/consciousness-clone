@@ -143,6 +143,13 @@ export default function Dashboard() {
     { href: '/clone-identity', icon: '🪪', title: 'Clone Identity', desc: 'Clone recognizes who talks', color: 'from-cyan-500 to-blue-500', glow: 'rgba(6,182,212,0.15)' },
     { href: '/daily-briefing', icon: '☀️', title: 'Daily Briefing', desc: 'Morning clone briefing', color: 'from-yellow-500 to-amber-500', glow: 'rgba(234,179,8,0.15)' },
     { href: '/widget', icon: '📱', title: 'Widget', desc: 'Home screen widget', color: 'from-slate-500 to-gray-500', glow: 'rgba(100,116,139,0.15)' },
+    { href: '/soul-sync', icon: '💕', title: 'Soul Sync', desc: 'Find your soul match', color: 'from-pink-500 to-rose-500', glow: 'rgba(236,72,153,0.15)' },
+    { href: '/time-travel', icon: '⏰', title: 'Time Travel', desc: 'Talk to younger/future you', color: 'from-indigo-500 to-blue-500', glow: 'rgba(99,102,241,0.15)' },
+    { href: '/death-simulation', icon: '💀', title: 'Death Simulation', desc: 'What they would say', color: 'from-red-500 to-rose-500', glow: 'rgba(239,68,68,0.15)' },
+    { href: '/ghost-mode', icon: '👻', title: 'Ghost Mode', desc: 'Messages from beyond', color: 'from-violet-500 to-purple-500', glow: 'rgba(139,92,246,0.15)' },
+    { href: '/clone-therapy', icon: '🧘', title: 'Clone Therapy', desc: 'AI therapy sessions', color: 'from-teal-500 to-cyan-500', glow: 'rgba(20,184,166,0.15)' },
+    { href: '/memory-milestones', icon: '🏅', title: 'Milestones', desc: 'Unlock badges & XP', color: 'from-amber-500 to-yellow-500', glow: 'rgba(245,158,11,0.15)' },
+    { href: '/clone-confessions', icon: '🤫', title: 'Confessions', desc: 'Anonymous secrets', color: 'from-fuchsia-500 to-pink-500', glow: 'rgba(217,70,239,0.15)' },
   ]
 
   return (
@@ -185,7 +192,7 @@ export default function Dashboard() {
             Hey, {userName} <span className="inline-block" style={{ animation: 'float-subtle 3s ease-in-out infinite' }}>👋</span>
           </h1>
           <p className="text-shimmer text-sm font-medium mt-1">Your digital consciousness dashboard</p>
-          <p className="text-white/20 text-xs mt-0.5">48 features • Your clone awaits</p>
+          <p className="text-white/20 text-xs mt-0.5">56 features • Your clone awaits</p>
         </div>
 
         {/* Stats */}
