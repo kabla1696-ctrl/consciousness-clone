@@ -146,6 +146,16 @@ const MORE_ITEMS: NavItem[] = [
   { href: '/memory-palace', icon: '🏰', label: 'Memory Palace' },
   { href: '/memory-replay', icon: '▶️', label: 'Memory Replay' },
   { href: '/call-user', icon: '📞', label: 'Voice Call Users' },
+  { href: '/family', icon: '👨\u200d👩\u200d👧\u200d👦', label: 'Family' },
+  { href: '/mood', icon: '🎭', label: 'Mood' },
+  { href: '/personality', icon: '🧬', label: 'Personality' },
+  { href: '/legacy', icon: '📜', label: 'Legacy' },
+  { href: '/memory-map', icon: '🗺️', label: 'Memory Map' },
+  { href: '/skills', icon: '💪', label: 'Skills' },
+  { href: '/consciousness-backup', icon: '🧠', label: 'Consciousness Backup' },
+  { href: '/dream-mode', icon: '💤', label: 'Dream Mode' },
+  { href: '/clone-feed', icon: '📡', label: 'Clone Feed' },
+  { href: '/clone-settings', icon: '⚙️', label: 'Clone Settings' },
 ]
 
 export default function DesktopNav() {

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import GlobalSearch from './GlobalSearch'
+import NotificationCenter from './NotificationCenter'
 
 const TABS = [
   { href: '/dashboard', icon: '🏠', label: 'Home' },
@@ -26,6 +27,11 @@ export default function MobileNav() {
     <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
     <nav role="navigation" aria-label="Mobile navigation" className="fixed bottom-0 left-0 right-0 z-[100] bg-[#0a0a1a]/95 backdrop-blur-xl border-t border-white/[0.06] md:hidden safe-bottom" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
       <div className="flex items-center justify-around px-2 py-1">
+        {/* Notification button */}
+        <div className="flex flex-col items-center gap-0.5 py-2 px-3 tap-feedback relative min-w-[44px] min-h-[44px] justify-center">
+          <NotificationCenter />
+          <span className="text-[9px] font-medium text-white/30">Alerts</span>
+        </div>
         {/* Search button */}
         <button onClick={() => setSearchOpen(true)} aria-label="Search" className="flex flex-col items-center gap-0.5 py-2 px-3 tap-feedback relative min-w-[44px] min-h-[44px] justify-center">
           <span className="text-lg opacity-50">🔍</span>

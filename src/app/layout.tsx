@@ -9,6 +9,12 @@ import AppShell from '../components/AppShell'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 import SkipLink from '../components/SkipLink'
+import CommandPalette from '../components/CommandPalette'
+import PageTransition from '../components/PageTransition'
+import { SoundProvider } from '../components/SoundEffects'
+import HapticFeedback from '../components/HapticFeedback'
+import PWAInstallPrompt from '../components/PWAInstallPrompt'
+import WebVitals from '../components/WebVitals'
 
 const APP_URL = 'https://consciousness-clone.vercel.app'
 const APP_NAME = 'Consciousness Clone'
@@ -147,9 +153,18 @@ export default function RootLayout({
         <SkipLink />
         <Providers>
           <CapacitorInit />
-          <AppShell>
-            {children}
-          </AppShell>
+          <WebVitals />
+          <SoundProvider>
+            <HapticFeedback>
+              <PageTransition>
+                <AppShell>
+                  {children}
+                </AppShell>
+              </PageTransition>
+            </HapticFeedback>
+          </SoundProvider>
+          <CommandPalette />
+          <PWAInstallPrompt />
           <Analytics />
           <SpeedInsights />
         </Providers>
