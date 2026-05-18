@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useT } from '../../lib/language-context';
+import FileUpload from '../../components/FileUpload';
 
 type DiaryEntry = {
   id: string;
@@ -271,6 +272,22 @@ export default function CloneDiaryPage() {
                   }}>{m.emoji} {m.label}</button>
                 ))}
               </div>
+            </div>
+
+            {/* Image Upload */}
+            <div style={{ marginBottom: 20 }}>
+              <FileUpload accept="image/*" multiple maxSize={5 * 1024 * 1024} onUpload={(files) => {
+                files.forEach(f => {
+                  const reader = new FileReader();
+                  reader.onload = (e) => {
+                    const saved = localStorage.getItem('clone_diary_images') || '[]';
+                    const images = JSON.parse(saved);
+                    images.push({ name: f.name, data: e.target?.result, date: new Date().toISOString().split('T')[0] });
+                    localStorage.setItem('clone_diary_images', JSON.stringify(images));
+                  };
+                  reader.readAsDataURL(f);
+                });
+              }} />
             </div>
 
             {viewMode === 'calendar' ? (

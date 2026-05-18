@@ -29,7 +29,7 @@ const SOUND_MUTED_KEY = 'sound-muted'
 function getAudioContext(): AudioContext | null {
   if (typeof window === 'undefined') return null
   try {
-    return new (window.AudioContext || (window as any).webkitAudioContext)()
+    return new (window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext)()
   } catch {
     return null
   }

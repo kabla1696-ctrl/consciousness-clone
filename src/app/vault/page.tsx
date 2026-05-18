@@ -4,6 +4,9 @@ import Link from 'next/link'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import LazyLoad from '../../components/LazyLoad'
+import SwipeActions from '../../components/SwipeActions'
+import PullToRefresh from '../../components/PullToRefresh'
 
 interface VaultEntry {
   id: string
@@ -455,7 +458,8 @@ export default function VaultPage() {
         </div>
       </header>
 
-      <div className="px-4 py-6 space-y-6 relative z-10">
+      <PullToRefresh onRefresh={async () => { if (currentPinRef.current) await loadEntries(currentPinRef.current) }} className="relative z-10">
+      <div className="px-4 py-6 space-y-6">
         {/* Stats with glowing indicators */}
         <div className="grid grid-cols-3 gap-3">
           <div className="bg-white/[0.03] rounded-xl border border-white/[0.06] p-3 text-center backdrop-blur-sm">
@@ -515,7 +519,14 @@ export default function VaultPage() {
             {entries.map((entry, idx) => {
               const cat = CATEGORIES.find(c => c.key === entry.category)
               return (
-                <div key={entry.id} className="bg-white/[0.03] rounded-xl border border-red-500/10 p-4 backdrop-blur-sm hover:bg-white/[0.05] hover:border-red-500/20 transition-all duration-300 group" style={{ animationDelay: `${idx * 50}ms` }}>
+                <LazyLoad key={entry.id}>
+                <SwipeActions
+                  leftAction={{ icon: '✏️', label: 'Edit', color: 'text-blue-400' }}
+                  rightAction={{ icon: '🗑️', label: 'Delete', color: 'text-red-400' }}
+                  onSwipeLeft={() => deleteEntry(entry.id)}
+                  onSwipeRight={() => { setNewContent(entry.content); setNewCategory(entry.category); setShowAdd(true) }}
+                >
+                <div className="bg-white/[0.03] rounded-xl border border-red-500/10 p-4 backdrop-blur-sm hover:bg-white/[0.05] hover:border-red-500/20 transition-all duration-300 group" style={{ animationDelay: `${idx * 50}ms` }}>
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <span className="text-lg">{cat?.icon}</span>
@@ -529,6 +540,8 @@ export default function VaultPage() {
                   <p className="text-white/70 text-sm leading-relaxed">{entry.content}</p>
                   <div className="text-[10px] text-white/20 mt-2">{new Date(entry.createdAt).toLocaleString()}</div>
                 </div>
+                </SwipeActions>
+                </LazyLoad>
               )
             })}
           </div>
@@ -558,6 +571,8 @@ export default function VaultPage() {
           <p>{MAX_ATTEMPTS - attempts} {t('attempts remaining')}</p>
         </div>
       </div>
+
+      </PullToRefresh>
 
       <style jsx global>{`
         @keyframes matrix-fall {

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import CountdownTimer from '../../components/CountdownTimer'
 
 interface TimeCapsule {
   id: string
@@ -435,6 +436,13 @@ export default function TimeCapsulePage() {
                       </div>
                     ) : (
                       <div className="text-xs text-amber-400 mb-3 text-center animate-pulse">✨ Unlocking soon...</div>
+                    )}
+
+                    {/* CountdownTimer */}
+                    {timeLeft && (
+                      <div className="mb-4">
+                        <CountdownTimer targetDate={capsule.unlock_date} label="Time remaining" />
+                      </div>
                     )}
 
                     {/* Blurred content */}

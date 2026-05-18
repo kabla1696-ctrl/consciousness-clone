@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import MarkdownRenderer from '../../components/MarkdownRenderer'
+import InfiniteScroll from '../../components/InfiniteScroll'
 
 interface Message {
   id: string
@@ -151,22 +153,33 @@ export default function Chat() {
             </div>
           )}
 
-          {messages.map((msg, i) => (
-            <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-slide-up`} style={{ animationDelay: `${Math.min(i * 0.04, 0.3)}s` }}>
-              <div className="max-w-[82%] sm:max-w-[75%]">
-                {msg.role === 'clone' && (
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <div className="w-6 h-6 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-full flex items-center justify-center text-xs shadow-md shadow-violet-500/20">🧠</div>
-                    <span className="text-white/20 text-[11px] font-medium">Clone</span>
+          {/* Messages list with InfiniteScroll */}
+          <InfiniteScroll
+            items={messages}
+            renderItem={(msg, i) => (
+              <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-slide-up`} style={{ animationDelay: `${Math.min(i * 0.04, 0.3)}s` }}>
+                <div className="max-w-[82%] sm:max-w-[75%]">
+                  {msg.role === 'clone' && (
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <div className="w-6 h-6 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-full flex items-center justify-center text-xs shadow-md shadow-violet-500/20">🧠</div>
+                      <span className="text-white/20 text-[11px] font-medium">Clone</span>
+                    </div>
+                  )}
+                  <div className={`rounded-2xl px-4 py-3 ${msg.role === 'user' ? 'bg-gradient-to-br from-violet-600 to-fuchsia-600 rounded-br-md shadow-lg shadow-violet-500/10' : 'rounded-bl-md bg-white/[0.04] backdrop-blur-sm border border-white/[0.06]'}`}>
+                    {msg.role === 'clone' ? (
+                      <MarkdownRenderer content={msg.content} />
+                    ) : (
+                      <p className="text-white/90 text-[15px] leading-relaxed whitespace-pre-wrap">{msg.content}</p>
+                    )}
                   </div>
-                )}
-                <div className={`rounded-2xl px-4 py-3 ${msg.role === 'user' ? 'bg-gradient-to-br from-violet-600 to-fuchsia-600 rounded-br-md shadow-lg shadow-violet-500/10' : 'rounded-bl-md bg-white/[0.04] backdrop-blur-sm border border-white/[0.06]'}`}>
-                  <p className="text-white/90 text-[15px] leading-relaxed whitespace-pre-wrap">{msg.content}</p>
+                  <p className={`text-white/15 text-[10px] mt-1 font-medium ${msg.role === 'user' ? 'text-right mr-1' : 'ml-1'}`}>{time(msg.created_at)}</p>
                 </div>
-                <p className={`text-white/15 text-[10px] mt-1 font-medium ${msg.role === 'user' ? 'text-right mr-1' : 'ml-1'}`}>{time(msg.created_at)}</p>
               </div>
-            </div>
-          ))}
+            )}
+            loadMore={async () => { /* Could load older messages from storage */ }}
+            hasMore={false}
+            className="space-y-5"
+          />
 
           {/* Typing indicator */}
           {loading && (

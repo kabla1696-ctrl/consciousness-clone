@@ -9,6 +9,9 @@ import { useT } from '../../lib/language-context'
 import RecentActivity, { logActivity } from '../../components/RecentActivity'
 import SearchSuggestions from '../../components/SearchSuggestions'
 import AnimatedCounter from '../../components/AnimatedCounter'
+import FloatingActionButton from '../../components/FloatingActionButton'
+import ScrollToTop from '../../components/ScrollToTop'
+import FavoriteFeatures from '../../components/FavoriteFeatures'
 
 // Quick actions — the most popular features
 const QUICK_ACTIONS = [
@@ -150,6 +153,9 @@ export default function Dashboard() {
 
         {/* ─── Divider ─── */}
         <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mb-8" />
+
+        {/* ─── Favorite Features ─── */}
+        <FavoriteFeatures />
 
         {/* ─── Stats Section ─── */}
         <div className="grid grid-cols-3 gap-3 mb-8">
@@ -294,6 +300,19 @@ export default function Dashboard() {
         {/* ─── Footer spacing ─── */}
         <div className="h-4" />
       </div>
+
+      {/* Floating Action Button */}
+      <FloatingActionButton
+        actions={[
+          { icon: '🧠', label: 'New Memory', onClick: () => { window.location.href = '/memories' } },
+          { icon: '💬', label: 'Start Chat', onClick: () => { window.location.href = '/chat' } },
+          { icon: '📝', label: 'Quick Note', onClick: () => { window.location.href = '/clone-diary' } },
+          { icon: '🔮', label: 'Time Capsule', onClick: () => { window.location.href = '/time-capsule' } },
+        ]}
+      />
+
+      {/* Scroll To Top */}
+      <ScrollToTop />
 
       {/* Global animation keyframes */}
       <style jsx global>{`

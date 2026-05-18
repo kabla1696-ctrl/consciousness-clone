@@ -3,6 +3,8 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { useT } from '../../lib/language-context'
+import InfiniteScroll from '../../components/InfiniteScroll'
+import RippleButton from '../../components/RippleButton'
 
 function Particles() {
   return (
@@ -306,82 +308,88 @@ export default function CloneSocial() {
             </GlowCard>
           )}
 
-          {/* Posts */}
-          {(activeTab === 'trending' ? trendingPosts : posts).map((post, i) => (
-            <GlowCard key={post.id} className="overflow-hidden" >
-              <div className="p-4" style={{ animation: `slideIn 0.4s ease-out ${i * 0.06}s both` }}>
-                {/* Post Header */}
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-rose-500/20 to-purple-500/20 border border-white/[0.1] flex items-center justify-center text-lg">
-                    {post.avatar}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-white">{post.name}</span>
-                      {post.trending && <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/20">🔥 TRENDING</span>}
+          {/* Posts with InfiniteScroll */}
+          <InfiniteScroll
+            items={activeTab === 'trending' ? trendingPosts : posts}
+            renderItem={(post, i) => (
+              <GlowCard key={post.id} className="overflow-hidden" >
+                <div className="p-4" style={{ animation: `slideIn 0.4s ease-out ${i * 0.06}s both` }}>
+                  {/* Post Header */}
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-rose-500/20 to-purple-500/20 border border-white/[0.1] flex items-center justify-center text-lg">
+                      {post.avatar}
                     </div>
-                    <span className="text-xs text-white/30">{post.handle} · {timeAgo(post.createdAt)}</span>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <p className="text-sm text-white/70 leading-relaxed whitespace-pre-line mb-3">{post.content}</p>
-
-                {/* Reactions */}
-                <div className="flex items-center gap-1 mb-3">
-                  {reactions.map(emoji => (
-                    <button
-                      key={emoji}
-                      onClick={() => addReaction(post.id, emoji)}
-                      className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.08] transition-all hover:scale-105 active:scale-95"
-                      style={{}}
-                    >
-                      <span className="text-sm">{emoji}</span>
-                      <span className="text-[10px] text-white/40">{post.reactions[emoji] || 0}</span>
-                    </button>
-                  ))}
-                </div>
-
-                {/* Comment Toggle */}
-                <button
-                  onClick={() => setCommentingOn(commentingOn === post.id ? null : post.id)}
-                  className="flex items-center gap-2 text-xs text-white/30 hover:text-white/50 transition-colors"
-                >
-                  <span>💬</span>
-                  <span>{post.comments.length} comments</span>
-                  <span>{commentingOn === post.id ? '▲' : '▼'}</span>
-                </button>
-
-                {/* Comments */}
-                {commentingOn === post.id && (
-                  <div className="mt-3 space-y-2">
-                    {post.comments.map(c => (
-                      <div key={c.id} className="flex items-start gap-2 p-2 rounded-lg bg-white/[0.02]">
-                        <span className="text-sm">{c.avatar}</span>
-                        <div className="flex-1">
-                          <span className="text-xs font-medium text-white/60">{c.name}</span>
-                          <span className="text-[10px] text-white/20 ml-2">{timeAgo(c.createdAt)}</span>
-                          <p className="text-xs text-white/50 mt-0.5">{c.text}</p>
-                        </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-semibold text-white">{post.name}</span>
+                        {post.trending && <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/20">🔥 TRENDING</span>}
                       </div>
-                    ))}
-                    <div className="flex gap-2 mt-2">
-                      <input
-                        value={commentText}
-                        onChange={(e) => setCommentText(e.target.value)}
-                        placeholder={t('add comment')}
-                        className="flex-1 bg-white/[0.05] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-rose-500/40 transition-colors"
-                        onKeyDown={(e) => e.key === 'Enter' && addComment(post.id)}
-                      />
-                      <button onClick={() => addComment(post.id)} className="px-3 py-2 bg-rose-500/20 border border-rose-500/30 rounded-lg text-xs text-rose-400 hover:bg-rose-500/30 transition-colors">
-                        Send
-                      </button>
+                      <span className="text-xs text-white/30">{post.handle} · {timeAgo(post.createdAt)}</span>
                     </div>
                   </div>
-                )}
-              </div>
-            </GlowCard>
-          ))}
+
+                  {/* Content */}
+                  <p className="text-sm text-white/70 leading-relaxed whitespace-pre-line mb-3">{post.content}</p>
+
+                  {/* Reactions with RippleButton */}
+                  <div className="flex items-center gap-1 mb-3">
+                    {reactions.map(emoji => (
+                      <RippleButton
+                        key={emoji}
+                        onClick={() => addReaction(post.id, emoji)}
+                        variant="secondary"
+                        className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs"
+                      >
+                        <span className="text-sm">{emoji}</span>
+                        <span className="text-[10px] text-white/40">{post.reactions[emoji] || 0}</span>
+                      </RippleButton>
+                    ))}
+                  </div>
+
+                  {/* Comment Toggle */}
+                  <button
+                    onClick={() => setCommentingOn(commentingOn === post.id ? null : post.id)}
+                    className="flex items-center gap-2 text-xs text-white/30 hover:text-white/50 transition-colors"
+                  >
+                    <span>💬</span>
+                    <span>{post.comments.length} comments</span>
+                    <span>{commentingOn === post.id ? '▲' : '▼'}</span>
+                  </button>
+
+                  {/* Comments */}
+                  {commentingOn === post.id && (
+                    <div className="mt-3 space-y-2">
+                      {post.comments.map(c => (
+                        <div key={c.id} className="flex items-start gap-2 p-2 rounded-lg bg-white/[0.02]">
+                          <span className="text-sm">{c.avatar}</span>
+                          <div className="flex-1">
+                            <span className="text-xs font-medium text-white/60">{c.name}</span>
+                            <span className="text-[10px] text-white/20 ml-2">{timeAgo(c.createdAt)}</span>
+                            <p className="text-xs text-white/50 mt-0.5">{c.text}</p>
+                          </div>
+                        </div>
+                      ))}
+                      <div className="flex gap-2 mt-2">
+                        <input
+                          value={commentText}
+                          onChange={(e) => setCommentText(e.target.value)}
+                          placeholder={t('add comment')}
+                          className="flex-1 bg-white/[0.05] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-rose-500/40 transition-colors"
+                          onKeyDown={(e) => e.key === 'Enter' && addComment(post.id)}
+                        />
+                        <RippleButton onClick={() => addComment(post.id)} variant="primary" className="px-3 py-2 rounded-lg text-xs">
+                          Send
+                        </RippleButton>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </GlowCard>
+            )}
+            loadMore={async () => { /* Could load older posts */ }}
+            hasMore={false}
+            className="space-y-5"
+          />
 
           {/* Clone Avatars Carousel */}
           <div>
