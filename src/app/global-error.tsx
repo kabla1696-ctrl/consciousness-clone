@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { errorMonitor } from '../lib/error-monitor'
 
 export default function GlobalError({
   error,
@@ -14,7 +15,7 @@ export default function GlobalError({
 
   useEffect(() => {
     setMounted(true)
-    // Log the error to an error reporting service
+    errorMonitor.captureError(error)
   }, [error])
 
   return (
