@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://consciousness-clone.vercel.app/sitemap.xml
