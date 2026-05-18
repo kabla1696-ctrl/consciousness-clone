@@ -495,7 +495,7 @@ export default function GoalsPage() {
         {/* Empty State */}
         {goals.length === 0 && !showAdd && (
           <div className="text-center py-20">
-            <div className="text-7xl mb-5 drop-shadow-lg">🎯</div>
+            <div aria-hidden="true" className="text-7xl mb-5 drop-shadow-lg">🎯</div>
             <h2 className="text-xl font-bold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent mb-2">{t('life goals')}</h2>
             <p className="text-white/25 text-sm mb-8 max-w-sm mx-auto leading-relaxed">
               {t('track')} {t('achieve')}. {t('progress')}.

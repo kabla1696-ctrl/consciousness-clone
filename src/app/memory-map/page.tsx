@@ -383,7 +383,7 @@ export default function MemoryMap() {
             <div className="text-center py-16">
               <div className="relative inline-block mb-4">
                 <div className="absolute inset-0 bg-violet-500/10 rounded-full blur-xl" />
-                <div className="relative text-5xl">🗺️</div>
+                <div aria-hidden="true" className="relative text-5xl">🗺️</div>
               </div>
               <p className="text-white/40 text-sm font-medium">No places yet</p>
               <p className="text-white/15 text-xs mt-1.5">{t('explore')}</p>

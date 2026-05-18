@@ -346,7 +346,7 @@ Choose 5 real, well-known songs. Pick songs that feel personal and meaningful.`,
         {/* Empty State */}
         {songs.length === 0 && !generating && (
           <div className="text-center py-16">
-            <div className="text-5xl mb-4 animate-bounce">🎶</div>
+            <div aria-hidden="true" className="text-5xl mb-4 animate-bounce">🎶</div>
             <p className="text-white/40 text-sm font-medium">{t('select your mood')}</p>
             <p className="text-white/20 text-xs mt-1.5">{t('ai curated songs')}</p>
           </div>

@@ -162,7 +162,7 @@ function VoiceUserPageInner() {
       {/* Ended state */}
       {callState === 'ended' && (
         <div className="relative z-10 flex flex-col items-center text-center px-6">
-          <div className="text-6xl mb-4">📵</div>
+          <div aria-hidden="true" className="text-6xl mb-4">📵</div>
           <h2 className="text-xl font-bold text-white mb-1">Call Ended</h2>
           <p className="text-white/30 text-sm mb-2">{userName}</p>
           <p className="text-white/20 text-sm mb-8">Duration: {formatTimer(callTimer)}</p>
@@ -179,7 +179,7 @@ function VoiceUserPageInner() {
           <div className="relative mb-6">
             <div className="absolute inset-0 rounded-full" style={{ animation: 'ring-pulse 2s ease-out infinite', background: 'rgba(16,185,129,0.15)' }} />
             <div className="absolute inset-0 rounded-full" style={{ animation: 'ring-pulse 2s ease-out 0.5s infinite', background: 'rgba(16,185,129,0.1)' }} />
-            <div className="relative w-28 h-28 rounded-full flex items-center justify-center text-5xl" style={{ background: 'rgba(16,185,129,0.12)', boxShadow: '0 0 60px rgba(16,185,129,0.15)' }}>
+            <div aria-hidden="true" className="relative w-28 h-28 rounded-full flex items-center justify-center text-5xl" style={{ background: 'rgba(16,185,129,0.12)', boxShadow: '0 0 60px rgba(16,185,129,0.15)' }}>
               {userName[0]?.toUpperCase()}
             </div>
           </div>

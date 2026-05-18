@@ -98,7 +98,7 @@ function UnlockExplosion({ onComplete }: { onComplete: () => void }) {
           }}
         />
       ))}
-      <div className="text-6xl animate-bounce-in">🔓</div>
+      <div aria-hidden="true" className="text-6xl animate-bounce-in">🔓</div>
     </div>
   )
 }
@@ -353,7 +353,7 @@ export default function TimeCapsulePage() {
         {capsules.length === 0 && !showForm && (
           <div className="text-center py-20 animate-slide-up">
             <div className="relative inline-block mb-6">
-              <div className="text-7xl animate-float">⏳</div>
+              <div aria-hidden="true" className="text-7xl animate-float">⏳</div>
               <div className="absolute -inset-4 bg-violet-500/10 rounded-full blur-2xl" />
             </div>
             <h2 className="text-2xl font-bold mb-3 bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">{t('no data')}</h2>

@@ -81,7 +81,7 @@ export default function DeathSimulation() {
         {/* WARNING */}
         {step === 'warn' && (
           <div className="text-center">
-            <div className="text-7xl mb-4" style={{ animation: 'float-subtle 4s ease-in-out infinite' }}>💀</div>
+            <div aria-hidden="true" className="text-7xl mb-4" style={{ animation: 'float-subtle 4s ease-in-out infinite' }}>💀</div>
             <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-rose-400 mb-2">{t('death simulation')}</h1>
             <p className="text-white/40 text-sm mb-4">{t('what they would say')}</p>
             <div className="rounded-xl border border-red-500/20 p-4 mb-6 text-left" style={{ background: 'rgba(239,68,68,0.05)' }}>
@@ -119,7 +119,7 @@ export default function DeathSimulation() {
         {/* GENERATING */}
         {step === 'generating' && (
           <div className="text-center">
-            <div className="text-5xl mb-4 animate-pulse">🕯️</div>
+            <div aria-hidden="true" className="text-5xl mb-4 animate-pulse">🕯️</div>
             <p className="text-white/40 text-sm mb-6">Generating farewell messages...</p>
             <div className="space-y-3">
               {farewells.map((f, i) => (
@@ -137,7 +137,7 @@ export default function DeathSimulation() {
         {step === 'result' && (
           <div>
             <div className="text-center mb-6">
-              <div className="text-5xl mb-2">🕯️</div>
+              <div aria-hidden="true" className="text-5xl mb-2">🕯️</div>
               <h2 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-rose-400">Farewell Messages</h2>
               <p className="text-white/30 text-xs">{t('what they would say')}</p>
             </div>

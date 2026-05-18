@@ -453,6 +453,7 @@ export default function CloneVoiceCallPage() {
         <div className="relative z-10 text-center">
           <div
             className="w-32 h-32 rounded-full bg-emerald-500/20 flex items-center justify-center text-6xl mx-auto mb-6"
+            aria-hidden="true"
             style={{ animation: 'ring-pulse 0.8s ease infinite, ring-glow 1.5s ease infinite' }}
           >
             📞

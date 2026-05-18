@@ -214,7 +214,7 @@ export default function LegacyLettersPage() {
         {!showForm && letters.length === 0 && (
           <div className="text-center py-16 animate-slide-up">
             <div className="relative inline-block mb-6">
-              <div className="text-7xl" style={{ animation: 'float 4s ease-in-out infinite' }}>✉️</div>
+              <div aria-hidden="true" className="text-7xl" style={{ animation: 'float 4s ease-in-out infinite' }}>✉️</div>
               <div className="absolute -inset-4 bg-violet-500/10 rounded-full blur-2xl" />
             </div>
             <h2 className="text-2xl font-bold mb-3 bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">{t('legacy letters')}</h2>

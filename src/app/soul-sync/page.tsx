@@ -111,7 +111,7 @@ export default function SoulSync() {
         {/* INTRO */}
         {step === 'intro' && (
           <div className="text-center">
-            <div className="text-7xl mb-4" style={{ animation: 'float-subtle 3s ease-in-out infinite' }}>💕</div>
+            <div aria-hidden="true" className="text-7xl mb-4" style={{ animation: 'float-subtle 3s ease-in-out infinite' }}>💕</div>
             <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-rose-400 mb-2">{t('soul sync')}</h1>
             <p className="text-white/40 text-sm mb-8">{t('discover your consciousness profile')}</p>
             <button onClick={() => setStep('quiz')} className="w-full py-3.5 rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold tap-feedback" style={{ boxShadow: '0 0 30px rgba(236,72,153,0.3)' }}>
@@ -150,7 +150,7 @@ export default function SoulSync() {
         {/* RESULT */}
         {step === 'result' && profile && (
           <div className="text-center">
-            <div className="w-32 h-32 mx-auto rounded-2xl flex items-center justify-center text-6xl mb-4" style={{ background: 'linear-gradient(135deg, rgba(236,72,153,0.1), rgba(139,92,246,0.1))', boxShadow: '0 0 40px rgba(236,72,153,0.2)', animation: 'float-subtle 4s ease-in-out infinite' }}>
+            <div aria-hidden="true" className="w-32 h-32 mx-auto rounded-2xl flex items-center justify-center text-6xl mb-4" style={{ background: 'linear-gradient(135deg, rgba(236,72,153,0.1), rgba(139,92,246,0.1))', boxShadow: '0 0 40px rgba(236,72,153,0.2)', animation: 'float-subtle 4s ease-in-out infinite' }}>
               {profileData.emoji}
             </div>
             <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-rose-400 mb-1">{profileData.title}</h2>
@@ -180,7 +180,7 @@ export default function SoulSync() {
             {partnerCode.length === 6 && (
               <div className="text-center">
                 <div className="rounded-2xl border border-pink-500/20 p-6 mb-4 backdrop-blur-xl" style={{ background: 'linear-gradient(135deg, rgba(236,72,153,0.05), rgba(139,92,246,0.05))' }}>
-                  <div className="text-6xl mb-3" style={{ animation: 'float-subtle 3s ease-in-out infinite' }}>💕</div>
+                  <div aria-hidden="true" className="text-6xl mb-3" style={{ animation: 'float-subtle 3s ease-in-out infinite' }}>💕</div>
                   <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-rose-400 mb-1">{78 + Math.floor(Math.random() * 18)}%</div>
                   <p className="text-white/40 text-sm">{t('soul compatibility')}</p>
                 </div>

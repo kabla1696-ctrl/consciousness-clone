@@ -316,8 +316,8 @@ export default function DreamModePage() {
           {/* Center brain icon */}
           <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
             <div className="relative">
-              <div className="absolute inset-0 text-6xl blur-xl opacity-30" style={{ animation: 'pulse 3s ease-in-out infinite' }}>🧠</div>
-              <div className="text-6xl relative" style={{ animation: 'pulse 3s ease-in-out infinite', filter: 'drop-shadow(0 0 20px rgba(139, 92, 246, 0.4))' }}>🧠</div>
+              <div aria-hidden="true" className="absolute inset-0 text-6xl blur-xl opacity-30" style={{ animation: 'pulse 3s ease-in-out infinite' }}>🧠</div>
+              <div aria-hidden="true" className="text-6xl relative" style={{ animation: 'pulse 3s ease-in-out infinite', filter: 'drop-shadow(0 0 20px rgba(139, 92, 246, 0.4))' }}>🧠</div>
             </div>
             {isProcessing ? (
               <div className="text-center mt-4">

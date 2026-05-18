@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useCallback } from 'react'
+import Image from 'next/image'
 
 export interface GalleryImage {
   src: string
@@ -121,12 +122,13 @@ export default function ImageGallery({
               className="group relative aspect-square rounded-xl overflow-hidden bg-white/[0.03] border border-white/[0.06] cursor-pointer"
               onClick={() => openLightbox(i)}
             >
-              <img
+              <Image
                 src={img.src}
                 alt={img.alt ?? ''}
+                fill
+                sizes="(max-width: 768px) 50vw, 33vw"
                 loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
 
               {/* Delete button */}
@@ -194,9 +196,12 @@ export default function ImageGallery({
           )}
 
           {/* Image */}
-          <img
+          <Image
             src={images[lightboxIndex].src}
             alt={images[lightboxIndex].alt ?? ''}
+            width={1200}
+            height={800}
+            sizes="90vw"
             className="max-w-[90vw] max-h-[85vh] object-contain rounded-lg"
             onClick={(e) => e.stopPropagation()}
           />

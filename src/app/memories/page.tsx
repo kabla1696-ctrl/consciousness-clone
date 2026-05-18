@@ -105,7 +105,7 @@ export default function MemoriesPage() {
       <main className="min-h-screen bg-[#050510] flex items-center justify-center px-6">
         <div className="w-full max-w-sm">
           <div className="text-center mb-8">
-            <div className="text-6xl mb-4">🔐</div>
+            <div aria-hidden="true" className="text-6xl mb-4">🔐</div>
             <h1 className="text-2xl font-bold text-white mb-2">Memories Locked</h1>
             <p className="text-white/40 text-sm">Enter your vault PIN to access memories</p>
           </div>
@@ -267,7 +267,7 @@ export default function MemoriesPage() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-24">
-            <div className="text-7xl mb-5 opacity-60" style={{ animation: 'float-subtle 5s ease-in-out infinite' }}>🧠</div>
+            <div aria-hidden="true" className="text-7xl mb-5 opacity-60" style={{ animation: 'float-subtle 5s ease-in-out infinite' }}>🧠</div>
             <p className="text-white/40 text-lg font-semibold mb-2">No memories found</p>
             <p className="text-white/20 text-sm">{search || activeCategory ? 'Try adjusting your filters' : 'Click "+ Add" to store your first memory'}</p>
           </div>

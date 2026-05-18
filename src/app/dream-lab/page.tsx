@@ -323,7 +323,7 @@ export default function DreamLab() {
         {/* Dream List */}
         {filtered.length === 0 ? (
           <div className="text-center py-16 animate-[fadeSlideUp_0.5s_ease-out]">
-            <div className="text-6xl mb-4 opacity-80">🌙</div>
+            <div aria-hidden="true" className="text-6xl mb-4 opacity-80">🌙</div>
             <p className="text-white/40 font-medium">No dreams recorded yet</p>
             <p className="text-white/20 text-sm mt-1">Start by recording your first dream</p>
           </div>

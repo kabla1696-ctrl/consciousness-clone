@@ -136,7 +136,7 @@ export default function SoulTransferPage() {
       <div className="px-4 py-6 space-y-6 relative z-10">
         {/* Hero */}
         <div className="text-center mb-6">
-          <div className="text-6xl mb-4" style={{ animation: 'float-subtle 3s ease-in-out infinite' }}>🧬</div>
+          <div aria-hidden="true" className="text-6xl mb-4" style={{ animation: 'float-subtle 3s ease-in-out infinite' }}>🧬</div>
           <h2 className="text-xl font-bold text-white mb-2">Share Your Soul</h2>
           <p className="text-white/40 text-sm max-w-sm mx-auto">Create a soul bond with someone special. Share your memories, personality, and essence with your clone.</p>
         </div>
@@ -307,7 +307,7 @@ export default function SoulTransferPage() {
         {/* Empty State */}
         {bonds.length === 0 && !showForm && (
           <div className="text-center py-12">
-            <div className="text-6xl mb-4 opacity-50">🤝</div>
+            <div aria-hidden="true" className="text-6xl mb-4 opacity-50">🤝</div>
             <h3 className="text-white/50 font-semibold mb-2">No Soul Bonds Yet</h3>
             <p className="text-white/30 text-sm mb-6">Create your first soul bond to share your essence with someone special</p>
             <button onClick={() => setShowForm(true)} className="px-6 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-xl text-sm font-semibold text-white hover:shadow-lg hover:shadow-violet-500/20 transition-all active:scale-95">

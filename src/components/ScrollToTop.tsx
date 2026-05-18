@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-export default function ScrollToTop() {
+const ScrollToTop = React.memo(function ScrollToTop() {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -53,4 +53,6 @@ export default function ScrollToTop() {
       `}</style>
     </button>
   )
-}
+})
+
+export default ScrollToTop

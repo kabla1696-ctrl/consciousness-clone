@@ -26,7 +26,7 @@ export default function VoiceClone() {
 
       <div className="pt-24 px-6 max-w-3xl mx-auto">
         <div className="text-center mb-12">
-          <div className="text-6xl mb-4">🎤</div>
+          <div aria-hidden="true" className="text-6xl mb-4">🎤</div>
           <h1 className="text-4xl font-bold mb-4">{t('voice clone')}</h1>
           <p className="text-white/30 text-lg">{t('make clone sound')}</p>
         </div>

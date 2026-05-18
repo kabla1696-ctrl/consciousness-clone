@@ -195,7 +195,7 @@ Be specific to this person's life based on their memories. Be genuine, not gener
           <div className="relative inline-block mb-4">
             <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-full blur-3xl animate-pulse" />
             <div className="absolute inset-0 bg-gradient-to-r from-amber-400/10 to-rose-400/10 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '1s', transform: 'scale(1.3)' }} />
-            <div className="relative text-6xl drop-shadow-lg">🌅</div>
+            <div aria-hidden="true" className="relative text-6xl drop-shadow-lg">🌅</div>
           </div>
           <h2 className="text-2xl font-bold bg-gradient-to-r from-amber-300 via-white to-orange-300 bg-clip-text text-transparent mb-1">{t('morning')}</h2>
           <p className="text-white/40 text-sm">{today}</p>
@@ -254,7 +254,7 @@ Be specific to this person's life based on their memories. Be genuine, not gener
         {/* Empty State */}
         {!briefing && !generating && (
           <div className="text-center py-16">
-            <div className="text-5xl mb-4 animate-bounce">✨</div>
+            <div aria-hidden="true" className="text-5xl mb-4 animate-bounce">✨</div>
             <p className="text-white/40 text-sm font-medium">{t('daily briefing')}</p>
             <p className="text-white/20 text-xs mt-1.5">{t('summary')}</p>
           </div>

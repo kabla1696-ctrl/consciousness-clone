@@ -153,7 +153,7 @@ export default function MemoryMilestones() {
       {showCelebration && (
         <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ background: 'rgba(0,0,0,0.8)' }} onClick={() => setShowCelebration(null)}>
           <div className="text-center" style={{ animation: 'float-subtle 2s ease-in-out' }}>
-            <div className="text-8xl mb-4">🎉</div>
+            <div aria-hidden="true" className="text-8xl mb-4">🎉</div>
             <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-yellow-400 mb-2">{t('milestones')} {t('unlocked')}!</h2>
             <p className="text-white/60 text-lg">{milestones.find(m => m.id === showCelebration)?.title}</p>
             <p className="text-amber-400 text-sm mt-1">+{milestones.find(m => m.id === showCelebration)?.xp} XP</p>

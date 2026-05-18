@@ -42,7 +42,7 @@ export default function MobileNav() {
         {TABS.map(tab => {
           const active = pathname === tab.href || pathname.startsWith(tab.href + '/')
           return (
-            <Link key={tab.href} href={tab.href} aria-current={active ? 'page' : undefined} className="flex flex-col items-center gap-0.5 py-2 px-3 tap-feedback relative min-w-[44px] min-h-[44px] justify-center">
+            <Link key={tab.href} href={tab.href} prefetch={true} aria-current={active ? 'page' : undefined} className="flex flex-col items-center gap-0.5 py-2 px-3 tap-feedback relative min-w-[44px] min-h-[44px] justify-center">
               {active && <div className="absolute -top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full" />}
               <span className={`text-lg transition-all ${active ? 'scale-110' : 'opacity-50'}`}>{tab.icon}</span>
               <span className={`text-[9px] font-medium ${active ? 'text-violet-400' : 'text-white/30'}`}>{tab.label}</span>

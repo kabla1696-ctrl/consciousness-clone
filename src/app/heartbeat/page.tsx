@@ -356,7 +356,7 @@ export default function HeartbeatMemory() {
                       style={{ animation: bpm > 0 ? `ping ${60 / bpm}s cubic-bezier(0,0,0.2,1) infinite` : 'ping 2s cubic-bezier(0,0,0.2,1) infinite' }}
                     />
                     <div className="absolute inset-2 rounded-full bg-gradient-to-br from-red-500/5 to-pink-500/5" />
-                    <span className="text-5xl relative z-10 drop-shadow-[0_0_20px_rgba(239,68,68,0.5)]">🫀</span>
+                    <span className="text-5xl relative z-10 drop-shadow-[0_0_20px_rgba(239,68,68,0.5)]" aria-hidden="true">🫀</span>
                   </div>
                 </div>
               </div>
@@ -366,10 +366,10 @@ export default function HeartbeatMemory() {
                 {bpm > 0 ? (
                   <>
                     <div className="relative">
-                      <div className="text-6xl font-black tabular-nums bg-gradient-to-r from-red-400 via-pink-400 to-red-400 bg-clip-text text-transparent bg-[length:200%_100%] animate-[shimmer_2s_ease-in-out_infinite]">
+                      <div aria-hidden="true" className="text-6xl font-black tabular-nums bg-gradient-to-r from-red-400 via-pink-400 to-red-400 bg-clip-text text-transparent bg-[length:200%_100%] animate-[shimmer_2s_ease-in-out_infinite]">
                         {Math.round(displayBpm)}
                       </div>
-                      <div className="absolute inset-0 text-6xl font-black tabular-nums text-red-500/10 blur-lg">
+                      <div aria-hidden="true" className="absolute inset-0 text-6xl font-black tabular-nums text-red-500/10 blur-lg">
                         {Math.round(displayBpm)}
                       </div>
                     </div>
@@ -568,7 +568,7 @@ export default function HeartbeatMemory() {
           <div className="space-y-3">
             {memories.length === 0 ? (
               <div className="text-center py-16">
-                <div className="text-5xl mb-4 drop-shadow-[0_0_30px_rgba(239,68,68,0.3)]">🫀</div>
+                <div aria-hidden="true" className="text-5xl mb-4 drop-shadow-[0_0_30px_rgba(239,68,68,0.3)]">🫀</div>
                 <p className="text-white/30 text-sm">No heartbeat memories yet</p>
                 <button
                   onClick={() => setView('measure')}

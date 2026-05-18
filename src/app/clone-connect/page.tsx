@@ -251,7 +251,7 @@ export default function CloneConnect() {
           <>
             {friendClones.length === 0 ? (
               <div className="text-center py-16">
-                <div className="text-5xl mb-3">👥</div>
+                <div aria-hidden="true" className="text-5xl mb-3">👥</div>
                 <p className="text-white/30 text-sm">{t('No friends yet')}</p>
                 <p className="text-white/15 text-xs">{t('Discover clones and send friend requests!')}</p>
               </div>
@@ -285,7 +285,7 @@ export default function CloneConnect() {
           <>
             {friendClones.length === 0 ? (
               <div className="text-center py-16">
-                <div className="text-5xl mb-3">💬</div>
+                <div aria-hidden="true" className="text-5xl mb-3">💬</div>
                 <p className="text-white/30 text-sm">{t('No conversations yet')}</p>
               </div>
             ) : (
@@ -409,7 +409,7 @@ export default function CloneConnect() {
             {/* Empty state */}
             {calls.length === 0 && userCallLogs.length === 0 && (
               <div className="text-center py-16">
-                <div className="text-5xl mb-3">📞</div>
+                <div aria-hidden="true" className="text-5xl mb-3">📞</div>
                 <p className="text-white/30 text-sm">{t('No call history')}</p>
                 <p className="text-white/15 text-xs">{t('Call a friend\'s clone to start!')}</p>
               </div>
@@ -422,7 +422,7 @@ export default function CloneConnect() {
           <>
             {requests.filter(r => r.status === 'pending').length === 0 ? (
               <div className="text-center py-16">
-                <div className="text-5xl mb-3">💌</div>
+                <div aria-hidden="true" className="text-5xl mb-3">💌</div>
                 <p className="text-white/30 text-sm">{t('No pending requests')}</p>
               </div>
             ) : (
@@ -498,7 +498,7 @@ export default function CloneConnect() {
       {showCall && (
         <div className="fixed inset-0 z-50 flex flex-col items-center justify-center" style={{ background: 'linear-gradient(135deg, #050510, #0a0a2e, #050510)' }}>
           <div className="mb-6" style={{ animation: showCall.active ? 'none' : 'pulse-ring 2s ease-out infinite' }}>
-            <div className="w-28 h-28 rounded-3xl flex items-center justify-center text-6xl" style={{ background: 'rgba(139,92,246,0.1)', boxShadow: '0 0 40px rgba(139,92,246,0.2)' }}>{showCall.clone.avatar}</div>
+            <div aria-hidden="true" className="w-28 h-28 rounded-3xl flex items-center justify-center text-6xl" style={{ background: 'rgba(139,92,246,0.1)', boxShadow: '0 0 40px rgba(139,92,246,0.2)' }}>{showCall.clone.avatar}</div>
           </div>
           <h2 className="text-2xl font-bold mb-1">{showCall.clone.name}</h2>
           <p className="text-white/40 text-sm mb-2">{showCall.clone.vibe}</p>

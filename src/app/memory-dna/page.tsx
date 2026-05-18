@@ -148,8 +148,8 @@ export default function MemoryDNAPage() {
         {!report && !generating && (
           <div className="text-center py-12 space-y-6">
             <div className="relative">
-              <div className="absolute inset-0 text-7xl flex items-center justify-center blur-xl opacity-30 animate-pulse">🧬</div>
-              <div className="relative text-7xl">🧬</div>
+              <div aria-hidden="true" className="absolute inset-0 text-7xl flex items-center justify-center blur-xl opacity-30 animate-pulse">🧬</div>
+              <div aria-hidden="true" className="relative text-7xl">🧬</div>
             </div>
             <div>
               <h2 className="text-2xl font-bold bg-gradient-to-r from-white via-white/90 to-white/60 bg-clip-text text-transparent">{t('personality genome')}</h2>
@@ -169,7 +169,7 @@ export default function MemoryDNAPage() {
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-24 h-24 rounded-full bg-violet-500/20 blur-xl animate-pulse" />
               </div>
-              <div className="relative text-6xl animate-pulse">🧬</div>
+              <div aria-hidden="true" className="relative text-6xl animate-pulse">🧬</div>
             </div>
             <p className="text-white/40 tracking-wide">Analyzing your memories...</p>
             <div className="w-48 h-1 bg-white/[0.04] rounded-full mx-auto overflow-hidden border border-white/[0.04]">
@@ -190,7 +190,7 @@ export default function MemoryDNAPage() {
             <div className="relative">
               <div className="absolute -inset-1 bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 rounded-2xl blur-xl opacity-60" />
               <div className="relative bg-gradient-to-br from-violet-500/[0.06] to-fuchsia-500/[0.06] backdrop-blur-2xl rounded-2xl border border-white/[0.06] p-6 text-center shadow-xl shadow-black/20">
-                <div className="text-5xl mb-3">🧬</div>
+                <div aria-hidden="true" className="text-5xl mb-3">🧬</div>
                 <h2 className="text-lg font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent mb-2">Your Memory DNA</h2>
                 <p className="text-white/50 text-sm italic leading-relaxed">{report.identityStatement}</p>
               </div>

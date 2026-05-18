@@ -511,7 +511,7 @@ export default function VaultPage() {
         {/* Entries */}
         {entries.length === 0 ? (
           <div className="text-center py-12 text-white/20">
-            <div className="text-5xl mb-3 drop-shadow-[0_0_30px_rgba(239,68,68,0.2)]">🔒</div>
+            <div aria-hidden="true" className="text-5xl mb-3 drop-shadow-[0_0_30px_rgba(239,68,68,0.2)]">🔒</div>
             <p>{t('vault empty')}</p>
             <p className="text-xs mt-1">{t('add your first secret')}</p>
           </div>

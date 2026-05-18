@@ -87,7 +87,7 @@ export default function ClonePassportPage() {
         <div className={`glass-card rounded-3xl p-6 border border-amber-500/10 transition-all duration-700 ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
           style={{ background: 'linear-gradient(135deg, rgba(30,20,50,0.6), rgba(20,15,40,0.8))' }}>
           <div className="text-center mb-5">
-            <div className="text-5xl mb-2">📕</div>
+            <div aria-hidden="true" className="text-5xl mb-2">📕</div>
             <p className="text-[11px] font-semibold text-amber-400/70 tracking-[4px] uppercase">Consciousness Clone</p>
             <h2 className="text-xl font-extrabold mt-1 bg-gradient-to-r from-amber-400 to-yellow-300 bg-clip-text text-transparent">{t('clone passport').toUpperCase()}</h2>
           </div>
@@ -159,7 +159,7 @@ export default function ClonePassportPage() {
             onClick={e => e.stopPropagation()}
             style={{ background: 'linear-gradient(135deg, rgba(30,20,50,0.95), rgba(20,15,40,0.98))' }}>
             <div className="text-center mb-5">
-              <div className="text-6xl mb-3">{selectedStamp.emoji}</div>
+              <div aria-hidden="true" className="text-6xl mb-3">{selectedStamp.emoji}</div>
               <h3 className="text-xl font-extrabold">{selectedStamp.country}</h3>
               <p className="text-xs text-white/40 mt-1">
                 {new Date(selectedStamp.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}

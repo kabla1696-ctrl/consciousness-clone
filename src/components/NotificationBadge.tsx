@@ -1,11 +1,12 @@
 'use client'
+import React from 'react'
 
 interface NotificationBadgeProps {
   count: number
   className?: string
 }
 
-export default function NotificationBadge({ count, className = '' }: NotificationBadgeProps) {
+const NotificationBadge = React.memo(function NotificationBadge({ count, className = '' }: NotificationBadgeProps) {
   if (count <= 0) return null
 
   const display = count > 99 ? '99+' : String(count)
@@ -17,4 +18,6 @@ export default function NotificationBadge({ count, className = '' }: Notificatio
       {display}
     </span>
   )
-}
+})
+
+export default NotificationBadge

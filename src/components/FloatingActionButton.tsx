@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 
 interface FABAction {
   icon: string
@@ -20,7 +20,7 @@ interface FloatingActionButtonProps {
   actions?: FABAction[]
 }
 
-export default function FloatingActionButton({
+const FloatingActionButton = React.memo(function FloatingActionButton({
   actions = DEFAULT_ACTIONS,
 }: FloatingActionButtonProps) {
   const [isOpen, setIsOpen] = useState(false)
@@ -103,4 +103,6 @@ export default function FloatingActionButton({
       `}</style>
     </>
   )
-}
+})
+
+export default FloatingActionButton

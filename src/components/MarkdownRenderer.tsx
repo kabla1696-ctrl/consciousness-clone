@@ -12,7 +12,7 @@ function parseInline(text: string): string {
     .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" class="text-violet-400 underline hover:text-violet-300" target="_blank" rel="noopener">$1</a>')
 }
 
-export default function MarkdownRenderer({ content }: { content: string }) {
+const MarkdownRenderer = React.memo(function MarkdownRenderer({ content }: { content: string }) {
   const lines = content.split('\n')
   const elements: React.ReactNode[] = []
   let inCode = false, codeLines: string[] = []
@@ -37,4 +37,6 @@ export default function MarkdownRenderer({ content }: { content: string }) {
   })
 
   return <div className="prose prose-invert max-w-none text-sm leading-relaxed">{elements}</div>
-}
+})
+
+export default MarkdownRenderer

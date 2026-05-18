@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 interface Activity {
   id: string
@@ -24,7 +24,7 @@ export function addActivity(type: Activity['type'], title: string, icon: string)
   localStorage.setItem(STORAGE_KEY, JSON.stringify(activities.slice(0, 50)))
 }
 
-export default function ActivityFeed() {
+const ActivityFeed = React.memo(function ActivityFeed() {
   const [activities, setActivities] = useState<Activity[]>([])
 
   useEffect(() => { setActivities(loadActivities()) }, [])
@@ -60,4 +60,6 @@ export default function ActivityFeed() {
       </div>
     </div>
   )
-}
+})
+
+export default ActivityFeed

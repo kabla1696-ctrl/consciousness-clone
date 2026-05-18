@@ -143,7 +143,7 @@ export default function MemoryPalacePage() {
             {/* Room Header */}
             <div className="relative rounded-xl overflow-hidden p-6 text-center" style={{ background: `${selectedRoom.color}08`, border: `1px solid ${selectedRoom.color}15` }}>
               <div className="absolute inset-0 opacity-10" style={{ background: `radial-gradient(circle at center, ${selectedRoom.color}, transparent)` }} />
-              <div className="text-5xl mb-2">{selectedRoom.emoji}</div>
+              <div aria-hidden="true" className="text-5xl mb-2">{selectedRoom.emoji}</div>
               <h2 className="text-xl font-bold text-white">{selectedRoom.name}</h2>
               <p className="text-xs text-white/40 mt-1">{selectedRoom.description}</p>
               <div className="text-xs text-white/20 mt-2">{selectedRoom.memories.length} memories placed here</div>

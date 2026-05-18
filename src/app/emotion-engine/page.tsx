@@ -361,7 +361,7 @@ export default function EmotionEngine() {
 
         {history.length === 0 && !currentEmotions && (
           <div className="text-center py-16">
-            <div className="text-6xl mb-5 animate-bounce">🎭</div>
+            <div aria-hidden="true" className="text-6xl mb-5 animate-bounce">🎭</div>
             <p className="text-gray-300 text-base font-semibold">Your emotional journey starts here</p>
             <p className="text-gray-600 text-xs mt-2">Type something above to analyze your emotions</p>
           </div>

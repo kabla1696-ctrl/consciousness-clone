@@ -113,7 +113,7 @@ export default function FAQ() {
         <div className="max-w-3xl mx-auto">
           {/* Hero */}
           <div className="text-center mb-12">
-            <div className="text-7xl mb-6">❓</div>
+            <div aria-hidden="true" className="text-7xl mb-6">❓</div>
             <h1 className="text-5xl md:text-6xl font-bold mb-4">
               Frequently Asked{' '}
               <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">Questions</span>

@@ -224,7 +224,7 @@ export default function PhotoMemories() {
           <div className="text-center py-20">
             <div className="relative inline-block mb-6">
               <div className="absolute inset-0 bg-violet-500/20 rounded-full blur-3xl" />
-              <div className="relative text-7xl">📸</div>
+              <div aria-hidden="true" className="relative text-7xl">📸</div>
             </div>
             <h2 className="text-xl font-bold gradient-text mb-2">{t('photo memories')}</h2>
             <p className="text-white/30 text-sm mb-8 max-w-sm mx-auto leading-relaxed">{t('capture and preserve description')}</p>

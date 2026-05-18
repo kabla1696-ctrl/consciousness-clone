@@ -252,8 +252,8 @@ export default function CloneIdentityPage() {
         {profiles.length === 0 ? (
           <div className="text-center py-16">
             <div className="relative inline-block mb-4">
-              <div className="absolute inset-0 text-5xl flex items-center justify-center blur-lg opacity-20 animate-pulse">🧠</div>
-              <div className="relative text-5xl">🧠</div>
+              <div aria-hidden="true" className="absolute inset-0 text-5xl flex items-center justify-center blur-lg opacity-20 animate-pulse">🧠</div>
+              <div aria-hidden="true" className="relative text-5xl">🧠</div>
             </div>
             <p className="text-white/20 font-medium">{t('no data')}</p>
             <p className="text-xs text-white/10 mt-1">{t('recognizes')}</p>

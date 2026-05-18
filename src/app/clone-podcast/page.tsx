@@ -214,7 +214,7 @@ export default function ClonePodcast() {
               <div className="absolute bottom-0 right-0 w-24 h-24 bg-fuchsia-500/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
             </div>
             <div className="relative z-10 text-center">
-              <div className="text-5xl mb-2 drop-shadow-lg">🎙️</div>
+              <div aria-hidden="true" className="text-5xl mb-2 drop-shadow-lg">🎙️</div>
               <p className="text-white/60 text-sm font-semibold tracking-wide">Consciousness Clone</p>
               <p className="text-violet-400/80 text-xs mt-1 font-medium">The Podcast</p>
             </div>
@@ -297,7 +297,7 @@ export default function ClonePodcast() {
         {/* Empty State */}
         {!currentScript && !generating && (
           <div className="text-center py-16">
-            <div className="text-5xl mb-4 animate-bounce">🎧</div>
+            <div aria-hidden="true" className="text-5xl mb-4 animate-bounce">🎧</div>
             <p className="text-white/40 text-sm font-medium">Generate your first episode to hear your story</p>
             <p className="text-white/20 text-xs mt-1.5">Based on your saved memories</p>
           </div>

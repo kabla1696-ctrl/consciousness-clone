@@ -120,7 +120,7 @@ export default function MemoryReplayPage() {
           <div className="absolute inset-0 bg-gradient-to-br from-violet-600/20 to-fuchsia-600/10" />
           <div className="relative p-6 space-y-4">
             <div className="text-center">
-              <div className="text-5xl mb-2">{moodObj.emoji}</div>
+              <div aria-hidden="true" className="text-5xl mb-2">{moodObj.emoji}</div>
               <h2 className="text-xl font-bold text-white">{current?.title || t('relive')}</h2>
               <p className="text-xs text-white/30 mt-1">{current?.date}</p>
             </div>

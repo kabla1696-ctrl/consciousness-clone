@@ -44,7 +44,7 @@ export default function Support() {
         <div className="max-w-5xl mx-auto">
           {/* Hero */}
           <div className="text-center mb-16">
-            <div className="text-7xl mb-6">💬</div>
+            <div aria-hidden="true" className="text-7xl mb-6">💬</div>
             <h1 className="text-5xl md:text-6xl font-bold mb-4">
               Get{' '}
               <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">Support</span>
@@ -60,7 +60,7 @@ export default function Support() {
 
                 {submitted ? (
                   <div className="text-center py-12">
-                    <div className="text-5xl mb-4">✅</div>
+                    <div aria-hidden="true" className="text-5xl mb-4">✅</div>
                     <h3 className="text-xl font-bold mb-2">Message Sent!</h3>
                     <p className="text-white/40 text-sm">We typically respond within 24 hours.</p>
                     <button

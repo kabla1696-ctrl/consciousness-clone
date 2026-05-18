@@ -157,7 +157,7 @@ export default function EmotionalWeatherPage() {
             <p className="text-xs text-white/40 uppercase tracking-wider mb-2">Today&apos;s Emotional Weather</p>
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-6xl mb-2 animate-[float-subtle_3s_ease-in-out_infinite]">{config.icon}</div>
+                <div aria-hidden="true" className="text-6xl mb-2 animate-[float-subtle_3s_ease-in-out_infinite]">{config.icon}</div>
                 <h2 className={`text-2xl font-extrabold ${config.color}`}>{config.label}</h2>
               </div>
               <div className="text-right">

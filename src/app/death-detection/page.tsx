@@ -143,7 +143,7 @@ export default function DeathDetectionPage() {
       <div className="px-4 py-6 space-y-6 relative z-10">
         {/* Current Status */}
         <div className={`bg-gradient-to-br ${STATUS_CONFIG[status].bg} backdrop-blur-xl rounded-2xl border ${STATUS_CONFIG[status].border} p-6 text-center`}>
-          <div className="text-5xl mb-3">{STATUS_CONFIG[status].icon}</div>
+          <div aria-hidden="true" className="text-5xl mb-3">{STATUS_CONFIG[status].icon}</div>
           <h2 className={`text-lg font-bold text-${STATUS_CONFIG[status].color}-400`}>{STATUS_CONFIG[status].label}</h2>
           <p className="text-white/30 text-xs mt-2">
             Last active: {lastActive.toLocaleDateString()} {lastActive.toLocaleTimeString()}
@@ -275,7 +275,7 @@ export default function DeathDetectionPage() {
         {/* Test Animation */}
         {showTestDeath && (
           <div className="bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-red-500/20 p-6 text-center animate-slide-up">
-            <div className="text-6xl mb-4 animate-pulse">
+            <div className="text-6xl mb-4 animate-pulse" aria-hidden="true">
               {status === 'warning' ? '⚠️' : status === 'critical' ? '🚨' : status === 'dead' ? '💀' : '💚'}
             </div>
             <h3 className="text-white font-bold text-lg mb-2">

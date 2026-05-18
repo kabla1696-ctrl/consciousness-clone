@@ -182,7 +182,7 @@ export default function LastWords() {
             </div>
             <div className="text-center py-4">
               <div className="relative inline-block">
-                <div className="text-6xl font-black bg-gradient-to-b from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">{remaining}</div>
+                <div aria-hidden="true" className="text-6xl font-black bg-gradient-to-b from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">{remaining}</div>
                 <div className="absolute inset-0 bg-violet-500/10 rounded-full blur-2xl scale-150" />
               </div>
               <div className="text-white/30 text-xs mt-2 uppercase tracking-wider">days until messages are delivered</div>
@@ -253,7 +253,7 @@ export default function LastWords() {
             {messages.length === 0 ? (
               <div className="text-center py-16">
                 <div className="relative inline-block mb-4">
-                  <div className="text-6xl">💌</div>
+                  <div aria-hidden="true" className="text-6xl">💌</div>
                   <div className="absolute inset-0 bg-violet-500/20 rounded-full blur-2xl scale-150" />
                 </div>
                 <p className="text-white/40 text-lg font-medium">{t('last words')}</p>
@@ -336,7 +336,7 @@ export default function LastWords() {
             {contacts.length === 0 ? (
               <div className="text-center py-16">
                 <div className="relative inline-block mb-4">
-                  <div className="text-6xl">👥</div>
+                  <div aria-hidden="true" className="text-6xl">👥</div>
                   <div className="absolute inset-0 bg-violet-500/20 rounded-full blur-2xl scale-150" />
                 </div>
                 <p className="text-white/40 text-lg font-medium">No emergency contacts</p>

@@ -390,7 +390,7 @@ export default function FamilyTreePage() {
           <div className="text-center py-20">
             <div className="relative inline-block mb-5">
               <div className="absolute inset-0 bg-violet-500/10 rounded-full blur-2xl scale-150" />
-              <div className="relative text-7xl">🧬</div>
+              <div aria-hidden="true" className="relative text-7xl">🧬</div>
             </div>
             <h2 className="text-lg font-bold mb-2 bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">{t('family tree')}</h2>
             <p className="text-white/25 text-sm mb-8 max-w-sm mx-auto leading-relaxed">

@@ -203,7 +203,7 @@ export default function HeirAccessPage() {
         {/* Heirs List */}
         {heirs.length === 0 ? (
           <div className="text-center py-16">
-            <div className="text-6xl mb-4 animate-bounce">🔑</div>
+            <div aria-hidden="true" className="text-6xl mb-4 animate-bounce">🔑</div>
             <p className="text-white/30 text-base font-semibold">No heirs designated</p>
             <p className="text-white/15 text-xs mt-1">Add someone you trust</p>
           </div>

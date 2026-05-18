@@ -127,7 +127,7 @@ export default function DeadMansSwitch() {
         <div className={`glass-card rounded-2xl p-6 text-center relative overflow-hidden border ${u.border}`}>
           <div className={`absolute inset-0 bg-gradient-to-br ${u.bg} opacity-30`} />
           <div className="relative z-10">
-            <div className="text-5xl mb-3">{settings.enabled ? (daysRemaining() <= 3 ? '🚨' : daysRemaining() <= 7 ? '⚠️' : '🛡️') : '⏸️'}</div>
+            <div className="text-5xl mb-3" aria-hidden="true">{settings.enabled ? (daysRemaining() <= 3 ? '🚨' : daysRemaining() <= 7 ? '⚠️' : '🛡️') : '⏸️'}</div>
             <h2 className={`text-2xl font-bold ${u.color} mb-1`}>{settings.enabled ? `${daysRemaining()} ${t('days')}` : t('inactive')}</h2>
             <p className="text-xs text-white/30">{settings.enabled ? `${t('countdown')} · ${u.label}` : t('inactive')}</p>
             {settings.enabled && (

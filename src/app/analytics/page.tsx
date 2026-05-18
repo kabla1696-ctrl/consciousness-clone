@@ -179,7 +179,7 @@ export default function Analytics() {
             <GlowCard key={stat.label} glowColor={stat.glow} className="p-6 text-center">
               <div className="absolute -top-8 -right-8 w-24 h-24 rounded-full bg-gradient-to-br opacity-[0.08] blur-2xl" style={{ background: `radial-gradient(circle, ${stat.glow === 'violet' ? '#8b5cf6' : stat.glow === 'fuchsia' ? '#d946ef' : stat.glow === 'cyan' ? '#06b6d4' : '#f59e0b'}, transparent)` }} />
               <div className="text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">{stat.icon}</div>
-              <div className={`text-4xl md:text-5xl font-black bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent mb-2`}>{stat.value}</div>
+              <div aria-hidden="true" className={`text-4xl md:text-5xl font-black bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent mb-2`}>{stat.value}</div>
               <div className="text-white/25 text-xs font-medium uppercase tracking-wider">{stat.label}</div>
             </GlowCard>
           ))}

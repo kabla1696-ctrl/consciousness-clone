@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 interface CountdownProps {
   targetDate: string | number
@@ -28,7 +28,7 @@ function FlipUnit({ value, label }: { value: number; label: string }) {
   )
 }
 
-export default function CountdownTimer({ targetDate, label, onComplete }: CountdownProps) {
+const CountdownTimer = React.memo(function CountdownTimer({ targetDate, label, onComplete }: CountdownProps) {
   const target = typeof targetDate === 'string' ? new Date(targetDate).getTime() : targetDate
   const [time, setTime] = useState(() => getTimeLeft(target))
 
@@ -59,4 +59,6 @@ export default function CountdownTimer({ targetDate, label, onComplete }: Countd
       </div>
     </div>
   )
-}
+})
+
+export default CountdownTimer

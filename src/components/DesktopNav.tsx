@@ -205,7 +205,7 @@ export default function DesktopNav() {
               {section.items.map(item => {
                 const active = pathname === item.href || pathname.startsWith(item.href + '/')
                 return (
-                  <Link key={item.href} href={item.href} aria-current={active ? 'page' : undefined} className={`flex items-center gap-3 px-3 py-2 rounded-xl transition-all tap-feedback group ${active ? 'bg-violet-500/15 text-violet-400' : 'text-white/40 hover:text-white/60 hover:bg-white/[0.03]'}`}>
+                  <Link key={item.href} href={item.href} prefetch={true} aria-current={active ? 'page' : undefined} className={`flex items-center gap-3 px-3 py-2 rounded-xl transition-all tap-feedback group ${active ? 'bg-violet-500/15 text-violet-400' : 'text-white/40 hover:text-white/60 hover:bg-white/[0.03]'}`}>
                     <span className={`text-lg flex-shrink-0 ${active ? 'scale-110' : 'group-hover:scale-105'} transition-transform`}>{item.icon}</span>
                     {!collapsed && <span className="text-sm font-medium">{item.label}</span>}
                     {active && !collapsed && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-violet-400" />}
@@ -232,7 +232,7 @@ export default function DesktopNav() {
               {MORE_ITEMS.map(item => {
                 const active = pathname === item.href || pathname.startsWith(item.href + '/')
                 return (
-                  <Link key={item.href} href={item.href} aria-current={active ? 'page' : undefined} className={`flex items-center gap-3 px-3 py-2 rounded-xl transition-all tap-feedback group ${active ? 'bg-violet-500/15 text-violet-400' : 'text-white/40 hover:text-white/60 hover:bg-white/[0.03]'}`}>
+                  <Link key={item.href} href={item.href} prefetch={true} aria-current={active ? 'page' : undefined} className={`flex items-center gap-3 px-3 py-2 rounded-xl transition-all tap-feedback group ${active ? 'bg-violet-500/15 text-violet-400' : 'text-white/40 hover:text-white/60 hover:bg-white/[0.03]'}`}>
                     <span className={`text-lg flex-shrink-0 ${active ? 'scale-110' : 'group-hover:scale-105'} transition-transform`}>{item.icon}</span>
                     {!collapsed && <span className="text-sm font-medium">{item.label}</span>}
                     {active && !collapsed && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-violet-400" />}

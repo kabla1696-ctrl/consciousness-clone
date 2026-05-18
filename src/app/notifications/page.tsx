@@ -86,7 +86,7 @@ function EmptyState({ filter }: { filter: FilterType }) {
 
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center">
-      <div className="text-5xl mb-4">{msg.icon}</div>
+      <div aria-hidden="true" className="text-5xl mb-4">{msg.icon}</div>
       <h3 className="text-white/40 font-semibold text-lg mb-2">{msg.title}</h3>
       <p className="text-white/20 text-sm max-w-xs">{msg.desc}</p>
     </div>

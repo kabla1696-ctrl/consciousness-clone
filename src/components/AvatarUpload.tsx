@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState, useCallback } from 'react'
+import Image from 'next/image'
 import { uploadFile, getPublicUrl, STORAGE_BUCKETS } from '@/lib/storage'
 
 interface AvatarUploadProps {
@@ -37,7 +38,7 @@ export default function AvatarUpload({
   /** Center-crop a file to a square and return a Blob */
   const cropToSquare = useCallback((file: File): Promise<Blob> => {
     return new Promise((resolve, reject) => {
-      const img = new Image()
+      const img = document.createElement('img')
       const url = URL.createObjectURL(file)
       img.onload = () => {
         URL.revokeObjectURL(url)
@@ -130,9 +131,11 @@ export default function AvatarUpload({
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); inputRef.current?.click() } }}
       >
         {displaySrc ? (
+          /* eslint-disable-next-line @next/next/no-img-element */
           <img
             src={displaySrc}
             alt="Avatar"
+            loading="lazy"
             className="w-full h-full object-cover"
           />
         ) : (

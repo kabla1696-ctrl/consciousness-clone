@@ -62,7 +62,7 @@ export default function Referral() {
 
       <div className="pt-24 px-6 max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <div className="text-6xl mb-4">🎁</div>
+          <div aria-hidden="true" className="text-6xl mb-4">🎁</div>
           <h1 className="text-4xl font-bold mb-4">{t('refer and earn')}</h1>
           <p className="text-white/30 text-lg">{t('invite friends')}</p>
         </div>

@@ -49,7 +49,7 @@ export default function About() {
         <div className="max-w-6xl mx-auto">
           {/* Hero */}
           <div className="text-center mb-20">
-            <div className="text-8xl mb-6">🧠</div>
+            <div aria-hidden="true" className="text-8xl mb-6">🧠</div>
             <h1 className="text-5xl md:text-7xl font-bold mb-6">
               About{' '}
               <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">Consciousness Clone</span>
@@ -134,7 +134,7 @@ export default function About() {
                   className="rounded-xl border border-white/[0.06] p-6 text-center hover:border-violet-500/30 transition group"
                   style={{ background: 'rgba(255,255,255,0.01)' }}
                 >
-                  <div className="text-5xl mb-3">{member.avatar}</div>
+                  <div aria-hidden="true" className="text-5xl mb-3">{member.avatar}</div>
                   <h3 className="font-semibold mb-1 group-hover:text-violet-400 transition">{member.name}</h3>
                   <div className="text-violet-400/70 text-xs mb-3">{member.role}</div>
                   <p className="text-white/30 text-xs leading-relaxed">{member.bio}</p>

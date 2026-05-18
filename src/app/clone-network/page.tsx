@@ -111,7 +111,7 @@ export default function CloneNetwork() {
             <div className="glass-card rounded-2xl p-6 mb-4 text-center relative">
               <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 to-fuchsia-500/5" />
               <div className="relative z-10">
-                <div className="text-5xl mb-3" style={{ filter: 'drop-shadow(0 0 20px rgba(139,92,246,0.3))' }}>{selectedClone.avatar}</div>
+                <div aria-hidden="true" className="text-5xl mb-3" style={{ filter: 'drop-shadow(0 0 20px rgba(139,92,246,0.3))' }}>{selectedClone.avatar}</div>
                 <h2 className="text-xl font-bold text-white mb-1">{selectedClone.name}</h2>
                 <p className="text-xs text-white/40 mb-3">{selectedClone.bio}</p>
                 <div className="flex flex-wrap gap-1.5 justify-center mb-3">

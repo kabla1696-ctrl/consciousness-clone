@@ -295,7 +295,7 @@ export default function Skills() {
           </div>
         ) : skills.length === 0 ? (
           <div className="text-center py-20">
-            <div className="text-6xl mb-4 drop-shadow-lg">🎯</div>
+            <div aria-hidden="true" className="text-6xl mb-4 drop-shadow-lg">🎯</div>
             <p className="text-white/30 text-lg font-medium">{t('no data')}</p>
             <p className="text-white/15 text-sm mt-2">Add your skills and let AI create personalized lessons</p>
           </div>

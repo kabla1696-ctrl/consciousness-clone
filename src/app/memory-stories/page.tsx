@@ -326,7 +326,7 @@ export default function MemoryStories() {
         {/* Empty State */}
         {!currentStory && !generating && (
           <div className="text-center py-16">
-            <div className="text-5xl mb-4 animate-bounce">📝</div>
+            <div aria-hidden="true" className="text-5xl mb-4 animate-bounce">📝</div>
             <p className="text-white/40 text-sm font-medium">Select a memory and style to create a story</p>
             <p className="text-white/20 text-xs mt-1.5">Your memories, reimagined as literature</p>
           </div>

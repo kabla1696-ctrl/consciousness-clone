@@ -207,7 +207,7 @@ export default function MirrorMode() {
         {messages.length === 0 && !loading && (
           <div className="text-center py-20">
             <div className="relative inline-block mb-4">
-              <div className="text-6xl">🪞</div>
+              <div aria-hidden="true" className="text-6xl">🪞</div>
               <div className="absolute inset-0 bg-violet-500/20 rounded-full blur-2xl scale-150" />
             </div>
             <p className="text-white/50 text-lg font-medium">{t('reflect')}</p>

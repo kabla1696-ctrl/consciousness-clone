@@ -184,7 +184,7 @@ export default function Dashboard() {
           <h2 className="text-xs font-semibold uppercase tracking-wider text-white/25 mb-3 px-1">⚡ Quick Actions</h2>
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-2">
             {QUICK_ACTIONS.map((qa) => (
-              <Link key={qa.href} href={qa.href} aria-label={qa.title} className="tap-feedback">
+              <Link key={qa.href} href={qa.href} prefetch={true} aria-label={qa.title} className="tap-feedback">
                 <div className="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] hover:bg-white/[0.04] transition-all duration-300 hover:scale-105 group">
                   <div className="text-xl group-hover:scale-110 transition-transform duration-300">{qa.icon}</div>
                   <span className="text-[10px] font-medium text-white/40 group-hover:text-white/60 transition-colors">{qa.title}</span>
@@ -240,7 +240,7 @@ export default function Dashboard() {
         {/* ─── Features Grid ─── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
           {filteredFeatures.map((f, i) => (
-            <Link key={f.href} href={f.href} aria-label={`${f.title} — ${f.desc}`} className="tap-feedback block">
+            <Link key={f.href} href={f.href} prefetch={true} aria-label={`${f.title} — ${f.desc}`} className="tap-feedback block">
               <div
                 className="float-card rounded-2xl p-4 transition-all duration-300 hover:scale-[1.03] group relative overflow-hidden h-full bg-white/[0.02] border border-white/[0.05] hover:border-white/[0.12]"
                 style={{ animationDelay: `${(i % 6) * -1}s` }}
@@ -284,7 +284,7 @@ export default function Dashboard() {
         <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mb-6" />
 
         {/* ─── Upgrade Banner ─── */}
-        <Link href="/pricing" aria-label={t('upgrade to pro')} className="block rounded-2xl p-5 tap-feedback mb-8 group relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.06), rgba(236,72,153,0.06))', border: '1px solid rgba(139,92,246,0.1)' }}>
+        <Link href="/pricing" prefetch={true} aria-label={t('upgrade to pro')} className="block rounded-2xl p-5 tap-feedback mb-8 group relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.06), rgba(236,72,153,0.06))', border: '1px solid rgba(139,92,246,0.1)' }}>
           {/* Shimmer effect */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.05), transparent)', animation: 'shimmer 2s infinite' }} />
           <div className="relative flex items-center gap-4">

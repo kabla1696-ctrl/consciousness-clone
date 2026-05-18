@@ -362,7 +362,7 @@ export default function AstronautMode() {
           {/* Central Dream Text with Aurora gradient */}
           <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
             <div className="animate-pulse mb-6">
-              <span className="text-6xl drop-shadow-[0_0_40px_rgba(139,92,246,0.6)]">🌙</span>
+              <span className="text-6xl drop-shadow-[0_0_40px_rgba(139,92,246,0.6)]" aria-hidden="true">🌙</span>
             </div>
             <h2 className="text-2xl font-bold bg-gradient-to-r from-violet-300 via-indigo-300 to-cyan-300 bg-clip-text text-transparent mb-2">
               {t('dream mode')}...
@@ -473,7 +473,7 @@ export default function AstronautMode() {
               <div className="relative">
                 <div className="w-28 h-28 mx-auto rounded-full bg-gradient-to-br from-indigo-500/20 to-violet-500/20 flex items-center justify-center mb-4 relative border border-indigo-500/10 backdrop-blur-sm animate-[float_4s_ease-in-out_infinite]">
                   <div className="absolute inset-0 rounded-full bg-gradient-to-br from-indigo-500/10 to-violet-500/10 animate-pulse" />
-                  <span className="text-5xl relative z-10 drop-shadow-[0_0_30px_rgba(99,102,241,0.4)]">🌌</span>
+                  <span className="text-5xl relative z-10 drop-shadow-[0_0_30px_rgba(99,102,241,0.4)]" aria-hidden="true">🌌</span>
                 </div>
               </div>
               <h2 className="text-lg font-bold bg-gradient-to-r from-indigo-300 to-violet-300 bg-clip-text text-transparent mb-1">{t('astronaut mode')}</h2>

@@ -121,7 +121,7 @@ function VideoUserPageInner() {
       {/* Ended state */}
       {callState === 'ended' && (
         <div className="absolute inset-0 z-50 flex flex-col items-center justify-center" style={{ background: 'linear-gradient(135deg, #050510, #080820)' }}>
-          <div className="text-6xl mb-4">📵</div>
+          <div aria-hidden="true" className="text-6xl mb-4">📵</div>
           <h2 className="text-xl font-bold text-white mb-1">Video Call Ended</h2>
           <p className="text-white/30 text-sm mb-2">{userName}</p>
           <p className="text-white/20 text-sm mb-8">Duration: {formatTimer(callTimer)}</p>
@@ -141,7 +141,7 @@ function VideoUserPageInner() {
             <div className="relative mb-6">
               <div className="absolute inset-0 rounded-full" style={{ animation: 'video-pulse 2s ease-out infinite', background: 'rgba(139,92,246,0.15)' }} />
               <div className="absolute inset-0 rounded-full" style={{ animation: 'video-pulse 2s ease-out 0.5s infinite', background: 'rgba(139,92,246,0.1)' }} />
-              <div className="relative w-28 h-28 rounded-full flex items-center justify-center text-5xl" style={{ background: 'rgba(139,92,246,0.12)', boxShadow: '0 0 60px rgba(139,92,246,0.15)' }}>
+              <div aria-hidden="true" className="relative w-28 h-28 rounded-full flex items-center justify-center text-5xl" style={{ background: 'rgba(139,92,246,0.12)', boxShadow: '0 0 60px rgba(139,92,246,0.15)' }}>
                 {userName[0]?.toUpperCase()}
               </div>
             </div>
@@ -167,7 +167,7 @@ function VideoUserPageInner() {
             {/* Simulated "their" video with animated gradient */}
             <div className="absolute inset-0 opacity-30" style={{ background: 'radial-gradient(ellipse at center, rgba(139,92,246,0.1), transparent 60%)' }} />
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <div className="w-32 h-32 rounded-full flex items-center justify-center text-5xl mb-4" style={{ background: 'rgba(139,92,246,0.1)', boxShadow: '0 0 80px rgba(139,92,246,0.1)' }}>
+              <div aria-hidden="true" className="w-32 h-32 rounded-full flex items-center justify-center text-5xl mb-4" style={{ background: 'rgba(139,92,246,0.1)', boxShadow: '0 0 80px rgba(139,92,246,0.1)' }}>
                 {userName[0]?.toUpperCase()}
               </div>
               <p className="text-white/30 text-sm">{userName}</p>

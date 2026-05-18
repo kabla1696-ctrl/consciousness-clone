@@ -205,7 +205,7 @@ export default function PersonalityEvolution() {
 
           {/* Current Stage Card */}
           <GlowCard glowColor="amber" className="p-5 text-center">
-            <div className="text-5xl mb-3" style={{ animation: evolving ? 'evolveSpin 1s ease-in-out' : 'none' }}>
+            <div aria-hidden="true" className="text-5xl mb-3" style={{ animation: evolving ? 'evolveSpin 1s ease-in-out' : 'none' }}>
               {currentStage.icon}
             </div>
             <div className="text-xs text-amber-400/60 uppercase tracking-widest mb-1">Level {level}</div>

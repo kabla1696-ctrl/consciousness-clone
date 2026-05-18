@@ -187,7 +187,7 @@ export default function LifeScorePage() {
           <div className="absolute inset-0 rounded-3xl border border-white/[0.08]" />
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/50 to-transparent" />
           <div className="relative p-8 text-center">
-            <div className="text-7xl mb-3 drop-shadow-lg">{level.icon}</div>
+            <div aria-hidden="true" className="text-7xl mb-3 drop-shadow-lg">{level.icon}</div>
             <div className="text-6xl font-black text-white mb-1 tracking-tight">
               {total}<span className="text-3xl text-white/20 font-light">/50</span>
             </div>

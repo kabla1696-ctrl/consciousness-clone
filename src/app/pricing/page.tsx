@@ -48,7 +48,7 @@ export default function Pricing() {
         <div className="max-w-6xl mx-auto">
           {/* Hero */}
           <div className="text-center mb-16">
-            <div className="text-8xl mb-6">🎉</div>
+            <div aria-hidden="true" className="text-8xl mb-6">🎉</div>
             <h1 className="text-5xl md:text-7xl font-bold mb-6">
               Everything is{' '}
               <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400 bg-clip-text text-transparent animate-pulse">FREE</span>
@@ -81,7 +81,7 @@ export default function Pricing() {
             <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-6 py-1.5 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full text-sm font-bold">
               🎁 No catch — really
             </div>
-            <div className="text-6xl font-bold text-white mb-2 mt-2">$0</div>
+            <div aria-hidden="true" className="text-6xl font-bold text-white mb-2 mt-2">$0</div>
             <div className="text-white/40 text-lg mb-6">forever</div>
             <p className="text-white/50 max-w-lg mx-auto mb-8">
               Every single feature. Unlimited usage. No hidden fees, no surprise charges, no &ldquo;upsell later.&rdquo;

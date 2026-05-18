@@ -210,7 +210,7 @@ Write in first person, as if the person is telling their own story. Be warm, ref
             {/* Book Cover */}
             <div className="inline-block mb-8">
               <div className="leather-texture w-56 h-72 rounded-2xl flex flex-col items-center justify-center gap-4 shadow-2xl shadow-violet-500/10 animate-glow-pulse">
-                <div className="text-5xl">📖</div>
+                <div aria-hidden="true" className="text-5xl">📖</div>
                 <div className="text-center px-4">
                   <h2 className="text-xl font-bold text-white/90 font-serif">My Life Story</h2>
                   <div className="w-16 h-px bg-gradient-to-r from-transparent via-violet-400/50 to-transparent mx-auto my-2" />
@@ -250,7 +250,7 @@ Write in first person, as if the person is telling their own story. Be warm, ref
           <div className="py-8 animate-slide-up">
             <div className="text-center mb-8">
               <div className="relative inline-block mb-4">
-                <div className="text-5xl animate-float" style={{ animation: 'float 3s ease-in-out infinite' }}>✍️</div>
+                <div aria-hidden="true" className="text-5xl animate-float" style={{ animation: 'float 3s ease-in-out infinite' }}>✍️</div>
                 <div className="absolute -inset-3 bg-violet-500/10 rounded-full blur-xl" />
               </div>
               <h2 className="text-2xl font-bold mb-2">Writing your story...</h2>

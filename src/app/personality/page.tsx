@@ -182,7 +182,7 @@ export default function PersonalityQuiz() {
           {/* Hero */}
           <div className="text-center mb-10 animate-slide-up">
             <div className="relative inline-block mb-6">
-              <div className="text-7xl">🧬</div>
+              <div aria-hidden="true" className="text-7xl">🧬</div>
               <div className="absolute inset-0 bg-violet-500/20 rounded-full blur-3xl" />
             </div>
             <h1 className="text-5xl font-black gradient-text mb-3">{t('personality')}</h1>
@@ -278,7 +278,7 @@ export default function PersonalityQuiz() {
         {/* Question */}
         <div className="text-center mb-10 animate-slide-up" key={currentQuestion}>
           <div className="relative inline-block mb-5">
-            <div className="text-6xl">🤔</div>
+            <div aria-hidden="true" className="text-6xl">🤔</div>
             <div className="absolute inset-0 bg-fuchsia-500/10 rounded-full blur-2xl animate-pulse" />
           </div>
           <h1 className="text-3xl md:text-4xl font-black text-white/95 mb-3 leading-tight">{q.question}</h1>

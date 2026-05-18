@@ -375,7 +375,7 @@ Structure your prediction as a narrative — paint a picture of what their ${cat
         {/* Empty State */}
         {!prediction && !generating && (
           <div className="text-center py-16">
-            <div className="text-5xl mb-4 animate-bounce">✨</div>
+            <div aria-hidden="true" className="text-5xl mb-4 animate-bounce">✨</div>
             <p className="text-white/40 text-sm font-medium">{t('choose timeframe and category')}</p>
             <p className="text-white/20 text-xs mt-1.5">{t('based on patterns in memories')}</p>
           </div>

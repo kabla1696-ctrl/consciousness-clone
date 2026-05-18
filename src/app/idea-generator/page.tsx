@@ -387,8 +387,8 @@ export default function IdeaGeneratorPage() {
         {currentIdeas.length === 0 && savedIdeas.length === 0 && !showHistory && (
           <div className="text-center py-14">
             <div className="relative inline-block mb-5">
-              <div className="absolute inset-0 text-6xl blur-2xl opacity-20">💡</div>
-              <div className="text-6xl relative" style={{ filter: 'drop-shadow(0 0 20px rgba(245, 158, 11, 0.25))' }}>💡</div>
+              <div aria-hidden="true" className="absolute inset-0 text-6xl blur-2xl opacity-20">💡</div>
+              <div aria-hidden="true" className="text-6xl relative" style={{ filter: 'drop-shadow(0 0 20px rgba(245, 158, 11, 0.25))' }}>💡</div>
             </div>
             <h2 className="text-lg font-bold bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent mb-2">{t('creative ideas')}</h2>
             <p className="text-white/25 text-sm max-w-sm mx-auto leading-relaxed">

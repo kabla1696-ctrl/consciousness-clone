@@ -157,7 +157,7 @@ export default function Changelog() {
         <div className="max-w-3xl mx-auto">
           {/* Hero */}
           <div className="text-center mb-16">
-            <div className="text-7xl mb-6">📋</div>
+            <div aria-hidden="true" className="text-7xl mb-6">📋</div>
             <h1 className="text-5xl md:text-6xl font-bold mb-4">
               What&apos;s{' '}
               <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400 bg-clip-text text-transparent">New</span>

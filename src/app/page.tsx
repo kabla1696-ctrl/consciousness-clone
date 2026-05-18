@@ -47,8 +47,8 @@ export default function Home() {
             <a href="#pricing" className="text-sm text-white/40 hover:text-white transition">Pricing</a>
           </div>
           <div className="flex gap-3 items-center">
-            <Link href="/login" className="px-5 py-2.5 text-sm text-white/50 hover:text-white transition">Sign In</Link>
-            <Link href="/signup" className="relative group px-6 py-2.5 text-sm font-semibold rounded-full">
+            <Link href="/login" prefetch={true} className="px-5 py-2.5 text-sm text-white/50 hover:text-white transition">Sign In</Link>
+            <Link href="/signup" prefetch={true} className="relative group px-6 py-2.5 text-sm font-semibold rounded-full">
               <div className="absolute inset-0 bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500" />
               <div className="absolute inset-0 bg-gradient-to-r from-violet-400 via-purple-400 to-fuchsia-400 opacity-0 group-hover:opacity-100 transition-opacity" />
               <span className="relative z-10">Get Started Free</span>
@@ -87,7 +87,7 @@ export default function Home() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-5 justify-center mb-20">
-            <Link href="/signup" className="group relative px-12 py-5 rounded-full text-lg font-semibold overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98]">
+            <Link href="/signup" prefetch={true} className="group relative px-12 py-5 rounded-full text-lg font-semibold overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98]">
               <div className="absolute inset-0 bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500" />
               <div className="absolute inset-0 bg-gradient-to-r from-violet-400 via-purple-400 to-fuchsia-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="absolute -inset-2 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full blur-xl opacity-40 group-hover:opacity-60 transition-opacity" />
@@ -96,7 +96,7 @@ export default function Home() {
                 <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
               </span>
             </Link>
-            <Link href="#how-it-works" className="group px-12 py-5 rounded-full text-lg font-medium border border-white/[0.08] hover:border-white/[0.15] transition-all hover:bg-white/[0.02]">
+            <Link href="#how-it-works" prefetch={true} className="group px-12 py-5 rounded-full text-lg font-medium border border-white/[0.08] hover:border-white/[0.15] transition-all hover:bg-white/[0.02]">
               <span className="flex items-center gap-2 text-white/60 group-hover:text-white/80">
                 Watch Demo
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
@@ -370,7 +370,7 @@ export default function Home() {
                         </li>
                       ))}
                     </ul>
-                    <Link href="/signup" className={`block text-center py-4 rounded-xl font-semibold transition-all ${plan.popular ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:shadow-lg hover:shadow-violet-500/25 hover:scale-[1.02]' : 'border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.02] text-white/60'}`}>
+                    <Link href="/signup" prefetch={true} className={`block text-center py-4 rounded-xl font-semibold transition-all ${plan.popular ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:shadow-lg hover:shadow-violet-500/25 hover:scale-[1.02]' : 'border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.02] text-white/60'}`}>
                       {plan.cta}
                     </Link>
                   </div>
@@ -399,7 +399,7 @@ export default function Home() {
               <p className="text-xl text-white/30 mb-12 max-w-lg mx-auto font-light">
                 Start building your digital consciousness today. Free forever. No credit card required.
               </p>
-              <Link href="/signup" className="group relative inline-flex items-center gap-3 px-14 py-6 rounded-full text-lg font-semibold overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98]">
+              <Link href="/signup" prefetch={true} className="group relative inline-flex items-center gap-3 px-14 py-6 rounded-full text-lg font-semibold overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98]">
                 <div className="absolute inset-0 bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500" />
                 <div className="absolute inset-0 bg-gradient-to-r from-violet-400 via-purple-400 to-fuchsia-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute -inset-4 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full blur-2xl opacity-30 group-hover:opacity-50 transition-opacity" />
@@ -428,7 +428,7 @@ export default function Home() {
               <h4 className="font-semibold mb-4 text-sm">Product</h4>
               <ul className="space-y-3">
                 {[{name: 'Features', href: '/#features'}, {name: 'Pricing', href: '/pricing'}, {name: 'Blog', href: '/blog'}, {name: 'API', href: '#'}].map((link, i) => (
-                  <li key={i}><a href={link.href} className="text-sm text-white/25 hover:text-white/60 transition">{link.name}</a></li>
+                  <li key={i}><Link href={link.href} prefetch={true} className="text-sm text-white/25 hover:text-white/60 transition">{link.name}</Link></li>
                 ))}
               </ul>
             </div>
@@ -444,8 +444,8 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/[0.03]">
             <p className="text-white/15 text-sm">© 2026 Consciousness Clone. All rights reserved.</p>
             <div className="flex gap-6 mt-4 md:mt-0">
-              <a href="/privacy" className="text-white/15 hover:text-white/40 transition text-sm">Privacy</a>
-              <a href="/terms" className="text-white/15 hover:text-white/40 transition text-sm">Terms</a>
+              <Link href="/privacy" prefetch={true} className="text-white/15 hover:text-white/40 transition text-sm">Privacy</Link>
+              <Link href="/terms" prefetch={true} className="text-white/15 hover:text-white/40 transition text-sm">Terms</Link>
               <a href="#" className="text-white/15 hover:text-white/40 transition text-sm">Security</a>
             </div>
           </div>

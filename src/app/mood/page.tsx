@@ -206,7 +206,7 @@ export default function MoodTrackerPage() {
       {showCelebration && (
         <div className="fixed inset-0 z-[100] pointer-events-none flex items-center justify-center">
           <div className="relative">
-            <div className="text-8xl bounce-select">✨</div>
+            <div aria-hidden="true" className="text-8xl bounce-select">✨</div>
             {/* Confetti particles */}
             {Array.from({ length: 8 }).map((_, i) => (
               <div key={i} className="absolute top-1/2 left-1/2 w-3 h-3 rounded-full" style={{
@@ -489,7 +489,7 @@ export default function MoodTrackerPage() {
         {/* Empty State */}
         {entries.length === 0 && !showCheckIn && (
           <div className="text-center py-20">
-            <div className="text-7xl mb-6" style={{ animation: 'float-subtle 4s ease-in-out infinite' }}>🎭</div>
+            <div aria-hidden="true" className="text-7xl mb-6" style={{ animation: 'float-subtle 4s ease-in-out infinite' }}>🎭</div>
             <h2 className="text-xl font-bold mb-2">Track Your Emotional Journey</h2>
             <p className="text-white/25 text-sm mb-8 max-w-sm mx-auto leading-relaxed">
               Log how you feel each day. Over time, you&apos;ll discover patterns and insights about your emotional wellbeing.

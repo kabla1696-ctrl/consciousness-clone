@@ -229,7 +229,7 @@ export default function CloneTherapy() {
           <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-purple-600/[0.05] blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
         </div>
         <div className="relative z-10 text-center px-6 max-w-md mx-auto">
-          <div className="text-5xl mb-6 animate-bounce">{showMoodCheckIn === 'before' ? '🫧' : '✨'}</div>
+          <div className="text-5xl mb-6 animate-bounce" aria-hidden="true">{showMoodCheckIn === 'before' ? '🫧' : '✨'}</div>
           <h2 className="text-xl font-bold text-white mb-2">{showMoodCheckIn === 'before' ? t('How are you feeling?') : t('How do you feel now?')}</h2>
           <p className="text-white/40 text-sm mb-8">{t('Rate your mood on a scale of 1–10')}</p>
           <div className="flex flex-wrap justify-center gap-3 mb-8">
@@ -321,7 +321,7 @@ export default function CloneTherapy() {
         <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 relative z-10">
           {messages.length === 0 && (
             <div className="text-center py-16">
-              <div className="text-5xl mb-4">{activeTypeInfo?.icon}</div>
+              <div aria-hidden="true" className="text-5xl mb-4">{activeTypeInfo?.icon}</div>
               <h2 className="text-lg font-bold text-white/90 mb-2">{t('Welcome to your')} {activeTypeInfo?.label} {t('session')}</h2>
               <p className="text-white/40 text-sm max-w-xs mx-auto">{t('I know your story. Let\'s work through this together. Share what\'s on your mind.')}</p>
             </div>

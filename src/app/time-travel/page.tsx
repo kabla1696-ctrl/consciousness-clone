@@ -131,7 +131,7 @@ export default function TimeTravelPage() {
       <div ref={chatRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
         {messages.length === 0 && (
           <div className="text-center py-12 text-white/20">
-            <div className="text-5xl mb-3">{getAgeEmoji(selectedAge)}</div>
+            <div aria-hidden="true" className="text-5xl mb-3">{getAgeEmoji(selectedAge)}</div>
             <p className="text-sm">{t('talk to yourself at age')} {selectedAge}</p>
             <p className="text-xs mt-1">{t(getAgeLabel(selectedAge).toLowerCase())} {t('perspective')}</p>
           </div>

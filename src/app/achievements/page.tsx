@@ -249,7 +249,7 @@ export default function AchievementsPage() {
 
         {filtered.length === 0 && (
           <div className="text-center py-16">
-            <div className="text-5xl mb-3">🏆</div>
+            <div aria-hidden="true" className="text-5xl mb-3">🏆</div>
             <p className="text-white/20">{t('locked')}</p>
           </div>
         )}

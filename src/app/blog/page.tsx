@@ -150,7 +150,7 @@ export default function BlogPage() {
           </div>
         ) : (
           <div className="text-center py-20">
-            <div className="text-5xl mb-4">🔍</div>
+            <div aria-hidden="true" className="text-5xl mb-4">🔍</div>
             <h3 className="text-xl font-semibold text-white/70 mb-2">No articles found</h3>
             <p className="text-white/40">Try a different search term or category.</p>
           </div>

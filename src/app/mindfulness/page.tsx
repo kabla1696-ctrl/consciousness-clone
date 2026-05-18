@@ -236,7 +236,7 @@ export default function Mindfulness() {
             {todayCheckIn ? (
               <div className="rounded-2xl border border-emerald-500/20 p-6 bg-emerald-500/[0.03] backdrop-blur-sm text-center shadow-lg shadow-emerald-500/5">
                 <div className="relative inline-block mb-3">
-                  <div className="text-5xl">{todayCheckIn.emoji}</div>
+                  <div aria-hidden="true" className="text-5xl">{todayCheckIn.emoji}</div>
                   <div className="absolute inset-0 bg-emerald-500/20 rounded-full blur-2xl scale-150" />
                 </div>
                 <p className="text-emerald-400 font-bold text-sm uppercase tracking-wider">You checked in today!</p>
@@ -438,7 +438,7 @@ export default function Mindfulness() {
             {!meditating ? (
               <div className="rounded-2xl border border-white/[0.08] p-8 bg-white/[0.02] backdrop-blur-sm text-center shadow-lg shadow-black/10">
                 <div className="relative inline-block mb-5">
-                  <div className="text-6xl">🧘</div>
+                  <div aria-hidden="true" className="text-6xl">🧘</div>
                   <div className="absolute inset-0 bg-violet-500/20 rounded-full blur-2xl scale-150" />
                 </div>
                 <h3 className="text-lg font-bold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent mb-2">AI Meditation Guide</h3>
