@@ -1,7 +1,8 @@
 'use client'
-import { useState, Suspense, useRef, useEffect } from 'react'
+import { useState, Suspense, useRef, useEffect, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import { useRealtimeMessages, type RealtimeMessage } from '@/hooks/useRealtime'
 
 interface Message {
   id: string
@@ -87,8 +88,9 @@ function ChatUserPageInner() {
   const sendMessage = () => {
     if (!input.trim()) return
     const now = new Date()
+    const msgId = `msg_${Date.now()}`
     const newMsg: Message = {
-      id: `msg_${Date.now()}`,
+      id: msgId,
       from: 'me',
       text: input.trim(),
       timestamp: now.toISOString(),
@@ -98,21 +100,30 @@ function ChatUserPageInner() {
     setInput('')
     inputRef.current?.focus()
 
-    // Simulate typing then reply
+    // Show typing indicator while waiting for clone's real-time response
     setIsTyping(true)
-    const delay = 1200 + Math.random() * 2500
-    setTimeout(() => {
-      setIsTyping(false)
-      const reply: Message = {
-        id: `msg_${Date.now()}`,
-        from: 'them',
-        text: REPLY_POOL[Math.floor(Math.random() * REPLY_POOL.length)],
-        timestamp: new Date().toISOString(),
-        read: false,
+
+    }
+
+  // Real-time subscription: incoming messages from the other user
+  const handleRealtimeMessage = useCallback((msg: RealtimeMessage) => {
+    // Only add messages not already in our list (avoid duplicates from own sends)
+    setMessages(prev => {
+      if (prev.some(m => m.id === msg.id)) return prev
+      // Map real-time row to our Message interface
+      const incoming: Message = {
+        id: msg.id,
+        from: msg.from,
+        text: msg.text,
+        timestamp: msg.timestamp,
+        read: msg.read,
       }
-      setMessages(prev => [...prev, reply])
-    }, delay)
-  }
+      return [...prev, incoming]
+    })
+    setIsTyping(false)
+  }, [])
+
+  const { connectionState } = useRealtimeMessages(userId, handleRealtimeMessage)
 
   const formatTime = (iso: string) => {
     try {
@@ -171,8 +182,8 @@ function ChatUserPageInner() {
           </div>
           <div className="flex-1 min-w-0">
             <span className="font-semibold text-sm text-white">{userName}</span>
-            <p className={`text-[10px] ${online ? 'text-emerald-400' : 'text-white/30'}`}>
-              {online ? '🟢 Online' : '⚪ Offline'}
+            <p className={`text-[10px] ${connectionState === 'connected' ? 'text-emerald-400' : connectionState === 'connecting' ? 'text-amber-400' : 'text-white/30'}`}>
+              {connectionState === 'connected' ? '🟢 Live' : connectionState === 'connecting' ? '🟡 Connecting...' : connectionState === 'error' ? '🔴 Offline' : '⚪ Offline'}
             </p>
           </div>
           <Link href={`/voice-user?user=${encodeURIComponent(userName)}&id=${userId}`} className="w-9 h-9 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-sm tap-feedback hover:bg-emerald-500/30 transition-colors">
