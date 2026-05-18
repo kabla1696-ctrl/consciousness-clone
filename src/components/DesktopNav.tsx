@@ -6,12 +6,10 @@ import { useState } from 'react'
 const NAV_ITEMS = [
   { href: '/dashboard', icon: '🏠', label: 'Dashboard' },
   { href: '/clone-feed', icon: '📰', label: 'Social Feed' },
-  { href: '/voice-call', icon: '📞', label: 'Voice Call' },
   { href: '/clone-connect', icon: '💬', label: 'Messages' },
-  { href: '/memories', icon: '🧠', label: 'Memories' },
+  { href: '/vault', icon: '🧠', label: 'Memories' },
   { href: '/personality', icon: '🧬', label: 'Personality' },
   { href: '/analytics', icon: '📈', label: 'Analytics' },
-  { href: '/vault', icon: '🔐', label: 'Vault' },
   { href: '/public-profile', icon: '🌐', label: 'Profile' },
   { href: '/language', icon: '🌍', label: 'Language' },
 ]

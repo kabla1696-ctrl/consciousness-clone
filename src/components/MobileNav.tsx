@@ -5,9 +5,8 @@ import { usePathname } from 'next/navigation'
 const TABS = [
   { href: '/dashboard', icon: '🏠', label: 'Home' },
   { href: '/clone-feed', icon: '📰', label: 'Feed' },
-  { href: '/vault', icon: '🔐', label: 'Vault' },
   { href: '/clone-connect', icon: '💬', label: 'Chat' },
-  { href: '/memories', icon: '🧠', label: 'Memory' },
+  { href: '/vault', icon: '🧠', label: 'Memory' },
 ]
 
 // Pages that have their own bottom input bars
