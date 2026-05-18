@@ -2,11 +2,17 @@
 import { ReactNode } from 'react'
 import { LanguageProvider } from '../lib/language-context'
 import { ToastProvider } from './Toast'
+import { ThemeProvider } from '../lib/theme-context'
+import { SoundProvider } from './SoundEffects'
 
 export default function Providers({ children }: { children: ReactNode }) {
   return (
-    <LanguageProvider>
-      <ToastProvider>{children}</ToastProvider>
-    </LanguageProvider>
+    <ThemeProvider>
+      <LanguageProvider>
+        <SoundProvider>
+          <ToastProvider>{children}</ToastProvider>
+        </SoundProvider>
+      </LanguageProvider>
+    </ThemeProvider>
   )
 }

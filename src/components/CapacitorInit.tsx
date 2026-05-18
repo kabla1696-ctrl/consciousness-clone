@@ -1,8 +1,26 @@
 'use client'
 
 import { useEffect } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
+
+const ONBOARDING_KEY = 'onboarding-completed'
+const PUBLIC_PATHS = ['/onboarding', '/login', '/signup', '/terms', '/privacy']
 
 export default function CapacitorInit() {
+  const router = useRouter()
+  const pathname = usePathname()
+
+  // Onboarding redirect
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    try {
+      const completed = localStorage.getItem(ONBOARDING_KEY)
+      if (!completed && !PUBLIC_PATHS.some((p) => pathname.startsWith(p))) {
+        router.replace('/onboarding')
+      }
+    } catch {}
+  }, [pathname, router])
+
   useEffect(() => {
     if (typeof window === 'undefined') return
 

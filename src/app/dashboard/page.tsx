@@ -5,6 +5,9 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { FEATURES, CATEGORIES } from '../../lib/features-data'
 import { useT } from '../../lib/language-context'
+import RecentActivity, { logActivity } from '../../components/RecentActivity'
+import SearchSuggestions from '../../components/SearchSuggestions'
+import AnimatedCounter from '../../components/AnimatedCounter'
 
 // Quick actions — the most popular features
 const QUICK_ACTIONS = [
@@ -36,8 +39,6 @@ export default function Dashboard() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [memoryCount, setMemoryCount] = useState(0)
   const [chatCount, setChatCount] = useState(0)
-  const [displayMemoryCount, setDisplayMemoryCount] = useState(0)
-  const [displayChatCount, setDisplayChatCount] = useState(0)
 
   const t = useT()
 
@@ -54,29 +55,12 @@ export default function Dashboard() {
         setMemoryCount(Array.isArray(mem) ? mem.length : 0)
         setChatCount(Array.isArray(chat) ? chat.length : 0)
       } catch { /* ignore */ }
+      logActivity({ type: 'page_visit', label: 'Visited Dashboard', path: '/dashboard', icon: '📊' })
     }
     init()
   }, [])
 
-  // Animated counter effect
-  useEffect(() => {
-    if (!isLoaded) return
-    const duration = 800
-    const steps = 30
-    const interval = duration / steps
 
-    let step = 0
-    const timer = setInterval(() => {
-      step++
-      const progress = step / steps
-      const ease = 1 - Math.pow(1 - progress, 3) // easeOutCubic
-      setDisplayMemoryCount(Math.round(memoryCount * ease))
-      setDisplayChatCount(Math.round(chatCount * ease))
-      if (step >= steps) clearInterval(timer)
-    }, interval)
-
-    return () => clearInterval(timer)
-  }, [isLoaded, memoryCount, chatCount])
 
   const logout = async () => {
     await supabase.auth.signOut()
@@ -169,13 +153,15 @@ export default function Dashboard() {
         {/* ─── Stats Section ─── */}
         <div className="grid grid-cols-3 gap-3 mb-8">
           {[
-            { value: displayMemoryCount, label: t('memories'), emoji: '📝', color: 'text-violet-400', gradient: 'from-violet-500/10 to-violet-600/5', border: 'border-violet-500/10', bar: 'from-violet-500' },
-            { value: displayChatCount, label: t('chat'), emoji: '💬', color: 'text-fuchsia-400', gradient: 'from-fuchsia-500/10 to-fuchsia-600/5', border: 'border-fuchsia-500/10', bar: 'from-fuchsia-500' },
-            { value: '∞', label: t('immortal'), emoji: '✨', color: 'text-emerald-400', gradient: 'from-emerald-500/10 to-emerald-600/5', border: 'border-emerald-500/10', bar: 'from-emerald-500' },
+            { value: memoryCount, label: t('memories'), emoji: '📝', color: 'text-violet-400', gradient: 'from-violet-500/10 to-violet-600/5', border: 'border-violet-500/10', bar: 'from-violet-500' },
+            { value: chatCount, label: t('chat'), emoji: '💬', color: 'text-fuchsia-400', gradient: 'from-fuchsia-500/10 to-fuchsia-600/5', border: 'border-fuchsia-500/10', bar: 'from-fuchsia-500' },
+            { value: -1, label: t('immortal'), emoji: '✨', color: 'text-emerald-400', gradient: 'from-emerald-500/10 to-emerald-600/5', border: 'border-emerald-500/10', bar: 'from-emerald-500' },
           ].map((s) => (
             <div key={s.label} className={`rounded-2xl bg-gradient-to-b ${s.gradient} border ${s.border} p-4 text-center transition-all duration-300 hover:scale-[1.04] hover:border-white/[0.08] cursor-default group`}>
               <div className="text-xs mb-1 opacity-60">{s.emoji}</div>
-              <div className={`text-2xl font-black ${s.color} tabular-nums`}>{s.value}</div>
+              <div className={`text-2xl font-black ${s.color} tabular-nums`}>
+                {s.value === -1 ? '∞' : <AnimatedCounter end={s.value} duration={800} />}
+              </div>
               <div className="text-white/25 text-[10px] font-medium uppercase tracking-wider mt-1">{s.label}</div>
               <div className={`w-8 h-0.5 bg-gradient-to-r ${s.bar} to-transparent rounded-full mx-auto mt-2 opacity-50 group-hover:opacity-100 group-hover:w-full transition-all duration-500`} />
             </div>
@@ -197,34 +183,19 @@ export default function Dashboard() {
           </div>
         </div>
 
+        {/* ─── Recent Activity ─── */}
+        <RecentActivity />
+
         {/* ─── Divider ─── */}
         <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mb-6" />
 
         {/* ─── Search Bar ─── */}
         <div className="mb-4">
-          <div className="relative group">
-            {/* Gradient border on focus */}
-            <div className="absolute -inset-px rounded-xl bg-gradient-to-r from-violet-500/50 to-fuchsia-500/50 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 blur-sm" />
-            <div className="relative">
-              <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-violet-400 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <input
-                type="text"
-                placeholder={t('search features')}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 rounded-xl glass-strong text-sm text-white/90 placeholder-white/20 outline-none focus:ring-1 focus:ring-violet-500/40 transition-all bg-white/[0.02]"
-              />
-              {searchQuery && (
-                <button onClick={() => setSearchQuery('')} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20 hover:text-white/50 transition-colors">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              )}
-            </div>
-          </div>
+          <SearchSuggestions
+            value={searchQuery}
+            onChange={setSearchQuery}
+            placeholder={t('search features')}
+          />
         </div>
 
         {/* ─── Category Tabs ─── */}
