@@ -536,7 +536,6 @@ button {
 .scroll-container {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: contain;
   scroll-behavior: smooth;
 }
 

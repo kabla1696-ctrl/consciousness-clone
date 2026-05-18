@@ -7,7 +7,7 @@ export default function Home() {
     <main className="min-h-screen bg-[#050510]">
       <AppRedirect />
       {/* Ultra Premium Background */}
-      <div className="fixed inset-0 z-0">
+      <div className="fixed inset-0 z-0 pointer-events-none">
         {/* Deep space gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#050510] via-[#0a0a2e] to-[#050510]" />
         

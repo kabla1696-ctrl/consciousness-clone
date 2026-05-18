@@ -168,7 +168,7 @@ export default function DreamLab() {
   return (
     <main className="min-h-screen bg-[#050510] page-transition relative">
       {/* Animated gradient bg */}
-      <div className="fixed inset-0 z-0">
+      <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute top-[-30%] left-[-20%] w-[70vw] h-[70vw] rounded-full bg-violet-900/20 blur-[120px] animate-[orb1_20s_ease-in-out_infinite]" />
         <div className="absolute bottom-[-20%] right-[-15%] w-[60vw] h-[60vw] rounded-full bg-purple-900/15 blur-[100px] animate-[orb2_25s_ease-in-out_infinite]" />
         <div className="absolute top-[40%] left-[50%] w-[40vw] h-[40vw] rounded-full bg-fuchsia-900/10 blur-[80px] animate-[orb3_18s_ease-in-out_infinite]" />
