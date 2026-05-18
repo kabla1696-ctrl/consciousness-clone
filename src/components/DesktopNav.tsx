@@ -11,8 +11,10 @@ const NAV_ITEMS = [
   { href: '/clone-feed', icon: '📰', label: 'Social Feed' },
   { href: '/clone-connect', icon: '💬', label: 'Messages' },
   { href: '/vault', icon: '🧠', label: 'Memories' },
+  { href: '/calendar', icon: '📅', label: 'Calendar' },
   { href: '/personality', icon: '🧬', label: 'Personality' },
   { href: '/analytics', icon: '📈', label: 'Analytics' },
+  { href: '/insights', icon: '📊', label: 'Insights' },
   { href: '/public-profile', icon: '🌐', label: 'Profile' },
   { href: '/language', icon: '🌍', label: 'Language' },
 ]
