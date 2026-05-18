@@ -802,6 +802,98 @@ button {
 }
 
 /* ============================================ */
+/* PERFORMANCE OPTIMIZATIONS                    */
+/* ============================================ */
+
+/* GPU-accelerate animated elements */
+@keyframes animatedGradientBorder,
+@keyframes gradient-shift,
+@keyframes gradient-bg,
+@keyframes shimmer,
+@keyframes shimmerBorder,
+@keyframes textGradientShift,
+@keyframes btnGradientShift {
+  will-change: background-position;
+}
+
+@keyframes orb1,
+@keyframes orb2,
+@keyframes orb3 {
+  will-change: transform;
+}
+
+@keyframes fadeIn,
+@keyframes fadeInUp,
+@keyframes fadeInLeft,
+@keyframes fadeInRight,
+@keyframes scaleIn,
+@keyframes pageEnter,
+@keyframes pageExit {
+  will-change: opacity, transform;
+}
+
+@keyframes twinkle,
+@keyframes glow-pulse,
+@keyframes pulse-btn,
+@keyframes pulse-ring,
+@keyframes ring-pulse,
+@keyframes input-glow {
+  will-change: opacity;
+}
+
+/* Contain layout for static wrappers */
+.glass,
+.glass-strong,
+.glass-card,
+.glass-card-animated,
+.glass-premium,
+.gradient-border-card,
+.shimmer-border {
+  contain: layout style;
+}
+
+/* Promote animated elements to their own layer */
+.float-card,
+.brain-pulse,
+.avatar-ring-pulse,
+.text-shimmer,
+.text-gradient-animated,
+.premium-progress,
+.glow-btn,
+.glow-pulse-hover {
+  transform: translateZ(0);
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .stars::after,
+  .stars2::after,
+  .stars3::after {
+    animation: none !important;
+  }
+
+  .ambient-orb {
+    animation: none !important;
+  }
+
+  .float-card {
+    animation: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ============================================ */
 /* PREMIUM DARK UI - ANIMATIONS & VISUAL EFFECTS */
 /* ============================================ */
 
@@ -1204,4 +1296,119 @@ button {
 
 .page-enter {
   animation: pageEnter 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ============================================ */
+/* ACCESSIBILITY (A11Y)                         */
+/* ============================================ */
+
+/* Skip Link */
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100000;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 0 0 12px 12px;
+  text-decoration: none;
+  transition: top 0.2s ease;
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid #c4b5fd;
+  outline-offset: 2px;
+}
+
+/* Focus-visible styles for keyboard navigation */
+:focus-visible {
+  outline: 2px solid #a78bfa;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+button:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid #a78bfa;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
+}
+
+/* Remove focus ring for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .stars::after,
+  .stars2::after,
+  .stars3::after {
+    animation: none !important;
+  }
+
+  .ambient-orb {
+    animation: none !important;
+  }
+
+  .particle {
+    animation: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .skip-link {
+    border: 2px solid LinkText;
+  }
+
+  button,
+  a,
+  input,
+  textarea {
+    border: 1px solid ButtonText;
+  }
+
+  .glass-card,
+  .glass-card-animated,
+  .glass,
+  .glass-strong,
+  .glass-premium {
+    border: 1px solid CanvasText;
+  }
+
+  :focus-visible {
+    outline: 3px solid Highlight;
+    outline-offset: 2px;
+  }
 }

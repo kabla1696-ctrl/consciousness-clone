@@ -6,6 +6,9 @@ import './globals.css'
 import CapacitorInit from '../components/CapacitorInit'
 import Providers from '../components/Providers'
 import AppShell from '../components/AppShell'
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/react'
+import SkipLink from '../components/SkipLink'
 
 const APP_URL = 'https://consciousness-clone.vercel.app'
 const APP_NAME = 'Consciousness Clone'
@@ -141,11 +144,14 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-[#050510] text-white antialiased">
+        <SkipLink />
         <Providers>
           <CapacitorInit />
           <AppShell>
             {children}
           </AppShell>
+          <Analytics />
+          <SpeedInsights />
         </Providers>
       </body>
     </html>

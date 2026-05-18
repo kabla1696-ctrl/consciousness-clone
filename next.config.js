@@ -6,6 +6,11 @@ const nextConfig = {
   // Security: don't expose "X-Powered-By: Next.js" header
   poweredByHeader: false,
 
+  // Remove console.log in production
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+
   // Compression (gzip) - enabled by default in production, explicit here
   compress: true,
 
