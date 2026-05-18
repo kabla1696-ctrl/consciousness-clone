@@ -1,140 +1,162 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import { useT } from '../../lib/language-context'
+import { useState, useMemo } from 'react';
+import type { Metadata } from 'next';
+import { blogPosts, categories, searchPosts, getPostsByCategory } from '@/lib/blog-data';
+import BlogCard from '@/components/BlogCard';
 
-const posts = [
-  {
-    id: 1,
-    title: "What is Digital Immortality?",
-    excerpt: "The concept of preserving human consciousness digitally has moved from science fiction to reality. Here's how Consciousness Clone is making it happen.",
-    category: "Concept",
-    readTime: "5 min",
-    date: "May 15, 2026",
-    emoji: "🧠",
-  },
-  {
-    id: 2,
-    title: "How AI Learns Your Personality",
-    excerpt: "Ever wonder how your clone starts thinking like you? We break down the AI techniques behind personality mirroring.",
-    category: "Technology",
-    readTime: "7 min",
-    date: "May 12, 2026",
-    emoji: "🤖",
-  },
-  {
-    id: 3,
-    title: "5 Reasons to Preserve Your Memories",
-    excerpt: "Your memories define who you are. Here's why preserving them digitally matters — for you and future generations.",
-    category: "Lifestyle",
-    readTime: "4 min",
-    date: "May 10, 2026",
-    emoji: "📝",
-  },
-  {
-    id: 4,
-    title: "Voice Cloning: The Future of Digital Presence",
-    excerpt: "Imagine your digital clone speaking in your exact voice. We explore the technology behind voice cloning and what it means for digital immortality.",
-    category: "Technology",
-    readTime: "6 min",
-    date: "May 8, 2026",
-    emoji: "🎤",
-  },
-  {
-    id: 5,
-    title: "Building a Legacy for Your Children",
-    excerpt: "How parents are using Consciousness Clone to leave behind more than just photos — their actual thoughts, stories, and wisdom.",
-    category: "Family",
-    readTime: "5 min",
-    date: "May 5, 2026",
-    emoji: "👨‍👩‍👧‍👦",
-  },
-  {
-    id: 6,
-    title: "The Ethics of Digital Consciousness",
-    excerpt: "As we build digital copies of human minds, important questions arise about identity, privacy, and what it means to be human.",
-    category: "Philosophy",
-    readTime: "8 min",
-    date: "May 3, 2026",
-    emoji: "🤔",
-  },
-]
+export default function BlogPage() {
+  const [activeCategory, setActiveCategory] = useState<string>('All');
+  const [searchQuery, setSearchQuery] = useState('');
 
-export default function Blog() {
-  const t = useT()
+  const filteredPosts = useMemo(() => {
+    if (searchQuery.trim()) {
+      return searchPosts(searchQuery);
+    }
+    return getPostsByCategory(activeCategory);
+  }, [activeCategory, searchQuery]);
+
   return (
     <main className="min-h-screen bg-[#050510]">
-      <nav className="fixed top-0 w-full z-50" style={{ background: 'rgba(5, 5, 16, 0.8)', backdropFilter: 'blur(40px)', borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center">🧠</div>
-            <span className="text-lg font-bold">Consciousness Clone</span>
-          </Link>
-          <div className="flex gap-6 items-center">
-            <Link href="/login" className="text-sm text-white/40 hover:text-white transition">Login</Link>
-            <Link href="/signup" className="px-5 py-2 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-lg text-sm font-semibold hover:opacity-90 transition">Get Started</Link>
-          </div>
-        </div>
-      </nav>
+      {/* Background */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050510] via-[#0a0a2e] to-[#050510]" />
+        <div
+          className="absolute top-[-200px] left-[-100px] w-[600px] h-[600px] rounded-full opacity-20"
+          style={{
+            background: 'radial-gradient(circle, rgba(139,92,246,0.4) 0%, transparent 70%)',
+            animation: 'orb1 15s ease-in-out infinite',
+          }}
+        />
+        <div
+          className="absolute bottom-[-200px] right-[-100px] w-[500px] h-[500px] rounded-full opacity-15"
+          style={{
+            background: 'radial-gradient(circle, rgba(217,70,239,0.4) 0%, transparent 70%)',
+            animation: 'orb2 20s ease-in-out infinite',
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage:
+              'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+            backgroundSize: '60px 60px',
+          }}
+        />
+      </div>
 
-      <div className="pt-24 px-6 max-w-6xl mx-auto pb-20">
+      {/* Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-24">
+        {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold mb-6">{t('blog')}</h1>
-          <p className="text-white/30 text-xl max-w-2xl mx-auto">
-            {t('articles')}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
+            style={{
+              background: 'rgba(139,92,246,0.1)',
+              border: '1px solid rgba(139,92,246,0.2)',
+            }}
+          >
+            <span className="text-sm">📝</span>
+            <span className="text-sm font-medium text-violet-400">Our Blog</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-white via-white to-white/60 bg-clip-text text-transparent">
+              Insights on Digital
+            </span>
+            <br />
+            <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
+              Consciousness
+            </span>
+          </h1>
+          <p className="text-lg text-white/50 max-w-2xl mx-auto">
+            Explore the frontier of digital immortality — technology, philosophy, and practical
+            guides for preserving your essence forever.
           </p>
         </div>
 
-        {/* Featured Post */}
-        <div className="rounded-2xl border border-violet-500/30 p-8 mb-10" style={{ background: 'rgba(139, 92, 246, 0.03)' }}>
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-4xl">{posts[0].emoji}</span>
-            <span className="px-3 py-1 bg-violet-500/20 rounded-full text-violet-400 text-xs font-semibold">{posts[0].category}</span>
-          </div>
-          <h2 className="text-3xl font-bold mb-4">{posts[0].title}</h2>
-          <p className="text-white/40 text-lg mb-6">{posts[0].excerpt}</p>
-          <div className="flex items-center gap-4 text-white/20 text-sm">
-            <span>{posts[0].date}</span>
-            <span>•</span>
-            <span>{posts[0].readTime} {t('read more')}</span>
+        {/* Search Bar */}
+        <div className="max-w-xl mx-auto mb-10">
+          <div
+            className="relative rounded-xl overflow-hidden"
+            style={{
+              background: 'rgba(255,255,255,0.03)',
+              border: '1px solid rgba(255,255,255,0.06)',
+            }}
+          >
+            <svg
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search articles..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-transparent pl-12 pr-4 py-3.5 text-sm text-white placeholder-white/30 outline-none"
+            />
           </div>
         </div>
 
-        {/* Blog Grid */}
-        <div className="grid md:grid-cols-3 gap-6">
-          {posts.slice(1).map((post) => (
-            <div key={post.id} className="rounded-2xl border border-white/[0.04] hover:border-white/[0.08] p-6 transition cursor-pointer group" style={{ background: 'rgba(255,255,255,0.01)' }}>
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-3xl">{post.emoji}</span>
-                <span className="px-3 py-1 bg-white/[0.04] rounded-full text-white/40 text-xs">{post.category}</span>
-              </div>
-              <h3 className="text-lg font-bold mb-3 group-hover:text-violet-400 transition">{post.title}</h3>
-              <p className="text-white/30 text-sm mb-4 line-clamp-3">{post.excerpt}</p>
-              <div className="flex items-center gap-3 text-white/20 text-xs">
-                <span>{post.date}</span>
-                <span>•</span>
-                <span>{post.readTime} {t('read more')}</span>
-              </div>
-            </div>
+        {/* Category Filter Tabs */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => {
+                setActiveCategory(cat);
+                setSearchQuery('');
+              }}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                activeCategory === cat && !searchQuery
+                  ? 'bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white shadow-lg shadow-purple-500/20'
+                  : 'text-white/40 hover:text-white/70'
+              }`}
+              style={
+                activeCategory !== cat || searchQuery
+                  ? {
+                      background: 'rgba(255,255,255,0.03)',
+                      border: '1px solid rgba(255,255,255,0.06)',
+                    }
+                  : undefined
+              }
+            >
+              {cat}
+            </button>
           ))}
         </div>
 
-        {/* Newsletter */}
-        <div className="mt-20 rounded-2xl border border-white/[0.04] p-10 text-center" style={{ background: 'rgba(255,255,255,0.01)' }}>
-          <h2 className="text-2xl font-bold mb-4">{t('latest posts')} 📬</h2>
-          <p className="text-white/30 mb-6">Get the latest insights on digital consciousness delivered to your inbox.</p>
-          <div className="flex gap-3 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="your@email.com"
-              className="flex-1 px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/50 transition text-white placeholder:text-white/20"
-            />
-            <button className="px-6 py-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl font-semibold hover:opacity-90 transition">
-              Subscribe
-            </button>
+        {/* Blog Grid */}
+        {filteredPosts.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredPosts.map((post, index) => (
+              <BlogCard
+                key={post.slug}
+                slug={post.slug}
+                title={post.title}
+                excerpt={post.excerpt}
+                date={post.date}
+                readTime={post.readTime}
+                category={post.category}
+                index={index}
+              />
+            ))}
           </div>
-        </div>
+        ) : (
+          <div className="text-center py-20">
+            <div className="text-5xl mb-4">🔍</div>
+            <h3 className="text-xl font-semibold text-white/70 mb-2">No articles found</h3>
+            <p className="text-white/40">Try a different search term or category.</p>
+          </div>
+        )}
       </div>
     </main>
-  )
+  );
 }
