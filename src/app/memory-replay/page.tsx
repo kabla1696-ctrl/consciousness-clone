@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface MemoryEntry {
   id: string; title: string; content: string; mood: string; date: string; tags: string[]; intensity: number
@@ -20,7 +21,7 @@ const MOODS = [
 
 export default function MemoryReplayPage() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [memories, setMemories] = useState<MemoryEntry[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -32,7 +33,7 @@ export default function MemoryReplayPage() {
   const [newContent, setNewContent] = useState('')
   const [newMood, setNewMood] = useState('happy')
   const [transitioning, setTransitioning] = useState(false)
-  const timerRef = useRef<any>(null)
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
     const init = async () => {

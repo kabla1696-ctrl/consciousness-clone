@@ -12,6 +12,7 @@ import AnimatedCounter from '../../components/AnimatedCounter'
 import FloatingActionButton from '../../components/FloatingActionButton'
 import ScrollToTop from '../../components/ScrollToTop'
 import FavoriteFeatures from '../../components/FavoriteFeatures'
+import type { User } from '@supabase/supabase-js'
 
 // Quick actions — the most popular features
 const QUICK_ACTIONS = [
@@ -36,7 +37,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 }
 
 export default function Dashboard() {
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [isLoaded, setIsLoaded] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -93,7 +94,7 @@ export default function Dashboard() {
   }
 
   return (
-    <main className="min-h-screen bg-[#050510] page-transition">
+    <main role="main" aria-label="Dashboard" className="min-h-screen bg-[#050510] page-transition overflow-x-hidden">
       {/* Floating Orbs Background */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute top-[-150px] left-[-80px] w-[500px] h-[500px] rounded-full opacity-20" style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.4) 0%, transparent 70%)', animation: 'orb1 20s ease-in-out infinite' }} />
@@ -112,7 +113,7 @@ export default function Dashboard() {
       </div>
 
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#050510]/80 backdrop-blur-2xl border-b border-white/[0.04] safe-top">
+      <header role="banner" className="sticky top-0 z-50 bg-[#050510]/80 backdrop-blur-2xl border-b border-white/[0.04] safe-top">
         <div className="px-4 py-3 flex justify-between items-center max-w-2xl mx-auto">
           <div className="flex items-center gap-3">
             <div className="relative">
@@ -123,13 +124,13 @@ export default function Dashboard() {
             </div>
             <span className="text-base font-bold tracking-tight bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Consciousness Clone</span>
           </div>
-          <button onClick={logout} className="text-white/30 text-xs tap-feedback px-3 py-1.5 rounded-lg glass hover:text-white/50 transition-colors">
+          <button onClick={logout} aria-label={t('logout')} className="text-white/30 text-xs tap-feedback px-3 py-1.5 rounded-lg glass hover:text-white/50 transition-colors">
             {t('logout')}
           </button>
         </div>
       </header>
 
-      <div className="relative z-10 px-4 py-6 pb-24 md:pb-8 scroll-container max-w-2xl mx-auto">
+      <div className="relative z-10 px-4 sm:px-6 py-6 pb-24 md:pb-8 scroll-container max-w-2xl mx-auto">
 
         {/* ─── Welcome Section ─── */}
         <div className="mb-8">
@@ -155,7 +156,7 @@ export default function Dashboard() {
         <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mb-8" />
 
         {/* ─── Stats Section ─── */}
-        <div className="grid grid-cols-3 gap-3 mb-8">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-8">
           {[
             { value: memoryCount, label: t('memories'), emoji: '📝', color: 'text-violet-400', gradient: 'from-violet-500/10 to-violet-600/5', border: 'border-violet-500/10', bar: 'from-violet-500' },
             { value: chatCount, label: t('chat'), emoji: '💬', color: 'text-fuchsia-400', gradient: 'from-fuchsia-500/10 to-fuchsia-600/5', border: 'border-fuchsia-500/10', bar: 'from-fuchsia-500' },
@@ -181,9 +182,9 @@ export default function Dashboard() {
         {/* ─── Quick Actions ─── */}
         <div className="mb-8">
           <h2 className="text-xs font-semibold uppercase tracking-wider text-white/25 mb-3 px-1">⚡ Quick Actions</h2>
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-2">
             {QUICK_ACTIONS.map((qa) => (
-              <Link key={qa.href} href={qa.href} className="tap-feedback">
+              <Link key={qa.href} href={qa.href} aria-label={qa.title} className="tap-feedback">
                 <div className="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] hover:bg-white/[0.04] transition-all duration-300 hover:scale-105 group">
                   <div className="text-xl group-hover:scale-110 transition-transform duration-300">{qa.icon}</div>
                   <span className="text-[10px] font-medium text-white/40 group-hover:text-white/60 transition-colors">{qa.title}</span>
@@ -217,6 +218,8 @@ export default function Dashboard() {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
+                  aria-label={`Filter by ${cat}`}
+                  aria-pressed={isActive}
                   className={`relative px-4 py-2 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-300 ${
                     isActive
                       ? 'text-white shadow-lg shadow-violet-500/20'
@@ -235,9 +238,9 @@ export default function Dashboard() {
         </div>
 
         {/* ─── Features Grid ─── */}
-        <div className="grid grid-cols-2 gap-3 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
           {filteredFeatures.map((f, i) => (
-            <Link key={f.href} href={f.href} className="tap-feedback block">
+            <Link key={f.href} href={f.href} aria-label={`${f.title} — ${f.desc}`} className="tap-feedback block">
               <div
                 className="float-card rounded-2xl p-4 transition-all duration-300 hover:scale-[1.03] group relative overflow-hidden h-full bg-white/[0.02] border border-white/[0.05] hover:border-white/[0.12]"
                 style={{ animationDelay: `${(i % 6) * -1}s` }}
@@ -272,7 +275,7 @@ export default function Dashboard() {
             <div className="col-span-2 text-center py-16">
               <div className="text-4xl mb-3">🔍</div>
               <p className="text-white/25 text-sm">{t('no features match')}</p>
-              <button onClick={() => { setSearchQuery(''); setActiveCategory('All') }} className="text-violet-400 text-xs mt-3 hover:underline">{t('clear filters')}</button>
+              <button onClick={() => { setSearchQuery(''); setActiveCategory('All') }} aria-label={t('clear filters')} className="text-violet-400 text-xs mt-3 hover:underline">{t('clear filters')}</button>
             </div>
           )}
         </div>
@@ -281,7 +284,7 @@ export default function Dashboard() {
         <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mb-6" />
 
         {/* ─── Upgrade Banner ─── */}
-        <Link href="/pricing" className="block rounded-2xl p-5 tap-feedback mb-8 group relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.06), rgba(236,72,153,0.06))', border: '1px solid rgba(139,92,246,0.1)' }}>
+        <Link href="/pricing" aria-label={t('upgrade to pro')} className="block rounded-2xl p-5 tap-feedback mb-8 group relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(139,92,246,0.06), rgba(236,72,153,0.06))', border: '1px solid rgba(139,92,246,0.1)' }}>
           {/* Shimmer effect */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.05), transparent)', animation: 'shimmer 2s infinite' }} />
           <div className="relative flex items-center gap-4">

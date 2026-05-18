@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface FamilyMember {
   id: string
@@ -52,7 +53,7 @@ function getRelInfo(relation: string) {
 
 export default function FamilyTreePage() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [members, setMembers] = useState<FamilyMember[]>([])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -83,11 +84,11 @@ export default function FamilyTreePage() {
   const loadMembers = async (userId: string) => {
     const { data } = await supabase
       .from('family_members')
-      .select('*')
+      .select('id, name, relation, birth_year, bio, photo_url, memories, created_at')
       .eq('user_id', userId)
       .order('created_at', { ascending: true })
 
-    if (data) setMembers(data)
+    if (data) setMembers(data as FamilyMember[])
   }
 
   const resetForm = () => {

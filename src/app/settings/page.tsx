@@ -328,7 +328,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050510] text-white px-4 py-8">
+    <div className="min-h-screen bg-[#050510] text-white px-4 sm:px-6 py-8 overflow-x-hidden">
       <div className="max-w-lg mx-auto">
         <h1 className="text-2xl font-bold mb-6" style={{ color: theme.color }}>
           ⚙️ Settings
@@ -366,7 +366,7 @@ export default function SettingsPage() {
             </button>
           </div>
 
-          <div className="grid grid-cols-4 gap-4 mb-4">
+          <div className="grid grid-cols-4 gap-3 sm:gap-4 mb-4">
             {themes.map(t => (
               <button
                 key={t.id}
@@ -537,7 +537,7 @@ export default function SettingsPage() {
             </div>
             <div className="border-t border-white/[0.06] pt-3">
               <p className="text-white/40 text-xs mb-2">Follow us</p>
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <a
                   href="https://twitter.com"
                   target="_blank"

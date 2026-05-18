@@ -4,10 +4,11 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 export default function Share() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [shareLink, setShareLink] = useState('')
   const [copied, setCopied] = useState(false)
   const [settings, setSettings] = useState({

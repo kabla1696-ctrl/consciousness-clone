@@ -2,8 +2,10 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-import GlobalSearch from './GlobalSearch'
-import NotificationCenter from './NotificationCenter'
+import dynamic from 'next/dynamic'
+
+const GlobalSearch = dynamic(() => import('./GlobalSearch'), { ssr: false })
+const NotificationCenter = dynamic(() => import('./NotificationCenter'), { ssr: false })
 
 const TABS = [
   { href: '/dashboard', icon: '🏠', label: 'Home' },

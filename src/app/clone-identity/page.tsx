@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface PersonProfile {
   id: string
@@ -31,7 +32,7 @@ const STORAGE_KEY = 'consciousness-clone-identity'
 
 export default function CloneIdentityPage() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [profiles, setProfiles] = useState<PersonProfile[]>([])
   const [showAdd, setShowAdd] = useState(false)
@@ -106,7 +107,7 @@ export default function CloneIdentityPage() {
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           messages: [{ role: 'user', content: `A message was received: "${testInput}". Based on these text samples from ${profile.name} (${profile.relation}): ${profile.textSamples.join(' | ')}. Rate confidence 0-100% that this message is from ${profile.name}. Reply in format: "Confidence: X%. Reason: brief explanation."` }],
           systemPrompt: 'You are a text pattern analyzer. Compare writing styles and give confidence scores.'

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface CheckIn {
   id: string
@@ -25,7 +26,7 @@ function loadJSON<T>(key: string, fallback: T): T {
   if (typeof window === 'undefined') return fallback
   try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)) } catch { return fallback }
 }
-function saveJSON(key: string, data: any) {
+function saveJSON(key: string, data: unknown) {
   localStorage.setItem(key, JSON.stringify(data))
 }
 
@@ -44,7 +45,7 @@ const FEELINGS = [
 
 export default function Mindfulness() {
   const t = useT();
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [tab, setTab] = useState<'checkin' | 'breathe' | 'gratitude' | 'meditate'>('checkin')
 
   const [checkins, setCheckins] = useState<CheckIn[]>([])
@@ -139,7 +140,7 @@ export default function Mindfulness() {
       const recentMood = checkins.length > 0 ? checkins[0].emoji : 'neutral'
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           message: `Generate a short 2-minute guided meditation script. The user is currently feeling ${recentMood}. Make it calming, specific, and easy to follow. Include breathing cues. Keep it under 200 words.`,
         }),

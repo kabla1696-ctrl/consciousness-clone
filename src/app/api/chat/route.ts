@@ -1,14 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { rateLimit } from '../../../lib/rate-limit'
+import { sanitizeInput } from '../../../lib/sanitize'
+import { verifyCsrf } from '../../../lib/csrf'
 
 export async function POST(req: NextRequest) {
   try {
+    // CSRF protection
+    const csrfValid = await verifyCsrf(req)
+    if (!csrfValid) {
+      return NextResponse.json({ error: 'Invalid CSRF token' }, { status: 403 })
+    }
+
+    // Rate limit by IP — 30 requests per minute
+    const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
+    const { success, remaining, resetAt } = rateLimit({ key: `chat:${ip}`, limit: 30, windowSeconds: 60 })
+    if (!success) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429, headers: { 'Retry-After': String(Math.ceil((resetAt - Date.now()) / 1000)) } }
+      )
+    }
+
     const { messages, memories } = await req.json()
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json({ error: 'Invalid messages' }, { status: 400 })
     }
 
-    const memorySection = memories ? `\n\n=== USER'S COMPLETE LIFE MEMORIES ===\nRead ALL of these carefully. These are the user's REAL memories, experiences, thoughts, and feelings. Use EVERY detail to understand who they are — their personality, language style, humor, fears, dreams, values, and worldview.\n\n${memories}\n\n=== END OF MEMORIES ===\n\nNow you KNOW this person deeply. Talk EXACTLY like them. Reference specific memories when relevant. You ARE them.` : ''
+    // Sanitize memory text if provided
+    const sanitizedMemories = memories ? sanitizeInput(String(memories).slice(0, 50_000)) : null
+
+    const memorySection = sanitizedMemories ? `\n\n=== USER'S COMPLETE LIFE MEMORIES ===\nRead ALL of these carefully. These are the user's REAL memories, experiences, thoughts, and feelings. Use EVERY detail to understand who they are — their personality, language style, humor, fears, dreams, values, and worldview.\n\n${sanitizedMemories}\n\n=== END OF MEMORIES ===\n\nNow you KNOW this person deeply. Talk EXACTLY like them. Reference specific memories when relevant. You ARE them.` : ''
 
     const apiMessages = [
       {
@@ -79,8 +101,9 @@ ${memorySection}`,
     }
 
     return NextResponse.json({ reply })
-  } catch (error: any) {
-    console.error('Chat API error:', error?.message || error)
-    return NextResponse.json({ error: 'Something went wrong', details: error?.message }, { status: 500 })
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error)
+    console.error('Chat API error:', message)
+    return NextResponse.json({ error: 'Something went wrong', details: message }, { status: 500 })
   }
 }

@@ -143,6 +143,7 @@ export default function FavoriteFeatures() {
           <p className="text-white/20 text-xs">Pin your favorite features here</p>
           <button
             onClick={() => setIsEditing(true)}
+            aria-label="Select favorites"
             className="text-violet-400/60 text-xs mt-2 hover:text-violet-400 transition-colors"
           >
             Select favorites →
@@ -163,6 +164,7 @@ export default function FavoriteFeatures() {
         </h2>
         <button
           onClick={() => setIsEditing((e) => !e)}
+          aria-label={isEditing ? 'Done editing favorites' : 'Edit favorites'}
           className="text-[10px] text-violet-400/60 hover:text-violet-400 transition-colors px-2 py-1 rounded-lg hover:bg-violet-500/10"
         >
           {isEditing ? 'Done' : 'Edit'}
@@ -212,6 +214,7 @@ export default function FavoriteFeatures() {
                         e.stopPropagation()
                         toggleFavorite(f.href)
                       }}
+                      aria-label={`Remove ${f.title} from favorites`}
                       className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500/80 flex items-center justify-center text-white text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500 shadow-lg"
                     >
                       ✕
@@ -239,6 +242,8 @@ export default function FavoriteFeatures() {
                   key={f.href}
                   onClick={() => !atMax && toggleFavorite(f.href)}
                   disabled={atMax}
+                  aria-label={`${isFav ? 'Remove' : 'Add'} ${f.title} ${isFav ? 'from' : 'to'} favorites`}
+                  aria-pressed={isFav}
                   className={`relative p-2 rounded-lg text-center transition-all duration-200 ${
                     isFav
                       ? 'bg-violet-500/10 border border-violet-500/20'

@@ -481,6 +481,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'breathing exercise': 'Breathing Exercise',
     'open in spotify': 'Open in Spotify',
     'test tamper detection': 'Test tamper detection',
+    'error.something_went_wrong': 'Something went wrong',
+    'error.try_again': 'Try Again',
+    'error.go_home': 'Go Home',
   },
   af: {
     'dashboard': 'Paneelbord',
@@ -845,6 +848,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Rugsteun',
     'restore': 'Herstel',
     'sync': 'Outomatiese Rugsteun',
+    'error.something_went_wrong': 'Iets het verkeerd geloop',
+    'error.try_again': 'Probeer weer',
+    'error.go_home': 'Tuis',
   },
   am: {
     'dashboard': 'ዳሽቦርድ',
@@ -1209,6 +1215,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'ተተኪ',
     'restore': 'መልስ',
     'sync': 'ራስ-ተሰኪ',
+    'error.something_went_wrong': 'ችግር ተፈጥሯል',
+    'error.try_again': 'እንደገና ሞክር',
+    'error.go_home': 'ወደ መነሻ',
   },
   ar: {
     'dashboard': 'لوحة التحكم',
@@ -1573,6 +1582,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'نسخ احتياطي',
     'restore': 'استعادة',
     'sync': 'نسخ احتياطي تلقائي',
+    'error.something_went_wrong': 'حدث خطأ ما',
+    'error.try_again': 'حاول مرة أخرى',
+    'error.go_home': 'العودة للرئيسية',
   },
   bn: {
     'dashboard': 'ড্যাশবোর্ড',
@@ -1937,6 +1949,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'ব্যাকআপ',
     'restore': 'রিস্টোর',
     'sync': 'অটো-ব্যাকআপ',
+    'error.something_went_wrong': 'কিছু ভুল হয়েছে',
+    'error.try_again': 'আবার চেষ্টা করুন',
+    'error.go_home': 'বাড়ি যান',
   },
   cs: {
     'dashboard': 'Panel',
@@ -2301,6 +2316,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Záloha',
     'restore': 'Obnovit',
     'sync': 'Automatická záloha',
+    'error.something_went_wrong': 'Něco se pokazilo',
+    'error.try_again': 'Zkusit znovu',
+    'error.go_home': 'Domů',
   },
   da: {
     'dashboard': 'Kontrolpanel',
@@ -2665,6 +2683,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Backup',
     'restore': 'Gendan',
     'sync': 'Auto-backup',
+    'error.something_went_wrong': 'Noget gik galt',
+    'error.try_again': 'Prøv igen',
+    'error.go_home': 'Hjem',
   },
   de: {
     'dashboard': 'Dashboard',
@@ -3029,6 +3050,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Backup',
     'restore': 'Wiederherstellen',
     'sync': 'Auto-Backup',
+    'error.something_went_wrong': 'Etwas ist schiefgelaufen',
+    'error.try_again': 'Erneut versuchen',
+    'error.go_home': 'Zur Startseite',
   },
   el: {
     'dashboard': 'Πίνακας Ελέγχου',
@@ -3393,6 +3417,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Αντίγραφο',
     'restore': 'Επαναφορά',
     'sync': 'Αυτόματο Αντίγραφο',
+    'error.something_went_wrong': 'Κάτι πήγε στραβά',
+    'error.try_again': 'Δοκιμάστε ξανά',
+    'error.go_home': 'Αρχική',
   },
   es: {
     'dashboard': 'Panel',
@@ -3757,6 +3784,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Respaldo',
     'restore': 'Restaurar',
     'sync': 'Respaldo automático',
+    'error.something_went_wrong': 'Algo salió mal',
+    'error.try_again': 'Intentar de nuevo',
+    'error.go_home': 'Ir al inicio',
   },
   fa: {
     'dashboard': 'داشبورد',
@@ -4121,6 +4151,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'پشتیبان‌گیری',
     'restore': 'بازیابی',
     'sync': 'پشتیبان‌گیری خودکار',
+    'error.something_went_wrong': 'مشکلی پیش آمد',
+    'error.try_again': 'دوباره تلاش کنید',
+    'error.go_home': 'صفحه اصلی',
   },
   fi: {
     'dashboard': 'Hallintapaneeli',
@@ -4485,6 +4518,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Varmuuskopio',
     'restore': 'Palauta',
     'sync': 'Automaattinen varmuuskopio',
+    'error.something_went_wrong': 'Jokin meni pieleen',
+    'error.try_again': 'Yritä uudelleen',
+    'error.go_home': 'Koti',
   },
   fr: {
     'dashboard': 'Tableau de bord',
@@ -4849,6 +4885,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Sauvegarde',
     'restore': 'Restaurer',
     'sync': 'Sauvegarde auto',
+    'error.something_went_wrong': "Quelque chose s'est mal passé",
+    'error.try_again': 'Réessayer',
+    'error.go_home': 'Accueil',
   },
   ha: {
     'dashboard': 'Dashboard',
@@ -5213,6 +5252,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Ajiye',
     'restore': 'Mayar',
     'sync': 'Ajiyar Kai-kai',
+    'error.something_went_wrong': 'Wani abu ya faru',
+    'error.try_again': 'Sake gwadawa',
+    'error.go_home': 'Gida',
   },
   he: {
     'dashboard': 'לוח בקרה',
@@ -5577,6 +5619,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'גיבוי',
     'restore': 'שחזר',
     'sync': 'גיבוי אוטומטי',
+    'error.something_went_wrong': 'משהו השתבש',
+    'error.try_again': 'נסה שוב',
+    'error.go_home': 'חזרה לדף הבית',
   },
   hi: {
     'dashboard': 'डैशबोर्ड',
@@ -5941,6 +5986,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'बैकअप',
     'restore': 'रिस्टोर',
     'sync': 'ऑटो-बैकअप',
+    'error.something_went_wrong': 'कुछ गलत हो गया',
+    'error.try_again': 'पुनः प्रयास करें',
+    'error.go_home': 'होम पर जाएं',
   },
   hu: {
     'dashboard': 'Vezérlőpult',
@@ -6305,6 +6353,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Mentés',
     'restore': 'Visszaállítás',
     'sync': 'Automatikus mentés',
+    'error.something_went_wrong': 'Valami hiba történt',
+    'error.try_again': 'Újrapróbálás',
+    'error.go_home': 'Kezdőlap',
   },
   hy: {
     'dashboard': 'Վահանակ',
@@ -6669,6 +6720,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Պահուստ',
     'restore': 'Վերականգնել',
     'sync': 'Ավտոմատ պահուստ',
+    'error.something_went_wrong': 'Ինչ-որ բան սխալ է',
+    'error.try_again': 'Փորձել նորից',
+    'error.go_home': 'Գլխավոր',
   },
   id: {
     'dashboard': 'Dasbor',
@@ -7033,6 +7087,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Cadangan',
     'restore': 'Pulihkan',
     'sync': 'Cadangan Otomatis',
+    'error.something_went_wrong': 'Terjadi kesalahan',
+    'error.try_again': 'Coba lagi',
+    'error.go_home': 'Ke beranda',
   },
   ig: {
     'dashboard': 'Ndị Njikwa',
@@ -7397,6 +7454,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Nchekwa',
     'restore': 'Laghachi',
     'sync': 'Nchekwa Onwe',
+    'error.something_went_wrong': 'Ihe mere',
+    'error.try_again': 'Nwaa ọzọ',
+    'error.go_home': 'Gaa ụlọ',
   },
   it: {
     'dashboard': 'Pannello',
@@ -7761,6 +7821,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Backup',
     'restore': 'Ripristina',
     'sync': 'Backup automatico',
+    'error.something_went_wrong': 'Qualcosa è andato storto',
+    'error.try_again': 'Riprova',
+    'error.go_home': 'Vai alla home',
   },
   ja: {
     'dashboard': 'ダッシュボード',
@@ -8125,6 +8188,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'バックアップ',
     'restore': '復元',
     'sync': '自動バックアップ',
+    'error.something_went_wrong': '問題が発生しました',
+    'error.try_again': '再試行',
+    'error.go_home': 'ホームに戻る',
   },
   ka: {
     'dashboard': 'მართვის პანელი',
@@ -8489,6 +8555,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'სარეზერვო',
     'restore': 'აღდგენა',
     'sync': 'ავტომატური სარეზერვო',
+    'error.something_went_wrong': 'Რაღაც არასწორი მოხდა',
+    'error.try_again': 'თავიდან სცადე',
+    'error.go_home': 'მთავარი',
   },
   km: {
     'dashboard': 'ផ្ទាំងគ្រប់គ្រង',
@@ -8853,6 +8922,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'បម្រុងទុក',
     'restore': 'ស្តារ',
     'sync': 'សមកាលកម្ម',
+    'error.something_went_wrong': 'មានបញ្ហាអ្វីមួយ',
+    'error.try_again': 'ព្យាយាមម្តងទៀត',
+    'error.go_home': 'ទំព័រដើម',
   },
   ko: {
     'dashboard': '대시보드',
@@ -9217,6 +9289,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': '백업',
     'restore': '복원',
     'sync': '자동 백업',
+    'error.something_went_wrong': '문제가 발생했습니다',
+    'error.try_again': '다시 시도',
+    'error.go_home': '홈으로',
   },
   lo: {
     'dashboard': 'ແຜງຄວບຄຸມ',
@@ -9581,6 +9656,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'ສຳຮອງ',
     'restore': 'ກູ້ຄືນ',
     'sync': 'ສຳຮອງອັດຕະໂນມັດ',
+    'error.something_went_wrong': 'ມີບາງຢ່າງຜິດພາດ',
+    'error.try_again': 'ລອງໃໝ່',
+    'error.go_home': 'ໜ້າຫຼັກ',
   },
   ms: {
     'dashboard': 'Papan Pemuka',
@@ -9945,6 +10023,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Sandaran',
     'restore': 'Pulihkan',
     'sync': 'Sandaran Auto',
+    'error.something_went_wrong': 'Sesuatu telah berlaku',
+    'error.try_again': 'Cuba lagi',
+    'error.go_home': 'Ke laman utama',
   },
   ne: {
     'dashboard': 'ड्यासबोर्ड',
@@ -10309,6 +10390,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'ब्याकअप',
     'restore': 'पुनर्स्थापना गर्नुहोस्',
     'sync': 'स्वत: ब्याकअप',
+    'error.something_went_wrong': 'केही गलत भयो',
+    'error.try_again': 'फेरि प्रयास गर्नुहोस्',
+    'error.go_home': 'गृहपृष्ठ',
   },
   nl: {
     'dashboard': 'Dashboard',
@@ -10673,6 +10757,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Back-up',
     'restore': 'Herstellen',
     'sync': 'Automatische back-up',
+    'error.something_went_wrong': 'Er is iets misgegaan',
+    'error.try_again': 'Opnieuw proberen',
+    'error.go_home': 'Naar startpagina',
   },
   no: {
     'dashboard': 'Kontrollpanel',
@@ -11037,6 +11124,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Sikkerhetskopier',
     'restore': 'Gjenopprett',
     'sync': 'Automatisk sikkerhetskopiering',
+    'error.something_went_wrong': 'Noe gikk galt',
+    'error.try_again': 'Prøv igjen',
+    'error.go_home': 'Hjem',
   },
   pl: {
     'dashboard': 'Panel',
@@ -11401,6 +11491,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Kopia zapasowa',
     'restore': 'Przywróć',
     'sync': 'Automatyczna kopia',
+    'error.something_went_wrong': 'Coś poszło nie tak',
+    'error.try_again': 'Spróbuj ponownie',
+    'error.go_home': 'Strona główna',
   },
   ps: {
     'dashboard': 'د کنټرول پینل',
@@ -11765,6 +11858,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'بیک اپ',
     'restore': 'بیرته',
     'sync': 'خپل بیک اپ',
+    'error.something_went_wrong': 'یو ښکیله وشوه',
+    'error.try_again': 'بیا هڅه وکړئ',
+    'error.go_home': 'کور ته لاړ شئ',
   },
   pt: {
     'dashboard': 'Painel',
@@ -12129,6 +12225,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Backup',
     'restore': 'Restaurar',
     'sync': 'Backup automático',
+    'error.something_went_wrong': 'Algo deu errado',
+    'error.try_again': 'Tentar novamente',
+    'error.go_home': 'Ir para o início',
   },
   ro: {
     'dashboard': 'Panou de control',
@@ -12493,6 +12592,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Backup',
     'restore': 'Restaurare',
     'sync': 'Backup automat',
+    'error.something_went_wrong': 'Ceva nu a mers bine',
+    'error.try_again': 'Încearcă din nou',
+    'error.go_home': 'Acasă',
   },
   ru: {
     'dashboard': 'Панель',
@@ -12857,6 +12959,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Бэкап',
     'restore': 'Восстановить',
     'sync': 'Авто-бэкап',
+    'error.something_went_wrong': 'Что-то пошло не так',
+    'error.try_again': 'Попробовать снова',
+    'error.go_home': 'На главную',
   },
   sv: {
     'dashboard': 'Instrumentpanel',
@@ -13221,6 +13326,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Säkerhetskopiera',
     'restore': 'Återställ',
     'sync': 'Autobackup',
+    'error.something_went_wrong': 'Något gick fel',
+    'error.try_again': 'Försök igen',
+    'error.go_home': 'Hem',
   },
   sw: {
     'dashboard': 'Dashibodi',
@@ -13585,6 +13693,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Hifadhi',
     'restore': 'Rejesha',
     'sync': 'Hifadhi ya Kiotomatiki',
+    'error.something_went_wrong': 'Kuna kitu kimeenda vibaya',
+    'error.try_again': 'Jaribu tena',
+    'error.go_home': 'Nyumbani',
   },
   th: {
     'dashboard': 'แดชบอร์ด',
@@ -13949,6 +14060,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'สำรองข้อมูล',
     'restore': 'กู้คืน',
     'sync': 'สำรองอัตโนมัติ',
+    'error.something_went_wrong': 'เกิดข้อผิดพลาด',
+    'error.try_again': 'ลองอีกครั้ง',
+    'error.go_home': 'กลับหน้าหลัก',
   },
   tl: {
     'dashboard': 'Dashboard',
@@ -14313,6 +14427,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Backup',
     'restore': 'I-restore',
     'sync': 'Auto-Backup',
+    'error.something_went_wrong': 'May nangyaring mali',
+    'error.try_again': 'Subukan muli',
+    'error.go_home': 'Pumunta sa tahanan',
   },
   tr: {
     'dashboard': 'Kontrol Paneli',
@@ -14677,6 +14794,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Yedekle',
     'restore': 'Geri Yükle',
     'sync': 'Otomatik Yedekleme',
+    'error.something_went_wrong': 'Bir şeyler yanlış gitti',
+    'error.try_again': 'Tekrar dene',
+    'error.go_home': 'Ana sayfa',
   },
   uk: {
     'dashboard': 'Панель',
@@ -15041,6 +15161,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Резервна копія',
     'restore': 'Відновити',
     'sync': 'Автоматичне резервне копіювання',
+    'error.something_went_wrong': 'Щось пішло не так',
+    'error.try_again': 'Спробувати знову',
+    'error.go_home': 'На головну',
   },
   ur: {
     'dashboard': 'ڈیش بورڈ',
@@ -15405,6 +15528,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'بیک اپ',
     'restore': 'بحال کریں',
     'sync': 'آٹو بیک اپ',
+    'error.something_went_wrong': 'کچھ غلط ہو گیا',
+    'error.try_again': 'دوبارہ کوشش کریں',
+    'error.go_home': 'ہوم پر جائیں',
   },
   vi: {
     'dashboard': 'Bảng điều khiển',
@@ -15769,6 +15895,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Sao lưu',
     'restore': 'Khôi phục',
     'sync': 'Tự động sao lưu',
+    'error.something_went_wrong': 'Đã xảy ra lỗi',
+    'error.try_again': 'Thử lại',
+    'error.go_home': 'Về trang chủ',
   },
   yo: {
     'dashboard': 'Pẹpẹ Iṣakoso',
@@ -16133,6 +16262,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': 'Ìdáàbòbọ́',
     'restore': 'Padà',
     'sync': 'Ìdáàbòbọ́ Aìfọwọ́lu',
+    'error.something_went_wrong': 'Ohunkun kan ti bajẹ',
+    'error.try_again': 'Gbìyànjú lẹ̀ẹ̀kansi',
+    'error.go_home': 'Lọ sílé',
   },
   zh: {
     'dashboard': '仪表板',
@@ -16497,6 +16629,9 @@ export const TRANSLATIONS: Record<string, Record<string, string>> = {
     'backup': '备份',
     'restore': '恢复',
     'sync': '自动备份',
+    'error.something_went_wrong': '出了点问题',
+    'error.try_again': '重试',
+    'error.go_home': '返回首页',
   },
 }
 

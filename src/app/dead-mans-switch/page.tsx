@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface EmergencyContact {
   id: string
@@ -28,7 +29,7 @@ const DEFAULT_SETTINGS: SwitchSettings = {
 
 export default function DeadMansSwitch() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [settings, setSettings] = useState<SwitchSettings>(DEFAULT_SETTINGS)
   const [showAddContact, setShowAddContact] = useState(false)

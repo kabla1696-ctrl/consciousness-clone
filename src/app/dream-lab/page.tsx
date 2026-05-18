@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface Dream {
   id: string
@@ -71,7 +72,7 @@ function Particles() {
 
 export default function DreamLab() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [dreams, setDreams] = useState<Dream[]>([])
   const [showAdd, setShowAdd] = useState(false)
   const [search, setSearch] = useState('')
@@ -125,7 +126,7 @@ export default function DreamLab() {
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           message: `Analyze this dream and provide psychological interpretation:\n\nTitle: ${dream.title}\nDream: ${dream.description}\nMood: ${dream.mood}\nLucidity: ${dream.lucidity}/5`,
         }),

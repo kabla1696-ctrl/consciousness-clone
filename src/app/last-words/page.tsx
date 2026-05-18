@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface LastMessage {
   id: string
@@ -29,7 +30,7 @@ function loadJSON<T>(key: string, fallback: T): T {
   if (typeof window === 'undefined') return fallback
   try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)) } catch { return fallback }
 }
-function saveJSON(key: string, data: any) {
+function saveJSON(key: string, data: unknown) {
   localStorage.setItem(key, JSON.stringify(data))
 }
 
@@ -41,7 +42,7 @@ const TIMER_OPTIONS = [
 
 export default function LastWords() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [messages, setMessages] = useState<LastMessage[]>([])
   const [contacts, setContacts] = useState<Contact[]>([])
   const [timerDays, setTimerDays] = useState<number>(() => loadJSON(LS_TIMER, 30))

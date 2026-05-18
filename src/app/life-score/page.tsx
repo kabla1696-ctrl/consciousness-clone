@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface ScoreEntry {
   id: string
@@ -37,7 +38,7 @@ function getLevel(total: number) {
 
 export default function LifeScorePage() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [scores, setScores] = useState<Record<string, number>>({})
   const [history, setHistory] = useState<ScoreEntry[]>([])
@@ -96,7 +97,7 @@ export default function LifeScorePage() {
       const scoreText = AREAS.map(a => `${a.label}: ${scores[a.key] || 0}/10`).join(', ')
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           messages: [{
             role: 'user',

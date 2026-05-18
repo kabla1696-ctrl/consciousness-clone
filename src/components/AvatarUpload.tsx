@@ -124,6 +124,10 @@ export default function AvatarUpload({
           const file = e.dataTransfer.files?.[0]
           if (file) handleFile(file)
         }}
+        role="button"
+        tabIndex={0}
+        aria-label="Upload avatar image"
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); inputRef.current?.click() } }}
       >
         {displaySrc ? (
           <img

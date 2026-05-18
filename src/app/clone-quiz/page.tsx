@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface QuizQuestion {
   question: string
@@ -40,7 +41,7 @@ function Particles() {
 
 export default function CloneQuiz() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [state, setState] = useState<QuizState>('loading')
   const [questions, setQuestions] = useState<QuizQuestion[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -86,7 +87,7 @@ export default function CloneQuiz() {
 
       const response = await fetch('https://consciousness-clone.vercel.app/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           messages: [{
             role: 'user',
@@ -143,15 +144,15 @@ ${memoryContext}`,
     setGenerating(false)
   }
 
-  const generateFallbackQuestions = (memories: any[]): QuizQuestion[] => {
+  const generateFallbackQuestions = (memories: Record<string, unknown>[]): QuizQuestion[] => {
     const shuffled = [...memories].sort(() => Math.random() - 0.5)
     return shuffled.slice(0, 10).map((mem, i) => {
       const otherMems = shuffled.filter((_, j) => j !== i).slice(0, 3)
       return {
         question: `Which of these is one of your memories?`,
-        options: [mem.content.slice(0, 80), ...otherMems.map((m: any) => m.content.slice(0, 80))].sort(() => Math.random() - 0.5),
+        options: [(mem.content as string).slice(0, 80), ...otherMems.map((m: Record<string, unknown>) => (m.content as string).slice(0, 80))].sort(() => Math.random() - 0.5),
         correctIndex: 0,
-        category: mem.category || 'General',
+        category: (mem.category as string) || 'General',
       }
     })
   }

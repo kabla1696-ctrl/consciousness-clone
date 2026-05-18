@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface Heir {
   id: string; name: string; email: string; phone: string; relation: string
@@ -41,7 +42,7 @@ function generateCode(): string {
 
 export default function HeirAccessPage() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [heirs, setHeirs] = useState<Heir[]>([])
   const [showAdd, setShowAdd] = useState(false)
@@ -149,7 +150,7 @@ export default function HeirAccessPage() {
               <label className="text-xs text-white/30 mb-2 block font-semibold uppercase tracking-wider">Access Level</label>
               <div className="space-y-2.5">
                 {ACCESS_LEVELS.map(al => (
-                  <button key={al.key} onClick={() => setAccessLevel(al.key as any)}
+                  <button key={al.key} onClick={() => setAccessLevel(al.key as typeof accessLevel)}
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all ${accessLevel === al.key ? 'bg-amber-500/10 border border-amber-500/25 shadow-lg shadow-amber-500/5' : 'bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.05]'}`}>
                     <span className="text-xl">{al.icon}</span>
                     <div><div className="text-sm font-semibold text-white">{al.key === 'full' ? t('full access') : al.key === 'partial' ? t('partial') : al.label}</div><div className="text-[10px] text-white/25">{al.desc}</div></div>

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface Message {
   id: string
@@ -27,7 +28,7 @@ function saveHistory(msgs: Message[]) {
 
 export default function MirrorMode() {
   const t = useT();
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
   const [answer, setAnswer] = useState('')
   const [loading, setLoading] = useState(false)
@@ -64,7 +65,7 @@ export default function MirrorMode() {
 
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({ message: context }),
       })
       const data = await res.json()
@@ -113,7 +114,7 @@ export default function MirrorMode() {
 
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({ message: context }),
       })
       const data = await res.json()

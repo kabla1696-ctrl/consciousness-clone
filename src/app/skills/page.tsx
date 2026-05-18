@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface Skill {
   id: string
@@ -31,7 +32,7 @@ const LEVELS = [
 
 export default function Skills() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [skills, setSkills] = useState<Skill[]>([])
   const [loading, setLoading] = useState(true)
   const [showAdd, setShowAdd] = useState(false)
@@ -55,11 +56,11 @@ export default function Skills() {
   const loadSkills = async (userId: string) => {
     const { data } = await supabase
       .from('skills')
-      .select('*')
+      .select('id, user_id, skill_name, level, description, lessons, created_at')
       .eq('user_id', userId)
       .order('created_at', { ascending: false })
 
-    if (data) setSkills(data)
+    if (data) setSkills(data as Skill[])
     setLoading(false)
   }
 
@@ -93,7 +94,7 @@ export default function Skills() {
     try {
       const response = await fetch('https://consciousness-clone.vercel.app/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           messages: [{
             role: 'user',

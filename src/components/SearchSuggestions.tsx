@@ -123,11 +123,16 @@ export default function SearchSuggestions({
           onFocus={() => setFocused(true)}
           onBlur={() => setTimeout(() => setFocused(false), 200)}
           onKeyDown={handleKeyDown}
+          aria-label={placeholder}
+          aria-autocomplete="list"
+          aria-expanded={showDropdown && items.length > 0}
+          aria-controls="search-suggestions-list"
           className="w-full pl-10 pr-4 py-3 rounded-xl glass-strong text-sm text-white/90 placeholder-white/20 outline-none focus:ring-1 focus:ring-violet-500/40 transition-all bg-white/[0.02]"
         />
         {value && (
           <button
             onClick={() => { onChange(''); setSelectedIndex(-1); inputRef.current?.focus() }}
+            aria-label="Clear search"
             className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/20 hover:text-white/50 transition-colors"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -141,6 +146,9 @@ export default function SearchSuggestions({
       {showDropdown && items.length > 0 && (
         <div
           ref={listRef}
+          id="search-suggestions-list"
+          role="listbox"
+          aria-label="Search suggestions"
           className="absolute top-full left-0 right-0 mt-2 rounded-xl bg-[#0a0a1a]/95 backdrop-blur-xl border border-white/[0.08] shadow-2xl shadow-black/50 overflow-hidden z-50 max-h-72 overflow-y-auto"
         >
           {!value.trim() && recentSearches.length > 0 && (
@@ -154,6 +162,8 @@ export default function SearchSuggestions({
               onMouseDown={e => e.preventDefault()}
               onClick={() => handleSelect(item)}
               onMouseEnter={() => setSelectedIndex(i)}
+              role="option"
+              aria-selected={i === selectedIndex}
               className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-all duration-150 ${
                 i === selectedIndex
                   ? 'bg-gradient-to-r from-violet-500/15 to-fuchsia-500/10 text-white'

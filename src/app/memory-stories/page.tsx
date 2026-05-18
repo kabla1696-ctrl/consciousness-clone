@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface Memory {
   id: string
@@ -30,7 +31,7 @@ const STYLES = [
 
 export default function MemoryStories() {
   const t = useT();
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [memories, setMemories] = useState<Memory[]>([])
   const [selectedMemory, setSelectedMemory] = useState<Memory | null>(null)
   const [selectedStyle, setSelectedStyle] = useState('novel')
@@ -53,7 +54,7 @@ export default function MemoryStories() {
         .order('created_at', { ascending: false })
         .limit(50)
 
-      if (data) setMemories(data)
+      if (data) setMemories(data as Memory[])
 
       const stored = localStorage.getItem('memory-stories-collection')
       if (stored) setStories(JSON.parse(stored))
@@ -84,7 +85,7 @@ export default function MemoryStories() {
     try {
       const response = await fetch('https://consciousness-clone.vercel.app/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           messages: [{
             role: 'user',

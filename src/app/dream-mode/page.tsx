@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface Connection {
   id: string
@@ -38,7 +39,7 @@ const MEMORY_CATEGORIES = [
 
 export default function DreamModePage() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [isProcessing, setIsProcessing] = useState(false)
   const [processProgress, setProcessProgress] = useState(0)
@@ -111,7 +112,7 @@ export default function DreamModePage() {
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           message: `Analyze these memory categories and find interesting connections and patterns: ${MEMORY_CATEGORIES.join(', ')}. Return a JSON object with two arrays: "connections" (objects with "from", "to", "insight" fields - 4 items) and "insights" (objects with "text" and "category" fields - 3 items). Only return valid JSON, no markdown.`,
         }),
@@ -128,17 +129,17 @@ export default function DreamModePage() {
 
         const result = JSON.parse(parsed)
 
-        const newConnections: Connection[] = (result.connections || []).map((c: any, i: number) => ({
+        const newConnections: Connection[] = (result.connections || []).map((c: Record<string, unknown>, i: number) => ({
           id: `ai-${Date.now()}-${i}`,
-          from: c.from || 'Memory A',
-          to: c.to || 'Memory B',
-          insight: c.insight || 'Interesting pattern detected',
+          from: (c.from as string) || 'Memory A',
+          to: (c.to as string) || 'Memory B',
+          insight: (c.insight as string) || 'Interesting pattern detected',
         }))
 
-        const newInsights: Insight[] = (result.insights || []).map((ins: any, i: number) => ({
+        const newInsights: Insight[] = (result.insights || []).map((ins: Record<string, unknown>, i: number) => ({
           id: `ins-${Date.now()}-${i}`,
-          text: ins.text || 'Pattern found',
-          category: ins.category || 'General',
+          text: (ins.text as string) || 'Pattern found',
+          category: (ins.category as string) || 'General',
           timestamp: new Date().toISOString(),
         }))
 

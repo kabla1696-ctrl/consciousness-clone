@@ -1,8 +1,11 @@
 'use client'
 import React from 'react'
+import { escapeHtml } from '../lib/sanitize'
 
 function parseInline(text: string): string {
-  return text
+  // Escape HTML first to prevent XSS, then apply markdown transforms
+  const safe = escapeHtml(text)
+  return safe
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
     .replace(/`(.+?)`/g, '<code class="px-1.5 py-0.5 rounded bg-white/10 text-violet-300 text-sm font-mono">$1</code>')

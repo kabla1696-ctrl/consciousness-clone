@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 const AURA_COLORS = [
   { name: 'Violet', color: '#8b5cf6', meaning: 'Spiritual awareness, intuition, higher consciousness', chakra: 'Crown' },
@@ -22,7 +23,7 @@ interface AuraReading { id: string; date: string; primary: string; secondary: st
 
 export default function CloneAuraPage() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [scanning, setScanning] = useState(false)
   const [scanProgress, setScanProgress] = useState(0)
@@ -67,7 +68,7 @@ export default function CloneAuraPage() {
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           messages: [{ role: 'user', content: `Based on someone's memories (${memories.length} entries), moods, and personality traits, give a brief aura reading (2-3 sentences). Be mystical and poetic.` }],
           systemPrompt: 'You are a mystical aura reader. Give poetic, insightful aura readings. Be brief but profound.'

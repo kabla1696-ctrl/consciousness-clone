@@ -116,7 +116,7 @@ export default function EmotionEngine() {
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           messages: [{ role: 'user', content: `Analyze the emotions in this text: "${text}"\n\nReturn a JSON object with:\n{\n  "emotions": { "joy": 0-100, "sadness": 0-100, "anger": 0-100, "fear": 0-100, "surprise": 0-100, "disgust": 0-100, "trust": 0-100, "anticipation": 0-100 },\n  "dominant": "the dominant emotion name",\n  "response": "A empathetic clone response (2-3 sentences) that acknowledges the emotion and responds appropriately. Be warm and understanding."\n}\nReturn ONLY valid JSON.` }],
           memories: '',

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface CloneProfile {
   id: string
@@ -29,7 +30,7 @@ const CLONES: CloneProfile[] = [
 
 export default function CloneNetwork() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [clones, setClones] = useState<CloneProfile[]>(CLONES)
   const [selectedClone, setSelectedClone] = useState<CloneProfile | null>(null)
@@ -61,7 +62,7 @@ export default function CloneNetwork() {
     try {
       const response = await fetch('https://consciousness-clone.vercel.app/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           messages: [{ role: 'user', content: msg }],
           memories: '',
@@ -164,7 +165,7 @@ export default function CloneNetwork() {
                 { id: 'online', label: t('Online'), icon: '🟢' },
                 { id: 'high-match', label: t('High Match'), icon: '💫' },
               ].map(f => (
-                <button key={f.id} onClick={() => setFilter(f.id as any)}
+                <button key={f.id} onClick={() => setFilter(f.id as typeof filter)}
                   className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm whitespace-nowrap transition-all duration-300 ${
                     filter === f.id ? 'bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 text-violet-300 border border-violet-500/30' : 'glass-card text-white/40'
                   }`}>

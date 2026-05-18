@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface Memory {
   id: string
@@ -71,7 +72,7 @@ const CATEGORY_BORDERS: Record<string, string> = {
 
 export default function MemoriesPage() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [memories, setMemories] = useState<Memory[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
@@ -137,10 +138,10 @@ export default function MemoriesPage() {
       setUser(user)
       const { data } = await supabase
         .from('memories')
-        .select('*')
+        .select('id, title, content, category, created_at')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
-      if (data) setMemories(data)
+      if (data) setMemories(data as Memory[])
       setLoading(false)
     }
     init()

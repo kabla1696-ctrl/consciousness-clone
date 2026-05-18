@@ -4,10 +4,11 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 export default function Referral() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [referralCode, setReferralCode] = useState('')
   const [copied, setCopied] = useState(false)
   const [referrals, setReferrals] = useState(0)

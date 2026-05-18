@@ -6,11 +6,14 @@ import { supabase } from '../../lib/supabase-browser'
 import AvatarUpload from '../../components/AvatarUpload'
 import AnimatedCounter from '../../components/AnimatedCounter'
 import ActivityFeed from '../../components/ActivityFeed'
-import BarChart from '../../components/BarChart'
+import dynamic from 'next/dynamic'
+
+const BarChart = dynamic(() => import('../../components/BarChart'), { ssr: false })
 import { fetchDashboardStats, type DashboardStats } from '../../lib/dashboard-data'
+import type { User } from '@supabase/supabase-js'
 
 export default function ProfilePage() {
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [authLoading, setAuthLoading] = useState(true)
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
@@ -61,10 +64,10 @@ export default function ProfilePage() {
         // Fallback: try to load from memories personality category
         if (!raw) {
           const mems = JSON.parse(localStorage.getItem('cc_memories') || '[]')
-          const personalityMem = mems.find((m: any) => m.category === 'personality')
+          const personalityMem = (mems as Record<string, unknown>[]).find((m: Record<string, unknown>) => m.category === 'personality')
           if (personalityMem?.content) {
             // Parse trait names from content like "Personality Profile: creative, analytical, ..."
-            const match = personalityMem.content.match(/Personality Profile: ([^.]+)/)
+            const match = (personalityMem.content as string).match(/Personality Profile: ([^.]+)/)
             if (match) {
               const traitNames = match[1].split(',').map((t: string) => t.trim())
               const colors = ['#8b5cf6', '#d946ef', '#06b6d4', '#f59e0b', '#10b981']
@@ -171,7 +174,7 @@ export default function ProfilePage() {
   ]
 
   return (
-    <main className="min-h-screen pb-24 md:pb-8" style={{ background: '#050510' }}>
+    <main className="min-h-screen pb-24 md:pb-8 overflow-x-hidden" style={{ background: '#050510' }}>
       {/* Animated background particles */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         {Array.from({ length: 12 }).map((_, i) => (
@@ -209,7 +212,7 @@ export default function ProfilePage() {
         </div>
       </header>
 
-      <div className="px-4 py-6 space-y-6 relative z-10">
+      <div className="px-4 sm:px-6 py-6 space-y-6 relative z-10">
         {/* ── Profile Header ── */}
         <div
           className={`bg-white/[0.03] rounded-2xl border border-white/[0.06] p-6 text-center space-y-4 transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
@@ -287,7 +290,7 @@ export default function ProfilePage() {
 
         {/* ── Stats Row ── */}
         <div
-          className={`grid grid-cols-4 gap-3 transition-all duration-700 delay-100 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          className={`grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 transition-all duration-700 delay-100 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
         >
           {statsData.map((s) => (
             <div

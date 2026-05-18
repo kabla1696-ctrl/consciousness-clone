@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
 import CountdownTimer from '../../components/CountdownTimer'
+import type { User } from '@supabase/supabase-js'
 
 interface TimeCapsule {
   id: string
@@ -104,7 +105,7 @@ function UnlockExplosion({ onComplete }: { onComplete: () => void }) {
 
 export default function TimeCapsulePage() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [capsules, setCapsules] = useState<TimeCapsule[]>([])
   const [showForm, setShowForm] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -139,10 +140,10 @@ export default function TimeCapsulePage() {
   const loadCapsules = async (userId: string) => {
     const { data } = await supabase
       .from('time_capsules')
-      .select('*')
+      .select('id, unlock_date, category, recipient_name, content, created_at, is_unlocked')
       .eq('user_id', userId)
       .order('unlock_date', { ascending: true })
-    if (data) setCapsules(data)
+    if (data) setCapsules(data as TimeCapsule[])
   }
 
   useEffect(() => {

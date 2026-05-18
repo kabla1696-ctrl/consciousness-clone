@@ -21,7 +21,7 @@ export default function SoulTransferPage() {
   const [friendName, setFriendName] = useState('')
   const [friendEmail, setFriendEmail] = useState('')
   const [selectedMemories, setSelectedMemories] = useState<string[]>([])
-  const [availableMemories, setAvailableMemories] = useState<any[]>([])
+  const [availableMemories, setAvailableMemories] = useState<{id: string; title: string; category: string; [key: string]: unknown}[]>([])
   const [showMemoryPicker, setShowMemoryPicker] = useState(false)
   const [activeBond, setActiveBond] = useState<SoulBond | null>(null)
   const [showTransfer, setShowTransfer] = useState(false)

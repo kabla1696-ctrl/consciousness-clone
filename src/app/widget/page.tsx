@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 const THEMES = [
   { id: 'dark', name: 'Dark', bg: '#050510', text: '#ffffff', accent: '#8b5cf6', border: 'rgba(255,255,255,0.06)' },
@@ -26,7 +27,7 @@ const defaultConfig: WidgetConfig = { theme: 'dark', bgColor: '#050510', textSiz
 
 export default function WidgetDashboard() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [selectedWidget, setSelectedWidget] = useState<number | null>(null)
   const [config, setConfig] = useState<Record<number, WidgetConfig>>({})
@@ -77,7 +78,7 @@ export default function WidgetDashboard() {
   const generateQuote = async () => {
     setQuoteLoading(true)
     try {
-      const res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: [{ role: 'user', content: 'Generate a short, inspiring one-liner wisdom quote. Just the quote, nothing else. Keep it under 15 words.' }] }) })
+      const res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' }, body: JSON.stringify({ messages: [{ role: 'user', content: 'Generate a short, inspiring one-liner wisdom quote. Just the quote, nothing else. Keep it under 15 words.' }] }) })
       if (res.ok) { const data = await res.json(); const quote = data.content || data.message || 'Your consciousness grows with every memory you create.'; setDailyQuote(quote); localStorage.setItem('daily-quote', JSON.stringify({ quote, timestamp: Date.now() })) }
       else { setDailyQuote('Your consciousness grows with every memory you create.') }
     } catch { setDailyQuote('Your consciousness grows with every memory you create.') }

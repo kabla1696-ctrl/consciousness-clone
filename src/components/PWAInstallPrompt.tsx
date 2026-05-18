@@ -135,6 +135,7 @@ export default function PWAInstallPrompt() {
           <button
             onClick={handleInstall}
             disabled={installing}
+            aria-label={installing ? 'Installing app' : 'Install app'}
             className="flex-1 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:brightness-110 active:scale-[0.98] transition-all duration-200 disabled:opacity-60 disabled:cursor-wait"
           >
             {installing ? (
@@ -152,6 +153,7 @@ export default function PWAInstallPrompt() {
 
           <button
             onClick={handleDismiss}
+            aria-label="Dismiss install prompt"
             className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-purple-200/80 hover:bg-white/10 hover:text-white active:scale-[0.98] transition-all duration-200"
           >
             Not now

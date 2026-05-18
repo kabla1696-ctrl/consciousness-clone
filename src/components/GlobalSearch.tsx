@@ -110,6 +110,9 @@ export default function GlobalSearch({ open, onClose }: Props) {
       <div
         className="relative w-full max-w-[600px] mx-4 mt-[10vh] md:mt-[12vh] bg-[#12122a]/95 backdrop-blur-2xl border border-white/[0.08] rounded-2xl shadow-2xl shadow-violet-500/10 overflow-hidden animate-slide-down"
         onClick={e => e.stopPropagation()}
+        role="dialog"
+        aria-label="Global search"
+        aria-modal="true"
       >
         {/* Input */}
         <div className="flex items-center gap-3 px-5 py-4 border-b border-white/[0.06]">
@@ -121,6 +124,7 @@ export default function GlobalSearch({ open, onClose }: Props) {
             onChange={e => handleSearch(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search features, memories, chats…"
+            aria-label="Search features, memories, and chats"
             className="flex-1 bg-transparent text-white text-base outline-none placeholder:text-white/20"
             autoComplete="off"
             spellCheck={false}
@@ -139,6 +143,7 @@ export default function GlobalSearch({ open, onClose }: Props) {
                     <span className="text-[11px] font-semibold uppercase tracking-wider text-white/25">Recent</span>
                     <button
                       onClick={() => { clearRecentSearches(); setRecent([]) }}
+                      aria-label="Clear recent searches"
                       className="text-[11px] text-white/20 hover:text-white/40 transition-colors"
                     >
                       Clear

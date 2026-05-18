@@ -5,6 +5,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
 import AnimatedIcon from '../../components/AnimatedIcon'
+import type { User } from '@supabase/supabase-js'
 
 interface Achievement {
   id: string
@@ -64,7 +65,7 @@ function FloatingParticles() {
 
 export default function AchievementsPage() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [achievements, setAchievements] = useState<Achievement[]>([])
   const [filter, setFilter] = useState<string>('all')

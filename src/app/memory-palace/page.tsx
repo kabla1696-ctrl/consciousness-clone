@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface Room { id: string; name: string; emoji: string; description: string; memories: PalaceMemory[]; color: string }
 interface PalaceMemory { id: string; title: string; placement: string; vividness: number }
@@ -21,7 +22,7 @@ const DEFAULT_ROOMS: Room[] = [
 
 export default function MemoryPalacePage() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [rooms, setRooms] = useState<Room[]>(DEFAULT_ROOMS)
   const [selectedRoom, setSelectedRoom] = useState<Room | null>(null)

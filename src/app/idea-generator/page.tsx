@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface Idea {
   id: string
@@ -26,7 +27,7 @@ const STORAGE_KEY = 'consciousness-ideas'
 
 export default function IdeaGeneratorPage() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [selectedCategory, setSelectedCategory] = useState('writing')
   const [generating, setGenerating] = useState(false)
@@ -69,7 +70,7 @@ export default function IdeaGeneratorPage() {
       const catInfo = CATEGORIES.find(c => c.key === selectedCategory)
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           message: `Generate 5 creative and unique ${catInfo?.label || selectedCategory} ideas. ${customPrompt ? `Additional context: ${customPrompt}.` : ''} Make them practical, inspiring, and diverse. Return as a JSON array of 5 strings. Only return valid JSON, no markdown or explanation.`,
         }),

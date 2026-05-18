@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import OptimizedImage from '@/components/OptimizedImage'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface PhotoMemory {
   id: string
@@ -25,7 +26,7 @@ const MOODS = [
 
 export default function PhotoMemories() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [photos, setPhotos] = useState<PhotoMemory[]>([])
   const [uploading, setUploading] = useState(false)
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoMemory | null>(null)
@@ -78,7 +79,7 @@ export default function PhotoMemories() {
     try {
       const response = await fetch('https://consciousness-clone.vercel.app/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           messages: [{ role: 'user', content: 'Generate a short, warm, nostalgic caption for a personal photo memory. Max 2 sentences. Be poetic but concise.' }],
           memories: '',

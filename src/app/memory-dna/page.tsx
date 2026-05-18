@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface Trait { name: string; percentage: number; description: string; color: string; icon: string }
 interface DNAReport {
@@ -26,7 +27,7 @@ const STORAGE_KEY = 'consciousness-memory-dna'
 
 export default function MemoryDNAPage() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [generating, setGenerating] = useState(false)
   const [report, setReport] = useState<DNAReport | null>(null)
@@ -57,7 +58,7 @@ export default function MemoryDNAPage() {
     setError('')
     try {
       const memories = JSON.parse(localStorage.getItem('consciousness-memories') || '[]')
-      const memoryTexts = memories.map((m: any) => m.content || m.text || '').filter(Boolean).slice(0, 50)
+      const memoryTexts = (memories as Record<string, unknown>[]).map((m: Record<string, unknown>) => (m.content || m.text || '') as string).filter(Boolean).slice(0, 50)
       if (memoryTexts.length === 0) {
         setError('Add some memories first to generate your DNA report.')
         setGenerating(false)
@@ -65,7 +66,7 @@ export default function MemoryDNAPage() {
       }
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           messages: [{ role: 'user', content: `Analyze these memories and create a Memory DNA report. Memories: ${JSON.stringify(memoryTexts)}\n\nReturn JSON only (no markdown):\n{"traits":[{"name":"Dreamer","percentage":25,"description":"one line"}],"coreValues":["value1","value2","value3"],"lifeThemes":["theme1","theme2","theme3"],"strengths":["s1","s2","s3"],"growthAreas":["g1","g2","g3"],"identityStatement":"You are primarily a X with strong Y tendencies"}\n\nTraits must total 100%. Use these names: Dreamer, Fighter, Lover, Philosopher, Creator, Healer, Explorer, Leader, Nurturer, Visionary. Pick 5-8.` }],
           systemPrompt: 'You are a personality analyst. Return only valid JSON, no markdown formatting.'
@@ -77,10 +78,10 @@ export default function MemoryDNAPage() {
       if (!jsonMatch) throw new Error('Could not parse AI response')
       const parsed = JSON.parse(jsonMatch[0])
       const newReport: DNAReport = {
-        traits: (parsed.traits || []).map((t: any) => ({
+        traits: (parsed.traits || []).map((t: Record<string, unknown>) => ({
           ...t,
-          color: TRAIT_COLORS[t.name] || '#8b5cf6',
-          icon: ({ Dreamer: '🌙', Fighter: '⚔️', Lover: '💕', Philosopher: '🧠', Creator: '🎨', Healer: '💚', Explorer: '🧭', Leader: '👑', Nurturer: '🤗', Visionary: '🔮', Realist: '⚖️', Adventurer: '🏔️' } as Record<string, string>)[t.name] || '✨',
+          color: TRAIT_COLORS[t.name as string] || '#8b5cf6',
+          icon: ({ Dreamer: '🌙', Fighter: '⚔️', Lover: '💕', Philosopher: '🧠', Creator: '🎨', Healer: '💚', Explorer: '🧭', Leader: '👑', Nurturer: '🤗', Visionary: '🔮', Realist: '⚖️', Adventurer: '🏔️' } as Record<string, string>)[t.name as string] || '✨',
         })),
         coreValues: parsed.coreValues || [],
         lifeThemes: parsed.lifeThemes || [],
@@ -93,8 +94,8 @@ export default function MemoryDNAPage() {
       const newHistory = [newReport, ...history].slice(0, 10)
       setHistory(newHistory)
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ latest: newReport, history: newHistory }))
-    } catch (e: any) {
-      setError('Failed to generate report. ' + (e.message || ''))
+    } catch (e: unknown) {
+      setError('Failed to generate report. ' + (e instanceof Error ? e.message : ''))
     }
     setGenerating(false)
   }

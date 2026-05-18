@@ -141,12 +141,12 @@ export default function CloneSocial() {
     if (stored) {
       const parsed = JSON.parse(stored)
       // Migrate old posts that use 'time' string to 'createdAt' timestamp
-      const migrated = parsed.map((p: any) => {
+      const migrated = parsed.map((p: Record<string, unknown>) => {
         if (!p.createdAt) {
           p.createdAt = Date.now() - Math.floor(Math.random() * 5 * 60 * 60 * 1000)
         }
         if (p.comments) {
-          p.comments = p.comments.map((c: any) => {
+          p.comments = (p.comments as Record<string, unknown>[]).map((c: Record<string, unknown>) => {
             if (!c.createdAt) c.createdAt = Date.now() - Math.floor(Math.random() * 60 * 60 * 1000)
             return c
           })
@@ -231,28 +231,28 @@ export default function CloneSocial() {
           100% { transform: scale(1); }
         }
       `}</style>
-      <div className="min-h-screen bg-[#050510] text-white relative">
+      <div className="min-h-screen bg-[#050510] text-white relative overflow-x-hidden">
         <Particles />
 
         {/* Header */}
-        <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#050510]/80 border-b border-white/[0.06]">
+        <header role="banner" className="sticky top-0 z-50 backdrop-blur-xl bg-[#050510]/80 border-b border-white/[0.06]">
           <div className="max-w-lg mx-auto px-4 py-4 flex items-center gap-3">
-            <Link href="/dashboard" className="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center hover:bg-white/[0.1] transition-colors">
+            <Link href="/dashboard" aria-label="Back to dashboard" className="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center hover:bg-white/[0.1] transition-colors">
               <span className="text-lg">←</span>
             </Link>
             <div className="flex-1">
               <h1 className="text-lg font-bold bg-gradient-to-r from-rose-400 to-purple-400 bg-clip-text text-transparent">{t('clone social')}</h1>
               <p className="text-xs text-white/40">{t('feed')}</p>
             </div>
-            <button onClick={() => setShowCompose(!showCompose)} className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center hover:bg-rose-500/20 transition-colors">
+            <button onClick={() => setShowCompose(!showCompose)} aria-label={showCompose ? 'Close compose' : 'Compose new post'} aria-expanded={showCompose} className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center hover:bg-rose-500/20 transition-colors">
               <span className="text-sm">✏️</span>
             </button>
           </div>
         </header>
 
-        <main className="max-w-lg mx-auto px-4 py-6 space-y-5 relative z-10">
+        <main role="main" aria-label="Clone social feed" className="max-w-lg mx-auto px-4 sm:px-6 py-6 space-y-5 relative z-10">
           {/* Stats Bar */}
-          <div className="flex gap-3">
+          <div className="grid grid-cols-3 gap-2 sm:gap-3">
             <GlowCard className="flex-1 p-3 text-center">
               <div className="text-lg font-bold text-white">{posts.length}</div>
               <div className="text-[10px] text-white/40">{t('posts')}</div>
@@ -268,11 +268,13 @@ export default function CloneSocial() {
           </div>
 
           {/* Tabs */}
-          <div className="flex gap-2">
+          <div className="grid grid-cols-2 gap-2">
             {(['feed', 'trending'] as const).map(tab => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
+                aria-label={tab === 'feed' ? 'Feed tab' : 'Trending tab'}
+                aria-pressed={activeTab === tab}
                 className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${
                   activeTab === tab
                     ? 'bg-rose-500/20 border border-rose-500/30 text-rose-400'
@@ -295,13 +297,14 @@ export default function CloneSocial() {
                 value={newPost}
                 onChange={(e) => setNewPost(e.target.value)}
                 placeholder={t('social share placeholder')}
+                aria-label="Compose new post"
                 className="w-full bg-white/[0.05] border border-white/[0.08] rounded-xl p-3 text-sm text-white placeholder-white/30 resize-none h-20 focus:outline-none focus:border-rose-500/40 transition-colors"
               />
               <div className="flex gap-2">
-                <button onClick={addPost} className="flex-1 py-2.5 bg-rose-500/20 border border-rose-500/30 rounded-xl text-sm font-medium text-rose-400 hover:bg-rose-500/30 transition-colors">
+                <button onClick={addPost} aria-label="Publish post" className="flex-1 py-2.5 bg-rose-500/20 border border-rose-500/30 rounded-xl text-sm font-medium text-rose-400 hover:bg-rose-500/30 transition-colors">
                   {t('posts')} 🚀
                 </button>
-                <button onClick={() => setShowCompose(false)} className="px-4 py-2.5 bg-white/[0.05] border border-white/[0.08] rounded-xl text-sm text-white/50 hover:bg-white/[0.08] transition-colors">
+                <button onClick={() => setShowCompose(false)} aria-label="Cancel composing" className="px-4 py-2.5 bg-white/[0.05] border border-white/[0.08] rounded-xl text-sm text-white/50 hover:bg-white/[0.08] transition-colors">
                   Cancel
                 </button>
               </div>
@@ -349,6 +352,8 @@ export default function CloneSocial() {
                   {/* Comment Toggle */}
                   <button
                     onClick={() => setCommentingOn(commentingOn === post.id ? null : post.id)}
+                    aria-label={commentingOn === post.id ? 'Hide comments' : 'Show comments'}
+                    aria-expanded={commentingOn === post.id}
                     className="flex items-center gap-2 text-xs text-white/30 hover:text-white/50 transition-colors"
                   >
                     <span>💬</span>
@@ -374,10 +379,11 @@ export default function CloneSocial() {
                           value={commentText}
                           onChange={(e) => setCommentText(e.target.value)}
                           placeholder={t('add comment')}
+                          aria-label={t('add comment')}
                           className="flex-1 bg-white/[0.05] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-rose-500/40 transition-colors"
                           onKeyDown={(e) => e.key === 'Enter' && addComment(post.id)}
                         />
-                        <RippleButton onClick={() => addComment(post.id)} variant="primary" className="px-3 py-2 rounded-lg text-xs">
+                        <RippleButton onClick={() => addComment(post.id)} variant="primary" className="px-3 py-2 rounded-lg text-xs" aria-label="Send comment">
                           Send
                         </RippleButton>
                       </div>

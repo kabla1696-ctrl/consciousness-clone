@@ -7,6 +7,7 @@ import { useT } from '../../lib/language-context'
 import LazyLoad from '../../components/LazyLoad'
 import SwipeActions from '../../components/SwipeActions'
 import PullToRefresh from '../../components/PullToRefresh'
+import type { User } from '@supabase/supabase-js'
 
 interface VaultEntry {
   id: string
@@ -93,7 +94,7 @@ async function decryptData(encryptedStr: string, ivStr: string, saltStr: string,
 
 export default function VaultPage() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [phase, setPhase] = useState<'locked' | 'setup' | 'unlocked' | 'denied'>('locked')
   const [pin, setPin] = useState('')
@@ -117,7 +118,7 @@ export default function VaultPage() {
   const [newMood, setNewMood] = useState('')
   const [newImportance, setNewImportance] = useState(3)
 
-  const lockTimerRef = useRef<any>(null)
+  const lockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const currentPinRef = useRef<string>('')
 
   // Generate matrix characters
@@ -157,7 +158,7 @@ export default function VaultPage() {
           setPinInput('')
         }, 5000) // Lock after 5 seconds of leaving
       } else {
-        clearTimeout(lockTimerRef.current)
+        clearTimeout(lockTimerRef.current!)
       }
     }
     document.addEventListener('visibilitychange', handleVisibility)
@@ -312,7 +313,7 @@ export default function VaultPage() {
 
   if (loading) {
     return (
-      <main className="page-transition min-h-screen flex items-center justify-center bg-[#050510]">
+      <main role="main" aria-label="Loading vault" className="page-transition min-h-screen flex items-center justify-center bg-[#050510]">
         <div className="w-8 h-8 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
       </main>
     )
@@ -321,9 +322,9 @@ export default function VaultPage() {
   // SETUP PHASE
   if (phase === 'setup') {
     return (
-      <main className="page-transition min-h-screen flex items-center justify-center px-4 bg-[#050510] relative">
+      <main role="main" aria-label="Vault setup" className="page-transition min-h-screen flex items-center justify-center px-4 bg-[#050510] relative overflow-x-hidden">
         {/* Matrix rain background */}
-        <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
           {matrixChars.map(m => (
             <div
               key={m.id}
@@ -337,16 +338,16 @@ export default function VaultPage() {
         <div className="w-full max-w-sm space-y-6 text-center relative z-10">
           <div className="relative inline-block">
             <div className="absolute inset-0 -m-4 rounded-full bg-gradient-to-br from-red-500/20 to-orange-500/20 blur-2xl animate-pulse" />
-            <div className="text-7xl mb-4 relative drop-shadow-[0_0_30px_rgba(239,68,68,0.3)]">🔐</div>
+            <div className="text-7xl mb-4 relative drop-shadow-[0_0_30px_rgba(239,68,68,0.3)]" aria-hidden="true">🔐</div>
           </div>
           <h1 className="text-2xl font-bold bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">Create Vault PIN</h1>
           <p className="text-white/40 text-sm">{t('choose a pin')}</p>
           <div className="space-y-3">
-            <input type="password" inputMode="numeric" maxLength={6} value={pin} onChange={e => setPin(e.target.value.replace(/\D/g, ''))} placeholder={t('enter pin')} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-center text-2xl tracking-[0.5em] focus:border-red-500/40 focus:outline-none transition backdrop-blur-sm" />
-            <input type="password" inputMode="numeric" maxLength={6} value={confirmPin} onChange={e => setConfirmPin(e.target.value.replace(/\D/g, ''))} placeholder={t('confirm pin')} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-center text-2xl tracking-[0.5em] focus:border-red-500/40 focus:outline-none transition backdrop-blur-sm" />
-            <button onClick={setupPin} disabled={pin.length < 4 || pin !== confirmPin} className="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium disabled:opacity-30 shadow-xl shadow-red-500/20 hover:shadow-red-500/30 transition-all active:scale-[0.98]">🔒 {t('create vault')}</button>
+            <input type="password" inputMode="numeric" maxLength={6} value={pin} onChange={e => setPin(e.target.value.replace(/\D/g, ''))} placeholder={t('enter pin')} aria-label={t('enter pin')} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-center text-2xl tracking-[0.5em] focus:border-red-500/40 focus:outline-none transition backdrop-blur-sm" />
+            <input type="password" inputMode="numeric" maxLength={6} value={confirmPin} onChange={e => setConfirmPin(e.target.value.replace(/\D/g, ''))} placeholder={t('confirm pin')} aria-label={t('confirm pin')} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-center text-2xl tracking-[0.5em] focus:border-red-500/40 focus:outline-none transition backdrop-blur-sm" />
+            <button onClick={setupPin} disabled={pin.length < 4 || pin !== confirmPin} aria-label={t('create vault')} className="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium disabled:opacity-30 shadow-xl shadow-red-500/20 hover:shadow-red-500/30 transition-all active:scale-[0.98]">🔒 {t('create vault')}</button>
           </div>
-          <Link href="/dashboard" className="text-sm text-white/30 hover:text-white/50 transition inline-block">← {t('back to dashboard')}</Link>
+          <Link href="/dashboard" aria-label={t('back to dashboard')} className="text-sm text-white/30 hover:text-white/50 transition inline-block">← {t('back to dashboard')}</Link>
         </div>
       </main>
     )
@@ -355,9 +356,9 @@ export default function VaultPage() {
   // LOCKED PHASE
   if (phase === 'locked') {
     return (
-      <main className="page-transition min-h-screen flex items-center justify-center px-4 bg-[#050510] relative">
+      <main role="main" aria-label="Vault locked" className="page-transition min-h-screen flex items-center justify-center px-4 bg-[#050510] relative overflow-x-hidden">
         {/* Matrix rain background */}
-        <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
           {matrixChars.map(m => (
             <div
               key={m.id}
@@ -408,8 +409,8 @@ export default function VaultPage() {
             <>
               <h1 className="text-2xl font-bold bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">Memory Vault</h1>
               <p className="text-white/40 text-sm">{t('enter pin to unlock')}</p>
-              <input type="password" inputMode="numeric" maxLength={6} value={pinInput} onChange={e => setPinInput(e.target.value.replace(/\D/g, ''))} onKeyDown={e => e.key === 'Enter' && attemptUnlock()} placeholder="••••" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-center text-2xl tracking-[0.5em] focus:border-red-500/40 focus:outline-none transition backdrop-blur-sm" />
-              <button onClick={attemptUnlock} disabled={pinInput.length < 4} className="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium disabled:opacity-30 shadow-xl shadow-red-500/20 hover:shadow-red-500/30 transition-all active:scale-[0.98]">🔓 {t('unlock')}</button>
+              <input type="password" inputMode="numeric" maxLength={6} value={pinInput} onChange={e => setPinInput(e.target.value.replace(/\D/g, ''))} onKeyDown={e => e.key === 'Enter' && attemptUnlock()} placeholder="••••" aria-label={t('enter pin to unlock')} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-center text-2xl tracking-[0.5em] focus:border-red-500/40 focus:outline-none transition backdrop-blur-sm" />
+              <button onClick={attemptUnlock} disabled={pinInput.length < 4} aria-label={t('unlock')} className="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium disabled:opacity-30 shadow-xl shadow-red-500/20 hover:shadow-red-500/30 transition-all active:scale-[0.98]">🔓 {t('unlock')}</button>
               {attempts > 0 && (
                 <div className="flex items-center justify-center gap-2 animate-pulse">
                   <span className="w-2 h-2 bg-amber-400 rounded-full" />
@@ -426,7 +427,7 @@ export default function VaultPage() {
               {accessMsg}
             </div>
           )}
-          <Link href="/dashboard" className="text-sm text-white/30 hover:text-white/50 transition inline-block">← {t('back')}</Link>
+          <Link href="/dashboard" aria-label={t('back')} className="text-sm text-white/30 hover:text-white/50 transition inline-block">← {t('back')}</Link>
         </div>
       </main>
     )
@@ -434,9 +435,9 @@ export default function VaultPage() {
 
   // UNLOCKED PHASE
   return (
-    <main className="page-transition min-h-screen pb-24 md:pb-8 relative">
+    <main role="main" aria-label="Vault" className="page-transition min-h-screen pb-24 md:pb-8 relative overflow-x-hidden">
       {/* Matrix rain background (subtle) */}
-      <div className="fixed inset-0 pointer-events-none z-0">
+      <div className="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
         {matrixChars.slice(0, 15).map(m => (
           <div
             key={m.id}
@@ -448,20 +449,20 @@ export default function VaultPage() {
         ))}
       </div>
 
-      <header className="sticky top-0 z-50 bg-[#050510]/80 backdrop-blur-2xl border-b border-red-500/10">
+      <header role="banner" className="sticky top-0 z-50 bg-[#050510]/80 backdrop-blur-2xl border-b border-red-500/10">
         <div className="flex items-center gap-3 px-4 py-3">
-          <Link href="/dashboard" className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
+          <Link href="/dashboard" aria-label="Back to dashboard" className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
             <svg className="w-5 h-5 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </Link>
           <h1 className="text-lg font-semibold text-white flex-1">🔐 Vault</h1>
-          <button onClick={lockVault} className="text-xs px-3 py-1.5 rounded-lg bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 transition">Lock</button>
+          <button onClick={lockVault} aria-label="Lock vault" className="text-xs px-3 py-1.5 rounded-lg bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 transition">Lock</button>
         </div>
       </header>
 
       <PullToRefresh onRefresh={async () => { if (currentPinRef.current) await loadEntries(currentPinRef.current) }} className="relative z-10">
-      <div className="px-4 py-6 space-y-6">
+      <div className="px-4 sm:px-6 py-6 space-y-6">
         {/* Stats with glowing indicators */}
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3">
           <div className="bg-white/[0.03] rounded-xl border border-white/[0.06] p-3 text-center backdrop-blur-sm">
             <div className="text-xl font-bold text-red-400 drop-shadow-[0_0_10px_rgba(239,68,68,0.3)]">{stats.total}</div>
             <div className="text-[10px] text-white/30">{t('entries')}</div>
@@ -480,7 +481,7 @@ export default function VaultPage() {
         </div>
 
         {/* Add Button */}
-        <button onClick={() => setShowAdd(!showAdd)} className="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium hover:shadow-lg hover:shadow-red-500/20 transition-all active:scale-[0.98] relative overflow-hidden group">
+        <button onClick={() => setShowAdd(!showAdd)} aria-label={showAdd ? t('cancel') : t('add vault memory')} aria-expanded={showAdd} className="w-full py-3 rounded-xl bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium hover:shadow-lg hover:shadow-red-500/20 transition-all active:scale-[0.98] relative overflow-hidden group">
           <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity" />
           <span className="relative">{showAdd ? `✕ ${t('cancel')}` : `＋ ${t('add vault memory')}`}</span>
         </button>
@@ -488,10 +489,10 @@ export default function VaultPage() {
         {/* Add Form */}
         {showAdd && (
           <div className="bg-white/[0.03] rounded-xl border border-red-500/10 p-4 space-y-3 backdrop-blur-xl shadow-2xl shadow-red-500/5">
-            <textarea value={newContent} onChange={e => setNewContent(e.target.value)} placeholder={t('secret placeholder')} className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm resize-none h-24 focus:border-red-500/40 focus:outline-none transition" />
+            <textarea value={newContent} onChange={e => setNewContent(e.target.value)} placeholder={t('secret placeholder')} aria-label={t('secret placeholder')} className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm resize-none h-24 focus:border-red-500/40 focus:outline-none transition" />
             <div className="flex gap-2 overflow-x-auto pb-1">
               {CATEGORIES.map(cat => (
-                <button key={cat.key} onClick={() => setNewCategory(cat.key)} className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs whitespace-nowrap transition ${newCategory === cat.key ? 'bg-red-500/20 text-red-400 border border-red-500/30 shadow-lg shadow-red-500/10' : 'bg-white/5 text-white/30 border border-white/5 hover:bg-white/10'}`}>
+                <button key={cat.key} onClick={() => setNewCategory(cat.key)} aria-label={cat.label} aria-pressed={newCategory === cat.key} className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs whitespace-nowrap transition ${newCategory === cat.key ? 'bg-red-500/20 text-red-400 border border-red-500/30 shadow-lg shadow-red-500/10' : 'bg-white/5 text-white/30 border border-white/5 hover:bg-white/10'}`}>
                   {cat.icon} {cat.label}
                 </button>
               ))}
@@ -499,11 +500,11 @@ export default function VaultPage() {
             <div className="flex items-center gap-2">
               <span className="text-xs text-white/30">{t('importance')}:</span>
               {[1,2,3,4,5].map(n => (
-                <button key={n} onClick={() => setNewImportance(n)} className={`text-lg transition hover:scale-110 ${n <= newImportance ? 'opacity-100' : 'opacity-20'}`}>⭐</button>
+                <button key={n} onClick={() => setNewImportance(n)} aria-label={`Importance ${n} of 5`} aria-pressed={n <= newImportance} className={`text-lg transition hover:scale-110 ${n <= newImportance ? 'opacity-100' : 'opacity-20'}`}>⭐</button>
               ))}
             </div>
-            <input value={newMood} onChange={e => setNewMood(e.target.value)} placeholder={t('mood optional')} className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm focus:border-red-500/40 focus:outline-none transition" />
-            <button onClick={addEntry} disabled={!newContent.trim()} className="w-full py-2.5 rounded-xl bg-red-600 text-white text-sm font-medium disabled:opacity-30 shadow-lg shadow-red-500/20 hover:bg-red-500 transition active:scale-[0.98]">🔐 {t('encrypt & save')}</button>
+            <input value={newMood} onChange={e => setNewMood(e.target.value)} placeholder={t('mood optional')} aria-label={t('mood optional')} className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm focus:border-red-500/40 focus:outline-none transition" />
+            <button onClick={addEntry} disabled={!newContent.trim()} aria-label={t('encrypt & save')} className="w-full py-2.5 rounded-xl bg-red-600 text-white text-sm font-medium disabled:opacity-30 shadow-lg shadow-red-500/20 hover:bg-red-500 transition active:scale-[0.98]">🔐 {t('encrypt & save')}</button>
           </div>
         )}
 
@@ -534,7 +535,7 @@ export default function VaultPage() {
                     </div>
                     <div className="flex items-center gap-1">
                       {Array.from({ length: entry.importance }).map((_, i) => <span key={i} className="text-[10px]">⭐</span>)}
-                      <button onClick={() => deleteEntry(entry.id)} className="ml-2 text-white/20 hover:text-red-400 text-xs opacity-0 group-hover:opacity-100 transition">✕</button>
+                      <button onClick={() => deleteEntry(entry.id)} aria-label="Delete entry" className="ml-2 text-white/20 hover:text-red-400 text-xs opacity-0 group-hover:opacity-100 transition">✕</button>
                     </div>
                   </div>
                   <p className="text-white/70 text-sm leading-relaxed">{entry.content}</p>
@@ -558,7 +559,7 @@ export default function VaultPage() {
               )}
             </h3>
             <p className="text-xs text-white/30 mb-3">{t('permanently destroy all vault data')}</p>
-            <button onClick={nuclearWipe} className="w-full py-2.5 rounded-xl bg-red-900/50 text-red-300 text-sm font-medium border border-red-500/20 hover:bg-red-900/80 transition-all active:scale-[0.98] relative overflow-hidden group">
+            <button onClick={nuclearWipe} aria-label={t('destroy everything')} className="w-full py-2.5 rounded-xl bg-red-900/50 text-red-300 text-sm font-medium border border-red-500/20 hover:bg-red-900/80 transition-all active:scale-[0.98] relative overflow-hidden group">
               <div className="absolute inset-0 bg-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
               <span className="relative">💀 {t('destroy everything')}</span>
             </button>

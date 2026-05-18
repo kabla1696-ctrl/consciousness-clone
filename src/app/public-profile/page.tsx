@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import OptimizedImage from '@/components/OptimizedImage'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface Profile {
   id: string
@@ -20,7 +21,7 @@ interface Profile {
 
 export default function PublicProfile() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -46,12 +47,12 @@ export default function PublicProfile() {
   const loadProfile = async (userId: string) => {
     const { data } = await supabase
       .from('public_profiles')
-      .select('*')
+      .select('id, user_id, display_name, bio, avatar_url, is_public, total_chats, rating, created_at')
       .eq('user_id', userId)
       .single()
 
     if (data) {
-      setProfile(data)
+      setProfile(data as Profile)
       setDisplayName(data.display_name || '')
       setBio(data.bio || '')
       setIsPublic(data.is_public || false)
@@ -78,7 +79,7 @@ export default function PublicProfile() {
         .select()
         .single()
 
-      if (data) setProfile(data)
+      if (data) setProfile(data as Profile)
     } else {
       const { data } = await supabase
         .from('public_profiles')
@@ -86,7 +87,7 @@ export default function PublicProfile() {
         .select()
         .single()
 
-      if (data) setProfile(data)
+      if (data) setProfile(data as Profile)
     }
 
     setSaving(false)

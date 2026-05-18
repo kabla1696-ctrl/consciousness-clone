@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface Message { role: 'user' | 'assistant'; content: string }
 
@@ -25,7 +26,7 @@ const AGE_PROMPTS: Record<number, string> = {
 
 export default function TimeTravelPage() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [selectedAge, setSelectedAge] = useState(20)
   const [messages, setMessages] = useState<Message[]>([])
@@ -56,12 +57,12 @@ export default function TimeTravelPage() {
 
     try {
       const memories = JSON.parse(localStorage.getItem('consciousness-memories') || '[]')
-      const memoryTexts = memories.slice(0, 10).map((m: any) => m.content || m.text || '').filter(Boolean)
+      const memoryTexts = memories.slice(0, 10).map((m: Record<string, unknown>) => (m.content || m.text || '') as string).filter(Boolean)
       const systemPrompt = `${AGE_PROMPTS[selectedAge]}\n\nYour memories from this age: ${JSON.stringify(memoryTexts.slice(0, 3))}\n\nStay in character as the user at age ${selectedAge}. Be authentic to how someone at that age would think and speak.`
 
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           messages: [...messages, userMsg].map(m => ({ role: m.role, content: m.content })),
           systemPrompt

@@ -142,6 +142,7 @@ export default function ImageGallery({
                       : 'bg-black/50 text-white/70 opacity-0 group-hover:opacity-100 hover:bg-red-500/80'
                   }`}
                   title={deleteConfirm === i ? 'Click again to confirm' : 'Delete'}
+                  aria-label={deleteConfirm === i ? 'Confirm delete image' : 'Delete image'}
                 >
                   {deleteConfirm === i ? '✓' : '✕'}
                 </button>
@@ -163,10 +164,14 @@ export default function ImageGallery({
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm"
           onClick={closeLightbox}
+          role="dialog"
+          aria-label="Image lightbox"
+          aria-modal="true"
         >
           {/* Close button */}
           <button
             onClick={closeLightbox}
+            aria-label="Close lightbox"
             className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
           >
             ✕
@@ -181,6 +186,7 @@ export default function ImageGallery({
           {images.length > 1 && (
             <button
               onClick={(e) => { e.stopPropagation(); goPrev() }}
+              aria-label="Previous image"
               className="absolute left-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
             >
               ‹
@@ -199,6 +205,7 @@ export default function ImageGallery({
           {images.length > 1 && (
             <button
               onClick={(e) => { e.stopPropagation(); goNext() }}
+              aria-label="Next image"
               className="absolute right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
             >
               ›

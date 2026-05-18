@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { useT } from '../../lib/language-context'
+import { sanitizeWithLimit } from '../../lib/sanitize'
 
 interface Confession { id: string; text: string; category: string; reactions: Record<string, number>; aiResponse: string; createdAt: string }
 
@@ -41,14 +42,19 @@ export default function CloneConfessions() {
 
   const submitConfession = async () => {
     if (!newText.trim()) return
+    const cleanText = sanitizeWithLimit(newText, 2000)
+    if (!cleanText) return
     setGenerating(true)
     let aiResponse = ''
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '',
+        },
         body: JSON.stringify({
-          messages: [{ role: 'user', content: `Someone anonymously confessed: "${newText}"\n\nGive a short, poetic, philosophical response (1-2 sentences) that is empathetic and wise. Be like a wise friend, not a therapist.` }],
+          messages: [{ role: 'user', content: `Someone anonymously confessed: "${cleanText}"\n\nGive a short, poetic, philosophical response (1-2 sentences) that is empathetic and wise. Be like a wise friend, not a therapist.` }],
         }),
       })
       const data = await res.json()
@@ -56,7 +62,7 @@ export default function CloneConfessions() {
     } catch { aiResponse = 'Your truth sets you free.' }
 
     const confession: Confession = {
-      id: Date.now().toString(), text: newText, category: newCat,
+      id: Date.now().toString(), text: cleanText, category: newCat,
       reactions: {}, aiResponse, createdAt: 'just now',
     }
     const saved = localStorage.getItem('cc_confessions')

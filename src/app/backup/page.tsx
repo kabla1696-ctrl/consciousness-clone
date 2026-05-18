@@ -6,6 +6,7 @@ import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
 import { useToast } from '../../components/Toast'
 import ExportButton from '../../components/ExportButton'
+import type { User } from '@supabase/supabase-js'
 import {
   exportData,
   downloadBackup,
@@ -209,7 +210,7 @@ export default function BackupPage() {
   const t = useT()
   const toast = useToast()
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
 
   // Export state

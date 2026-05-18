@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 interface AnimatedCounterProps {
   end: number
@@ -15,7 +15,7 @@ function easeOutCubic(t: number): number {
   return 1 - Math.pow(1 - t, 3)
 }
 
-export default function AnimatedCounter({
+const AnimatedCounter = React.memo(function AnimatedCounter({
   end,
   duration = 800,
   prefix = '',
@@ -75,4 +75,6 @@ export default function AnimatedCounter({
       {prefix}{formatted}{suffix}
     </span>
   )
-}
+})
+
+export default AnimatedCounter

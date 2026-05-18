@@ -2,8 +2,10 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect, useCallback } from 'react'
-import NotificationCenter from './NotificationCenter'
-import GlobalSearch from './GlobalSearch'
+import dynamic from 'next/dynamic'
+
+const NotificationCenter = dynamic(() => import('./NotificationCenter'), { ssr: false })
+const GlobalSearch = dynamic(() => import('./GlobalSearch'), { ssr: false })
 import { useTheme } from '@/lib/theme-context'
 
 type NavItem = { href: string; icon: string; label: string }
@@ -218,6 +220,8 @@ export default function DesktopNav() {
         <div>
           <button
             onClick={() => setShowMore(!showMore)}
+            aria-label={showMore ? 'Show less navigation' : 'Show more navigation'}
+            aria-expanded={showMore}
             className={`flex items-center gap-3 px-3 py-2 rounded-xl transition-all tap-feedback w-full text-white/30 hover:text-white/50 hover:bg-white/[0.03] ${collapsed ? 'justify-center' : ''}`}
           >
             <span className="text-lg flex-shrink-0">⋯</span>
@@ -244,6 +248,7 @@ export default function DesktopNav() {
       <div className="p-4 border-t border-white/[0.06]">
         <button
           onClick={toggleColorMode}
+          aria-label={colorMode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
           className="flex items-center gap-2 w-full px-3 py-2 rounded-xl text-white/40 hover:text-white/60 hover:bg-white/[0.03] transition-all tap-feedback"
           title={colorMode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
         >

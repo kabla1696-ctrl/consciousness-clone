@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface Song {
   name: string
@@ -37,7 +38,7 @@ const ALBUM_COLORS = [
 
 export default function SoulPlaylist() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [selectedMood, setSelectedMood] = useState('motivated')
   const [generating, setGenerating] = useState(false)
   const [songs, setSongs] = useState<Song[]>([])
@@ -81,7 +82,7 @@ export default function SoulPlaylist() {
     try {
       const response = await fetch('https://consciousness-clone.vercel.app/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           messages: [{
             role: 'user',

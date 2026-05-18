@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface Snapshot {
   id: string
@@ -47,7 +48,7 @@ function FloatingParticles() {
 
 export default function PersonalitySnapshotsPage() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [snapshots, setSnapshots] = useState<Snapshot[]>([])
   const [showCheckIn, setShowCheckIn] = useState(false)
@@ -98,7 +99,7 @@ export default function PersonalitySnapshotsPage() {
       const recent = snapshots.slice(0, 7).map(s => ({ date: s.timestamp.split('T')[0], ...s.scores }))
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           message: `Analyze these personality snapshot scores over time and provide a brief trend insight (2-3 sentences). Data: ${JSON.stringify(recent)}. Focus on notable changes, patterns, or advice.`,
         }),

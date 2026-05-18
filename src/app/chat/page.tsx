@@ -6,6 +6,7 @@ import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
 import MarkdownRenderer from '../../components/MarkdownRenderer'
 import InfiniteScroll from '../../components/InfiniteScroll'
+import type { User } from '@supabase/supabase-js'
 
 interface Message {
   id: string
@@ -18,7 +19,7 @@ const STORAGE_KEY = 'cc_chat_messages'
 
 export default function Chat() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [authLoading, setAuthLoading] = useState(true)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
@@ -74,7 +75,7 @@ export default function Chat() {
 
     const res = await fetch('/api/chat', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
       body: JSON.stringify({ messages: history, memories }),
     })
     if (!res.ok) throw new Error(`API ${res.status}`)
@@ -116,7 +117,7 @@ export default function Chat() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col bg-[#050510] relative">
+    <main role="main" aria-label="Chat with clone" className="min-h-screen flex flex-col bg-[#050510] relative overflow-x-hidden">
       {/* Floating particles */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute w-[500px] h-[500px] rounded-full opacity-[0.08]" style={{ top: '-150px', right: '-120px', background: 'radial-gradient(circle,rgba(139,92,246,0.4),transparent 70%)', animation: 'orb1 20s ease-in-out infinite' }} />
@@ -125,9 +126,9 @@ export default function Chat() {
       </div>
 
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#050510]/80 backdrop-blur-2xl border-b border-white/[0.04]">
+      <header role="banner" className="sticky top-0 z-50 bg-[#050510]/80 backdrop-blur-2xl border-b border-white/[0.04]">
         <div className="px-4 py-3 flex items-center gap-3 max-w-3xl mx-auto">
-          <Link href="/dashboard" className="p-2 -ml-2 rounded-xl hover:bg-white/[0.04] transition-colors">
+          <Link href="/dashboard" aria-label="Back to dashboard" className="p-2 -ml-2 rounded-xl hover:bg-white/[0.04] transition-colors">
             <svg className="w-5 h-5 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </Link>
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-base shadow-lg shadow-violet-500/20">🧠</div>
@@ -142,7 +143,7 @@ export default function Chat() {
       </header>
 
       {/* Messages */}
-      <div className="relative z-10 flex-1 overflow-y-auto px-4 pt-4 pb-28">
+      <div role="log" aria-label="Chat messages" aria-live="polite" className="relative z-10 flex-1 overflow-y-auto px-4 sm:px-6 pt-4 pb-28">
         <div className="max-w-3xl mx-auto space-y-5">
           {/* Empty state */}
           {messages.length === 0 && !loading && (
@@ -206,10 +207,10 @@ export default function Chat() {
 
       {/* Input bar */}
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#050510]/90 backdrop-blur-2xl border-t border-white/[0.03]">
-        <div className="max-w-3xl mx-auto px-4 py-3">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
           <div className={`flex items-center gap-2 rounded-2xl bg-white/[0.04] border px-2 transition-all duration-200 ${focused ? 'border-violet-500/30 shadow-lg shadow-violet-500/5' : 'border-white/[0.06]'}`}>
-            <input ref={inputRef} type="text" value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage()} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)} className="flex-1 px-3 py-3 bg-transparent border-none focus:outline-none text-white text-[15px] placeholder:text-white/20" placeholder={t('type message')} disabled={loading} />
-            <button onClick={sendMessage} disabled={loading || !input.trim()} className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center transition-all disabled:opacity-20 active:scale-90 hover:shadow-lg hover:shadow-violet-500/20">
+            <input ref={inputRef} type="text" value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage()} onFocus={() => setFocused(true)} onBlur={() => setFocused(false)} className="flex-1 px-3 py-3 bg-transparent border-none focus:outline-none text-white text-[15px] placeholder:text-white/20" placeholder={t('type message')} disabled={loading} aria-label={t('type message')} />
+            <button onClick={sendMessage} disabled={loading || !input.trim()} aria-label="Send message" className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-violet-600 to-fuchsia-600 flex items-center justify-center transition-all disabled:opacity-20 active:scale-90 hover:shadow-lg hover:shadow-violet-500/20">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
             </button>
           </div>

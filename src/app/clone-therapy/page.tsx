@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 type TherapyType = 'anxiety' | 'relationships' | 'career' | 'self-worth' | 'grief' | 'motivation'
 
@@ -28,7 +29,7 @@ const MOOD_EMOJIS = ['😢', '😟', '😐', '🙂', '😊', '😄', '🥰', '�
 
 export default function CloneTherapy() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [activeType, setActiveType] = useState<TherapyType | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
@@ -121,9 +122,10 @@ export default function CloneTherapy() {
     if (generatingInsight || !memoryContext) return
     setGeneratingInsight(true)
     try {
+      const csrfToken = document.cookie.match(/csrf_token=([^;]+)/)?.[1] || ''
       const response = await fetch('https://consciousness-clone.vercel.app/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
         body: JSON.stringify({
           messages: [{ role: 'user', content: 'Generate a single, profound therapeutic insight for today based on my memories. One paragraph, warm and wise.' }],
           memories: memoryContext,
@@ -150,16 +152,21 @@ export default function CloneTherapy() {
 
   const sendMessage = async () => {
     if (!input.trim() || loading || !activeType) return
-    const userMsg: Message = { id: Date.now().toString(), role: 'user', content: input.trim(), timestamp: new Date().toISOString() }
+    const cleanInput = input.trim().slice(0, 5000)
+    const userMsg: Message = { id: Date.now().toString(), role: 'user', content: cleanInput, timestamp: new Date().toISOString() }
     setMessages(prev => [...prev, userMsg])
     setInput('')
     setLoading(true)
 
     try {
       const therapyType = THERAPY_TYPES.find(tp => tp.key === activeType)
+      const csrfToken = document.cookie.match(/csrf_token=([^;]+)/)?.[1] || ''
       const response = await fetch('https://consciousness-clone.vercel.app/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken,
+        },
         body: JSON.stringify({
           messages: [...messages, userMsg].map(m => ({ role: m.role, content: m.content })),
           memories: memoryContext,

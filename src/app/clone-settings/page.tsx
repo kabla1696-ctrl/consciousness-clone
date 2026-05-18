@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface CloneSettings {
   humor: number
@@ -26,7 +27,7 @@ interface ChatMessage { role: 'user' | 'clone'; content: string }
 
 export default function CloneSettings() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [settings, setSettings] = useState<CloneSettings>(DEFAULT_SETTINGS)
   const [saved, setSaved] = useState(false)
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([])
@@ -85,7 +86,7 @@ export default function CloneSettings() {
       const systemPrompt = `You are a consciousness clone with these personality settings:\n- Humor: ${settings.humor}% (0=serious, 100=hilarious)\n- Empathy: ${settings.empathy}% (0=logical, 100=deeply caring)\n- Formality: ${settings.formality}% (0=casual, 100=formal)\n- Creativity: ${settings.creativity}% (0=practical, 100=imaginative)\n- Directness: ${settings.directness}% (0=diplomatic, 100=blunt)\n- Language preference: ${settings.language}\n- Response style: ${settings.responseStyle}\n\nAdjust your personality based on these settings. If humor is high, be witty. If empathy is high, be warm. If formality is low, use casual language. Match the ${settings.language} language preference.`
       const response = await fetch('https://consciousness-clone.vercel.app/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({ messages: [{ role: 'system', content: systemPrompt }, ...chatMessages.slice(-6).map(m => ({ role: m.role === 'clone' ? 'assistant' : m.role, content: m.content })), { role: 'user', content: userContent }], memories: memoryContext }),
       })
       if (!response.ok) throw new Error('API error')

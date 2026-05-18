@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface Goal {
   id: string
@@ -35,7 +36,7 @@ const STORAGE_KEY = 'consciousness-goals'
 
 export default function GoalsPage() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [goals, setGoals] = useState<Goal[]>([])
   const [showAdd, setShowAdd] = useState(false)
@@ -148,7 +149,7 @@ export default function GoalsPage() {
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           message: `I have a goal: "${goal.title}". ${goal.description ? `Description: ${goal.description}.` : ''} Category: ${goal.category}. Status: ${goal.status}. ${goal.deadline ? `Deadline: ${goal.deadline}.` : ''} Give me a short, personalized motivational advice (max 3 sentences) to help me achieve this goal.`,
         }),

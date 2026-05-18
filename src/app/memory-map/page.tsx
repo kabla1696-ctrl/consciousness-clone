@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface MemoryLocation {
   id: string
@@ -18,25 +19,26 @@ interface MemoryLocation {
   }
 }
 
+interface NominatimResult { display_name: string; lat: string; lon: string; [key: string]: unknown }
 interface GroupedMemories {
   [place: string]: MemoryLocation[]
 }
 
 export default function MemoryMap() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [locations, setLocations] = useState<MemoryLocation[]>([])
   const [groupedLocations, setGroupedLocations] = useState<GroupedMemories>({})
   const [showAdd, setShowAdd] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
-  const [searchResults, setSearchResults] = useState<any[]>([])
+  const [searchResults, setSearchResults] = useState<NominatimResult[]>([])
   const [searching, setSearching] = useState(false)
-  const [selectedPlace, setSelectedPlace] = useState<any>(null)
+  const [selectedPlace, setSelectedPlace] = useState<NominatimResult | null>(null)
   const [memoryContent, setMemoryContent] = useState('')
   const [memoryCategory, setMemoryCategory] = useState('places')
   const [saving, setSaving] = useState(false)
   const [expandedPlace, setExpandedPlace] = useState<string | null>(null)
-  const [memories, setMemories] = useState<any[]>([])
+  const [memories, setMemories] = useState<Record<string, unknown>[]>([])
 
   const CATEGORIES = [
     { value: 'places', label: 'Places', icon: '📍' },
@@ -61,7 +63,7 @@ export default function MemoryMap() {
     const [locResult, memResult] = await Promise.all([
       supabase
         .from('memory_locations')
-        .select('*')
+        .select('id, place_name, memory_id, latitude, longitude, created_at')
         .eq('user_id', userId)
         .order('created_at', { ascending: false }),
       supabase
@@ -116,7 +118,7 @@ export default function MemoryMap() {
     return () => clearTimeout(timer)
   }, [searchQuery])
 
-  const selectPlace = (place: any) => {
+  const selectPlace = (place: NominatimResult) => {
     setSelectedPlace(place)
     setSearchQuery(place.display_name.split(',')[0])
     setSearchResults([])

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface VoiceEntry {
   id: string
@@ -51,7 +52,7 @@ function Particles() {
 
 export default function VoiceJournal() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [entries, setEntries] = useState<VoiceEntry[]>([])
   const [isRecording, setIsRecording] = useState(false)
   const [audioURL, setAudioURL] = useState<string | null>(null)
@@ -83,12 +84,12 @@ export default function VoiceJournal() {
   const loadEntries = async (userId: string) => {
     const { data } = await supabase
       .from('voice_journals')
-      .select('*')
+      .select('id, audio_url, mood, duration_seconds, created_at')
       .eq('user_id', userId)
       .order('created_at', { ascending: false })
       .limit(50)
 
-    if (data) setEntries(data)
+    if (data) setEntries(data as VoiceEntry[])
   }
 
   const drawWaveform = useCallback(() => {

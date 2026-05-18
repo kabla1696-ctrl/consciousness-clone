@@ -5,6 +5,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
 import HapticButton from '../../components/HapticButton'
+import type { User } from '@supabase/supabase-js'
 
 interface MoodEntry {
   id: string
@@ -47,7 +48,7 @@ function getDayKey(dateStr: string) {
 
 export default function MoodTrackerPage() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [entries, setEntries] = useState<MoodEntry[]>([])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -77,7 +78,7 @@ export default function MoodTrackerPage() {
 
     const { data } = await supabase
       .from('mood_entries')
-      .select('*')
+      .select('id, mood, intensity, note, created_at')
       .eq('user_id', userId)
       .gte('created_at', thirtyDaysAgo.toISOString())
       .order('created_at', { ascending: false })

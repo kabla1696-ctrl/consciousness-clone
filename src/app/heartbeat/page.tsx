@@ -136,7 +136,7 @@ export default function HeartbeatMemory() {
         await videoRef.current.play()
         setCameraReady(true)
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       setCameraError('Camera access denied. Please allow camera permission.')
     }
   }

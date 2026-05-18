@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 function Particles() {
   return (
@@ -47,15 +48,19 @@ function GlowCard({ children, className = '', glowColor = 'violet' }: { children
   )
 }
 
+interface ActivityItem {
+  role?: string; content?: string; mood?: string; category?: string; created_at: string; [key: string]: unknown
+}
+
 export default function Analytics() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [stats, setStats] = useState({
     totalMemories: 0,
     totalChats: 0,
     categoryBreakdown: {} as Record<string, number>,
     moodBreakdown: {} as Record<string, number>,
-    recentActivity: [] as any[],
+    recentActivity: [] as ActivityItem[],
     topCategories: [] as [string, number][],
   })
 
@@ -71,8 +76,8 @@ export default function Analytics() {
 
   const loadAnalytics = async (userId: string) => {
     const [memoriesRes, messagesRes] = await Promise.all([
-      supabase.from('memories').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
-      supabase.from('chat_messages').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
+      supabase.from('memories').select('category, mood, created_at').eq('user_id', userId).order('created_at', { ascending: false }),
+      supabase.from('chat_messages').select('created_at').eq('user_id', userId).order('created_at', { ascending: false }),
     ])
 
     const memories = memoriesRes.data || []
@@ -254,7 +259,7 @@ export default function Analytics() {
             <p className="text-white/20 text-center py-12 text-sm">{t('no data')}</p>
           ) : (
             <div className="space-y-2">
-              {stats.recentActivity.map((item: any, i: number) => (
+              {stats.recentActivity.map((item: ActivityItem, i: number) => (
                 <div
                   key={i}
                   className="flex items-center gap-4 py-3.5 px-4 rounded-xl hover:bg-white/[0.02] border border-transparent hover:border-white/[0.04] transition-all duration-300 group"

@@ -208,8 +208,8 @@ export default function CalendarPage() {
     : ''
 
   return (
-    <div className="min-h-screen bg-[#050510] text-white">
-      <div className="max-w-4xl mx-auto px-4 py-6 md:py-10">
+    <div className="min-h-screen bg-[#050510] text-white overflow-x-hidden">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 md:py-10">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">

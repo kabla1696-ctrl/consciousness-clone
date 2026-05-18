@@ -52,6 +52,7 @@ export default function ExportButton({
     <button
       onClick={handleExport}
       disabled={exporting}
+      aria-label={exporting ? 'Exporting data' : 'Export data'}
       className={`
         relative flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl
         font-semibold text-sm transition-all duration-300 tap-feedback

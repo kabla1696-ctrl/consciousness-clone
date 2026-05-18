@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface Episode {
   id: string
@@ -14,7 +15,7 @@ interface Episode {
 
 export default function ClonePodcast() {
   const t = useT();
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [generating, setGenerating] = useState(false)
   const [currentScript, setCurrentScript] = useState('')
   const [currentTitle, setCurrentTitle] = useState('')
@@ -53,7 +54,7 @@ export default function ClonePodcast() {
     try {
       const response = await fetch('https://consciousness-clone.vercel.app/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           messages: [{
             role: 'user',

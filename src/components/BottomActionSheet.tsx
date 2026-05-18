@@ -96,6 +96,9 @@ export default function BottomActionSheet({
       <div
         ref={sheetRef}
         className="w-full max-w-lg bg-[#0a0a1a] rounded-t-2xl border-t border-white/[0.06] overflow-hidden"
+        role="dialog"
+        aria-label={title || "Action sheet"}
+        aria-modal="true"
         style={{
           transform: `translateY(${dragOffset}px)`,
           transition: isDragging
@@ -132,6 +135,7 @@ export default function BottomActionSheet({
                 action.onClick()
                 onClose()
               }}
+              aria-label={action.label}
               className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl text-left transition-colors tap-feedback ${
                 action.destructive
                   ? 'text-red-400 hover:bg-red-500/10 active:bg-red-500/20'
@@ -156,6 +160,7 @@ export default function BottomActionSheet({
         <div className="px-3 pb-4 pt-1">
           <button
             onClick={onClose}
+            aria-label="Cancel and close"
             className="w-full py-3.5 rounded-xl bg-white/[0.08] text-white font-semibold text-[15px] tap-feedback active:bg-white/[0.12] transition-colors"
           >
             Cancel

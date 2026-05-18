@@ -1,5 +1,5 @@
 'use client'
-import { useRef, type MouseEvent, type ReactNode } from 'react'
+import React, { useRef, type MouseEvent, type ReactNode } from 'react'
 
 interface RippleButtonProps {
   children: ReactNode
@@ -8,9 +8,10 @@ interface RippleButtonProps {
   variant?: 'primary' | 'secondary' | 'ghost'
   disabled?: boolean
   type?: 'button' | 'submit'
+  'aria-label'?: string
 }
 
-export default function RippleButton({ children, className = '', onClick, variant = 'primary', disabled = false, type = 'button' }: RippleButtonProps) {
+const RippleButton = React.memo(function RippleButton({ children, className = '', onClick, variant = 'primary', disabled = false, type = 'button', ...rest }: RippleButtonProps) {
   const btnRef = useRef<HTMLButtonElement>(null)
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -35,8 +36,11 @@ export default function RippleButton({ children, className = '', onClick, varian
 
   return (
     <button ref={btnRef} type={type} disabled={disabled} onClick={handleClick}
-      className={`relative overflow-hidden transition-all duration-200 active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed ${variants[variant]} ${className}`}>
+      className={`relative overflow-hidden transition-all duration-200 active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed ${variants[variant]} ${className}`}
+      {...rest}>
       {children}
     </button>
   )
-}
+})
+
+export default RippleButton

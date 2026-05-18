@@ -5,6 +5,18 @@ import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
 
 interface Message { id: string; role: 'user' | 'clone'; text: string; timestamp: number }
+interface Memory { title?: string; content?: string; text?: string; [key: string]: unknown }
+interface CallLog { id: string; duration: number; messageCount: number; timestamp: string; preview: string[] }
+interface SpeechRecognitionEvent { resultIndex: number; results: SpeechRecognitionResultList }
+interface SpeechRecognitionErrorEvent extends Event { error: string }
+interface SpeechRecognitionInstance {
+  continuous: boolean; interimResults: boolean; lang: string; maxAlternatives: number
+  start(): void; stop(): void; abort(): void
+  onresult: ((event: SpeechRecognitionEvent) => void) | null
+  onend: (() => void) | null
+  onerror: ((event: SpeechRecognitionErrorEvent) => void) | null
+}
+type SpeechRecognitionConstructor = new () => SpeechRecognitionInstance
 
 export default function CloneVoiceCallPage() {
   const t = useT()
@@ -15,12 +27,12 @@ export default function CloneVoiceCallPage() {
   const [transcript, setTranscript] = useState('')
   const [callTimer, setCallTimer] = useState(0)
   const [cloneName, setCloneName] = useState('Your Clone')
-  const [memories, setMemories] = useState<any[]>([])
+  const [memories, setMemories] = useState<Memory[]>([])
   const [waveHeights, setWaveHeights] = useState<number[]>(Array(30).fill(5))
 
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const waveRef = useRef<NodeJS.Timeout | null>(null)
-  const recognitionRef = useRef<any>(null)
+  const recognitionRef = useRef<SpeechRecognitionInstance | null>(null)
   const audioCtxRef = useRef<AudioContext | null>(null)
   const loopActiveRef = useRef(false)
   const messagesRef = useRef<Message[]>([])
@@ -72,7 +84,7 @@ export default function CloneVoiceCallPage() {
   // Play beep sound via AudioContext
   const playBeep = useCallback((freq: number, duration: number) => {
     try {
-      if (!audioCtxRef.current) audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)()
+      if (!audioCtxRef.current) audioCtxRef.current = new (window.AudioContext || (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext!)()
       const ctx = audioCtxRef.current
       const osc = ctx.createOscillator()
       const gain = ctx.createGain()
@@ -90,13 +102,13 @@ export default function CloneVoiceCallPage() {
   // Get AI response
   const getCloneResponse = useCallback(async (userText: string, recentMsgs: Message[]) => {
     const memoryContext = memories.length > 0
-      ? `\n\nUser's memories for context:\n${memories.map((m: any) => `- ${m.title}: ${m.content?.slice(0, 100)}`).join('\n')}`
+      ? `\n\nUser's memories for context:\n${memories.map((m: Memory) => `- ${m.title}: ${m.content?.slice(0, 100)}`).join('\n')}`
       : ''
 
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({
           messages: [
             { role: 'system', content: `You are ${cloneName}'s consciousness clone on a LIVE VOICE CALL. Keep responses SHORT (1-2 sentences), natural, warm. You're talking LIVE, not writing. Be personal, reference their memories when relevant.${memoryContext}` },
@@ -141,7 +153,8 @@ export default function CloneVoiceCallPage() {
   // Listen for speech using Web Speech API
   const listenForSpeech = useCallback((): Promise<string> => {
     return new Promise((resolve) => {
-      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+      const window_ = window as unknown as Record<string, SpeechRecognitionConstructor | undefined>
+      const SpeechRecognition = window_.SpeechRecognition || window_.webkitSpeechRecognition
       if (!SpeechRecognition) {
         alert('Speech Recognition is not supported in this browser. Please use Chrome.')
         resolve('')
@@ -160,7 +173,7 @@ export default function CloneVoiceCallPage() {
 
       let finalText = ''
 
-      recognition.onresult = (event: any) => {
+      recognition.onresult = (event: SpeechRecognitionEvent) => {
         let interim = ''
         for (let i = event.resultIndex; i < event.results.length; i++) {
           if (event.results[i].isFinal) {
@@ -178,7 +191,7 @@ export default function CloneVoiceCallPage() {
         resolve(finalText.trim())
       }
 
-      recognition.onerror = (e: any) => {
+      recognition.onerror = (_e: SpeechRecognitionErrorEvent) => {
         setIsListening(false)
         setTranscript('')
         // On 'no-speech' or 'aborted', just resolve empty — loop will retry
@@ -317,7 +330,7 @@ export default function CloneVoiceCallPage() {
 
   // ====== IDLE / ENDED SCREEN ======
   if (callState === 'idle' || callState === 'ended') {
-    let logs: any[] = []
+    let logs: CallLog[] = []
     try { logs = JSON.parse(localStorage.getItem('cc_call_logs') || '[]') } catch {}
 
     return (
@@ -405,7 +418,7 @@ export default function CloneVoiceCallPage() {
             <div>
               <h3 className="text-sm font-semibold text-white/50 mb-3">{t('Recent Calls')}</h3>
               <div className="space-y-2">
-                {logs.slice(0, 5).map((log: any) => (
+                {logs.slice(0, 5).map((log: CallLog) => (
                   <div
                     key={log.id}
                     className="flex items-center gap-3 p-3 rounded-xl border border-white/[0.06]"

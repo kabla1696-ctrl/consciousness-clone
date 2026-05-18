@@ -136,7 +136,7 @@ export default function CloneFeed() {
           { id: 'profile', icon: '👤', label: t('Profile') },
           { id: 'followers', icon: '👥', label: t('Followers') },
         ].map(tabItem => (
-          <button key={tabItem.id} onClick={() => setTab(tabItem.id as any)} className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium whitespace-nowrap tap-feedback transition-all ${tab === tabItem.id ? 'bg-violet-500/20 text-violet-400 border border-violet-500/30' : 'text-white/40 border border-transparent'}`}>
+          <button key={tabItem.id} onClick={() => setTab(tabItem.id as typeof tab)} className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium whitespace-nowrap tap-feedback transition-all ${tab === tabItem.id ? 'bg-violet-500/20 text-violet-400 border border-violet-500/30' : 'text-white/40 border border-transparent'}`}>
             <span>{tabItem.icon}</span> {tabItem.label}
           </button>
         ))}
@@ -356,7 +356,7 @@ export default function CloneFeed() {
                 { id: 'image', icon: '📸', label: 'Photo' },
                 { id: 'video', icon: '🎥', label: 'Video' },
               ].map(tabItem => (
-                <button key={tabItem.id} onClick={() => setPostType(tabItem.id as any)} className={`flex-1 py-2 rounded-xl text-xs tap-feedback ${postType === tabItem.id ? 'bg-violet-500/20 border-violet-500/40 text-violet-400' : 'bg-white/[0.03] border-white/[0.06] text-white/40'} border`}>{tabItem.icon} {tabItem.label}</button>
+                <button key={tabItem.id} onClick={() => setPostType(tabItem.id as typeof postType)} className={`flex-1 py-2 rounded-xl text-xs tap-feedback ${postType === tabItem.id ? 'bg-violet-500/20 border-violet-500/40 text-violet-400' : 'bg-white/[0.03] border-white/[0.06] text-white/40'} border`}>{tabItem.icon} {tabItem.label}</button>
               ))}
             </div>
 

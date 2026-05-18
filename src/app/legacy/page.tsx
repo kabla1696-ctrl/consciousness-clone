@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import type { User } from '@supabase/supabase-js'
 
 interface LegacyLetter {
   id: string
@@ -71,7 +72,7 @@ function QuillAnimation() {
 
 export default function LegacyLettersPage() {
   const t = useT()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [letters, setLetters] = useState<LegacyLetter[]>([])
   const [showForm, setShowForm] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -102,10 +103,10 @@ export default function LegacyLettersPage() {
   const loadLetters = async (userId: string) => {
     const { data } = await supabase
       .from('legacy_letters')
-      .select('*')
+      .select('id, is_delivered, deliver_condition, deliver_date, recipient_relation, recipient_name, recipient_email, subject, content, created_at')
       .eq('user_id', userId)
       .order('created_at', { ascending: false })
-    if (data) setLetters(data)
+    if (data) setLetters(data as LegacyLetter[])
   }
 
   const handleCreate = async () => {

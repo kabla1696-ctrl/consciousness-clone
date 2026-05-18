@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { generateCsrfToken } from './lib/csrf'
 
 // Routes that require authentication
 const PROTECTED_ROUTES = [
@@ -106,6 +107,17 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   const isAuthenticated = !!user
+
+  // Set CSRF cookie (Double-Submit pattern) if not already present
+  if (!request.cookies.has('csrf_token')) {
+    supabaseResponse.cookies.set('csrf_token', generateCsrfToken(), {
+      httpOnly: false, // JS must read it to send in header
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      path: '/',
+      maxAge: 60 * 60 * 24, // 24 hours
+    })
+  }
 
   // Auth pages (login/signup) - redirect to dashboard if already logged in
   if (pathname === '/login' || pathname === '/signup') {

@@ -1,10 +1,12 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
-import BarChart from '@/components/BarChart'
-import LineChart from '@/components/LineChart'
-import PieChart from '@/components/PieChart'
-import HeatMap from '@/components/HeatMap'
+import dynamic from 'next/dynamic'
+
+const BarChart = dynamic(() => import('@/components/BarChart'), { ssr: false })
+const LineChart = dynamic(() => import('@/components/LineChart'), { ssr: false })
+const PieChart = dynamic(() => import('@/components/PieChart'), { ssr: false })
+const HeatMap = dynamic(() => import('@/components/HeatMap'), { ssr: false })
 
 // --- Helpers ---
 function safeParse<T>(key: string, fallback: T): T {
@@ -294,9 +296,9 @@ export default function InsightsPage() {
   if (!mounted) return null
 
   return (
-    <div className="min-h-screen bg-[#0a0a1a] pb-24">
+    <div className="min-h-screen bg-[#0a0a1a] pb-24 overflow-x-hidden">
       {/* Header */}
-      <div className="sticky top-0 z-30 bg-[#0a0a1a]/80 backdrop-blur-xl border-b border-white/[0.06] px-4 py-4 md:px-8">
+      <div className="sticky top-0 z-30 bg-[#0a0a1a]/80 backdrop-blur-xl border-b border-white/[0.06] px-4 py-4 sm:px-6 md:px-8">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div>
             <h1 className="text-xl font-bold text-white flex items-center gap-2">
@@ -304,7 +306,7 @@ export default function InsightsPage() {
             </h1>
             <p className="text-xs text-white/40 mt-0.5">Data-driven view of your inner world</p>
           </div>
-          <div className="flex items-center gap-1 bg-white/[0.04] rounded-xl p-1">
+          <div className="flex items-center gap-1 bg-white/[0.04] rounded-xl p-1 overflow-x-auto scrollbar-hide">
             {dateRanges.map(r => (
               <button
                 key={r.key}
@@ -322,7 +324,7 @@ export default function InsightsPage() {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 md:px-8 mt-6 space-y-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 mt-6 space-y-6">
         {/* Quick Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <StatCard icon="📝" label="Memories" value={filteredMemories.length} sub="total entries" />
@@ -403,7 +405,7 @@ export default function InsightsPage() {
         {/* Writing Stats */}
         <GlassCard>
           <SectionTitle icon="✍️" title="Writing Statistics" subtitle="Your writing patterns and habits" />
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
             <div className="text-center">
               <div className="text-3xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
                 {writingStats.totalWords.toLocaleString()}
