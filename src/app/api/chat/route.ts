@@ -89,7 +89,6 @@ ${memorySection}`,
 
     if (!response.ok) {
       const errorText = await response.text()
-      console.error('AI API error:', response.status, errorText)
       return NextResponse.json({ error: 'AI service unavailable' }, { status: 500 })
     }
 
@@ -103,7 +102,6 @@ ${memorySection}`,
     return NextResponse.json({ reply })
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error)
-    console.error('Chat API error:', message)
     return NextResponse.json({ error: 'Something went wrong', details: message }, { status: 500 })
   }
 }

@@ -125,7 +125,6 @@ export default function Skills() {
       setSkills(skills.map(s => s.id === skill.id ? { ...s, lessons } : s))
       setExpandedSkill(skill.id)
     } catch (err) {
-      console.error('Failed to generate lessons:', err)
     }
 
     setGeneratingLessons(null)

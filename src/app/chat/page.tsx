@@ -97,7 +97,6 @@ export default function Chat() {
       const reply = await getAIResponse(text)
       setMessages(p => [...p, { id: `c-${Date.now()}`, role: 'clone', content: reply, created_at: new Date().toISOString() }])
     } catch (e) {
-      console.error(e)
       setMessages(p => [...p, { id: `e-${Date.now()}`, role: 'clone', content: "Couldn't reach my brain. Try again? 🧠", created_at: new Date().toISOString() }])
     }
     setLoading(false)

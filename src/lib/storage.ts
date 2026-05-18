@@ -27,14 +27,12 @@ export async function uploadFile(
       })
 
     if (error) {
-      console.error('[storage] upload error:', error.message)
       return { data: null, error: error.message }
     }
 
     return { data, error: null }
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Upload failed'
-    console.error('[storage] upload exception:', message)
     return { data: null, error: message }
   }
 }
@@ -59,14 +57,12 @@ export async function deleteFile(
     const { error } = await supabase.storage.from(bucket).remove(pathList)
 
     if (error) {
-      console.error('[storage] delete error:', error.message)
       return { error: error.message }
     }
 
     return { error: null }
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Delete failed'
-    console.error('[storage] delete exception:', message)
     return { error: message }
   }
 }
@@ -87,14 +83,12 @@ export async function listFiles(
     })
 
     if (error) {
-      console.error('[storage] list error:', error.message)
       return { data: null, error: error.message }
     }
 
     return { data: data?.map(f => ({ name: f.name, id: f.id ?? '', updated_at: f.updated_at ?? '' })) ?? null, error: null }
   } catch (err) {
     const message = err instanceof Error ? err.message : 'List failed'
-    console.error('[storage] list exception:', message)
     return { data: null, error: message }
   }
 }

@@ -142,7 +142,6 @@ You're not an AI assistant. You're THEM, looking back with love and wisdom.`
       }
       setMessages((prev) => [...prev, futureMsg])
     } catch (err) {
-      console.error('Future self error:', err)
       const errorMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: 'future',

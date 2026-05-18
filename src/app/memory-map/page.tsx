@@ -106,7 +106,6 @@ export default function MemoryMap() {
       const data = await response.json()
       setSearchResults(data)
     } catch (err) {
-      console.error('Search error:', err)
     }
     setSearching(false)
   }
@@ -155,7 +154,6 @@ export default function MemoryMap() {
       setSelectedPlace(null)
       setMemoryContent('')
     } catch (err) {
-      console.error('Save error:', err)
       alert('Failed to save. Try again!')
     }
 

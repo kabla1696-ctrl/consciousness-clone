@@ -93,7 +93,6 @@ export default function CloneSettings() {
       const data = await response.json()
       setChatMessages(prev => [...prev, { role: 'clone', content: data.reply || 'Hmm, thinking...' }])
     } catch (err) {
-      console.error('Chat error:', err)
       setChatMessages(prev => [...prev, { role: 'clone', content: 'Oops, my brain glitched. Try again! 🧠' }])
     }
     setChatLoading(false)

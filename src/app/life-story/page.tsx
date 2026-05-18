@@ -129,7 +129,6 @@ Write in first person, as if the person is telling their own story. Be warm, ref
       })
       setGenerated(true)
     } catch (err) {
-      console.error('Failed to generate life story:', err)
     }
     setGenerating(false)
   }

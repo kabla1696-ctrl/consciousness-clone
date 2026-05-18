@@ -173,7 +173,6 @@ export default function VoiceJournal() {
 
       setTimeout(() => drawWaveform(), 100)
     } catch (err) {
-      console.error('Microphone error:', err)
       alert(t('microphone error'))
     }
   }
@@ -216,7 +215,6 @@ export default function VoiceJournal() {
       loadEntries(user.id)
       discardRecording()
     } catch (err) {
-      console.error('Save error:', err)
       alert(t('error'))
     }
 

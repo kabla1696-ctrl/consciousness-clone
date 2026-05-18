@@ -320,7 +320,6 @@ export default function BackupPage() {
         toast.warning('Import completed with some errors')
       }
     } catch (err) {
-      console.error('Import error:', err)
       toast.error('Import failed. Please try again.')
     } finally {
       setImporting(false)

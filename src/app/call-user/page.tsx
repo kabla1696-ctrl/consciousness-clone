@@ -113,7 +113,6 @@ function CallUserContent() {
       }
       draw()
     } catch (err) {
-      console.error('Mic access denied:', err)
       // Fallback: animate bars randomly
       const animate = () => {
         animFrameRef.current = requestAnimationFrame(animate)

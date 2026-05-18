@@ -137,7 +137,6 @@ ${memoryContext}`,
       setAnswers(new Array(Math.min(parsed.length, 10)).fill(null))
       setState('playing')
     } catch (err) {
-      console.error('Quiz generation error:', err)
       setError('Failed to generate questions. Try again!')
     }
 

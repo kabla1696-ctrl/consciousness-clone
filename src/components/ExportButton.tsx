@@ -36,7 +36,6 @@ export default function ExportButton({
       downloadBackup(backup)
       toast.success('Backup downloaded successfully! 🎉')
     } catch (err) {
-      console.error('Export error:', err)
       toast.error('Failed to export data. Please try again.')
     } finally {
       setExporting(false)
