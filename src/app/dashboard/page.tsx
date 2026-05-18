@@ -154,9 +154,6 @@ export default function Dashboard() {
         {/* ─── Divider ─── */}
         <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mb-8" />
 
-        {/* ─── Favorite Features ─── */}
-        <FavoriteFeatures />
-
         {/* ─── Stats Section ─── */}
         <div className="grid grid-cols-3 gap-3 mb-8">
           {[
@@ -173,6 +170,12 @@ export default function Dashboard() {
               <div className={`w-8 h-0.5 bg-gradient-to-r ${s.bar} to-transparent rounded-full mx-auto mt-2 opacity-50 group-hover:opacity-100 group-hover:w-full transition-all duration-500`} />
             </div>
           ))}
+        </div>
+
+        {/* ─── Favorite Features ─── */}
+        <div className="mb-8">
+          <h3 className="text-sm font-semibold text-white/40 uppercase tracking-wider mb-3">⭐ Favorites</h3>
+          <FavoriteFeatures />
         </div>
 
         {/* ─── Quick Actions ─── */}
@@ -301,6 +304,9 @@ export default function Dashboard() {
         <div className="h-4" />
       </div>
 
+      {/* Scroll To Top */}
+      <ScrollToTop />
+
       {/* Floating Action Button */}
       <FloatingActionButton
         actions={[
@@ -310,9 +316,6 @@ export default function Dashboard() {
           { icon: '🔮', label: 'Time Capsule', onClick: () => { window.location.href = '/time-capsule' } },
         ]}
       />
-
-      {/* Scroll To Top */}
-      <ScrollToTop />
 
       {/* Global animation keyframes */}
       <style jsx global>{`
