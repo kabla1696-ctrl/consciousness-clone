@@ -44,7 +44,8 @@ describe('env', () => {
   it('exposes isDev and isProd flags', () => {
     process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://test.supabase.co'
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'test-anon-key'
-    process.env.NODE_ENV = 'development'
+    // NODE_ENV is read-only in TS, use Object.defineProperty
+    Object.defineProperty(process.env, 'NODE_ENV', { value: 'development', writable: true })
     const { env } = require('../lib/env')
     expect(env.isDev).toBe(true)
     expect(env.isProd).toBe(false)
