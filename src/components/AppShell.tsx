@@ -2,6 +2,7 @@
 import MobileNav from './MobileNav'
 import DesktopNav from './DesktopNav'
 import ScrollToTop from './ScrollToTop'
+import PWAInstallPrompt from './PWAInstallPrompt'
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   return (
@@ -12,6 +13,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       </div>
       <MobileNav />
       <ScrollToTop />
+      <PWAInstallPrompt />
     </>
   )
 }

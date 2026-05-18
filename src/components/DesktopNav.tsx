@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
+import NotificationCenter from './NotificationCenter'
 
 const NAV_ITEMS = [
   { href: '/dashboard', icon: '🏠', label: 'Dashboard' },
@@ -24,6 +25,7 @@ export default function DesktopNav() {
       <div className="p-4 flex items-center gap-3 border-b border-white/[0.06]">
         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-lg shadow-lg shadow-violet-500/20 flex-shrink-0">🧠</div>
         {!collapsed && <span className="text-sm font-bold tracking-tight bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Consciousness Clone</span>}
+        <NotificationCenter />
         <button onClick={() => setCollapsed(!collapsed)} aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'} className="ml-auto text-white/20 hover:text-white/50 text-xs tap-feedback">☰</button>
       </div>
 
