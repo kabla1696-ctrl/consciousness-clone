@@ -1,8 +1,16 @@
 import type { Metadata, Viewport } from 'next'
+import { Inter } from 'next/font/google'
 
 // Next.js 15 deprecated the separate viewport export.
 // We merge viewport fields into metadata via generateViewport.
 import './globals.css'
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+})
 import CapacitorInit from '../components/CapacitorInit'
 import Providers from '../components/Providers'
 import AppShell from '../components/AppShell'
@@ -149,7 +157,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="bg-[#050510] text-white antialiased">
+      <body className={`bg-[#050510] text-white antialiased ${inter.variable}`}>
         <SkipLink />
         <Providers>
           <CapacitorInit />
