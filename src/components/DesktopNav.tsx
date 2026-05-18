@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import { useState, useEffect, useCallback } from 'react'
 import NotificationCenter from './NotificationCenter'
 import GlobalSearch from './GlobalSearch'
+import { useTheme } from '@/lib/theme-context'
 
 const NAV_ITEMS = [
   { href: '/dashboard', icon: '🏠', label: 'Dashboard' },
@@ -20,6 +21,7 @@ export default function DesktopNav() {
   const pathname = usePathname()
   const [collapsed, setCollapsed] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
+  const { colorMode, toggleColorMode } = useTheme()
 
   const handleKey = useCallback((e: KeyboardEvent) => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -61,11 +63,17 @@ export default function DesktopNav() {
       </nav>
 
       {/* Bottom */}
-      {!collapsed && (
-        <div className="p-4 border-t border-white/[0.06]">
-          <div className="text-[10px] text-white/15">Consciousness Clone v2.0</div>
-        </div>
-      )}
+      <div className="p-4 border-t border-white/[0.06]">
+        <button
+          onClick={toggleColorMode}
+          className="flex items-center gap-2 w-full px-3 py-2 rounded-xl text-white/40 hover:text-white/60 hover:bg-white/[0.03] transition-all tap-feedback"
+          title={colorMode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          <span className="text-lg flex-shrink-0">{colorMode === 'dark' ? '☀️' : '🌙'}</span>
+          {!collapsed && <span className="text-sm font-medium">{colorMode === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>}
+        </button>
+        {!collapsed && <div className="text-[10px] text-white/15 mt-2">Consciousness Clone v2.0</div>}
+      </div>
     </aside>
     </>
   )

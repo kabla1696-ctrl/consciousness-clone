@@ -185,7 +185,7 @@ function ConfirmModal({
 
 // ── Main Settings Page ──────────────────────────────────────────
 export default function SettingsPage() {
-  const { theme, setTheme, themes } = useTheme()
+  const { theme, setTheme, themes, colorMode, toggleColorMode } = useTheme()
 
   // Notification toggles
   const [pushEnabled, setPushEnabled] = useState(true)
@@ -336,6 +336,36 @@ export default function SettingsPage() {
 
         {/* ── 1. Appearance ─────────────────────────────────────── */}
         <SettingsCard icon="🎨" title="Appearance" subtitle="Theme & accent color" defaultOpen>
+          {/* Dark / Light mode toggle */}
+          <div className="flex items-center justify-between py-3 mb-3 border-b border-white/[0.06]">
+            <div className="flex items-center gap-3">
+              <span className="text-xl">{colorMode === 'dark' ? '🌙' : '☀️'}</span>
+              <div>
+                <p className="font-medium text-sm">{colorMode === 'dark' ? 'Dark Mode' : 'Light Mode'}</p>
+                <p className="text-xs text-white/40 mt-0.5">Switch between dark and light themes</p>
+              </div>
+            </div>
+            <button
+              onClick={toggleColorMode}
+              className="relative w-16 h-8 rounded-full transition-all duration-300 flex items-center"
+              style={{
+                background: colorMode === 'dark'
+                  ? 'rgba(99,102,241,0.3)'
+                  : 'rgba(250,204,21,0.3)',
+              }}
+            >
+              <div
+                className="absolute w-6 h-6 rounded-full flex items-center justify-center text-sm transition-all duration-300 shadow-md"
+                style={{
+                  left: colorMode === 'dark' ? '4px' : '36px',
+                  background: colorMode === 'dark' ? '#6366f1' : '#facc15',
+                }}
+              >
+                {colorMode === 'dark' ? '🌙' : '☀️'}
+              </div>
+            </button>
+          </div>
+
           <div className="grid grid-cols-4 gap-4 mb-4">
             {themes.map(t => (
               <button

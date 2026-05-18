@@ -20,16 +20,23 @@ export const accentThemes: AccentTheme[] = [
   { id: 'teal', name: 'Teal', color: '#14b8a6', glow: 'rgba(20,184,166,0.15)', rgb: '20,184,166' },
 ]
 
+export type ColorMode = 'dark' | 'light'
+
 interface ThemeContextValue {
   theme: AccentTheme
   setTheme: (theme: AccentTheme) => void
   themes: AccentTheme[]
+  colorMode: ColorMode
+  toggleColorMode: () => void
+  accentColor: string
+  setAccentColor: (t: AccentTheme) => void
 }
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<AccentTheme>(accentThemes[0])
+  const [colorMode, setColorMode] = useState<ColorMode>('dark')
 
   useEffect(() => {
     try {
@@ -39,11 +46,18 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         if (parsed) {
           setThemeState(parsed)
           applyTheme(parsed)
-          return
         }
       }
-    } catch {}
-    applyTheme(accentThemes[0])
+      const storedMode = localStorage.getItem('cc-theme') as ColorMode | null
+      if (storedMode === 'dark' || storedMode === 'light') {
+        setColorMode(storedMode)
+        applyColorMode(storedMode)
+      } else {
+        applyColorMode('dark')
+      }
+    } catch {
+      applyColorMode('dark')
+    }
   }, [])
 
   const setTheme = useCallback((newTheme: AccentTheme) => {
@@ -54,8 +68,19 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     } catch {}
   }, [])
 
+  const toggleColorMode = useCallback(() => {
+    setColorMode(prev => {
+      const next: ColorMode = prev === 'dark' ? 'light' : 'dark'
+      applyColorMode(next)
+      try {
+        localStorage.setItem('cc-theme', next)
+      } catch {}
+      return next
+    })
+  }, [])
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, themes: accentThemes }}>
+    <ThemeContext.Provider value={{ theme, setTheme, themes: accentThemes, colorMode, toggleColorMode, accentColor: theme.color, setAccentColor: setTheme }}>
       {children}
     </ThemeContext.Provider>
   )
@@ -68,9 +93,15 @@ function applyTheme(t: AccentTheme) {
   root.style.setProperty('--accent-rgb', t.rgb)
 }
 
+function applyColorMode(mode: ColorMode) {
+  const root = document.documentElement
+  root.classList.remove('dark', 'light')
+  root.classList.add(mode)
+}
+
 export function useTheme() {
   const ctx = useContext(ThemeContext)
   // Return default theme during SSR/prerender when provider isn't mounted
-  if (!ctx) return { theme: accentThemes[0], setTheme: () => {}, themes: accentThemes }
+  if (!ctx) return { theme: accentThemes[0], setTheme: () => {}, themes: accentThemes, colorMode: 'dark' as ColorMode, toggleColorMode: () => {}, accentColor: accentThemes[0].color, setAccentColor: () => {} }
   return ctx
 }
