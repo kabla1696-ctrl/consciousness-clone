@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useT } from '../../lib/language-context';
-import FileUpload from '../../components/FileUpload';
+import ImageGallery, { type GalleryImage } from '../../components/ImageGallery';
 
 type DiaryEntry = {
   id: string;
@@ -43,6 +43,7 @@ export default function CloneDiaryPage() {
   const [viewMode, setViewMode] = useState<'list' | 'calendar' | 'detail'>('list');
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [filterMood, setFilterMood] = useState<string | null>(null);
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
 
   useEffect(() => {
     const saved = localStorage.getItem('clone_diary');
@@ -52,6 +53,15 @@ export default function CloneDiaryPage() {
       setEntries(SAMPLE_ENTRIES);
       localStorage.setItem('clone_diary', JSON.stringify(SAMPLE_ENTRIES));
     }
+    // Load saved diary images
+    try {
+      const savedImages = JSON.parse(localStorage.getItem('clone_diary_images') || '[]');
+      setGalleryImages(savedImages.map((img: { name: string; data: string; date: string }, i: number) => ({
+        src: img.data,
+        alt: img.name,
+        id: `diary-img-${i}`,
+      })));
+    } catch {}
   }, []);
 
   const filteredEntries = entries.filter(e => {
@@ -274,20 +284,36 @@ export default function CloneDiaryPage() {
               </div>
             </div>
 
-            {/* Image Upload */}
+            {/* Image Gallery */}
             <div style={{ marginBottom: 20 }}>
-              <FileUpload accept="image/*" multiple maxSize={5 * 1024 * 1024} onUpload={(files) => {
-                files.forEach(f => {
-                  const reader = new FileReader();
-                  reader.onload = (e) => {
-                    const saved = localStorage.getItem('clone_diary_images') || '[]';
-                    const images = JSON.parse(saved);
-                    images.push({ name: f.name, data: e.target?.result, date: new Date().toISOString().split('T')[0] });
-                    localStorage.setItem('clone_diary_images', JSON.stringify(images));
-                  };
-                  reader.readAsDataURL(f);
-                });
-              }} />
+              <ImageGallery
+                images={galleryImages}
+                columns={3}
+                onUpload={(files) => {
+                  files.forEach(f => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                      const saved = localStorage.getItem('clone_diary_images') || '[]';
+                      const images = JSON.parse(saved);
+                      const newEntry = { name: f.name, data: e.target?.result as string, date: new Date().toISOString().split('T')[0] };
+                      images.push(newEntry);
+                      localStorage.setItem('clone_diary_images', JSON.stringify(images));
+                      setGalleryImages(prev => [...prev, { src: newEntry.data, alt: newEntry.name, id: `diary-img-${prev.length}` }]);
+                    };
+                    reader.readAsDataURL(f);
+                  });
+                }}
+                onDelete={(index) => {
+                  setGalleryImages(prev => {
+                    const next = prev.filter((_, i) => i !== index);
+                    // Sync to localStorage
+                    const raw = JSON.parse(localStorage.getItem('clone_diary_images') || '[]');
+                    raw.splice(index, 1);
+                    localStorage.setItem('clone_diary_images', JSON.stringify(raw));
+                    return next;
+                  });
+                }}
+              />
             </div>
 
             {viewMode === 'calendar' ? (

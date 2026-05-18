@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import AnimatedIcon from '../../components/AnimatedIcon'
 
 interface Achievement {
   id: string
@@ -209,7 +210,16 @@ export default function AchievementsPage() {
                   <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 ${
                     achievement.unlocked ? 'bg-gradient-to-br from-violet-500/20 to-amber-500/20 shadow-lg shadow-violet-500/10' : 'bg-white/5 grayscale opacity-40'
                   }`}>
-                    {achievement.icon}
+                    {achievement.unlocked ? (
+                      <AnimatedIcon
+                        icon={achievement.icon}
+                        animation={achievement.category === 'special' ? 'float' : achievement.requirement >= 100 ? 'pulse' : 'bounce'}
+                        size="md"
+                        continuous
+                      />
+                    ) : (
+                      <span>{achievement.icon}</span>
+                    )}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">

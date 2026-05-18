@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
+import HapticButton from '../../components/HapticButton'
 
 interface MoodEntry {
   id: string
@@ -343,13 +344,16 @@ export default function MoodTrackerPage() {
               />
             </div>
 
-            <button
+            <HapticButton
               onClick={handleCheckIn}
               disabled={!selectedMood || saving}
-              className="w-full bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-bold py-3.5 rounded-xl tap-feedback disabled:opacity-30 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-violet-500/20 transition-all active:scale-[0.98]"
+              variant="primary"
+              hapticType="medium"
+              soundEffect
+              className="w-full py-3.5"
             >
               {saving ? 'Saving...' : '✨ Log My Mood'}
-            </button>
+            </HapticButton>
           </div>
         )}
 
