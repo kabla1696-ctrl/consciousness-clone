@@ -243,7 +243,7 @@ export default function MemoryMap() {
                       setSearchQuery(e.target.value)
                       setSelectedPlace(null)
                     }}
-                    placeholder="Search for a place..."
+                    placeholder={t('search place')}
                     className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/40 focus:shadow-[0_0_20px_rgba(139,92,246,0.08)] transition-all text-white placeholder:text-white/15 text-sm backdrop-blur-sm"
                   />
                   {searching && (
@@ -320,7 +320,7 @@ export default function MemoryMap() {
                 <textarea
                   value={memoryContent}
                   onChange={e => setMemoryContent(e.target.value)}
-                  placeholder="What happened here? What do you remember?"
+                  placeholder={t('memory map description')}
                   rows={3}
                   className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/40 focus:shadow-[0_0_20px_rgba(139,92,246,0.08)] transition-all text-white placeholder:text-white/15 text-sm resize-none backdrop-blur-sm"
                 />

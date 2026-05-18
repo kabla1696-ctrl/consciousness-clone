@@ -355,14 +355,14 @@ export default function DreamSharing() {
 
             <input
               type="text"
-              placeholder="Dream title..."
+              placeholder={t('dream title')}
               value={newTitle}
               onChange={e => setNewTitle(e.target.value)}
               className="w-full bg-white/5 rounded-xl px-4 py-3 text-white placeholder-white/30 outline-none border border-white/10 focus:border-purple-500/50 mb-3 text-sm"
             />
 
             <textarea
-              placeholder="Describe your dream in detail... What did you see, feel, hear?"
+              placeholder={t('dream sharing placeholder')}
               value={newContent}
               onChange={e => setNewContent(e.target.value)}
               rows={4}

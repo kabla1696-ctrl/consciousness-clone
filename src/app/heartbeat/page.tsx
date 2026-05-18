@@ -531,7 +531,7 @@ export default function HeartbeatMemory() {
                 <textarea
                   value={newMemoryText}
                   onChange={e => setNewMemoryText(e.target.value)}
-                  placeholder="What are you feeling right now? What made your heart race?"
+                  placeholder={t('heartbeat placeholder')}
                   className="w-full h-24 rounded-xl bg-white/[0.03] border border-white/[0.06] px-4 py-3 text-sm text-white/80 placeholder-white/20 resize-none focus:outline-none focus:border-violet-500/40 transition"
                 />
                 <label className="flex items-center gap-3 cursor-pointer">

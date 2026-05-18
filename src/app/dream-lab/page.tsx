@@ -259,14 +259,14 @@ export default function DreamLab() {
               value={title}
               onChange={e => setTitle(e.target.value)}
               className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl focus:outline-none focus:border-violet-500/40 focus:shadow-[0_0_15px_rgba(139,92,246,0.08)] transition-all duration-300 text-white placeholder:text-white/20 backdrop-blur-sm"
-              placeholder="Dream title..."
+              placeholder={t('dream title')}
             />
             <textarea
               value={description}
               onChange={e => setDescription(e.target.value)}
               className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl focus:outline-none focus:border-violet-500/40 transition-all duration-300 resize-none text-white placeholder:text-white/20 backdrop-blur-sm"
               rows={4}
-              placeholder="Describe your dream in detail..."
+              placeholder={t('describe dream')}
             />
             <div>
               <p className="text-white/40 text-xs mb-2 font-medium">Mood:</p>

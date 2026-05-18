@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useRef, useCallback, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
+import OptimizedImage from '@/components/OptimizedImage'
 
 type CallPhase = 'ringing' | 'connected' | 'ended' | 'incoming'
 
@@ -224,7 +225,7 @@ function CallUserContent() {
       <main className="min-h-screen flex flex-col items-center justify-center px-4" style={{ background: 'linear-gradient(135deg, #050510, #0a0a2e)' }}>
         <div className="text-center mb-8">
           <div className="w-20 h-20 rounded-full bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center text-3xl text-white font-bold mx-auto mb-4">
-            {avatarUrl ? <img src={avatarUrl} alt={userName} className="w-full h-full rounded-full object-cover" /> : avatarInitial}
+            {avatarUrl ? <OptimizedImage src={avatarUrl} alt={userName} width={80} height={80} className="w-full h-full rounded-full object-cover" /> : avatarInitial}
           </div>
           <h2 className="text-2xl font-bold text-white mb-1">{userName}</h2>
           <p className="text-white/30 text-sm">Call ended</p>
@@ -302,7 +303,7 @@ function CallUserContent() {
             }}
           >
             <div className="absolute inset-[-3px] rounded-full z-[-1]" style={{ background: 'linear-gradient(135deg, #8b5cf6, #ec4899, #10b981)', animation: 'borderRotate 3s linear infinite' }} />
-            {avatarUrl ? <img src={avatarUrl} alt={userName} className="w-full h-full rounded-full object-cover" /> : avatarInitial}
+            {avatarUrl ? <OptimizedImage src={avatarUrl} alt={userName} width={112} height={112} className="w-full h-full rounded-full object-cover" /> : avatarInitial}
           </div>
           {phase === 'connected' && (
             <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-emerald-500 border-3 border-[#050510] flex items-center justify-center">

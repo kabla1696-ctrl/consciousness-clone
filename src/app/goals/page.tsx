@@ -267,7 +267,7 @@ export default function GoalsPage() {
                 <input
                   value={title}
                   onChange={e => setTitle(e.target.value)}
-                  placeholder="What do you want to achieve?"
+                  placeholder={t('goal placeholder')}
                   className="w-full backdrop-blur-xl bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-3 text-sm text-white placeholder-white/15 focus:outline-none focus:border-violet-500/40 focus:bg-white/[0.04] transition-all duration-300"
                 />
               </div>
@@ -277,7 +277,7 @@ export default function GoalsPage() {
                 <textarea
                   value={description}
                   onChange={e => setDescription(e.target.value)}
-                  placeholder="More details about this goal..."
+                  placeholder={t('goal details')}
                   rows={2}
                   className="w-full backdrop-blur-xl bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-3 text-sm text-white placeholder-white/15 focus:outline-none focus:border-violet-500/40 focus:bg-white/[0.04] transition-all duration-300 resize-none"
                 />

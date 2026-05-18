@@ -337,7 +337,7 @@ export default function MoodTrackerPage() {
               <textarea
                 value={note}
                 onChange={e => setNote(e.target.value)}
-                placeholder="What's on your mind?"
+                placeholder={t('whats on your mind')}
                 rows={2}
                 className="w-full glass rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-violet-500/40 resize-none transition"
               />

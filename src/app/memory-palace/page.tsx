@@ -154,8 +154,8 @@ export default function MemoryPalacePage() {
             </button>
             {showAdd && (
               <div className="bg-white/5 rounded-xl border border-violet-500/10 p-4 space-y-3">
-                <input value={newTitle} onChange={e => setNewTitle(e.target.value)} placeholder="Memory title" className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm" />
-                <input value={newPlacement} onChange={e => setNewPlacement(e.target.value)} placeholder="Where in the room? (e.g., On the shelf, By the window)" className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm" />
+                <input value={newTitle} onChange={e => setNewTitle(e.target.value)} placeholder={t('memory title')} className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm" />
+                <input value={newPlacement} onChange={e => setNewPlacement(e.target.value)} placeholder={t('memory palace placement')} className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white text-sm" />
                 <div>
                   <div className="flex justify-between text-xs text-white/30 mb-1"><span>Vividness</span><span>{newVividness}%</span></div>
                   <input type="range" min={10} max={100} value={newVividness} onChange={e => setNewVividness(parseInt(e.target.value))} className="w-full" style={{ accentColor: selectedRoom.color }} />

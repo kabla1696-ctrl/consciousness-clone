@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import OptimizedImage from '@/components/OptimizedImage'
 import { useT } from '../../lib/language-context'
 
 interface PhotoMemory {
@@ -146,7 +147,7 @@ export default function PhotoMemories() {
           <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
             <div className="glass-card rounded-2xl overflow-hidden max-w-md w-full animate-slide-up">
               <div className="aspect-square bg-black/50 relative">
-                <img src={preview} alt="Preview" className="w-full h-full object-cover" />
+                <OptimizedImage src={preview} alt="Preview" fill className="w-full h-full object-cover" />
               </div>
               <div className="p-4 space-y-4">
                 <div>
@@ -194,7 +195,7 @@ export default function PhotoMemories() {
               </button>
             </div>
             <div className="flex-1 flex items-center justify-center p-4" onClick={e => e.stopPropagation()}>
-              <img src={selectedPhoto.image} alt="" className="max-w-full max-h-[70vh] object-contain rounded-xl" />
+              <OptimizedImage src={selectedPhoto.image} alt={selectedPhoto.caption || 'Photo memory'} width={800} height={600} className="max-w-full max-h-[70vh] object-contain rounded-xl" />
             </div>
             <div className="px-6 py-4 text-center" onClick={e => e.stopPropagation()}>
               <p className="text-white/70 text-sm mb-1">{selectedPhoto.caption}</p>
@@ -209,7 +210,7 @@ export default function PhotoMemories() {
             {photos.map(photo => (
               <button key={photo.id} onClick={() => setSelectedPhoto(photo)}
                 className="group relative aspect-square rounded-2xl overflow-hidden glass-card hover-lift">
-                <img src={photo.image} alt="" className="w-full h-full object-cover" />
+                <OptimizedImage src={photo.image} alt={photo.caption || 'Photo memory'} fill className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="absolute bottom-0 left-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity">
                   <p className="text-white text-xs font-medium truncate">{photo.caption}</p>

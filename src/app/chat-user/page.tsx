@@ -3,6 +3,7 @@ import { useState, Suspense, useRef, useEffect, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useRealtimeMessages, type RealtimeMessage } from '@/hooks/useRealtime'
+import OptimizedImage from '@/components/OptimizedImage'
 
 interface Message {
   id: string
@@ -173,7 +174,7 @@ function ChatUserPageInner() {
           <div className="relative">
             <div className="w-10 h-10 rounded-full flex items-center justify-center text-lg" style={{ background: 'rgba(139,92,246,0.15)' }}>
               {avatarUrl ? (
-                <img src={avatarUrl} alt={userName} className="w-full h-full rounded-full object-cover" />
+                <OptimizedImage src={avatarUrl} alt={userName} width={40} height={40} className="w-full h-full rounded-full object-cover" />
               ) : (
                 userName[0]?.toUpperCase() || '?'
               )}

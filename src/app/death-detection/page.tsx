@@ -232,9 +232,9 @@ export default function DeathDetectionPage() {
 
           {showAddHeir && (
             <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-4 space-y-3 mb-4">
-              <input value={heirName} onChange={e => setHeirName(e.target.value)} placeholder="Name" className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition" />
-              <input value={heirEmail} onChange={e => setHeirEmail(e.target.value)} placeholder="Email" type="email" className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition" />
-              <input value={heirPhone} onChange={e => setHeirPhone(e.target.value)} placeholder="Phone (optional)" className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition" />
+              <input value={heirName} onChange={e => setHeirName(e.target.value)} placeholder={t('name')} className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition" />
+              <input value={heirEmail} onChange={e => setHeirEmail(e.target.value)} placeholder={t('email')} type="email" className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition" />
+              <input value={heirPhone} onChange={e => setHeirPhone(e.target.value)} placeholder={t('phone optional')} className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition" />
               <select value={heirRelation} onChange={e => setHeirRelation(e.target.value)} className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white focus:outline-none focus:border-violet-500/30 transition appearance-none">
                 {RELATIONS.map(r => <option key={r} value={r} className="bg-[#0a0a1a]">{r}</option>)}
               </select>

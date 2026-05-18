@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import OptimizedImage from '@/components/OptimizedImage'
 import { useT } from '../../lib/language-context'
 
 interface Profile {
@@ -147,7 +148,7 @@ export default function PublicProfile() {
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-2xl blur-lg opacity-40 group-hover:opacity-60 transition-opacity" />
               <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-3xl font-bold shadow-xl shadow-violet-500/20 border border-white/[0.1]">
-                {profilePic ? <img src={profilePic} alt="Profile" className="w-full h-full object-cover" /> : (displayName ? displayName[0].toUpperCase() : '🧠')}
+                {profilePic ? <OptimizedImage src={profilePic} alt="Profile" width={80} height={80} className="w-full h-full object-cover rounded-2xl" /> : (displayName ? displayName[0].toUpperCase() : '🧠')}
               </div>
               <label className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-violet-500 border-2 border-[#050510] flex items-center justify-center text-[10px] cursor-pointer tap-feedback shadow-lg z-10">
                 📷
@@ -197,7 +198,7 @@ export default function PublicProfile() {
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
                 className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/40 focus:ring-2 focus:ring-violet-500/10 transition-all text-white placeholder:text-white/15 backdrop-blur-sm"
-                placeholder="How others will see your clone"
+                placeholder={t('public profile placeholder')}
               />
             </div>
 
@@ -209,7 +210,7 @@ export default function PublicProfile() {
                 onChange={(e) => setBio(e.target.value)}
                 className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/40 focus:ring-2 focus:ring-violet-500/10 transition-all resize-none text-white placeholder:text-white/15 backdrop-blur-sm"
                 rows={3}
-                placeholder="A short description about your clone..."
+                placeholder={t('clone description placeholder')}
               />
               <p className="text-white/15 text-xs mt-1.5">{bio.length}/200 characters</p>
             </div>

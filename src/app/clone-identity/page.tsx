@@ -176,7 +176,7 @@ export default function CloneIdentityPage() {
             <div className="relative bg-white/[0.02] backdrop-blur-2xl rounded-2xl border border-cyan-500/[0.08] p-5 space-y-4 shadow-xl shadow-black/20">
               <h3 className="text-sm font-medium text-cyan-400">{editingId ? t('edit') + ' Profile' : t('add person')}</h3>
               <div className="grid grid-cols-2 gap-3">
-                <input value={name} onChange={e => setName(e.target.value)} placeholder="Name *" className="col-span-2 bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10 focus:shadow-lg focus:shadow-cyan-500/10 transition-all duration-300" />
+                <input value={name} onChange={e => setName(e.target.value)} placeholder={t('name required')} className="col-span-2 bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10 focus:shadow-lg focus:shadow-cyan-500/10 transition-all duration-300" />
                 <select value={relation} onChange={e => setRelation(e.target.value)} className="bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2.5 text-white text-sm focus:outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10 transition-all duration-300 appearance-none">
                   {RELATIONS.map(r => <option key={r} value={r}>{r}</option>)}
                 </select>
@@ -190,19 +190,19 @@ export default function CloneIdentityPage() {
               {recognitionMethod === 'text_pattern' && (
                 <div>
                   <label className="text-[11px] text-white/20 uppercase tracking-widest font-medium mb-1.5 block pl-1">{t('face')}</label>
-                  <textarea value={textSamples} onChange={e => setTextSamples(e.target.value)} placeholder="Hey what's up!\nAmi bhalo achi\nLet's grab lunch tmrw" className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2.5 text-white text-sm h-24 resize-none placeholder:text-white/15 focus:outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10 transition-all duration-300" />
+                  <textarea value={textSamples} onChange={e => setTextSamples(e.target.value)} placeholder={t('text samples placeholder')} className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2.5 text-white text-sm h-24 resize-none placeholder:text-white/15 focus:outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10 transition-all duration-300" />
                 </div>
               )}
 
               {recognitionMethod === 'knowledge' && (
                 <div className="space-y-2">
-                  <input value={knowledgeQ} onChange={e => setKnowledgeQ(e.target.value)} placeholder="Question only they'd know" className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10 transition-all duration-300" />
-                  <input value={knowledgeA} onChange={e => setKnowledgeA(e.target.value)} placeholder="Answer" className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10 transition-all duration-300" />
+                  <input value={knowledgeQ} onChange={e => setKnowledgeQ(e.target.value)} placeholder={t('knowledge question')} className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10 transition-all duration-300" />
+                  <input value={knowledgeA} onChange={e => setKnowledgeA(e.target.value)} placeholder={t('answer')} className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2.5 text-white text-sm placeholder:text-white/20 focus:outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10 transition-all duration-300" />
                 </div>
               )}
 
               {recognitionMethod === 'voice' && (
-                <textarea value={voiceDesc} onChange={e => setVoiceDesc(e.target.value)} placeholder="Describe their voice: accent, pitch, speaking style..." className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2.5 text-white text-sm h-16 resize-none placeholder:text-white/15 focus:outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10 transition-all duration-300" />
+                <textarea value={voiceDesc} onChange={e => setVoiceDesc(e.target.value)} placeholder={t('voice description')} className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2.5 text-white text-sm h-16 resize-none placeholder:text-white/15 focus:outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10 transition-all duration-300" />
               )}
 
               <div className="grid grid-cols-2 gap-3">
@@ -293,7 +293,7 @@ export default function CloneIdentityPage() {
                     {testMode === profile.id && (
                       <div className="mt-2.5 space-y-2">
                         <div className="flex gap-2">
-                          <input value={testInput} onChange={e => setTestInput(e.target.value)} placeholder="Type a sample message..." className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-white text-xs placeholder:text-white/15 focus:outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10 transition-all duration-300" />
+                          <input value={testInput} onChange={e => setTestInput(e.target.value)} placeholder={t('sample message')} className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-white text-xs placeholder:text-white/15 focus:outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10 transition-all duration-300" />
                           <button onClick={() => runTest(profile)} className="relative px-4 py-2 rounded-lg text-xs overflow-hidden group/btn transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/20">
                             <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600" />
                             <span className="relative z-10 text-white">{t('search')}</span>

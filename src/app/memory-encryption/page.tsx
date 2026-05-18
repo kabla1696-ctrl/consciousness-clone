@@ -197,7 +197,7 @@ export default function MemoryEncryption() {
               <textarea
                 value={newMemory}
                 onChange={(e) => setNewMemory(e.target.value)}
-                placeholder="What do you want to encrypt forever?"
+                placeholder={t('encrypt placeholder')}
                 className="w-full bg-white/[0.05] border border-white/[0.08] rounded-xl p-3 text-sm text-white placeholder-white/30 resize-none h-24 focus:outline-none focus:border-emerald-500/40 transition-colors"
               />
               <div className="flex gap-2">

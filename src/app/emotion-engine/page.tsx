@@ -225,7 +225,7 @@ export default function EmotionEngine() {
           <textarea
             value={text}
             onChange={e => setText(e.target.value)}
-            placeholder="Type anything — your clone will read your emotions..."
+            placeholder={t('emotion engine placeholder')}
             rows={3}
             className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-white text-sm placeholder-gray-600 focus:outline-none focus:border-violet-500/40 focus:shadow-lg focus:shadow-violet-500/5 resize-none transition-all duration-300"
           />

@@ -114,7 +114,7 @@ export default function MemoriesPage() {
               value={vaultPin}
               onChange={e => { setVaultPin(e.target.value); setVaultError('') }}
               onKeyDown={e => e.key === 'Enter' && tryUnlock()}
-              placeholder="Enter PIN"
+              placeholder={t('enter pin')}
               maxLength={6}
               className="w-full px-4 py-3 bg-white/[0.05] border border-white/[0.1] rounded-xl text-white text-center text-2xl tracking-[0.5em] placeholder:text-white/20 placeholder:tracking-normal placeholder:text-sm focus:outline-none focus:border-violet-500/50"
               autoFocus
@@ -213,7 +213,7 @@ export default function MemoriesPage() {
         <div className="flex gap-3 mb-6">
           <div className="relative flex-1">
             <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-            <input type="text" value={search} onChange={e => setSearch(e.target.value)} className="w-full pl-11 pr-4 py-3 bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition" placeholder="Search memories..." />
+            <input type="text" value={search} onChange={e => setSearch(e.target.value)} className="w-full pl-11 pr-4 py-3 bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition" placeholder={t('search memories')} />
           </div>
           <button onClick={() => setShowForm(!showForm)} className="px-4 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-xl text-sm font-semibold hover:shadow-lg hover:shadow-violet-500/20 transition-all active:scale-95 whitespace-nowrap">
             {showForm ? '✕ Close' : `+ ${t('add')}`}
@@ -224,8 +224,8 @@ export default function MemoriesPage() {
         {showForm && (
           <div className="mb-6 p-5 rounded-2xl bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] animate-slide-up">
             <h3 className="text-sm font-bold text-violet-400 mb-4 uppercase tracking-wider">{t('new memory')}</h3>
-            <input value={title} onChange={e => setTitle(e.target.value)} className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition mb-3" placeholder="Memory title..." />
-            <textarea value={content} onChange={e => setContent(e.target.value)} rows={3} className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition resize-none mb-3" placeholder="Describe this memory..." />
+            <input value={title} onChange={e => setTitle(e.target.value)} className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition mb-3" placeholder={t('memory title')} />
+            <textarea value={content} onChange={e => setContent(e.target.value)} rows={3} className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition resize-none mb-3" placeholder={t('describe memory')} />
             <div className="mb-4">
               <p className="text-[11px] text-white/25 uppercase tracking-wider mb-2 font-medium">Category</p>
               <select value={category} onChange={e => setCategory(e.target.value)} className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white focus:outline-none focus:border-violet-500/30 transition appearance-none cursor-pointer" style={{ backgroundImage: 'url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 20 20\'%3e%3cpath stroke=\'%236b7280\' stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1.5\' d=\'M6 8l4 4 4-4\'/%3e%3c/svg%3e")', backgroundPosition: 'right 0.75rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.25em' }}>

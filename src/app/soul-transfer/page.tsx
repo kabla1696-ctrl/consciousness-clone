@@ -163,13 +163,13 @@ export default function SoulTransferPage() {
             <input
               value={friendName}
               onChange={e => setFriendName(e.target.value)}
-              placeholder="Friend's name"
+              placeholder={t('friend name')}
               className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition"
             />
             <input
               value={friendEmail}
               onChange={e => setFriendEmail(e.target.value)}
-              placeholder="Friend's email"
+              placeholder={t('friend email')}
               type="email"
               className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-violet-500/30 transition"
             />

@@ -133,7 +133,7 @@ export default function GhostMode() {
 
           {showAdd && (
             <div className="rounded-xl border border-violet-500/20 p-4 mb-4" style={{ background: 'rgba(139,92,246,0.03)' }}>
-              <input value={newName} onChange={e => setNewName(e.target.value)} placeholder="Name" className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm mb-3 focus:outline-none focus:border-violet-500/40" />
+              <input value={newName} onChange={e => setNewName(e.target.value)} placeholder={t('name')} className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm mb-3 focus:outline-none focus:border-violet-500/40" />
               <div className="grid grid-cols-2 gap-2 mb-3">
                 {['daily', 'weekly', 'monthly', 'yearly'].map(f => (
                   <button key={f} onClick={() => setNewFreq(f)} className={`py-2 rounded-lg text-xs capitalize tap-feedback ${newFreq === f ? 'bg-violet-500/20 border-violet-500/40 text-violet-400' : 'bg-white/[0.03] border-white/[0.06] text-white/40'} border`}>{f}</button>

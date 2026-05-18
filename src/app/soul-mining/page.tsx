@@ -181,7 +181,7 @@ export default function SoulMining() {
               💡 {t('random')}
             </button>
           </div>
-          <textarea value={memoryText} onChange={e => setMemoryText(e.target.value)} placeholder="Share a deep memory to mine soul coins..."
+          <textarea value={memoryText} onChange={e => setMemoryText(e.target.value)} placeholder={t('soul mining placeholder')}
             rows={3} style={{ width:'100%',padding:12,borderRadius:10,border:'1px solid rgba(255,255,255,0.1)',background:'rgba(0,0,0,0.3)',color:'#E0E0E0',fontSize:14,resize:'none',boxSizing:'border-box',marginBottom:12 }} />
           <button onClick={mineMemory} disabled={mining || !memoryText.trim() || minedToday >= DAILY_LIMIT}
             style={{ width:'100%',padding:14,borderRadius:12,border:'none',background:mining?'#F59E0B':'linear-gradient(135deg,#FBBF24,#F59E0B)',color:'#050510',fontWeight:700,cursor:mining?'wait':'pointer',fontSize:16,opacity:!memoryText.trim()||minedToday>=DAILY_LIMIT?0.5:1 }}>

@@ -130,9 +130,9 @@ export default function HeirAccessPage() {
           <div className="bg-white/[0.02] backdrop-blur-xl rounded-2xl border border-amber-500/15 p-5 space-y-5 shadow-xl shadow-black/10">
             <h3 className="text-sm font-bold text-amber-400">{editingId ? 'Edit Heir' : 'New Heir'}</h3>
             <div className="grid grid-cols-2 gap-3">
-              <input value={name} onChange={e => setName(e.target.value)} placeholder="Full Name *" className="col-span-2 bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500/40 transition-all" />
-              <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" type="email" className="bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500/40 transition-all" />
-              <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="Phone" className="bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500/40 transition-all" />
+              <input value={name} onChange={e => setName(e.target.value)} placeholder={t('full name required')} className="col-span-2 bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500/40 transition-all" />
+              <input value={email} onChange={e => setEmail(e.target.value)} placeholder={t('email')} type="email" className="bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500/40 transition-all" />
+              <input value={phone} onChange={e => setPhone(e.target.value)} placeholder={t('phone')} className="bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500/40 transition-all" />
             </div>
             <div>
               <label className="text-xs text-white/30 mb-2 block font-semibold uppercase tracking-wider">Relation</label>
@@ -166,8 +166,8 @@ export default function HeirAccessPage() {
             </div>
             {verificationMethod === 'secret_question' && (
               <div className="space-y-2.5">
-                <input value={secretQuestion} onChange={e => setSecretQuestion(e.target.value)} placeholder="Question only they would know" className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500/40 transition-all" />
-                <input value={secretAnswer} onChange={e => setSecretAnswer(e.target.value)} placeholder="Answer (hashed, never stored)" className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500/40 transition-all" />
+                <input value={secretQuestion} onChange={e => setSecretQuestion(e.target.value)} placeholder={t('secret question')} className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500/40 transition-all" />
+                <input value={secretAnswer} onChange={e => setSecretAnswer(e.target.value)} placeholder={t('secret answer')} className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500/40 transition-all" />
               </div>
             )}
             <div>

@@ -292,7 +292,7 @@ export default function CloneSocial() {
               <textarea
                 value={newPost}
                 onChange={(e) => setNewPost(e.target.value)}
-                placeholder="Share a thought, memory, or feeling..."
+                placeholder={t('social share placeholder')}
                 className="w-full bg-white/[0.05] border border-white/[0.08] rounded-xl p-3 text-sm text-white placeholder-white/30 resize-none h-20 focus:outline-none focus:border-rose-500/40 transition-colors"
               />
               <div className="flex gap-2">
@@ -369,7 +369,7 @@ export default function CloneSocial() {
                       <input
                         value={commentText}
                         onChange={(e) => setCommentText(e.target.value)}
-                        placeholder="Add a comment..."
+                        placeholder={t('add comment')}
                         className="flex-1 bg-white/[0.05] border border-white/[0.08] rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 focus:outline-none focus:border-rose-500/40 transition-colors"
                         onKeyDown={(e) => e.key === 'Enter' && addComment(post.id)}
                       />

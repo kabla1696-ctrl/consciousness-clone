@@ -249,7 +249,7 @@ export default function Skills() {
                   onChange={(e) => setSkillDesc(e.target.value)}
                   className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl focus:outline-none focus:border-violet-500/40 focus:ring-2 focus:ring-violet-500/10 transition-all resize-none text-white placeholder:text-white/15 backdrop-blur-sm"
                   rows={3}
-                  placeholder="Describe your experience with this skill..."
+                  placeholder={t('skill experience')}
                 />
               </div>
 

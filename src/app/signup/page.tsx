@@ -81,7 +81,7 @@ export default function Signup() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="w-full px-4 py-3.5 bg-white/[0.03] border border-white/[0.06] rounded-xl text-white placeholder:text-white/20 text-base focus:outline-none focus:border-fuchsia-500/40 focus:ring-2 focus:ring-fuchsia-500/10 focus:shadow-lg focus:shadow-fuchsia-500/10 transition-all duration-300"
-                placeholder="Your name"
+                placeholder={t('your name')}
                 required
                 autoComplete="name"
               />
@@ -106,7 +106,7 @@ export default function Signup() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-3.5 bg-white/[0.03] border border-white/[0.06] rounded-xl text-white placeholder:text-white/20 text-base focus:outline-none focus:border-fuchsia-500/40 focus:ring-2 focus:ring-fuchsia-500/10 focus:shadow-lg focus:shadow-fuchsia-500/10 transition-all duration-300"
-                placeholder="Min 6 characters"
+                placeholder={t('min 6 characters')}
                 required
                 minLength={6}
                 autoComplete="new-password"

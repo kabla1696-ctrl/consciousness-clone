@@ -402,7 +402,7 @@ export default function LegacyTree() {
               background: 'linear-gradient(135deg, #34d399, #fbbf24)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
               🌱 {t('family memory')}
             </h3>
-            <input value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="Name..."
+            <input value={newName} onChange={(e) => setNewName(e.target.value)} placeholder={t('name')}
               style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid rgba(52,211,153,0.2)',
                 background: 'rgba(255,255,255,0.03)', color: '#e2e8f0', fontSize: 14, outline: 'none', marginBottom: 12, boxSizing: 'border-box' }} />
             <select value={newRelation} onChange={(e) => setNewRelation(e.target.value)}
@@ -438,7 +438,7 @@ export default function LegacyTree() {
               🍃 Add Memory Leaf
             </h3>
             <textarea value={newMemoryText} onChange={(e) => setNewMemoryText(e.target.value)}
-              placeholder="Write a memory..." rows={3}
+              placeholder={t('write a memory')} rows={3}
               style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid rgba(52,211,153,0.2)',
                 background: 'rgba(255,255,255,0.03)', color: '#e2e8f0', fontSize: 14, outline: 'none',
                 marginBottom: 16, boxSizing: 'border-box', resize: 'none' }} />

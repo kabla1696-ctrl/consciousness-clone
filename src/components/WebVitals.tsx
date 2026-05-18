@@ -4,13 +4,8 @@ import { useEffect } from 'react';
 import { onCLS, onLCP, onTTFB, onINP, type Metric } from 'web-vitals';
 
 function reportMetric(metric: Metric) {
-  // In development, log to console
+  // In development, skip analytics reporting
   if (process.env.NODE_ENV === 'development') {
-    console.log(`[Web Vitals] ${metric.name}:`, {
-      value: metric.value,
-      rating: metric.rating,
-      id: metric.id,
-    });
     return;
   }
 

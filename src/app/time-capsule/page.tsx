@@ -278,7 +278,7 @@ export default function TimeCapsulePage() {
                 type="text"
                 value={recipientName}
                 onChange={e => setRecipientName(e.target.value)}
-                placeholder="Who is this for?"
+                placeholder={t('who is this for')}
                 className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all"
               />
             </div>
@@ -330,7 +330,7 @@ export default function TimeCapsulePage() {
               <textarea
                 value={content}
                 onChange={e => setContent(e.target.value)}
-                placeholder="Write your message to the future..."
+                placeholder={t('time capsule message')}
                 rows={4}
                 className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all resize-none"
               />

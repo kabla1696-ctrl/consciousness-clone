@@ -262,7 +262,7 @@ export default function MirrorMode() {
             onKeyDown={e => e.key === 'Enter' && submitAnswer()}
             disabled={loading}
             className="flex-1 px-4 py-3.5 bg-white/[0.04] border border-white/[0.08] rounded-xl focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all duration-300 text-white placeholder:text-white/20 text-sm backdrop-blur-sm"
-            placeholder="Type your answer..."
+            placeholder={t('mirror mode answer')}
           />
           <button
             onClick={submitAnswer}

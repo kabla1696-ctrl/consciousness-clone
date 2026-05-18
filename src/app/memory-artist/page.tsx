@@ -116,7 +116,7 @@ export default function MemoryArtist() {
 
       <main style={{ maxWidth: 900, margin: '0 auto', padding: 20 }}>
         <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 20, padding: 24, border: '1px solid rgba(255,255,255,0.06)', marginBottom: 32 }}>
-          <textarea value={memoryInput} onChange={e => setMemoryInput(e.target.value)} placeholder="Describe a memory to transform into art..." style={{ width: '100%', minHeight: 80, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 16, color: '#e2e8f0', fontSize: 15, resize: 'vertical', fontFamily: 'inherit', lineHeight: 1.6, outline: 'none' }} />
+          <textarea value={memoryInput} onChange={e => setMemoryInput(e.target.value)} placeholder={t('memory artist placeholder')} style={{ width: '100%', minHeight: 80, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, padding: 16, color: '#e2e8f0', fontSize: 15, resize: 'vertical', fontFamily: 'inherit', lineHeight: 1.6, outline: 'none' }} />
 
           <div style={{ marginTop: 16, marginBottom: 16 }}>
             <div style={{ fontSize: 13, color: '#94a3b8', marginBottom: 10 }}>{t('style')}</div>

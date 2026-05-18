@@ -134,7 +134,7 @@ export default function MemoryTimeMachine() {
           />
           <input
             type="text"
-            placeholder="Search memories..."
+            placeholder={t('search memories')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             style={{

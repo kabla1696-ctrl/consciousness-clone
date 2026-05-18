@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { useT } from '../../lib/language-context'
+import OptimizedImage from '@/components/OptimizedImage'
 
 interface Post {
   id: string; author: string; avatar: string; content: string; image?: string; video?: string
@@ -246,7 +247,7 @@ export default function CloneFeed() {
             <div className="text-center mb-6">
               <div className="relative inline-block">
                 <div className="w-24 h-24 rounded-3xl flex items-center justify-center text-5xl mx-auto mb-3" style={{ background: 'rgba(139,92,246,0.1)', boxShadow: '0 0 30px rgba(139,92,246,0.15)' }}>
-                  {profilePic ? <img src={profilePic} alt="Profile" className="w-full h-full rounded-3xl object-cover" /> : profile.avatar}
+                  {profilePic ? <OptimizedImage src={profilePic} alt="Profile" width={96} height={96} className="w-full h-full rounded-3xl object-cover" /> : profile.avatar}
                 </div>
                 <label className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-violet-500 border-2 border-[#050510] flex items-center justify-center text-xs cursor-pointer tap-feedback shadow-lg">
                   📷

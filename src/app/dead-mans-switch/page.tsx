@@ -178,11 +178,11 @@ export default function DeadMansSwitch() {
           </div>
           {showAddContact && (
             <div className="glass-card rounded-2xl p-4 mb-3 space-y-3 animate-slide-up">
-              <input value={newContact.name} onChange={e => setNewContact(prev => ({ ...prev, name: e.target.value }))} placeholder="Name"
+              <input value={newContact.name} onChange={e => setNewContact(prev => ({ ...prev, name: e.target.value }))} placeholder={t('name')}
                 className="w-full bg-white/5 rounded-xl px-4 py-2.5 text-sm text-white/80 placeholder-white/20 border border-white/[0.06] focus:border-violet-500/30 transition" />
-              <input value={newContact.email} onChange={e => setNewContact(prev => ({ ...prev, email: e.target.value }))} placeholder="Email"
+              <input value={newContact.email} onChange={e => setNewContact(prev => ({ ...prev, email: e.target.value }))} placeholder={t('email')}
                 className="w-full bg-white/5 rounded-xl px-4 py-2.5 text-sm text-white/80 placeholder-white/20 border border-white/[0.06] focus:border-violet-500/30 transition" />
-              <textarea value={newContact.message} onChange={e => setNewContact(prev => ({ ...prev, message: e.target.value }))} placeholder="Personal message (optional)" rows={2}
+              <textarea value={newContact.message} onChange={e => setNewContact(prev => ({ ...prev, message: e.target.value }))} placeholder={t('personal message optional')} rows={2}
                 className="w-full bg-white/5 rounded-xl px-4 py-2.5 text-sm text-white/80 placeholder-white/20 border border-white/[0.06] focus:border-violet-500/30 transition resize-none" />
               <div className="flex gap-2">
                 <button onClick={() => setShowAddContact(false)} className="flex-1 py-2.5 rounded-xl glass-card text-white/40 text-sm">Cancel</button>
@@ -218,7 +218,7 @@ export default function DeadMansSwitch() {
           </div>
           {editingMessage ? (
             <textarea value={settings.finalMessage} onChange={e => setSettings(prev => ({ ...prev, finalMessage: e.target.value }))} rows={4}
-              placeholder="Write a message to be sent to your contacts if the switch activates..."
+              placeholder={t('dead mans switch message')}
               className="w-full bg-white/5 rounded-xl px-4 py-3 text-sm text-white/80 placeholder-white/20 border border-white/[0.06] focus:border-violet-500/30 transition resize-none" />
           ) : (
             <div className="glass-card rounded-2xl p-4">

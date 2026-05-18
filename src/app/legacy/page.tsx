@@ -246,7 +246,7 @@ export default function LegacyLettersPage() {
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="text-xs text-white/40 mb-1.5 block font-medium">{t('name')}</label>
-                <input type="text" value={recipientName} onChange={e => setRecipientName(e.target.value)} placeholder="Their name"
+                <input type="text" value={recipientName} onChange={e => setRecipientName(e.target.value)} placeholder={t('their name')}
                   className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all" />
               </div>
               <div>
@@ -274,7 +274,7 @@ export default function LegacyLettersPage() {
 
             <div>
               <label className="text-xs text-white/40 mb-1.5 block font-medium">Subject</label>
-              <input type="text" value={subject} onChange={e => setSubject(e.target.value)} placeholder="What is this letter about?"
+              <input type="text" value={subject} onChange={e => setSubject(e.target.value)} placeholder={t('letter subject')}
                 className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all" />
             </div>
 
@@ -308,7 +308,7 @@ export default function LegacyLettersPage() {
               <label className="text-xs text-white/40 mb-1.5 block font-medium">Your Letter</label>
               <div className="relative">
                 <textarea
-                  value={content} onChange={e => setContent(e.target.value)} placeholder="Pour your heart out..." rows={6}
+                  value={content} onChange={e => setContent(e.target.value)} placeholder={t('letter content')} rows={6}
                   className="w-full parchment-texture bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all resize-none leading-relaxed"
                 />
                 {saving && <div className="absolute bottom-3 right-3"><QuillAnimation /></div>}

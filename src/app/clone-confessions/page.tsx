@@ -140,7 +140,7 @@ export default function CloneConfessions() {
                 <h3 className="font-semibold text-sm">{t('post confession')}</h3>
                 <button onClick={() => setShowWrite(false)} className="text-white/40 tap-feedback">✕</button>
               </div>
-              <textarea value={newText} onChange={e => setNewText(e.target.value)} placeholder="What's on your mind? No one will know it's you..." className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm resize-none h-28 focus:outline-none focus:border-violet-500/40 mb-3" />
+              <textarea value={newText} onChange={e => setNewText(e.target.value)} placeholder={t('confession placeholder')} className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm resize-none h-28 focus:outline-none focus:border-violet-500/40 mb-3" />
               <div className="flex gap-2 mb-3 overflow-x-auto scroll-container">
                 {CATEGORIES.map(c => (
                   <button key={c.id} onClick={() => setNewCat(c.id)} className={`px-3 py-1.5 rounded-full text-xs whitespace-nowrap tap-feedback border ${newCat === c.id ? 'bg-violet-500/20 border-violet-500/40 text-violet-400' : 'bg-white/[0.03] border-white/[0.06] text-white/40'}`}>{c.icon} {c.label}</button>

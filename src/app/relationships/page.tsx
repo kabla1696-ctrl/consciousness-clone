@@ -311,7 +311,7 @@ export default function Relationships() {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="text-white/60 text-xs mb-1 block">{t('nickname')}</label>
-                  <input value={form.nickname || ''} onChange={e => setForm({ ...form, nickname: e.target.value })} placeholder="What you call them" className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm focus:outline-none focus:border-violet-500/40" />
+                  <input value={form.nickname || ''} onChange={e => setForm({ ...form, nickname: e.target.value })} placeholder={t('nickname placeholder')} className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-sm focus:outline-none focus:border-violet-500/40" />
                 </div>
                 <div>
                   <label className="text-white/60 text-xs mb-1 block">{t('relation')} *</label>

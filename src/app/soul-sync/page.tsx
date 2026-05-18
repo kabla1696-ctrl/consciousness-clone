@@ -174,7 +174,7 @@ export default function SoulSync() {
             <h2 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-rose-400 mb-4">{t('compare souls')}</h2>
             <div className="rounded-xl border border-white/[0.06] p-4 mb-4 backdrop-blur-xl" style={{ background: 'rgba(255,255,255,0.02)' }}>
               <label className="text-white/40 text-xs mb-2 block">{t('enter their soul code')}</label>
-              <input value={partnerCode} onChange={e => setPartnerCode(e.target.value.toUpperCase())} placeholder="ABC123" className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-center text-lg font-mono tracking-widest focus:outline-none focus:border-pink-500/40" maxLength={6} />
+              <input value={partnerCode} onChange={e => setPartnerCode(e.target.value.toUpperCase())} placeholder={t('soul sync code placeholder')} className="w-full p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-white text-center text-lg font-mono tracking-widest focus:outline-none focus:border-pink-500/40" maxLength={6} />
             </div>
 
             {partnerCode.length === 6 && (

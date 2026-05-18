@@ -266,7 +266,7 @@ export default function Mindfulness() {
                   onChange={e => setFeelingNote(e.target.value)}
                   className="w-full px-4 py-3.5 bg-white/[0.04] border border-white/[0.08] rounded-xl focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all duration-300 resize-none text-white placeholder:text-white/20 text-sm backdrop-blur-sm mb-4"
                   rows={2}
-                  placeholder="Any notes about how you feel? (optional)"
+                  placeholder={t('mindfulness notes')}
                 />
                 <button
                   onClick={submitCheckIn}

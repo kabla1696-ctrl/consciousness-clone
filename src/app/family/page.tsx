@@ -317,7 +317,7 @@ export default function FamilyTreePage() {
                   type="text"
                   value={formName}
                   onChange={e => setFormName(e.target.value)}
-                  placeholder="Their name"
+                  placeholder={t('their name')}
                   className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/15 focus:outline-none focus:border-violet-500/40 focus:shadow-[0_0_20px_rgba(139,92,246,0.08)] transition-all backdrop-blur-sm"
                 />
               </div>
@@ -363,7 +363,7 @@ export default function FamilyTreePage() {
                 <textarea
                   value={formBio}
                   onChange={e => setFormBio(e.target.value)}
-                  placeholder="Tell their story..."
+                  placeholder={t('tell their story')}
                   rows={3}
                   className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/15 focus:outline-none focus:border-violet-500/40 focus:shadow-[0_0_20px_rgba(139,92,246,0.08)] transition-all resize-none backdrop-blur-sm"
                 />
@@ -574,7 +574,7 @@ function MemberCard({
                     type="text"
                     value={newMemory}
                     onChange={e => setNewMemory(e.target.value)}
-                    placeholder="A memory with this person..."
+                    placeholder={t('memory with person')}
                     className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded-xl px-3 py-2 text-xs text-white placeholder-white/15 focus:outline-none focus:border-violet-500/40 transition-all backdrop-blur-sm"
                     onKeyDown={e => e.key === 'Enter' && onSaveMemory()}
                   />

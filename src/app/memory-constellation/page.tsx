@@ -391,7 +391,7 @@ export default function MemoryConstellation() {
             <input
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
-              placeholder="Memory title..."
+              placeholder={t('memory title')}
               style={{
                 width: '100%', padding: '12px 16px', borderRadius: 12,
                 border: '1px solid rgba(139, 92, 246, 0.2)',

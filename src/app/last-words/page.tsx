@@ -230,7 +230,7 @@ export default function LastWords() {
                   value={msgRecipient}
                   onChange={e => setMsgRecipient(e.target.value)}
                   className="w-full px-4 py-3.5 bg-white/[0.04] border border-white/[0.08] rounded-xl focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all duration-300 text-white placeholder:text-white/20 text-sm backdrop-blur-sm"
-                  placeholder="Recipient name..."
+                  placeholder={t('recipient name')}
                 />
                 <textarea
                   value={msgContent}
@@ -306,21 +306,21 @@ export default function LastWords() {
                   value={contactName}
                   onChange={e => setContactName(e.target.value)}
                   className="w-full px-4 py-3.5 bg-white/[0.04] border border-white/[0.08] rounded-xl focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all duration-300 text-white placeholder:text-white/20 text-sm backdrop-blur-sm"
-                  placeholder="Name..."
+                  placeholder={t('name')}
                 />
                 <input
                   type="email"
                   value={contactEmail}
                   onChange={e => setContactEmail(e.target.value)}
                   className="w-full px-4 py-3.5 bg-white/[0.04] border border-white/[0.08] rounded-xl focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all duration-300 text-white placeholder:text-white/20 text-sm backdrop-blur-sm"
-                  placeholder="Email..."
+                  placeholder={t('email')}
                 />
                 <input
                   type="text"
                   value={contactRelation}
                   onChange={e => setContactRelation(e.target.value)}
                   className="w-full px-4 py-3.5 bg-white/[0.04] border border-white/[0.08] rounded-xl focus:outline-none focus:border-violet-500/50 focus:shadow-[0_0_20px_rgba(139,92,246,0.15)] transition-all duration-300 text-white placeholder:text-white/20 text-sm backdrop-blur-sm"
-                  placeholder="Relation (e.g. Spouse, Friend)..."
+                  placeholder={t('relation example')}
                 />
                 <button
                   onClick={addContact}

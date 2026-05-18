@@ -156,7 +156,7 @@ export default function MemoryWeather() {
 
         {showAdd && (
           <div className="weather-card" style={{ marginBottom:24 }}>
-            <input value={newText} onChange={e => setNewText(e.target.value)} placeholder="Describe the memory..."
+            <input value={newText} onChange={e => setNewText(e.target.value)} placeholder={t('describe the memory')}
               style={{ width:'100%',padding:12,borderRadius:10,border:'1px solid rgba(255,255,255,0.1)',background:'rgba(0,0,0,0.3)',color:'#E0E0E0',fontSize:14,marginBottom:12,boxSizing:'border-box' }} />
             <div style={{ display:'flex',gap:8,flexWrap:'wrap',marginBottom:12 }}>
               {Object.entries(moodConfig).map(([key, cfg]) => (

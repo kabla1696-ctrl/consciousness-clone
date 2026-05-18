@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase-browser'
+import OptimizedImage from '@/components/OptimizedImage'
 import { FEATURES, CATEGORIES } from '../../lib/features-data'
 import { useT } from '../../lib/language-context'
 import RecentActivity, { logActivity } from '../../components/RecentActivity'
@@ -113,7 +114,7 @@ export default function Dashboard() {
           <div className="flex items-center gap-3">
             <div className="relative">
               <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-sm shadow-lg shadow-violet-500/20">
-                {typeof window !== 'undefined' && localStorage.getItem('cc_profile_pic') ? <img src={localStorage.getItem('cc_profile_pic')!} alt="" className="w-full h-full object-cover rounded-xl" /> : '🧠'}
+                {typeof window !== 'undefined' && localStorage.getItem('cc_profile_pic') ? <OptimizedImage src={localStorage.getItem('cc_profile_pic')!} alt="Profile" width={36} height={36} className="w-full h-full object-cover rounded-xl" /> : '🧠'}
               </div>
               <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl blur opacity-20" />
             </div>
