@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useT } from '../../lib/language-context';
 
@@ -39,7 +39,6 @@ export default function CloneOrchestraPage() {
   const [currentTheme, setCurrentTheme] = useState('');
   const [round, setRound] = useState(0);
   const [particles, setParticles] = useState<{ x: number; y: number; s: number; d: number }[]>([]);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const p = Array.from({ length: 40 }, () => ({

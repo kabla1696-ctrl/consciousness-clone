@@ -148,7 +148,7 @@ export default function AstronautMode() {
     try {
       const memoryTexts = memories.slice(0, 20).map(m => `- ${m.content} [${m.category}]`).join('\n')
 
-      const response = await fetch('https://consciousness-clone.vercel.app/api/chat', {
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({

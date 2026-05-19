@@ -45,17 +45,21 @@ export default function PublicProfile() {
   }, [])
 
   const loadProfile = async (userId: string) => {
-    const { data } = await supabase
-      .from('public_profiles')
-      .select('id, user_id, display_name, bio, avatar_url, is_public, total_chats, rating, created_at')
-      .eq('user_id', userId)
-      .single()
+    try {
+      const { data } = await supabase
+        .from('public_profiles')
+        .select('id, user_id, display_name, bio, avatar_url, is_public, total_chats, rating, created_at')
+        .eq('user_id', userId)
+        .single()
 
-    if (data) {
-      setProfile(data as Profile)
-      setDisplayName(data.display_name || '')
-      setBio(data.bio || '')
-      setIsPublic(data.is_public || false)
+      if (data) {
+        setProfile(data as Profile)
+        setDisplayName(data.display_name || '')
+        setBio(data.bio || '')
+        setIsPublic(data.is_public || false)
+      }
+    } catch (err) {
+      console.error('Failed to load profile:', err)
     }
     setLoading(false)
   }
@@ -64,30 +68,34 @@ export default function PublicProfile() {
     if (!user) return
     setSaving(true)
 
-    const profileData = {
-      user_id: user.id,
-      display_name: displayName.trim(),
-      bio: bio.trim(),
-      is_public: isPublic,
-    }
+    try {
+      const profileData = {
+        user_id: user.id,
+        display_name: displayName.trim(),
+        bio: bio.trim(),
+        is_public: isPublic,
+      }
 
-    if (profile) {
-      const { data } = await supabase
-        .from('public_profiles')
-        .update(profileData)
-        .eq('id', profile.id)
-        .select()
-        .single()
+      if (profile) {
+        const { data } = await supabase
+          .from('public_profiles')
+          .update(profileData)
+          .eq('id', profile.id)
+          .select()
+          .single()
 
-      if (data) setProfile(data as Profile)
-    } else {
-      const { data } = await supabase
-        .from('public_profiles')
-        .insert({ ...profileData, total_chats: 0, rating: 0 })
-        .select()
-        .single()
+        if (data) setProfile(data as Profile)
+      } else {
+        const { data } = await supabase
+          .from('public_profiles')
+          .insert({ ...profileData, total_chats: 0, rating: 0 })
+          .select()
+          .single()
 
-      if (data) setProfile(data as Profile)
+        if (data) setProfile(data as Profile)
+      }
+    } catch (err) {
+      console.error('Failed to save profile:', err)
     }
 
     setSaving(false)

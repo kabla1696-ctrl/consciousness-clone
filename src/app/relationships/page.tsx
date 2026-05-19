@@ -83,6 +83,13 @@ export default function Relationships() {
         </div>
       </header>
 
+      {/* Save Toast */}
+      {savedMsg && (
+        <div className="fixed top-16 left-1/2 -translate-x-1/2 z-[60] px-5 py-2.5 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-sm font-semibold shadow-lg shadow-emerald-500/10 animate-[slide-up_0.3s_ease-out]">
+          ✓ {savedMsg}
+        </div>
+      )}
+
       {/* Tab Bar */}
       <div className="sticky top-[56px] z-40 backdrop-blur-xl border-b border-white/[0.04]" style={{ background: 'rgba(5,5,16,0.9)' }}>
         <div className="flex px-2">
