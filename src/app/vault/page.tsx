@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
 import LazyLoad from '../../components/LazyLoad'
@@ -13,6 +13,7 @@ interface VaultEntry {
   id: string
   encrypted: string
   iv: string
+  salt: string
   category: string
   importance: number
   createdAt: string
@@ -255,7 +256,7 @@ export default function VaultPage() {
       const raw: VaultEntry[] = JSON.parse(stored)
       const decrypted: DecryptedEntry[] = []
       for (const entry of raw) {
-        const content = await decryptData(entry.encrypted, entry.iv, entry.iv, pin)
+        const content = await decryptData(entry.encrypted, entry.iv, entry.salt, pin)
         if (content) {
           decrypted.push({ id: entry.id, content, category: entry.category, importance: entry.importance, mood: '', createdAt: entry.createdAt })
         }
@@ -268,7 +269,7 @@ export default function VaultPage() {
     if (!newContent.trim() || !currentPinRef.current) return
     const enc = await encryptData(newContent, currentPinRef.current)
     const raw: VaultEntry[] = JSON.parse(localStorage.getItem(VAULT_STORAGE) || '[]')
-    raw.push({ id: Date.now().toString(), encrypted: enc.encrypted, iv: enc.iv, category: newCategory, importance: newImportance, createdAt: new Date().toISOString() })
+    raw.push({ id: Date.now().toString(), encrypted: enc.encrypted, iv: enc.iv, salt: enc.salt, category: newCategory, importance: newImportance, createdAt: new Date().toISOString() })
     localStorage.setItem(VAULT_STORAGE, JSON.stringify(raw))
     setEntries(prev => [...prev, { id: Date.now().toString(), content: newContent, category: newCategory, importance: newImportance, mood: newMood, createdAt: new Date().toISOString() }])
     setNewContent('')

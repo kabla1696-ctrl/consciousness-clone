@@ -54,7 +54,7 @@ export default function MemoryReplayPage() {
           setMemories(defaults)
           localStorage.setItem('consciousness-memory-replay', JSON.stringify(defaults))
         }
-      } catch {}
+      } catch (err) { console.error('Failed to load replay data:', err) }
       setLoading(false)
     }
     init()

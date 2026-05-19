@@ -12,14 +12,14 @@ function Particles() {
           key={i}
           className="absolute rounded-full"
           style={{
-            width: `${Math.random() * 3 + 1}px`,
-            height: `${Math.random() * 3 + 1}px`,
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
+            width: `${1 + (i % 3)}px`,
+            height: `${1 + (i % 3)}px`,
+            left: `${(i * 5.5) % 100}%`,
+            top: `${(i * 7.3) % 100}%`,
             background: i % 3 === 0 ? '#10b981' : i % 3 === 1 ? '#06b6d4' : '#8b5cf6',
-            opacity: 0.4 + Math.random() * 0.3,
-            animation: `particleFloat ${8 + Math.random() * 14}s ease-in-out infinite`,
-            animationDelay: `${Math.random() * 8}s`,
+            opacity: 0.4 + (i % 4) * 0.08,
+            animation: `particleFloat ${8 + (i % 5) * 3}s ease-in-out infinite`,
+            animationDelay: `${i * 0.45}s`,
           }}
         />
       ))}

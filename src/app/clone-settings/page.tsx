@@ -84,7 +84,7 @@ export default function CloneSettings() {
       const { data: memories } = await supabase.from('memories').select('content').eq('user_id', user.id).order('created_at', { ascending: false }).limit(30)
       const memoryContext = memories?.map(m => m.content).join('\n') || ''
       const systemPrompt = `You are a consciousness clone with these personality settings:\n- Humor: ${settings.humor}% (0=serious, 100=hilarious)\n- Empathy: ${settings.empathy}% (0=logical, 100=deeply caring)\n- Formality: ${settings.formality}% (0=casual, 100=formal)\n- Creativity: ${settings.creativity}% (0=practical, 100=imaginative)\n- Directness: ${settings.directness}% (0=diplomatic, 100=blunt)\n- Language preference: ${settings.language}\n- Response style: ${settings.responseStyle}\n\nAdjust your personality based on these settings. If humor is high, be witty. If empathy is high, be warm. If formality is low, use casual language. Match the ${settings.language} language preference.`
-      const response = await fetch('https://consciousness-clone.vercel.app/api/chat', {
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': document.cookie.match(/csrf_token=([^;]+)/)?.[1] || '' },
         body: JSON.stringify({ messages: [{ role: 'system', content: systemPrompt }, ...chatMessages.slice(-6).map(m => ({ role: m.role === 'clone' ? 'assistant' : m.role, content: m.content })), { role: 'user', content: userContent }], memories: memoryContext }),

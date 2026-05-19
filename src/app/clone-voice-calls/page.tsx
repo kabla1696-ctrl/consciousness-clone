@@ -27,9 +27,14 @@ export default function CloneVoiceCallsPage() {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem('clone-voice-calls');
-    if (stored) setCallLogs(JSON.parse(stored));
-    else { setCallLogs(DEFAULT_CALLS); localStorage.setItem('clone-voice-calls', JSON.stringify(DEFAULT_CALLS)); }
+    try {
+      const stored = localStorage.getItem('clone-voice-calls');
+      if (stored) setCallLogs(JSON.parse(stored));
+      else { setCallLogs(DEFAULT_CALLS); localStorage.setItem('clone-voice-calls', JSON.stringify(DEFAULT_CALLS)); }
+    } catch {
+      setCallLogs(DEFAULT_CALLS);
+      localStorage.setItem('clone-voice-calls', JSON.stringify(DEFAULT_CALLS));
+    }
   }, []);
 
   useEffect(() => {

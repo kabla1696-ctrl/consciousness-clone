@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useT } from '../../lib/language-context';
 import ImageGallery, { type GalleryImage } from '../../components/ImageGallery';
@@ -46,10 +46,11 @@ export default function CloneDiaryPage() {
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
 
   useEffect(() => {
-    const saved = localStorage.getItem('clone_diary');
-    if (saved) {
-      setEntries(JSON.parse(saved));
-    } else {
+    try {
+      const saved = localStorage.getItem('clone_diary');
+      if (saved) {
+        setEntries(JSON.parse(saved));
+      } else {
       setEntries(SAMPLE_ENTRIES);
       localStorage.setItem('clone_diary', JSON.stringify(SAMPLE_ENTRIES));
     }
@@ -62,6 +63,10 @@ export default function CloneDiaryPage() {
         id: `diary-img-${i}`,
       })));
     } catch {}
+    } catch {
+      setEntries(SAMPLE_ENTRIES);
+      localStorage.setItem('clone_diary', JSON.stringify(SAMPLE_ENTRIES));
+    }
   }, []);
 
   const filteredEntries = entries.filter(e => {
@@ -286,6 +291,7 @@ export default function CloneDiaryPage() {
 
             {/* Image Gallery */}
             <div style={{ marginBottom: 20 }}>
+              <Suspense fallback={<div style={{ height: 160, borderRadius: 16, background: 'rgba(255,255,255,0.03)', animation: 'pulse 2s ease-in-out infinite' }} />}>
               <ImageGallery
                 images={galleryImages}
                 columns={3}
@@ -314,6 +320,7 @@ export default function CloneDiaryPage() {
                   });
                 }}
               />
+              </Suspense>
             </div>
 
             {viewMode === 'calendar' ? (

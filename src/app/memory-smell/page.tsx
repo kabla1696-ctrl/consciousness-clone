@@ -66,14 +66,14 @@ export default function MemorySmellPage() {
           return (
             <div key={i} style={{
               position: 'absolute',
-              width: Math.random() * 6 + 3 + 'px',
-              height: Math.random() * 6 + 3 + 'px',
+              width: 3 + (i % 6) + 'px',
+              height: 3 + (i % 6) + 'px',
               borderRadius: '50%',
               background: smell.color + '30',
-              left: Math.random() * 100 + '%',
-              top: Math.random() * 100 + '%',
-              animation: `scent ${Math.random() * 8 + 5}s ease-in-out infinite`,
-              animationDelay: Math.random() * 4 + 's',
+              left: (i * 4) % 100 + '%',
+              top: (i * 5.3) % 100 + '%',
+              animation: `scent ${5 + (i % 8)}s ease-in-out infinite`,
+              animationDelay: (i * 0.16) + 's',
             }} />
           );
         })}

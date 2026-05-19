@@ -47,16 +47,18 @@ export default function CloneTherapyDog() {
   const animRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem('therapy-pet');
-    if (stored) {
-      const parsed = JSON.parse(stored) as Pet;
-      const elapsed = Date.now() - Math.max(parsed.lastFed, parsed.lastPlayed, parsed.lastPetted);
-      const decay = Math.min(elapsed / 60000, 30);
-      parsed.hunger = Math.max(0, parsed.hunger - decay * 0.5);
-      parsed.happiness = Math.max(0, parsed.happiness - decay * 0.3);
-      parsed.energy = Math.min(100, parsed.energy + decay * 0.2);
-      setPet(parsed);
-    }
+    try {
+      const stored = localStorage.getItem('therapy-pet');
+      if (stored) {
+        const parsed = JSON.parse(stored) as Pet;
+        const elapsed = Date.now() - Math.max(parsed.lastFed, parsed.lastPlayed, parsed.lastPetted);
+        const decay = Math.min(elapsed / 60000, 30);
+        parsed.hunger = Math.max(0, parsed.hunger - decay * 0.5);
+        parsed.happiness = Math.max(0, parsed.happiness - decay * 0.3);
+        parsed.energy = Math.min(100, parsed.energy + decay * 0.2);
+        setPet(parsed);
+      }
+    } catch { /* corrupted data, use defaults */ }
   }, []);
 
   useEffect(() => {

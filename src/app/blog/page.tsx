@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { blogPosts, categories, searchPosts, getPostsByCategory } from '@/lib/blog-data';
+import { categories, searchPosts, getPostsByCategory } from '@/lib/blog-data';
 import BlogCard from '@/components/BlogCard';
 
 export default function BlogPage() {

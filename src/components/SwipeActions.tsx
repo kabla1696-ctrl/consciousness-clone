@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useCallback, useEffect, type ReactNode } from 'react'
+import { useRef, useState, useCallback, type ReactNode } from 'react';
 
 interface SwipeActionsProps {
   children: ReactNode

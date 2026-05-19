@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
 import type { User } from '@supabase/supabase-js'
@@ -185,7 +185,7 @@ export default function AstronautMode() {
       const updated = [dream, ...dreamHistory]
       setDreamHistory(updated)
       localStorage.setItem('astronaut-dreams', JSON.stringify(updated))
-    } catch (err) {
+    } catch {
       setDreamInsight('The dreamscape was clouded... try again when the stars align.')
       setDreamConnections(0)
     }
@@ -246,7 +246,7 @@ export default function AstronautMode() {
             <h1 className="text-sm font-bold">{t('astronaut mode')}</h1>
             <p className="text-[10px] text-indigo-400 flex items-center gap-1">
               <span className={`w-1.5 h-1.5 rounded-full ${isDreaming ? 'bg-violet-400 animate-pulse' : 'bg-white/20'}`} />
-              {isDreaming ? "{t('dream mode')}..." : 'Night Mode'}
+              {isDreaming ? `${t('dream mode')}...` : 'Night Mode'}
             </p>
           </div>
           <button

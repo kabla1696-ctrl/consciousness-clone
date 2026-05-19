@@ -156,19 +156,22 @@ export default function PersonalityQuiz() {
 
   const savePersonality = async () => {
     setSaving(true)
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
+    try {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) { setSaving(false); return }
 
-    const traits = getTopTraits()
-    await supabase.from('memories').insert({
-      user_id: user.id,
-      content: `Personality Profile: ${traits.join(', ')}. Top trait: ${traits[0]}. Communication style: ${answers.direct ? 'Direct' : answers.diplomatic ? 'Diplomatic' : 'Emotional'}. Energy: ${answers.introvert ? 'Introvert' : answers.extrovert ? 'Extrovert' : 'Ambivert'}.`,
-      category: 'personality',
-      mood: '🧬',
-    })
+      const traits = getTopTraits()
+      await supabase.from('memories').insert({
+        user_id: user.id,
+        content: `Personality Profile: ${traits.join(', ')}. Top trait: ${traits[0]}. Communication style: ${answers.direct ? 'Direct' : answers.diplomatic ? 'Diplomatic' : 'Emotional'}. Energy: ${answers.introvert ? 'Introvert' : answers.extrovert ? 'Extrovert' : 'Ambivert'}.`,
+        category: 'personality',
+        mood: '🧬',
+      })
 
-    setSaving(false)
-    window.location.href = '/dashboard'
+      window.location.href = '/dashboard'
+    } catch {
+      setSaving(false)
+    }
   }
 
   const progress = ((currentQuestion + 1) / questions.length) * 100

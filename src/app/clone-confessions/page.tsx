@@ -33,11 +33,13 @@ export default function CloneConfessions() {
   const [selectedCat, setSelectedCat] = useState('all')
 
   useEffect(() => {
-    const saved = localStorage.getItem('cc_confessions')
-    if (saved) {
-      const userConfessions = JSON.parse(saved)
-      setConfessions([...userConfessions, ...SAMPLE_CONFESSIONS])
-    }
+    try {
+      const saved = localStorage.getItem('cc_confessions')
+      if (saved) {
+        const userConfessions = JSON.parse(saved)
+        setConfessions([...userConfessions, ...SAMPLE_CONFESSIONS])
+      }
+    } catch { /* corrupted data, use defaults */ }
   }, [])
 
   const submitConfession = async () => {
@@ -65,8 +67,11 @@ export default function CloneConfessions() {
       id: Date.now().toString(), text: cleanText, category: newCat,
       reactions: {}, aiResponse, createdAt: 'just now',
     }
-    const saved = localStorage.getItem('cc_confessions')
-    const userConfessions = saved ? JSON.parse(saved) : []
+    let userConfessions: Confession[] = []
+    try {
+      const saved = localStorage.getItem('cc_confessions')
+      userConfessions = saved ? JSON.parse(saved) : []
+    } catch { /* corrupted data */ }
     const updated = [confession, ...userConfessions]
     localStorage.setItem('cc_confessions', JSON.stringify(updated))
     setConfessions([confession, ...SAMPLE_CONFESSIONS])

@@ -77,7 +77,7 @@ export default function MemoryMilestones() {
   return (
     <main className="min-h-screen bg-[#050510] page-transition" style={{ background: 'linear-gradient(135deg, #050510, #080818, #0d0520)' }}>
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        {[...Array(6)].map((_, i) => <div key={i} className="absolute rounded-full" style={{ width: Math.random() * 4 + 1 + 'px', height: Math.random() * 4 + 1 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', background: ['rgba(234,179,8,0.4)', 'rgba(245,158,11,0.3)', 'rgba(251,191,36,0.3)'][i % 3], animation: `float${i % 3} ${8 + Math.random() * 12}s ease-in-out infinite`, animationDelay: Math.random() * 5 + 's' }} />)}
+        {[...Array(6)].map((_, i) => <div key={i} className="absolute rounded-full" style={{ width: 1 + (i % 4) + 'px', height: 1 + (i % 4) + 'px', left: (i * 16.5) % 100 + '%', top: (i * 13.7) % 100 + '%', background: ['rgba(234,179,8,0.4)', 'rgba(245,158,11,0.3)', 'rgba(251,191,36,0.3)'][i % 3], animation: `float${i % 3} ${8 + (i % 5) * 3}s ease-in-out infinite`, animationDelay: i * 0.8 + 's' }} />)}
       </div>
 
       <header className="sticky top-0 z-50 backdrop-blur-xl border-b border-white/[0.06] safe-top" style={{ background: 'rgba(5,5,16,0.85)' }}>

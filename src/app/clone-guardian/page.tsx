@@ -21,18 +21,20 @@ export default function CloneGuardianPage() {
   const [wingFlap, setWingFlap] = useState(0);
 
   useEffect(() => {
-    const stored = localStorage.getItem('guardian-alerts');
-    const alertsData = stored ? JSON.parse(stored) : DEFAULT_ALERTS;
-    setAlerts(alertsData);
-    if (!stored) localStorage.setItem('guardian-alerts', JSON.stringify(DEFAULT_ALERTS));
+    try {
+      const stored = localStorage.getItem('guardian-alerts');
+      const alertsData = stored ? JSON.parse(stored) : DEFAULT_ALERTS;
+      setAlerts(alertsData);
+      if (!stored) localStorage.setItem('guardian-alerts', JSON.stringify(DEFAULT_ALERTS));
 
-    const s = localStorage.getItem('guardian-stats');
-    if (s) setStats(JSON.parse(s));
-    else {
-      const ns: GuardianStats = { warningsGiven: alertsData.length, decisionsPrevented: alertsData.filter((a: Alert) => a.prevented).length, shieldStrength: 87, daysActive: 42 };
-      setStats(ns);
-      localStorage.setItem('guardian-stats', JSON.stringify(ns));
-    }
+      const s = localStorage.getItem('guardian-stats');
+      if (s) setStats(JSON.parse(s));
+      else {
+        const ns: GuardianStats = { warningsGiven: alertsData.length, decisionsPrevented: alertsData.filter((a: Alert) => a.prevented).length, shieldStrength: 87, daysActive: 42 };
+        setStats(ns);
+        localStorage.setItem('guardian-stats', JSON.stringify(ns));
+      }
+    } catch { /* corrupted data, use defaults */ }
   }, []);
 
   useEffect(() => {

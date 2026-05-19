@@ -47,13 +47,15 @@ export default function ClonePassportPage() {
   const [showMap, setShowMap] = useState(false)
 
   useEffect(() => {
-    const saved = localStorage.getItem('clone-passport-stamps')
-    if (saved) {
-      setStamps(JSON.parse(saved))
-    } else {
-      setStamps(SAMPLE_STAMPS)
-      localStorage.setItem('clone-passport-stamps', JSON.stringify(SAMPLE_STAMPS))
-    }
+    try {
+      const saved = localStorage.getItem('clone-passport-stamps')
+      if (saved) {
+        setStamps(JSON.parse(saved))
+      } else {
+        setStamps(SAMPLE_STAMPS)
+        localStorage.setItem('clone-passport-stamps', JSON.stringify(SAMPLE_STAMPS))
+      }
+    } catch { setStamps(SAMPLE_STAMPS) }
     setTimeout(() => setIsOpen(true), 100)
   }, [])
 

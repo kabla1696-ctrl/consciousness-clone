@@ -38,10 +38,12 @@ export default function CloneSleepPage() {
   const [stars, setStars] = useState<{ x: number; y: number; size: number; delay: number }[]>([]);
 
   useEffect(() => {
-    const saved = localStorage.getItem('clone-dreams');
+    try {
+      const saved = localStorage.getItem('clone-dreams');
+      if (saved) setDreams(JSON.parse(saved));
+      else setDreams(defaultDreams);
+    } catch { setDreams(defaultDreams) }
     const savedBedtime = localStorage.getItem('clone-bedtime');
-    if (saved) setDreams(JSON.parse(saved));
-    else setDreams(defaultDreams);
     if (savedBedtime) setBedtime(savedBedtime);
     setStars(Array.from({ length: 60 }).map(() => ({
       x: Math.random() * 100,

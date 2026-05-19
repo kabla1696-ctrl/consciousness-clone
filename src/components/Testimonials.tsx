@@ -1,9 +1,5 @@
 'use client'
 
-import Link from 'next/link'
-import { useState, useEffect } from 'react'
-import { supabase } from '../lib/supabase-browser'
-
 const testimonials = [
   {
     name: "Sarah K.",

@@ -106,7 +106,7 @@ export default function MemoryArtist() {
       `}</style>
 
       {[...Array(5)].map((_, i) => (
-        <div key={i} style={{ position: 'fixed', width: 4, height: 4, borderRadius: '50%', background: ['#f093fb','#667eea','#764ba2','#fed6e3'][i%4], left: `${Math.random()*100}%`, top: `${Math.random()*100}%`, animation: `particleFloat ${3+Math.random()*4}s ease-in-out infinite`, animationDelay: `${Math.random()*3}s`, pointerEvents: 'none', zIndex: 0 }} />
+        <div key={i} style={{ position: 'fixed', width: 4, height: 4, borderRadius: '50%', background: ['#f093fb','#667eea','#764ba2','#fed6e3'][i%4], left: `${10 + i * 18}%`, top: `${5 + i * 19}%`, animation: `particleFloat ${3 + (i % 4)}s ease-in-out infinite`, animationDelay: `${i * 0.6}s`, pointerEvents: 'none', zIndex: 0 }} />
       ))}
 
       <header style={{ position: 'sticky', top: 0, zIndex: 50, backdropFilter: 'blur(20px)', background: 'rgba(5,5,16,0.8)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 16 }}>

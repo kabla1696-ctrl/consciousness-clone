@@ -24,7 +24,7 @@ export default function Referral() {
   }, [])
 
   const copyCode = () => {
-    navigator.clipboard.writeText(`https://consciousness-clone.vercel.app/signup?ref=${referralCode}`)
+    navigator.clipboard.writeText(`${window.location.origin}/signup?ref=${referralCode}`)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
@@ -73,7 +73,7 @@ export default function Referral() {
           <div className="flex gap-3">
             <input
               type="text"
-              value={`https://consciousness-clone.vercel.app/signup?ref=${referralCode}`}
+              value={`${window.location.origin}/signup?ref=${referralCode}`}
               readOnly
               className="flex-1 px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-xl text-white/60 text-sm"
             />

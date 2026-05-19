@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, Suspense } from 'react'
 import dynamic from 'next/dynamic'
 
 const BarChart = dynamic(() => import('@/components/BarChart'), { ssr: false })
@@ -338,7 +338,9 @@ export default function InsightsPage() {
           <GlassCard>
             <SectionTitle icon="📈" title="Memory Trends" subtitle="Memories recorded per month" />
             {memoryTrends.length > 0 ? (
-              <LineChart data={memoryTrends} height={220} />
+              <Suspense fallback={<div className="h-40 rounded-2xl bg-white/5 animate-pulse" />}>
+                <LineChart data={memoryTrends} height={220} />
+              </Suspense>
             ) : (
               <p className="text-white/20 text-sm text-center py-12">No memory data yet</p>
             )}
@@ -347,7 +349,9 @@ export default function InsightsPage() {
           <GlassCard>
             <SectionTitle icon="🎭" title="Mood Distribution" subtitle="Your emotional landscape" />
             {moodDistribution.length > 0 ? (
-              <PieChart data={moodDistribution} />
+              <Suspense fallback={<div className="h-40 rounded-2xl bg-white/5 animate-pulse" />}>
+                <PieChart data={moodDistribution} />
+              </Suspense>
             ) : (
               <p className="text-white/20 text-sm text-center py-12">Track moods to see your distribution</p>
             )}
@@ -358,7 +362,9 @@ export default function InsightsPage() {
         <GlassCard>
           <SectionTitle icon="🔥" title="Activity Heatmap" subtitle="Your daily consciousness activity" />
           {heatmapData.length > 0 ? (
-            <HeatMap data={heatmapData} />
+            <Suspense fallback={<div className="h-40 rounded-2xl bg-white/5 animate-pulse" />}>
+              <HeatMap data={heatmapData} />
+            </Suspense>
           ) : (
             <p className="text-white/20 text-sm text-center py-12">No activity data in this period</p>
           )}
@@ -369,7 +375,9 @@ export default function InsightsPage() {
           <GlassCard>
             <SectionTitle icon="🏷️" title="Top Topics" subtitle="Most common tags & categories" />
             {topTopics.length > 0 ? (
-              <BarChart data={topTopics} height={220} />
+              <Suspense fallback={<div className="h-40 rounded-2xl bg-white/5 animate-pulse" />}>
+                <BarChart data={topTopics} height={220} />
+              </Suspense>
             ) : (
               <p className="text-white/20 text-sm text-center py-12">Add tags to your memories to see topics</p>
             )}
@@ -378,6 +386,7 @@ export default function InsightsPage() {
           <GlassCard>
             <SectionTitle icon="⚡" title="Features Used" subtitle="Your most-used consciousness features" />
             {featuresTimeline.length > 0 ? (
+              <Suspense fallback={<div className="h-40 rounded-2xl bg-white/5 animate-pulse" />}>
               <BarChart
                 data={featuresTimeline.map((f, i) => ({
                   ...f,
@@ -396,6 +405,7 @@ export default function InsightsPage() {
                 }))}
                 height={220}
               />
+              </Suspense>
             ) : (
               <p className="text-white/20 text-sm text-center py-12">Use more features to see your stats</p>
             )}

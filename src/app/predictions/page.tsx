@@ -58,8 +58,12 @@ export default function Predictions() {
         setMemoryContext(memories.map(m => `[${m.category}] ${m.content}`).join('\n'))
       }
 
-      const stored = localStorage.getItem('predictions-history')
-      if (stored) setPredictions(JSON.parse(stored))
+      try {
+        const stored = localStorage.getItem('predictions-history')
+        if (stored) setPredictions(JSON.parse(stored))
+      } catch {
+        localStorage.removeItem('predictions-history')
+      }
     }
     init()
   }, [])
@@ -109,7 +113,7 @@ Structure your prediction as a narrative — paint a picture of what their ${cat
       const updated = [newPrediction, ...predictions].slice(0, 50)
       setPredictions(updated)
       localStorage.setItem('predictions-history', JSON.stringify(updated))
-    } catch (err) {
+    } catch {
       setPrediction('Failed to generate prediction. Please try again.')
     }
 

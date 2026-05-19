@@ -136,7 +136,7 @@ ${memoryContext}`,
       setQuestions(parsed.slice(0, 10))
       setAnswers(new Array(Math.min(parsed.length, 10)).fill(null))
       setState('playing')
-    } catch (err) {
+    } catch {
       setError('Failed to generate questions. Try again!')
     }
 

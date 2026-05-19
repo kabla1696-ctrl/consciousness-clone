@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect, useCallback, Suspense } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
 import MarkdownRenderer from '../../components/MarkdownRenderer'
@@ -167,7 +167,9 @@ export default function Chat() {
                   )}
                   <div className={`rounded-2xl px-4 py-3 ${msg.role === 'user' ? 'bg-gradient-to-br from-violet-600 to-fuchsia-600 rounded-br-md shadow-lg shadow-violet-500/10' : 'rounded-bl-md bg-white/[0.04] backdrop-blur-sm border border-white/[0.06]'}`}>
                     {msg.role === 'clone' ? (
-                      <MarkdownRenderer content={msg.content} />
+                      <Suspense fallback={<div className="h-4 rounded bg-white/5 animate-pulse" />}>
+                        <MarkdownRenderer content={msg.content} />
+                      </Suspense>
                     ) : (
                       <p className="text-white/90 text-[15px] leading-relaxed whitespace-pre-wrap">{msg.content}</p>
                     )}

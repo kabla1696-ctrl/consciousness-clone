@@ -104,10 +104,10 @@ export default function MemoryAuctionPage() {
       {/* Particles */}
       {[...Array(5)].map((_, i) => (
         <div key={i} style={{
-          position: 'fixed', width: `${2 + Math.random() * 3}px`, height: `${2 + Math.random() * 3}px`,
-          borderRadius: '50%', background: `rgba(139,92,246,${0.15 + Math.random() * 0.25})`,
-          left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%`,
-          animation: `float ${4 + Math.random() * 6}s ease-in-out infinite ${Math.random() * 3}s`
+          position: 'fixed', width: `${2 + (i % 3)}px`, height: `${2 + (i % 3)}px`,
+          borderRadius: '50%', background: `rgba(139,92,246,${0.15 + (i * 0.05)})`,
+          left: `${15 + i * 18}%`, top: `${10 + i * 17}%`,
+          animation: `float ${4 + i}s ease-in-out infinite ${i * 0.6}s`
         }} />
       ))}
 

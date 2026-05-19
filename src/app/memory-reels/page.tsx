@@ -49,7 +49,7 @@ export default function MemoryReelsPage() {
     if (stored) {
       try {
         setMemories(JSON.parse(stored));
-      } catch {}
+      } catch (err) { console.error('Failed to load reels data:', err) }
     }
   }, []);
 
@@ -113,13 +113,13 @@ export default function MemoryReelsPage() {
             key={`${currentIndex}-${i}`}
             style={{
               position: 'absolute',
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              width: `${Math.random() * 4 + 2}px`,
-              height: `${Math.random() * 4 + 2}px`,
+              left: `${(i * 6.7 + currentIndex * 3.2) % 100}%`,
+              top: `${(i * 7.1 + currentIndex * 2.8) % 100}%`,
+              width: `${2 + (i % 4)}px`,
+              height: `${2 + (i % 4)}px`,
               borderRadius: '50%',
               background: 'rgba(255,255,255,0.3)',
-              animation: `float ${Math.random() * 8 + 4}s ease-in-out infinite`,
+              animation: `float ${4 + (i % 5) * 2}s ease-in-out infinite`,
               pointerEvents: 'none',
             }}
           />
@@ -148,13 +148,13 @@ export default function MemoryReelsPage() {
               key={i}
               style={{
                 position: 'absolute',
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                width: `${Math.random() * 6 + 3}px`,
-                height: `${Math.random() * 6 + 3}px`,
+                left: `${(i * 12.5) % 100}%`,
+                top: `${(i * 14.3) % 100}%`,
+                width: `${3 + (i % 5)}px`,
+                height: `${3 + (i % 5)}px`,
                 borderRadius: '50%',
                 background: 'rgba(255,255,255,0.2)',
-                animation: `float ${Math.random() * 6 + 3}s ease-in-out infinite`,
+                animation: `float ${3 + (i % 4) * 2}s ease-in-out infinite`,
               }}
             />
           ))}

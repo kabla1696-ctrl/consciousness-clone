@@ -76,14 +76,16 @@ export default function CloneConnect() {
   const router = useRouter()
 
   useEffect(() => {
-    const saved = localStorage.getItem('cc_clone_connect')
-    if (saved) {
-      const d = JSON.parse(saved)
-      setFriends(d.friends || [])
-      setMessages(d.messages || [])
-      setCalls(d.calls || [])
-      setRequests(d.requests || [])
-    }
+    try {
+      const saved = localStorage.getItem('cc_clone_connect')
+      if (saved) {
+        const d = JSON.parse(saved)
+        setFriends(d.friends || [])
+        setMessages(d.messages || [])
+        setCalls(d.calls || [])
+        setRequests(d.requests || [])
+      }
+    } catch { /* corrupted data, use defaults */ }
     try {
       const logs = JSON.parse(localStorage.getItem('cc_user_call_logs') || '[]')
       setUserCallLogs(logs)

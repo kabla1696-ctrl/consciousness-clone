@@ -52,7 +52,7 @@ export default function MemoryTriggersPage() {
       {/* Particles */}
       <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', overflow: 'hidden', zIndex: 0 }}>
         {showParticles && Array.from({ length: 20 }).map((_, i) => (
-          <div key={i} style={{ position: 'absolute', width: 4, height: 4, borderRadius: '50%', background: ['#4FC3F7', '#FFD54F', '#81C784', '#FF80AB'][i % 4], left: `${Math.random() * 100}%`, opacity: 0.4, animation: `floatP ${5 + Math.random() * 6}s linear ${Math.random() * 5}s infinite` }} />
+          <div key={i} style={{ position: 'absolute', width: 4, height: 4, borderRadius: '50%', background: ['#4FC3F7', '#FFD54F', '#81C784', '#FF80AB'][i % 4], left: `${(i * 5.1) % 100}%`, opacity: 0.4, animation: `floatP ${5 + (i % 6)}s linear ${(i * 0.25)}s infinite` }} />
         ))}
       </div>
 

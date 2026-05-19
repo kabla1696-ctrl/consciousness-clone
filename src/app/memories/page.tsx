@@ -124,7 +124,7 @@ export default function MemoriesPage() {
             <button onClick={tryUnlock} className="w-full mt-4 py-3 bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl text-white font-medium tap-feedback">
               🔓 Unlock
             </button>
-            <a href="/vault" className="block text-center text-violet-400 text-sm mt-3">Go to Vault Settings</a>
+            <Link href="/vault" className="block text-center text-violet-400 text-sm mt-3">Go to Vault Settings</Link>
           </div>
         </div>
       </main>

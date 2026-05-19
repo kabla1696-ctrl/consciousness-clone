@@ -52,12 +52,14 @@ export default function CloneOrchestraPage() {
   }, []);
 
   useEffect(() => {
-    const saved = localStorage.getItem('orchestra_state');
-    if (saved) {
-      const s = JSON.parse(saved);
-      setSelected(s.selected || []);
-      setContributions(s.contributions || []);
-    }
+    try {
+      const saved = localStorage.getItem('orchestra_state');
+      if (saved) {
+        const s = JSON.parse(saved);
+        setSelected(s.selected || []);
+        setContributions(s.contributions || []);
+      }
+    } catch { /* corrupted data, use defaults */ }
   }, []);
 
   const toggleClone = (id: number) => {

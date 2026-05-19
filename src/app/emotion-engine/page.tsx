@@ -148,7 +148,8 @@ export default function EmotionEngine() {
   const drawEmotionWheel = (emotions: EmotionData) => {
     const canvas = canvasRef.current
     if (!canvas) return
-    const ctx = canvas.getContext('2d')!
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
     const size = 240
     canvas.width = size * 2; canvas.height = size * 2
     canvas.style.width = `${size}px`; canvas.style.height = `${size}px`

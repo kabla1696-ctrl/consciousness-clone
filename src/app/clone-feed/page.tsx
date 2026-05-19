@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react';
 import { useT } from '../../lib/language-context'
 import OptimizedImage from '@/components/OptimizedImage'
 
@@ -56,8 +56,10 @@ export default function CloneFeed() {
   const [currentStoryIdx, setCurrentStoryIdx] = useState(0)
 
   useEffect(() => {
-    const saved = localStorage.getItem('cc_clone_feed')
-    if (saved) { const d = JSON.parse(saved); if (d.posts) setPosts(d.posts); if (d.stories) setStories(d.stories); if (d.followers) setFollowers(d.followers) }
+    try {
+      const saved = localStorage.getItem('cc_clone_feed')
+      if (saved) { const d = JSON.parse(saved); if (d.posts) setPosts(d.posts); if (d.stories) setStories(d.stories); if (d.followers) setFollowers(d.followers) }
+    } catch { /* corrupted data, use defaults */ }
     const pic = localStorage.getItem('cc_profile_pic')
     if (pic) setProfilePic(pic)
   }, [])

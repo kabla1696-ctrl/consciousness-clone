@@ -54,6 +54,7 @@ export default function ClonePoet() {
   const [selectedStyle, setSelectedStyle] = useState<string>('Haiku');
   const [generating, setGenerating] = useState(false);
   const [expandedPoem, setExpandedPoem] = useState<string | null>(null);
+  const [filterStyle, setFilterStyle] = useState<string | null>(null);
 
   useEffect(() => {
     const stored = localStorage.getItem('clone-poems');
@@ -106,6 +107,8 @@ export default function ClonePoet() {
     setPoems(prev => prev.map(p => p.id === id ? { ...p, favorite: !p.favorite } : p));
   };
 
+  const filteredPoems = filterStyle ? poems.filter(p => p.style === filterStyle) : poems;
+
   return (
     <div style={{ minHeight: '100vh', background: '#050510', color: '#e2e8f0', fontFamily: 'Georgia, "Times New Roman", serif' }}>
       <style>{`
@@ -151,12 +154,12 @@ export default function ClonePoet() {
 
         <div style={{ display: 'flex', gap: 8, marginBottom: 24, overflowX: 'auto', paddingBottom: 8 }}>
           {['All', ...POEM_STYLES].map(style => (
-            <button key={style} onClick={() => {}} style={{ padding: '8px 16px', borderRadius: 20, border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.04)', color: '#94a3b8', cursor: 'pointer', fontSize: 13, whiteSpace: 'nowrap' }}>{style}</button>
+            <button key={style} onClick={() => setFilterStyle(style === 'All' ? null : style)} style={{ padding: '8px 16px', borderRadius: 20, border: `1px solid ${filterStyle === style || (style === 'All' && !filterStyle) ? 'rgba(244,114,182,0.4)' : 'rgba(255,255,255,0.1)'}`, background: filterStyle === style || (style === 'All' && !filterStyle) ? 'rgba(244,114,182,0.15)' : 'rgba(255,255,255,0.04)', color: filterStyle === style || (style === 'All' && !filterStyle) ? '#f472b6' : '#94a3b8', cursor: 'pointer', fontSize: 13, whiteSpace: 'nowrap' }}>{style}</button>
           ))}
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          {poems.map((poem, i) => (
+          {filteredPoems.map((poem, i) => (
             <div key={poem.id} className="poem-card" onClick={() => setExpandedPoem(expandedPoem === poem.id ? null : poem.id)} style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 20, padding: 28, border: '1px solid rgba(255,255,255,0.06)', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}>
               <div style={{ position: 'absolute', top: 0, left: 0, width: 4, height: '100%', background: STYLE_INFO[poem.style]?.color || '#a78bfa', borderRadius: '4px 0 0 4px' }} />
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>

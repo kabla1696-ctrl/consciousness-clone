@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback, Suspense } from 'react'
 import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
 import { useToast } from '../../components/Toast'
@@ -419,7 +419,9 @@ export default function BackupPage() {
             </div>
           </div>
 
-          <ExportButton className="w-full" />
+          <Suspense fallback={<div className="h-12 rounded-xl bg-white/5 animate-pulse" />}>
+            <ExportButton className="w-full" />
+          </Suspense>
         </div>
 
         {/* ─── Import Section ─── */}

@@ -1,7 +1,6 @@
 'use client'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
-import { supabase } from '../../lib/supabase-browser'
 import { useT } from '../../lib/language-context'
 
 interface Message { id: string; role: 'user' | 'clone'; text: string; timestamp: number }

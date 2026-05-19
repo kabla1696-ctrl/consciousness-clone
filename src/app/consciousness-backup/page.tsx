@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useT } from '../../lib/language-context';
 
@@ -27,6 +27,13 @@ export default function ConsciousnessBackupPage() {
   const [backing, setBacking] = useState(false);
   const [progress, setProgress] = useState(0);
   const [restoring, setRestoring] = useState<string | null>(null);
+  const backupIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (backupIntervalRef.current) clearInterval(backupIntervalRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     const saved = localStorage.getItem('clone-backups');
@@ -46,9 +53,11 @@ export default function ConsciousnessBackupPage() {
     setBacking(true);
     setProgress(0);
     const interval = setInterval(() => {
+      backupIntervalRef.current = interval;
       setProgress(p => {
         if (p >= 100) {
           clearInterval(interval);
+          backupIntervalRef.current = null;
           const newBackup: BackupEntry = {
             id: Date.now().toString(),
             date: new Date().toLocaleString('sv-SE', { hour12: false }).replace('T', ' '),

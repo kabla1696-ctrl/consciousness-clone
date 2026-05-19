@@ -79,10 +79,14 @@ export default function CloneTherapy() {
         setMemoryContext(memories.map(m => `[${m.category}] ${m.content}`).join('\n'))
       }
 
-      const stored = localStorage.getItem('clone-therapy-sessions')
-      if (stored) {
-        const parsed: Session[] = JSON.parse(stored)
-        setSessions(parsed)
+      try {
+        const stored = localStorage.getItem('clone-therapy-sessions')
+        if (stored) {
+          const parsed: Session[] = JSON.parse(stored)
+          setSessions(parsed)
+        }
+      } catch {
+        localStorage.removeItem('clone-therapy-sessions')
       }
 
       const insightStored = localStorage.getItem('clone-therapy-insight')

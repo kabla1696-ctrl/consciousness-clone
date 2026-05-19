@@ -83,13 +83,13 @@ function Particles() {
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
       {Array.from({ length: 25 }).map((_, i) => (
         <div key={i} className="absolute rounded-full animate-float" style={{
-          width: `${2 + Math.random() * 4}px`,
-          height: `${2 + Math.random() * 4}px`,
-          left: `${Math.random() * 100}%`,
-          top: `${Math.random() * 100}%`,
+          width: `${2 + (i % 4)}px`,
+          height: `${2 + (i % 4)}px`,
+          left: `${(i * 4) % 100}%`,
+          top: `${(i * 5.3) % 100}%`,
           background: `radial-gradient(circle, ${['#06b6d4', '#8b5cf6', '#ec4899', '#f59e0b'][i % 4]}88, transparent)`,
-          animationDuration: `${4 + Math.random() * 6}s`,
-          animationDelay: `${Math.random() * 3}s`,
+          animationDuration: `${4 + (i % 5)}s`,
+          animationDelay: `${(i * 0.12)}s`,
         }} />
       ))}
     </div>

@@ -60,7 +60,12 @@ export default function MemoryConstellation() {
   const [selectedMemory, setSelectedMemory] = useState<Memory | null>(null);
   const [zoom, setZoom] = useState(1);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  const [bgStars] = useState(() => generateStars(200));
+  const [bgStars, setBgStars] = useState<Array<{id: string, x: number, y: number, size: number, opacity: number, twinkleSpeed: number, twinkleDelay: number}>>([]);
+
+  useEffect(() => {
+    setBgStars(generateStars(200));
+  }, []);
+
   const [showAdd, setShowAdd] = useState(false);
   const [newTitle, setNewTitle] = useState('');
   const [newCategory, setNewCategory] = useState(CATEGORIES[0]);
@@ -285,8 +290,8 @@ export default function MemoryConstellation() {
                 borderRadius: '50%',
                 background: `radial-gradient(circle, ${CAT_COLORS[mem.category]}, transparent)`,
                 boxShadow: `0 0 ${mem.size * 2}px ${CAT_COLORS[mem.category]}66, 0 0 ${mem.size * 4}px ${CAT_COLORS[mem.category]}22`,
-                animation: `twinkle ${2 + Math.random() * 3}s ease-in-out infinite`,
-                animationDelay: `${Math.random() * 2}s`,
+                animation: `twinkle ${2 + (mem.id.length % 3)}s ease-in-out infinite`,
+                animationDelay: `${(mem.id.length * 0.3) % 2}s`,
               }} />
               <div style={{
                 position: 'absolute', top: mem.size + 4, left: '50%',

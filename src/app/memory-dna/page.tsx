@@ -47,7 +47,7 @@ export default function MemoryDNAPage() {
           setHistory(data.history || [])
           if (data.latest) setReport(data.latest)
         }
-      } catch {}
+      } catch (err) { console.error('Failed to load DNA data:', err) }
       setLoading(false)
     }
     init()

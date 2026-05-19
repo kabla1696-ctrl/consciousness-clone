@@ -36,14 +36,17 @@ export default function Relationships() {
   const [form, setForm] = useState<Partial<Person>>({ relation: 'Friend', quality: 7, privacyLevel: 'MOST', accessAfterDeath: false, accessLevel: 'CHAT_ONLY', verificationMethod: 'SECRET_QUESTION' })
   const [cloneSettings, setCloneSettings] = useState({ language: 'banglish', slang: 2, emoji: 2, typing: 'casual', humor: 6, warmth: 8, detail: 6, emotion: 7, directness: 5, catchphrases: ['Ami toh aage e bollam', 'Eta ki hocche!'], memoryRefs: true, quirks: ['Always says "listen..."', 'Goes on tangents about cricket'] })
   const [legacySettings, setLegacySettings] = useState({ inactivity: 90, legacyMessage: '', emergencyContacts: [{ name: '', email: '', relation: '' }] })
+  const [savedMsg, setSavedMsg] = useState('')
 
   useEffect(() => {
-    const saved = localStorage.getItem('cc_relationships')
-    if (saved) setPeople(JSON.parse(saved))
-    const cs = localStorage.getItem('cc_clone_behavior')
-    if (cs) setCloneSettings(JSON.parse(cs))
-    const ls = localStorage.getItem('cc_legacy_settings')
-    if (ls) setLegacySettings(JSON.parse(ls))
+    try {
+      const saved = localStorage.getItem('cc_relationships')
+      if (saved) setPeople(JSON.parse(saved))
+      const cs = localStorage.getItem('cc_clone_behavior')
+      if (cs) setCloneSettings(JSON.parse(cs))
+      const ls = localStorage.getItem('cc_legacy_settings')
+      if (ls) setLegacySettings(JSON.parse(ls))
+    } catch { /* corrupted data, use defaults */ }
   }, [])
 
   const save = (p: Person[]) => { setPeople(p); localStorage.setItem('cc_relationships', JSON.stringify(p)) }
@@ -215,7 +218,7 @@ export default function Relationships() {
             </div>
           </div>
 
-          <button onClick={() => { localStorage.setItem('cc_legacy_settings', JSON.stringify(legacySettings)); alert(t('legacy settings saved')) }} className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold text-sm tap-feedback" style={{ boxShadow: '0 0 20px rgba(245,158,11,0.3)' }}>
+          <button onClick={() => { localStorage.setItem('cc_legacy_settings', JSON.stringify(legacySettings)); setSavedMsg(t('legacy settings saved')); setTimeout(() => setSavedMsg(''), 2000) }} className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold text-sm tap-feedback" style={{ boxShadow: '0 0 20px rgba(245,158,11,0.3)' }}>
             💾 {t('save legacy settings')}
           </button>
         </>}
@@ -289,7 +292,7 @@ export default function Relationships() {
             </div>
           </div>
 
-          <button onClick={() => { localStorage.setItem('cc_clone_behavior', JSON.stringify(cloneSettings)); alert(t('clone behavior saved')) }} className="w-full py-3 rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-semibold text-sm tap-feedback" style={{ boxShadow: '0 0 20px rgba(139,92,246,0.3)' }}>
+          <button onClick={() => { localStorage.setItem('cc_clone_behavior', JSON.stringify(cloneSettings)); setSavedMsg(t('clone behavior saved')); setTimeout(() => setSavedMsg(''), 2000) }} className="w-full py-3 rounded-xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-semibold text-sm tap-feedback" style={{ boxShadow: '0 0 20px rgba(139,92,246,0.3)' }}>
             💾 {t('save clone behavior')}
           </button>
         </>}

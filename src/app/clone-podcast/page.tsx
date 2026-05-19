@@ -40,8 +40,12 @@ export default function ClonePodcast() {
         setMemoryContext(memories.map(m => `[${m.category}] ${m.content}`).join('\n'))
       }
 
-      const stored = localStorage.getItem('clone-podcast-episodes')
-      if (stored) setEpisodes(JSON.parse(stored))
+      try {
+        const stored = localStorage.getItem('clone-podcast-episodes')
+        if (stored) setEpisodes(JSON.parse(stored))
+      } catch {
+        localStorage.removeItem('clone-podcast-episodes')
+      }
     }
     init()
   }, [])
@@ -82,7 +86,7 @@ export default function ClonePodcast() {
       const updated = [newEpisode, ...episodes]
       setEpisodes(updated)
       localStorage.setItem('clone-podcast-episodes', JSON.stringify(updated))
-    } catch (err) {
+    } catch {
       setCurrentScript('Failed to generate episode. Please try again.')
     }
 

@@ -1,4 +1,4 @@
-import { FEATURES, Feature } from './features-data'
+import { FEATURES } from './features-data';
 
 export type SearchResultType = 'feature' | 'memory' | 'chat' | 'setting' | 'navigation'
 

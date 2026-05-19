@@ -43,7 +43,7 @@ export default function MemoryPalacePage() {
           const data = JSON.parse(stored)
           setRooms(data.rooms || DEFAULT_ROOMS)
         }
-      } catch {}
+      } catch (err) { console.error('Failed to load palace data:', err) }
       setLoading(false)
     }
     init()
